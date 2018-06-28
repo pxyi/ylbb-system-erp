@@ -1,0 +1,36 @@
+:host ::ng-deep .ant-calendar-picker {
+  width: 100%;
+}
+
+.form-group-title {
+  color: rgba(0,0,0,.85);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.form-group-content {
+  &:not(:last-nth) {
+    margin-bottom: 32px;
+  }
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+  }
+}
+
+.form-group-divider {
+  height: 1px;
+  background: #e8e8e8;
+  margin: 24px 0 32px;;
+  clear: both;
+}
+
+.form-footer {
+  text-align: center;
+  button:first-child {
+    margin-right: 18px;
+  }
+}

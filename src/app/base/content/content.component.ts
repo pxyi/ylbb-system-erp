@@ -35,7 +35,7 @@ export class ContentComponent {
         return routeData;
       })
     ).subscribe(event => {
-      this.breadcrumb = event[0]['title'] ? event : [];
+      this.breadcrumb = event[0] && event[0]['title'] ? event : [];
     })
 
     store.select('routerState').subscribe(res => this.routerState = res);
