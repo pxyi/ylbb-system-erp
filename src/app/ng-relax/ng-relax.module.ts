@@ -43,6 +43,8 @@ registerLocaleData(zh);
     SlideComponent,
     TipComponent,
 
+    MonthdiffPipe,
+
     FormsModule,
     RouterModule,
     ReactiveFormsModule,

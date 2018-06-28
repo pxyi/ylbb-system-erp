@@ -5,6 +5,7 @@ import { NgRelaxModule } from './../../ng-relax/ng-relax.module';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { PotentialComponent } from './potential/potential.component';
 import { NewinformationComponent } from './newinformation/newinformation.component';
+import { NointentionComponent } from './nointention/nointention.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { NewinformationComponent } from './newinformation/newinformation.compone
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent]
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent]
 })
 export class CustomerModule { }

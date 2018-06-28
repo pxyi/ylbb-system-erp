@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PotentialComponent } from './potential/potential.component';
 import { NewinformationComponent } from './newinformation/newinformation.component';
+import { NointentionComponent } from './nointention/nointention.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,12 @@ const routes: Routes = [
     path: 'newinfo/:id',
     data: { title: '新建潜在客户' },
     component: NewinformationComponent
-  }
+  },
+  {
+    path: 'nointention',
+    data: { title: '无意向客户' },
+    component: NointentionComponent
+  },
 ];
 
 @NgModule({
