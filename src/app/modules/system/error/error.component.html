@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="box">
+    <div class="left-image">
+      <div [ngStyle]="{
+        'background-image': 
+            errorType == 403 ? 'url(https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg)' : 
+            errorType == 500 ? 'url(https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg)' : 
+                               'url(https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg)',
+        'background-size': 'contain'
+      }"></div>
+    </div>
+    <div class="content">
+      <h1>{{ errorType }}</h1>
+      <p>{{ errorType == 403 ? '抱歉，你无权访问该页面' : errorType == 500 ? '抱歉，服务器出错了' : '抱歉，你访问的页面不存在' }}</p>
+      <div>
+        <button nz-button [nzType]="'primary'" nzSize="large" routerLink="/home">
+          <span>返回首页</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

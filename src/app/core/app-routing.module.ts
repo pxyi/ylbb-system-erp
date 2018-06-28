@@ -10,6 +10,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: 'home',
     data: {title: '主页'},
     component: BaseComponent,
@@ -18,16 +22,17 @@ const routes: Routes = [
         path: 'customer',
         data: { title: '客户管理' },
         loadChildren: 'src/app/modules/customer/customer.module#CustomerModule'
-      }
+      },
     ]
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'system',
+    data: { title: '系统管理' },
+    loadChildren: 'src/app/modules/system/system.module#SystemModule'
   },
   {
     path: '**',
-    redirectTo: '/login',
+    redirectTo: '/system/error/404',
     pathMatch: 'full'
   }
 ];
