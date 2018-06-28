@@ -1,0 +1,26 @@
+.footer {
+	margin: 48px 0 24px;
+	color: rgba(0, 0, 0, .45);
+	font-size: 14px;
+	text-align: center;
+	.footer-link {
+		margin-bottom: 8px;
+		& > a{
+			display: inline-block;
+			margin: 0 15px;
+			color: rgba(0, 0, 0, .45);
+			vertical-align: middle;
+			&:hover {
+				color: rgba(0, 0, 0, .7);
+				img{
+					opacity: 1;
+				}
+			}
+		}
+		img {
+			width: 16px;
+			opacity: .5;
+			vertical-align: sub;
+		}
+	}
+}

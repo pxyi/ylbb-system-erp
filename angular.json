@@ -46,9 +46,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/aes.js"
+            ]
           },
           "configurations": {
             "production": {

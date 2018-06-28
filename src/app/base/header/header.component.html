@@ -1,0 +1,38 @@
+<div class="ui-header">
+
+  <div class="ui-menu-collapsed" (click)="TapIsCollapsed()">
+    <i class="anticon" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed"></i>
+  </div>
+
+  <div class="ui-user-info">
+
+    <nz-tooltip [nzTitle]="'更新日志'" [nzPlacement]="'bottom'">
+      <div nz-tooltip class="changelog" routerLink="/system/changelog">
+        <i class="anticon anticon-question-circle-o"></i>
+      </div>
+    </nz-tooltip>
+
+    <nz-dropdown nzPlacement="bottomRight">
+      <div class="ant-dropdown-link" nz-dropdown>
+        <nz-avatar nzIcon="user" nzSize="small" style="vertical-align: middle" nzSrc="./assets/images/default-boy.png"></nz-avatar>
+        <span>{{ userInfo.name }}</span>
+      </div>
+      <ul class="ant-dropdown-cell" nz-menu [style.width]="'140px'">
+        <li nz-menu-item>
+          <a href="javascript:;" style="font-size: 13px; background: #fff; cursor: no-drop; color: #ccc;">
+            <i class="anticon anticon-user" [style.margin-right]="'6px'"></i>个人中心</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" style="font-size: 13px; background: #fff; cursor: no-drop; color: #ccc;">
+            <i class="anticon anticon-setting" [style.margin-right]="'6px'"></i>设置</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" style="font-size: 13px;border-top: solid 1px #e8e8e8" (click)="signOut()">
+            <i class="anticon anticon-logout" [style.margin-right]="'6px'"></i>退出登录</a>
+        </li>
+      </ul>
+    </nz-dropdown>
+
+  </div>
+
+</div>

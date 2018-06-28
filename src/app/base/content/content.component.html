@@ -1,0 +1,8 @@
+<nz-spin [nzTip]="'正在加载页面...'" [nzSize]="'large'" [nzSpinning]="routerState.currentPath != routerState.goPath">
+  <div class="ui-content">
+    <ea-breadcrumb [breadcrumb]="breadcrumb"></ea-breadcrumb>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</nz-spin>

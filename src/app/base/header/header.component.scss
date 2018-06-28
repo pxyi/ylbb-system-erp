@@ -1,0 +1,51 @@
+.ui-header {
+  display: flex;
+  height: 100%;
+}
+
+.ui-menu-collapsed {
+  width: 64px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  &:hover {
+    background: #e6f7ff;
+  }
+  .anticon {
+    font-size: 18px;
+  }
+}
+.ui-user-info {
+  flex: auto;
+  padding-right: 12px;
+  color: rgba(0, 0, 0, .65);
+
+  display: flex;
+  justify-content: flex-end;
+
+  .ant-dropdown-link {
+    padding: 0 12px;
+    transition: all .2s;
+    span {
+      font-size: 13px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    &:hover {
+      background: #e6f7ff;
+    }
+  }
+  .changelog {
+    padding: 0 12px;
+    transition: all .2s;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+      background: #e6f7ff;
+    }
+    i {
+      font-size: 18px;
+      vertical-align: middle;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+<nz-table
+  #nzTable
+  nzShowSizeChanger
+  [nzScroll]="{x:'100%'}"
+  [nzFrontPagination]="false"
+  [ngClass]="[ allowSpace ? 'break' : 'nowrap' ]"
+  [nzData]="dataSet"
+  [nzLoading]="_pageInfo.loading"
+  [nzTotal]="_pageInfo.totalPage"
+  [(nzPageIndex)]="_pageInfo.pageNum"
+  [(nzPageSize)]="_pageInfo.pageSize"
+  (nzPageSizeChange)="_request(true)"
+  (nzPageIndexChange)="_request()">
+  <thead>
+    <tr>
+      <th nz-th nzCheckbox *ngIf="checked" [style.text-align]="'center'">
+        <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)"></label>
+      </th>
+      <ng-container *ngFor="let head of thead">
+        <ng-container *ngIf="(head.left == undefined) && (head.right == undefined)">
+          <th nz-th [nzWidth]="head.width || ''">
+            <span>{{ head.name || head }}</span>
+          </th>
+        </ng-container>
+        <ng-container *ngIf="head.left > -1">
+          <th nz-th [nzWidth]="head.width || ''" [nzLeft]="head.left">
+            <span>{{ head.name || head }}</span>
+          </th>
+        </ng-container>
+        <ng-container *ngIf="head.right > -1">
+          <th nz-th [nzWidth]="head.width || ''" [nzRight]="head.right">
+            <span>{{ head.name || head }}</span>
+          </th>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let data of dataSet">
+      <td nzShowCheckbox *ngIf="checked" [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="isChecked($event)"></td>
+      <ng-container *ngTemplateOutlet="EaTableTbodyTr; context: { $implicit: data }"></ng-container>
+    </tr>
+  </tbody>
+</nz-table>

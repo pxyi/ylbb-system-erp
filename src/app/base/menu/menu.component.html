@@ -1,0 +1,43 @@
+<div class="ui-menu">
+  <div class="ui-logo">
+    <img src="./assets/images/logo-header.png" alt="logo" [ngStyle]="{'margin-left': '24px'}" [title]="userInfo.store['shopName']">
+    <span [style.font-size]="shopNameFontSize + 'px'" [ngClass]="{'active': isCollapsed}">{{ userInfo.store['shopName'] }}</span>
+  </div>
+  <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" nzTheme='dark'>
+    <li nz-menu-item [routerLink]="['/home']" [nzSelected]="routerState.currentPath == '/home'">
+      <span title>
+        <i class="anticon anticon-home"></i>
+        <span>首页</span>
+      </span>
+    </li>
+    <li nz-submenu [nzOpen]="routerState.currentPath.indexOf('/home/customer') > -1">
+      <span title>
+        <i class="anticon anticon-team"></i>
+        <span>客户管理</span>
+      </span>
+      <ul>
+        <li nz-menu-item routerLink="/home/customer/potentail" [nzSelected]="routerState.currentPath == '/home/customer/potentail'">
+          <span>潜在客户</span>
+        </li>
+        <li nz-menu-item routerLink="/home/customer/nointention" [nzSelected]="routerState.currentPath == '/home/customer/nointention'">
+          <span>无意向客户</span>
+        </li>
+      </ul>
+    </li>
+    <li nz-submenu [nzOpen]="routerState.currentPath.indexOf('/home/marketing') > -1">
+      <span title>
+        <i class="anticon anticon-area-chart"></i>
+        <span>推广活动</span>
+      </span>
+      <ul>
+        <li nz-menu-item routerLink="/home/marketing/activity" [nzSelected]="routerState.currentPath.indexOf('/home/marketing/activity') > -1">
+          <span>活动</span>
+        </li>
+        <!-- <li nz-menu-item routerLink="/home/marketing/admin" [nzSelected]="routerState.currentPath.indexOf('/home/marketing/admin') > -1"><span>管理</span></li> -->
+        <li nz-menu-item routerLink="/home/marketing/data" [nzSelected]="routerState.currentPath.indexOf('/home/marketing/data') > -1">
+          <span>数据</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

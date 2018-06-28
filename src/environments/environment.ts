@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  version: '0.0.0',
+  // domain: 'http://localhost:2800'
+  domain: 'http://newbss.beibeiyue.com'
 };
 
 /*

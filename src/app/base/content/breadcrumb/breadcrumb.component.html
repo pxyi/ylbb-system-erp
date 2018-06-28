@@ -1,0 +1,14 @@
+<div class="ea-breadcrumb">
+  <nz-breadcrumb *ngIf="breadcrumb.length">
+    <nz-breadcrumb-item>
+      <i class="anticon anticon-home"></i>
+    </nz-breadcrumb-item>
+    <ng-container *ngFor="let item of breadcrumb">
+      <nz-breadcrumb-item *ngIf="!item.titleHide">
+        <span>{{ item['title'] }}</span>
+      </nz-breadcrumb-item>
+    </ng-container>
+  </nz-breadcrumb>
+
+  <div class="ea-breadcrumb-title" *ngIf="!breadcrumb[breadcrumb.length - 1].hideTitle">{{ breadcrumb[breadcrumb.length - 1].title }}</div>
+</div>

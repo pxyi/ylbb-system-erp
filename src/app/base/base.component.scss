@@ -1,0 +1,28 @@
+/* base */
+.ant-layout {
+  height: 100%;
+  background: #f0f2f5;
+}
+
+/* header */
+.ant-layout-header {
+  background: #fff;
+  padding: 0;
+  box-shadow: rgba(0, 21, 41, 0.08) 0px 1px 4px;
+  z-index: 1;
+}
+/* menu */
+.ant-layout-sider {
+  background: #001529;
+  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  z-index: 9;
+}
+/* content */
+.ant-layout-content {
+  position: relative;
+}
+
+.ant-layout-footer {
+  padding: 0;
+  background: none;
+}

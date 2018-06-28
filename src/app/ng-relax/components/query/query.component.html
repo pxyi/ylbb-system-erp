@@ -1,0 +1,52 @@
+<form nz-form [nzLayout]="'inline'" [formGroup]="_queryForm">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8" *ngFor="let control of _node" [nzLg]="8" [nzSm]="12" [nzXs]="24" [style.display]="isCollapse && control.isHide ? 'none' : 'block'">
+      <nz-form-item nzFlex nz-row>
+        <nz-form-label [nzSpan]="5">{{ control.label }}</nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <ng-container *ngIf="control.type === 'input'">
+            <nz-input-group [nzSuffix]="suffixIconButton">
+              <input [formControlName]="control.key" nz-input [placeholder]="control.placeholder">
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <i class="anticon anticon-close-circle" (click)="_clearControlValue(control.key)"></i>
+            </ng-template>
+          </ng-container>
+
+          <ng-container *ngIf="control.type === 'select'">
+            <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder">
+              <nz-option *ngFor="let option of control.options" [nzLabel]="option[control.optionKey?.label]" [nzValue]="option[control.optionKey?.value]"
+                [nzDisabled]="option?.disabled"></nz-option>
+            </nz-select>
+          </ng-container>
+
+          <ng-container *ngIf="control.type === 'between'">
+          </ng-container>
+
+          <ng-container *ngIf="control.type === 'datepicker'">
+            <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder"></nz-date-picker>
+          </ng-container>
+
+          <ng-container *ngIf="control.type === 'rangepicker'">
+            <nz-range-picker [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd" [nzPlaceHolder]="[control.placeholder[0] || '开始日期', control.placeholder[1] || '结束日期']"></nz-range-picker>
+          </ng-container>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8" [nzLg]="8" [nzSm]="12" [nzXs]="24" class="hp-query-btns">
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" (click)="_submit()">查询</button>
+          <button nz-button (click)="_reset()" style="margin-left: 8px;">重置</button>
+
+          <ng-container *ngTemplateOutlet="EaQueryBtns"></ng-container>
+          
+          <a style="margin-left:8px;font-size:12px;" (click)="isCollapse = !isCollapse" *ngIf="_showSlideBtn">
+            {{ isCollapse ? '展开' : '收起' }}
+            <i class="anticon" [class.anticon-down]="isCollapse" [class.anticon-up]="!isCollapse"></i>
+          </a>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

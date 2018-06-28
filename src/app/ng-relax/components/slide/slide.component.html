@@ -1,0 +1,6 @@
+<div class="cm-slide" [style.width]="width + 'px'">
+  <div class="close" *ngIf="closeLink" [routerLink]="closeLink">
+    <i class="anticon anticon-close"></i>
+  </div>
+  <ng-content></ng-content>
+</div>

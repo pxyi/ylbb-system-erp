@@ -1,0 +1,8 @@
+<nz-layout>
+  <nz-sider [nzWidth]="isCollapsed ? 80 : 256"><ea-menu [isCollapsed]="isCollapsed"></ea-menu></nz-sider>
+  <nz-layout>
+    <nz-header><ea-header [(isCollapsed)]="isCollapsed"></ea-header></nz-header>
+    <nz-content><ea-content></ea-content></nz-content>
+    <nz-footer><ea-footer></ea-footer></nz-footer>
+  </nz-layout>
+</nz-layout>

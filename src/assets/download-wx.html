@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	
+	</head>
+	<style type="text/css">
+		body { margin: 0; }
+		*{ padding: 0; margin: 0;}
+		h1{ font-size: 40px; text-align: center; line-height: 40px; margin: 40px 0;}
+		#canvas{ margin: 0 auto; display: block;}
+		img { width: 800px; height: 1060px; position: absolute; left: 50%; margin-left: -400px; top: 120px; z-index: 9; opacity: 0;  }
+	</style>
+	<body>
+		<h1>长按保存门店推广图</h1>
+		<canvas id="canvas" width="800" height="1060"></canvas>
+		<img src="" id="img" alt="">
+	</body>
+	<script type="text/javascript">
+		
+
+		function getParams (name){
+		  var reg = new RegExp("(^|&)"+ name.toLowerCase() +"=([^&]*)(&|$)");
+		  var r = window.location.search.substr(1).toLowerCase().match(reg);
+		  if(r!=null){return  unescape(r[2]);}
+		  return null;
+		}
+
+		var bgimg = "";
+		var qrcode ="";
+		var shopName ="";
+		var price ="";
+		var originalPrice="";
+		var detailAddress ="";
+		$(function(){
+			$.ajax({
+				type:"get",
+				url:"http://newbss.beibeiyue.com/market/storePictureInfo",
+				// url: 'http://192.168.1.164:8383/market/storePictureInfo',
+				async:true,
+				data:{
+					paramJson:JSON.stringify({
+						activityId:getParams('id').split('|')[0],
+						storeId:getParams('id').split('|')[1]
+					})
+				},
+				success:function(res){
+					bgimg = res.result.standardDiagram;
+					qrcode = res.result.qrcode;
+					price = res.result.coupon;
+					originalPrice = res.result.originalPrice;
+					shopName = res.result.shopName;
+					detailAddress = res.result.detailAddress;
+					hcanvas();
+				}
+			});
+		})
+
+		function hcanvas(){
+			var imgbg = new Image();
+			imgbg.setAttribute('crossOrigin', 'anonymous');
+			imgbg.src = bgimg;
+			imgbg.onload = function(){
+				var qrcodeimg = new Image();
+				qrcodeimg.setAttribute('crossOrigin', 'anonymous');
+				qrcodeimg.src = qrcode;
+				qrcodeimg.onload = function(){
+					var canvas = document.getElementById('canvas');
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(imgbg, 0, 0, canvas.width, canvas.height);
+					ctx.drawImage(qrcodeimg,canvas.width*0.35,canvas.height*0.48,canvas.width*0.3,canvas.width*0.3);
+					ctx.font = "48px 微软雅黑";
+					ctx.fillStyle = '#FF1F52';
+					ctx.textAlign = 'left';
+					ctx.fillText('￥'+ originalPrice,canvas.width*0.05,canvas.height*0.91);
+					ctx.font = "20px 微软雅黑";
+					ctx.fillStyle = '#cdcdcd';
+					ctx.textAlign = 'left';
+					ctx.fillText('单游价',canvas.width*0.22,canvas.height*0.91);
+					ctx.moveTo(canvas.width*0.58,canvas.height*0.83-5);
+					ctx.lineTo(canvas.width*0.58+58,canvas.height*0.83-5);
+					ctx.strokeStyle = '#cdcdcd';
+					ctx.stroke();
+					ctx.textAlign = 'left';
+					ctx.fillStyle = '#000';
+					ctx.font = "36px 微软雅黑";
+					ctx.fillText(shopName,canvas.width*0.05,canvas.height*0.84);
+					ctx.fillStyle = '#989898';
+					ctx.font = "28px 微软雅黑";
+					ctx.fillText(detailAddress,canvas.width*0.05,canvas.height*0.96);
+
+					
+					ctx.font = "148px 微软雅黑";
+					ctx.fillStyle = '#FF1F52';
+					ctx.textAlign = 'left';
+					ctx.fillText(price, canvas.width * 0.22, canvas.height * 0.37);
+
+					var dataURL = canvas.toDataURL('image/png');
+					$('#img').attr('src', dataURL).css('opacity', 1);
+				}
+			};
+		}
+	</script>
+</html>
