@@ -1,7 +1,7 @@
 <div class="ea-breadcrumb" *ngIf="breadcrumb.length">
   <nz-breadcrumb>
     <nz-breadcrumb-item>
-      <i class="anticon anticon-home"></i>
+      <i class="anticon anticon-home" [style.font-size]="'14px'"></i>
     </nz-breadcrumb-item>
     <ng-container *ngFor="let item of breadcrumb">
       <nz-breadcrumb-item *ngIf="!item.titleHide">
