@@ -1,6 +1,6 @@
 import { UserInfoState } from './../core/reducers/userInfo-reducer';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ReducersConf } from './../core/reducers/reducers-config';
+import { AppState } from './../core/reducers/reducers-config';
 import { Injectable }             from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable }             from 'rxjs';
@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 export class UserInfoResolver implements Resolve<UserInfoState> {
   constructor(
     private router: Router,
-    private store: Store<ReducersConf>,
+    private store: Store<AppState>,
     private message: NzMessageService
   ) { }
  

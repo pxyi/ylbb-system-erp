@@ -1,5 +1,5 @@
 import { RouterState } from './../reducers/router-reducer';
-import { ReducersConf } from './../reducers/reducers-config';
+import { AppState } from './../reducers/reducers-config';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     private router     : Router,
     private fb         : FormBuilder = new FormBuilder(),
     private activated  : ActivatedRoute,
-    private store      : Store<ReducersConf>
+    private store      : Store<AppState>
   ) {
     store.select('routerState').subscribe( res => this.baseRouter = res);
   }

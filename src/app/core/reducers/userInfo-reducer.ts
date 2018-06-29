@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-export const userInfoReducer = (state: UserInfoState, action: Action) => {
+export function userInfoReducer (state: UserInfoState, action: Action) {
   switch (action.type) {
     case 'setUserInfo':
       window.localStorage.setItem('userInfo', JSON.stringify(action['payload']));

@@ -1,5 +1,5 @@
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { ReducersConf } from './reducers/reducers-config';
+import { AppState } from './reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 
@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor(
-    private store  : Store<ReducersConf>,
+    private store  : Store<AppState>,
     private router : Router
   ) { 
 

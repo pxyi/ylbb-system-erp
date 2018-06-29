@@ -5,7 +5,7 @@ const routerStateDefalut =  {
   goPath: '',
   currentPath: ''
 }
-export const routerReducer = (state: RouterState = routerStateDefalut, action: Action) => {
+export function routerReducer (state: RouterState = routerStateDefalut, action: Action) {
   switch (action.type) {
     case 'loginSource': 
       state.loginSource = action['payload'];

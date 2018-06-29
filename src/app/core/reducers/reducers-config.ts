@@ -6,7 +6,7 @@ export const reducersConfig = {
   routerState    : routerReducer
 }
 
-export interface ReducersConf {
+export interface AppState {
   userInfoState  : UserInfoState;
   routerState    : RouterState
 }
