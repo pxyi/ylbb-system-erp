@@ -13,8 +13,9 @@ export class MenuComponent implements OnInit {
 
   @Input() isCollapsed: boolean = false;
 
+  @Input() userInfo: UserInfoState;
+  
   routerState: RouterState;
-  userInfo: UserInfoState;
   shopNameFontSize = 24;
 
   constructor(
@@ -24,7 +25,6 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.store.select('routerState').subscribe(res => this.routerState = res);
 
-    this.store.select('userInfoState').subscribe(res => this.userInfo = res);
     this.shopNameFontSize = 160 / this.userInfo.store['shopName'].length > 24 ? 24 : 160 / this.userInfo.store['shopName'].length;
   }
 

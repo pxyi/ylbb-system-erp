@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { UserInfoState } from '../../core/reducers/userInfo-reducer';
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'ea-header',
@@ -15,16 +14,12 @@ export class HeaderComponent implements OnInit {
 
   @Input() isCollapsed: boolean = false;
 
-  userInfo: UserInfoState;
+  @Input() userInfo: UserInfoState;
   constructor(
-    private store: Store<UserInfoState>,
     private router: Router
   ) {  }
+  
   ngOnInit() {
-    this.store.select('userInfoState').subscribe(res => {
-      this.userInfo = res;
-      window.document.title = `${res.store.shopName}-鱼乐贝贝`;
-    });
   }
 
 
