@@ -1,7 +1,9 @@
+import { UserInfoResolver } from './../base/userInfo-resolver.service';
 import { BaseComponent } from './../base/base.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { AuthGuardService } from '../base/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -15,8 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    data: {title: '主页'},
     component: BaseComponent,
+    resolve: [ UserInfoResolver ],
     children: [
       {
         path: 'customer',

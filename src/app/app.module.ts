@@ -14,6 +14,8 @@ import { MenuComponent } from './base/menu/menu.component';
 import { StoreModule } from '@ngrx/store';
 import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
+import { AuthGuardService } from './base/auth-guard.service';
+import { UserInfoResolver } from './base/userInfo-resolver.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.compon
     StoreModule.forRoot(reducersConfig)
   ],
   providers: [
+    AuthGuardService,
+    UserInfoResolver
   ],
   bootstrap: [AppComponent]
 })
