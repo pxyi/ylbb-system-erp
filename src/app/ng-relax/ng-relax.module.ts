@@ -15,6 +15,7 @@ import { NoopInterceptor } from '../core/http.intercept';
 import { NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import zh from '@angular/common/locales/zh';
 import { MonthdiffPipe } from './pipes/monthdiff.pipe';
+import { QuoteComponent } from './components/quote/quote.component';
 registerLocaleData(zh);
 
 @NgModule({
@@ -26,7 +27,7 @@ registerLocaleData(zh);
     HttpClientModule,
     NgZorroAntdModule
   ],
-  declarations: [QueryComponent, TableComponent, SlideComponent, TipComponent, MonthdiffPipe],
+  declarations: [QueryComponent, TableComponent, SlideComponent, TipComponent, MonthdiffPipe, QuoteComponent],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     {
@@ -42,6 +43,7 @@ registerLocaleData(zh);
     TableComponent,
     SlideComponent,
     TipComponent,
+    QuoteComponent,
 
     MonthdiffPipe,
 

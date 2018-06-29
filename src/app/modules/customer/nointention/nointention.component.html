@@ -22,7 +22,7 @@
     </td>
     <td>{{ data.communityName || '--' }}</td>
     <td>{{ data.createDate }}</td>
-    <td>{{ data.nextFollowTime || '--' }}</td>
+    <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
     <td>{{ data.lastFollowTime || '--' }}</td>
     <td>{{ data.sourceName || '--' }}</td>
     <td>{{ data.memberStatus || '--' }}</td>

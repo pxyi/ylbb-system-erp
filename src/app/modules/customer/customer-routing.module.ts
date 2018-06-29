@@ -3,12 +3,21 @@ import { Routes, RouterModule } from '@angular/router';
 import { PotentialComponent } from './potential/potential.component';
 import { NewinformationComponent } from './newinformation/newinformation.component';
 import { NointentionComponent } from './nointention/nointention.component';
+import { PreviewCustomerComponent } from './preview/preview.component';
 
 const routes: Routes = [
   {
     path: 'potentail',
     data: { title: '潜在客户' },
-    component: PotentialComponent
+    component: PotentialComponent,
+    children: [
+      {
+        path: 'preview/:id',
+        data: { title: '客户详情' },
+        component: PreviewCustomerComponent,
+        outlet: 'aux'
+      }
+    ]
   },
   {
     path: 'newinfo/:id',
