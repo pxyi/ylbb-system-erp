@@ -1,3 +1,4 @@
+import { UserInfoState } from './../core/reducers/userInfo-reducer';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ReducersConf } from './../core/reducers/reducers-config';
 import { Injectable }             from '@angular/core';
@@ -7,25 +8,25 @@ import { Store } from '@ngrx/store';
  
  
 @Injectable()
-export class UserInfoResolver implements Resolve<boolean> {
+export class UserInfoResolver implements Resolve<UserInfoState> {
   constructor(
     private router: Router,
     private store: Store<ReducersConf>,
     private message: NzMessageService
   ) { }
  
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserInfoState> {
     return new Observable(observer => {
       try {
         let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
         this.store.dispatch({ type: 'setUserInfo', payload: userInfo });
         if (!userInfo.id) throw "未登录";
-          observer.next(true);
+          observer.next(userInfo);
           observer.complete();
       } catch (e) {
         this.message.warning('请登录!');
         this.router.navigateByUrl('/login');
-        observer.next(false);
+        observer.next(null);
         observer.complete();
       }
     })

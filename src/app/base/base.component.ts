@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { ReducersConf } from '../core/reducers/reducers-config';
-import { UserInfoState } from '../core/reducers/userInfo-reducer';
+import { UserInfoState } from './../core/reducers/userInfo-reducer';
+import { Component, OnInit } from '@angular/core';;
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ea-base',
@@ -15,14 +14,14 @@ export class BaseComponent implements OnInit {
   userInfo: UserInfoState;
 
   constructor(
-    private store: Store<ReducersConf>
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.store.select('userInfoState').subscribe(res => {
-      this.userInfo = res;
+    this.route.data.subscribe((res: { userInfo: UserInfoState }) => {
+      this.userInfo = res.userInfo;
       window.document.title = `${this.userInfo.store['shopName']}-鱼乐贝贝`;
-    });
+    })
   }
 
 }
