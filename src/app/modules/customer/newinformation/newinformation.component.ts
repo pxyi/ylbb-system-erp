@@ -128,6 +128,7 @@ export class NewinformationComponent implements OnInit {
     if (this.customerForm.invalid) {
       for (let i in this.customerForm.controls) {
         this.customerForm.controls[i].markAsDirty();
+        this.customerForm.controls[i].updateValueAndValidity();
       }
     } else {
       this._submitLoading = true;
