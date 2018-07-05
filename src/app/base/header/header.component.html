@@ -6,6 +6,30 @@
 
   <div class="ui-user-info">
 
+    <div class="router-search">
+      <nz-input-group [nzSuffix]="suffixIconButton">
+        <input id="search" placeholder="站内搜索" (keyup.enter)="keyupEnter()" nz-input [(ngModel)]="searchValue" (ngModelChange)="onChange($event)" [nzAutocomplete]="auto"
+        />
+        <div class="input-cover"></div>
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <label for="search"><i class="anticon anticon-search"></i></label>
+      </ng-template>
+      <nz-autocomplete #auto>
+        <nz-auto-optgroup *ngFor="let group of autoComplateOptions" [nzLabel]="groupTitle">
+          <ng-template #groupTitle>
+            <span>{{group.title}}</span>
+          </ng-template>
+          <nz-auto-option *ngFor="let option of group.children" [nzLabel]="option.text" [nzValue]="option">
+            <p class="search-item" (click)="keyupEnter(option)">
+              {{option.text}}
+              <span>{{ option.value.split('/')[option.value.split('/').length -1] }}</span>
+            </p>
+          </nz-auto-option>
+        </nz-auto-optgroup>
+      </nz-autocomplete>
+    </div>
+
     <nz-tooltip [nzTitle]="'更新日志'" [nzPlacement]="'bottom'">
       <div nz-tooltip class="changelog" routerLink="/system/changelog">
         <i class="anticon anticon-question-circle-o"></i>

@@ -19,9 +19,41 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) {  }
   
+
+  searchValue: string;
+  onChange(value: any): void {
+    this.autoComplateOptions = !value ? this.complateOptions : JSON.parse(JSON.stringify(this.complateOptions)).filter( res => {
+      res.children = res.children.filter(item => item.text.indexOf(value) > -1);
+      return res.children.length > 0;
+    })
+  }
   ngOnInit() {
   }
+  autoComplateOptions: any[] = [];
+  complateOptions = [ 
+    {
+      title: '客户管理',
+      children: [
+        { text: '潜在客户', value: '/home/customer/potentail' },
+        { text: '无意向客户', value: '/home/customer/nointention' }
+      ]
+    },
+    {
+      title: '系统管理',
+      children: [
+        { text: '更新日志', value: '/system/changelog' },
+        { text: '使用帮助', value: '/system/help' }
+      ]
+    }
+  ]
 
+  keyupEnter(value?) {
+    if (value) {
+      this.router.navigateByUrl(value['value']);
+    } else if (typeof this.searchValue === 'object') {
+      this.router.navigateByUrl(this.searchValue['value']);
+    }
+  }
 
   TapIsCollapsed() {
     this.isCollapsed = !this.isCollapsed;
