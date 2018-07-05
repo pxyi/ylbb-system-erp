@@ -55,7 +55,7 @@ export class NointentionComponent {
     {
       label       : '宝宝生日',
       key         : 'birthday',
-      type        : 'datepicker',
+      type        : 'rangepicker',
       valueKey    : ['babyBirthdayStart', 'babyBirthdayEnd'],
       placeholder : ['选择开始时间', '选择结束时间'],
       isHide      : true
@@ -63,7 +63,7 @@ export class NointentionComponent {
     {
       label       : '创建时间',
       key         : 'createTime',
-      type        : 'datepicker',
+      type        : 'rangepicker',
       valueKey    : ['createDateStart', 'createDateEnd'],
       placeholder : ['选择开始时间', '选择结束时间'],
       isHide      : true
@@ -71,7 +71,7 @@ export class NointentionComponent {
     {
       label       : '下次跟进',
       key         : 'nextFollowTime',
-      type        : 'datepicker',
+      type        : 'rangepicker',
       valueKey    : ['nextFollowTimeStart', 'nextFollowTimeEnd'],
       placeholder : ['选择开始时间', '选择结束时间'],
       isHide      : true
@@ -79,7 +79,7 @@ export class NointentionComponent {
     {
       label       : '最后跟进',
       key         : 'lastFollowTime',
-      type        : 'datepicker',
+      type        : 'rangepicker',
       valueKey    : ['lastFollowTimeStart', 'lastFollowTimeEnd'],
       placeholder : ['选择开始时间', '选择结束时间'],
       isHide      : true
