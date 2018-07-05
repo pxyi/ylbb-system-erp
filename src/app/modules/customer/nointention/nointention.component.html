@@ -17,9 +17,7 @@
     </td>
     <td>{{ data.birthday | monthdiff }}</td>
     <td>{{ data.parentName }}</td>
-    <td>
-      <a href="javascript:;">查看</a>
-    </td>
+    <td><a href="javascript:;" [getMobile]="data.id">查看</a></td>
     <td>{{ data.communityName || '--' }}</td>
     <td>{{ data.createDate }}</td>
     <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>

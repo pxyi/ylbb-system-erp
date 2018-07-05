@@ -18,7 +18,7 @@
     <td><i class="iconfont" [title]="data.sex" [ngClass]="[ data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i></td>
     <td>{{ data.birthday | monthdiff }}</td>
     <td>{{ data.parentName }}</td>
-    <td><a href="javascript:;">查看</a></td>
+    <td><a href="javascript:;" [getMobile]="data.id">查看</a></td>
     <td>{{ data.communityName || '--' }}</td>
     <td>{{ data.createDate }}</td>
     <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>

@@ -16,7 +16,6 @@ import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
 import { AuthGuardService } from './base/auth-guard.service';
 import { UserInfoResolver } from './base/userInfo-resolver.service';
-import { DemoComponent } from './demo/demo.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { DemoComponent } from './demo/demo.component';
     MenuComponent,
     ContentComponent,
     FooterComponent,
-    BreadcrumbComponent,
-    DemoComponent
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

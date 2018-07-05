@@ -7,6 +7,7 @@ import { PotentialComponent } from './potential/potential.component';
 import { NewinformationComponent } from './newinformation/newinformation.component';
 import { NointentionComponent } from './nointention/nointention.component';
 import { PreviewCustomerComponent } from './preview/preview.component';
+import { GetMobileDirective } from './get-mobile.directive';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { PreviewCustomerComponent } from './preview/preview.component';
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent]
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective]
 })
 export class CustomerModule { }
