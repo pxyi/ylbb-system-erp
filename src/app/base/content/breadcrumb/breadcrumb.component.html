@@ -10,5 +10,7 @@
     </ng-container>
   </nz-breadcrumb>
 
-  <div class="ea-breadcrumb-title" *ngIf="!breadcrumb[breadcrumb.length - 1].hideTitle">{{ breadcrumb[breadcrumb.length - 1].title }}</div>
+  <div class="ea-breadcrumb-title" *ngIf="!breadcrumb[breadcrumb.length - 1].hideTitle && !breadcrumbHeader">{{ breadcrumb[breadcrumb.length - 1].title }}</div>
+
+  <ng-container *ngTemplateOutlet="breadcrumbTmpt"></ng-container>
 </div>

@@ -23,6 +23,7 @@ export class AppComponent {
       }
 
       if (event instanceof NavigationEnd) {
+        store.dispatch({ type: 'setBreadcrumb' });
         store.dispatch({ type: 'currentPath', payload: event.url })
       }
     });
