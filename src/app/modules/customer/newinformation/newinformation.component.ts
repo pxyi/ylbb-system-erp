@@ -24,6 +24,8 @@ export class NewinformationComponent implements OnInit {
 
   customerForm   : FormGroup;
 
+  customerFormInitValue: object = {};
+
   collectorList     : any[] = [];
   recommenderList   : any[] = []; 
   sourceList        : any[] = [];
@@ -55,6 +57,7 @@ export class NewinformationComponent implements OnInit {
           if (res.code == 1000) {
             res.result.member.birthday = res.result.member.birthday ? new Date(res.result.member.birthday) : '';
             this.customerForm.patchValue(res.result.member);
+            this.customerFormInitValue = this.customerForm.value;
           }
         });
 
@@ -62,9 +65,10 @@ export class NewinformationComponent implements OnInit {
           if (res.code == 1000) {
             this.customerForm.patchValue({
               mobilePhone: res.result.mobilePhone
-            })
+            });
+            this.customerFormInitValue['mobilePhone'] = res.result.mobilePhone;
           }
-        })
+        });
 
       }
 
@@ -100,6 +104,7 @@ export class NewinformationComponent implements OnInit {
       recommendedId: [''],                                                                               // 推荐人
       collectorId: [''],                                                                               // 收集人
     });
+    this.customerFormInitValue = this.customerForm.value;
     this.customerForm.get('birthday').valueChanges.subscribe(res => {
       this.customerForm.patchValue({
         constellation: res ? this._getAstro(this.format.transform(res, 'yyyy-MM-dd').split('-')[1], this.format.transform(res, 'yyyy-MM-dd').split('-')[2]) : '',

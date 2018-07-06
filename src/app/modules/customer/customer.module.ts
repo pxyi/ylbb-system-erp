@@ -8,6 +8,7 @@ import { NewinformationComponent } from './newinformation/newinformation.compone
 import { NointentionComponent } from './nointention/nointention.component';
 import { PreviewCustomerComponent } from './preview/preview.component';
 import { GetMobileDirective } from './get-mobile.directive';
+import { NewinformationCanDeactivate } from './newinformation/newinfomation.guard';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { GetMobileDirective } from './get-mobile.directive';
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective]
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective],
+  providers: [NewinformationCanDeactivate]
 })
 export class CustomerModule { }

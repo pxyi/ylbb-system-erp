@@ -4,6 +4,7 @@ import { PotentialComponent } from './potential/potential.component';
 import { NewinformationComponent } from './newinformation/newinformation.component';
 import { NointentionComponent } from './nointention/nointention.component';
 import { PreviewCustomerComponent } from './preview/preview.component';
+import { NewinformationCanDeactivate } from './newinformation/newinfomation.guard';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
   {
     path: 'newinfo/:id',
     data: { title: '新建潜在客户' },
-    component: NewinformationComponent
+    component: NewinformationComponent,
+    canDeactivate: [ NewinformationCanDeactivate ]
   },
   {
     path: 'nointention',
