@@ -25,9 +25,9 @@ export class NewinformationCanDeactivate implements CanDeactivate<Newinformation
         } else {
           this.confirm.confirm({
             nzTitle: '确认离开此页面吗?',
-            nzContent: '<b>您还未保存信息</b>',
-            nzOkText: '离开',
-            nzCancelText: '取消',
+            nzContent: '您还未保存信息',
+            nzOkText: '确定离开',
+            nzCancelText: '继续编辑',
             nzOnOk() {
               observer.next(true);
               observer.complete()
