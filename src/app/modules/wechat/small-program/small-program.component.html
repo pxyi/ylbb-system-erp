@@ -1,0 +1,84 @@
+<ng-template #breadcrumbTmpt>
+  <div class="wechat-small-program-breadcrum">
+    <div class="head-flex">
+      <div class="breadcrum-icon"><img src="https://ylbb-system.oss-cn-beijing.aliyuncs.com/wechat/small-program.png" alt="微信小程序"></div>
+      <div class="breadcrum-content">
+        <h2>微信小程序</h2>
+        <div class="breadcrum-tip">
+          <h4>温馨提示：</h4>
+          <p>为了保证您的门店信息真实有效，您提交的修改内容将会在审核后再同步到微信门店小程序。因此会产生短暂的延时，敬请谅解！</p>
+        </div>
+      </div>
+    </div>
+    <nz-tabset [(nzSelectedIndex)]="tabsetSelectIndex">
+      <nz-tab nzTitle="详情"></nz-tab>
+      <nz-tab nzTitle="暂无进度" [nzDisabled]="true"></nz-tab>
+    </nz-tabset>
+    <div class="operation-btns">
+      <nz-button-group>
+        <button nz-button>预览</button>
+        <button nz-button>预览小程序</button>
+      </nz-button-group>
+      <button nz-button nzType="primary">保存</button>
+    </div>
+  </div>
+</ng-template>
+
+<div [hidden]="tabsetSelectIndex != 0">
+  <form nz-form nzLayout="vertical" [formGroup]="formModel">
+    <nz-card nzTitle="基础信息" [nzLoading]="getInfoLoading">
+      <div class="form-group-content" nz-row [nzGutter]="20">
+        <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="shopName" [nzRequired]="true">门店名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input nz-input formControlName="shopName" placeholder="请输入门店名称" id="shopName">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="shopTel" [nzRequired]="true">门店预约电话</nz-form-label>
+            <nz-form-control>
+              <input nz-input nz-input formControlName="shopTel" placeholder="请输入门店名称" id="shopTel">
+              <nz-form-explain *ngIf="formModel.get('shopTel').dirty && formModel.get('shopTel').errors">请输入正确的门店预约电话</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="publicCommentName">大众点评名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input nz-input formControlName="publicCommentName" placeholder="请输入大众点评名称" id="publicCommentName">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+          <nz-form-item>
+            <nz-form-label nzFor="meituanName">美团名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input nz-input formControlName="meituanName" placeholder="请输入美团名称" id="meituanName">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="地理位置" [nzLoading]="getInfoLoading">
+      <nz-form-item>
+        <nz-form-label nzFor="shopAddress" [nzRequired]="true">门店位置</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzCompact>
+            <nz-cascader [nzOptions]="addressOptions" nzPlaceHolder="请选择所在省市区" (ngModelChange)="onCascaderChanges($event)"></nz-cascader>
+            <input nz-input nz-input (keyup.enter)="mapGeocoderSearch()" formControlName="shopAddress" placeholder="请输入详细位置" id="shopAddress">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-spin [nzSpinning]="mapReadLoading">
+        <abm-map #map [options]="{}" (ready)="onReady($event)" style="height: 300px;"></abm-map>
+      </nz-spin>
+    </nz-card>
+  </form>
+</div>
+<div [hidden]="tabsetSelectIndex != 1">
+  
+</div>

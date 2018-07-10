@@ -14,3 +14,10 @@
 	color: rgba(0,0,0,.85);
 	margin-bottom: 16px;
 }
+
+
+:host ::ng-deep {
+  nz-tabset .ant-tabs-bar {
+    margin-bottom: 0 !important;
+  }
+}

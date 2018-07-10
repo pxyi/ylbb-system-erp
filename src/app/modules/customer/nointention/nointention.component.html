@@ -1,30 +1,35 @@
-<ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
-
-
-<ea-tip [isShow]="checkedItems.length" type="info">
-  选择
-  <a href="javascript: void(0)">{{ checkedItems.length }}条</a> 相关记录
-  <a href="javascript:;" (click)="gainClue()">捞取</a>
-</ea-tip>
-
-<ea-table #EaTable [thead]="tableNode" [checked]="true" [EaTableTbodyTr]="EaTableTbodyTr" [allowSpace]="false" [(checkedItems)]="checkedItems" url="/customer/showNoIntentionCustomer">
-  <ng-template let-data #EaTableTbodyTr>
-    <td>{{ data.nick }}</td>
-    <td>{{ data.name || '--' }}</td>
-    <td>{{ data.birthday || '--' }}</td>
-    <td>
-      <i class="iconfont" [title]="data.sex" [ngClass]="[ data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i>
-    </td>
-    <td>{{ data.birthday | monthdiff }}</td>
-    <td>{{ data.parentName }}</td>
-    <td><a href="javascript:;" [getMobile]="data.id">查看</a></td>
-    <td>{{ data.communityName || '--' }}</td>
-    <td>{{ data.createDate }}</td>
-    <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
-    <td>{{ data.lastFollowTime || '--' }}</td>
-    <td>{{ data.sourceName || '--' }}</td>
-    <td>{{ data.memberStatus || '--' }}</td>
-    <td>{{ data.followStage + (data.followNum ? '('+ data.followNum +')' : '') }}</td>
-    <td>{{ data.contributors || '--' }}</td>
-  </ng-template>
-</ea-table>
+<div class="container">
+  <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
+  
+  
+  <ea-tip [isShow]="checkedItems.length" type="info">
+    选择
+    <a href="javascript: void(0)">{{ checkedItems.length }}条</a> 相关记录
+    <a href="javascript:;" (click)="gainClue()">捞取</a>
+  </ea-tip>
+  
+  <ea-table #EaTable [thead]="tableNode" [checked]="true" [EaTableTbodyTr]="EaTableTbodyTr" [allowSpace]="false" [(checkedItems)]="checkedItems"
+    url="/customer/showNoIntentionCustomer">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.name || '--' }}</td>
+      <td>{{ data.birthday || '--' }}</td>
+      <td>
+        <i class="iconfont" [title]="data.sex" [ngClass]="[ data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i>
+      </td>
+      <td>{{ data.birthday | monthdiff }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>
+        <a href="javascript:;" [getMobile]="data.id">查看</a>
+      </td>
+      <td>{{ data.communityName || '--' }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
+      <td>{{ data.lastFollowTime || '--' }}</td>
+      <td>{{ data.sourceName || '--' }}</td>
+      <td>{{ data.memberStatus || '--' }}</td>
+      <td>{{ data.followStage + (data.followNum ? '('+ data.followNum +')' : '') }}</td>
+      <td>{{ data.contributors || '--' }}</td>
+    </ng-template>
+  </ea-table>
+</div>

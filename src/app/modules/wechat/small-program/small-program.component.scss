@@ -1,0 +1,77 @@
+.wechat-small-program-breadcrum {
+  position: relative;
+  .head-flex {
+    display: flex;
+  }
+  .breadcrum-icon {
+    margin-right: 16px;
+    img {
+      width: 28px;
+    }
+  }
+  .breadcrum-content {
+    flex: auto;
+    h2 {
+      line-height: 28px;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .breadcrum-tip {
+      display: flex;
+      margin-bottom: 20px;
+      h4 {
+        width: 76px;
+        margin: 0;
+        color: rgba(0,0,0,.65);
+      }
+      p {
+        flex: 0 5 auto;
+        margin: 0;
+        color: rgba(0,0,0,.45);
+      }
+    }
+  }
+  .operation-btns {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  nz-button-group {
+    margin-right: 8px;
+  }
+}
+
+.ant-card-bordered {
+  border: 0 !important;
+}
+
+.form-group-content {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+  }
+}
+
+nz-card:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+:host ::ng-deep {
+  .anchorBL {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  nz-input-group {
+    display: flex !important;
+    nz-cascader {
+      width: 300px !important;
+    }
+    input {
+      flex: 0 1 auto !important;
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } fr
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
+import { Router } from '@angular/router';
 
 /**
  * @class 拦截请求与响应
@@ -37,12 +38,19 @@ export class NoopInterceptor implements HttpInterceptor {
       tap(event => {
         if (event instanceof HttpResponse) {
           if (event.status == 200 || event.status == 304) {
-            
+            if (event.body.code == 3000) {
+              window.localStorage.removeItem('userInfo');
+              this.router.navigateByUrl('/login');
+            }
           }
         }
       })
     )
   }
+
+  constructor(
+    private router: Router
+  ) { }
 
 }
 

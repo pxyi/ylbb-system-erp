@@ -1,4 +1,4 @@
-.container {
+.login-container {
     display: flex;
     height: 100%;
     & > div {
@@ -173,7 +173,7 @@
 }
 
 @media (max-width: 1600px) {
-    .container {
+    .login-container {
         .box {
             .login-logo {
                 right: 10%;
@@ -258,7 +258,7 @@
 }
 
 @media (max-width: 1200px) {
-    .container {
+    .login-container {
         .box {
             .login-logo {
                 right: 8%;
