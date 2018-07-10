@@ -38,20 +38,55 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
       publicCommentName: [],                                                                   // 大众点评名称
       meituanName: [],                                                                         // 美团名称
       shopAddress: [],                                                                         // 详细地址
-      cityAddress: [],                                                                         // 省市区
+      cascaderAddress: [, [Validators.required]],                                              // 省市区
       facilitie: [],                                                                           // 包含设施
       businessTime: [],                                                                        // 营业时间
       healthSafe: [],                                                                          // 卫生安全
       warmPrompt: [],                                                                          // 温馨提示
       trafficInformation: [],                                                                  // 交通信息
-      parkingInformation: []                                                                   // 停车场信息
+      parkingInformation: [],                                                                  // 停车场信息
+
+      longitude: ['', [Validators.required]],
+      latitude: ['', [Validators.required]]
     })
     this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
 
-    this.http.post<YlbbResponse>('/wechat/selectSmallProgram', {}).subscribe(res => {
+    this.http.post<any>('/wechat/selectSmallProgram', {}).subscribe(res => {
       this.getInfoLoading = false;
       this.formModel.patchValue(res.result);
-    })
+      this._mapMarkerInit();
+    });
+
+    this.formModel.patchValue({ cascaderAddress: ["110000", "110100", "110104"] });
+
+    this.formModel.get('cascaderAddress').valueChanges.subscribe(res => {
+      if (res.length) {
+        this.provinceList.map(list => {
+          if (list.value == res[0]) {
+            this.provinceValue = list.label;
+          }
+        });
+        this.cityList.map(list => {
+          if (list.value == res[1]) {
+            this.cityValue = list.label;
+          }
+        });
+        this.areaList.map(list => {
+          if (list.value == res[2]) {
+            this.areaValue = list.label;
+          }
+        });
+      }
+    });
+
+  }
+
+  _mapMarkerInit() {
+    if (this._map && this.formModel.get('longitude').value) {
+      let point = new BMap.Point(this.formModel.get('longitude').value, this.formModel.get('latitude').value)
+      this._map.centerAndZoom(point, 16);
+      this._map.addOverlay(new BMap.Marker(point));
+    }
   }
 
   @ViewChild('map') mapComp: AbmComponent;
@@ -69,8 +104,9 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     
     map.addEventListener('click', this._mapClick.bind(this));
 
+    this._mapMarkerInit();
 
-    let _this = this;
+    let _this_ = this;
     // 获取 地址/逆地理解析 方法
     let geoc = new BMap.Geocoder();
     this._shopAddressSearch = (text) => {
@@ -78,30 +114,26 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
       map.clearOverlays();
       // 根据输入内容通过地理解析得到经纬度
       geoc.getPoint(text, function (point) {
-        console.log('得到结果', point);
         if (point) {
+          // 将搜索到的经纬度复制给 form 表单
+          _this_.formModel.patchValue({ longitude: point.lng, latitude: point.lat });
           map.centerAndZoom(point, 16);
           map.addOverlay(new BMap.Marker(point));
-          // 根据地理解析得到的经纬度， 逆地理解析得到省市区
-          geoc.getLocation(point, function (res) {
-            var addComp = res.addressComponents;
-            console.log(addComp, res)
-          }); 
         } else {
-          _this.message.warning('您选择地址没有解析到结果');
+          _this_.message.warning('您选择地址没有解析到结果');
         }
       });
     }
-    this._mapClickSearch = (point) => {
+    this._mapClickSearch = (point: any) => {
+      // 将搜索到的经纬度复制给 form 表单
+      _this_.formModel.patchValue({ longitude: point.lng, latitude: point.lat });
       // 删除地图覆盖物 （删除原有的点）
       map.clearOverlays();
       map.centerAndZoom(point, 16);
       map.addOverlay(new BMap.Marker(point));
       // 根据地理解析得到的经纬度， 逆地理解析得到省市区
       geoc.getLocation(point, function (res) {
-        var addComp = res.addressComponents;
-        console.log(addComp, res.address);
-        _this.formModel.patchValue({ shopAddress: res.address });
+        _this_.formModel.patchValue({ shopAddress: res.address });
       });
     }
 
@@ -122,16 +154,42 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     this._mapClickSearch(e.point);
   }
 
-  ngOnDestroy(): void {
-    this._map.removeEventListener('click', this._mapClick.bind(this));
-    this._mapAutocomplete.removeEventListener('click');
-  }
-
 
   /* ------------------------- 省市区级联选择 ------------------------- */
   addressOptions: any[] = [];
-  onCascaderChanges(e) {
-
+  provinceList: any[];
+  provinceValue: string;
+  cityList: any[];
+  cityValue: string;
+  areaList: any[];
+  areaValue: string;
+  addressLoadData = (node: any, index: number) => {
+    return new Promise((resolve) => {
+      if (index < 0) {
+        this.http.post<any>('/wechat/getPosition', {}).subscribe(res => {
+          node.children = res.result.provinceList;
+          this.provinceList = res.result.provinceList;
+          resolve();
+        })
+      } else if (index === 0) {
+        this.http.post<any>('/wechat/getPosition', { provinceCode: node.value }).subscribe(res => {
+          node.children = res.result.cityList;
+          this.cityList = res.result.cityList;
+          resolve();
+        })
+      } else if (index === 1) {
+        this.http.post<any>('/wechat/getPosition', { cityCode: node.value }).subscribe(res => {
+          res.result.areaList.map(res => res.isLeaf = true);
+          node.children = res.result.areaList;
+          this.areaList = res.result.areaList;
+          resolve();
+        })
+      }
+    });
   }
 
+
+  ngOnDestroy(): void {
+    this._map && this._map.removeEventListener('click', this._mapClick.bind(this));
+  }
 }

@@ -68,9 +68,14 @@
         <nz-form-label nzFor="shopAddress" [nzRequired]="true">门店位置</nz-form-label>
         <nz-form-control>
           <nz-input-group nzCompact>
-            <nz-cascader [nzOptions]="addressOptions" nzPlaceHolder="请选择所在省市区" (ngModelChange)="onCascaderChanges($event)"></nz-cascader>
-            <input nz-input nz-input (keyup.enter)="mapGeocoderSearch()" formControlName="shopAddress" placeholder="请输入详细位置" id="shopAddress">
+            <nz-cascader [nzOptions]="addressOptions" formControlName="cascaderAddress" nzPlaceHolder="请选择所在省市区" [nzLoadData]="addressLoadData"></nz-cascader>
+            <input nz-input (keyup.enter)="mapGeocoderSearch()" formControlName="shopAddress" placeholder="请输入详细位置" id="shopAddress">
+            <input nz-input [value]="formModel.get('longitude').value + '，' + formModel.get('latitude').value" readonly placeholder="请选择门店位置" style="width: 220px;">
           </nz-input-group>
+          <nz-form-explain 
+            *ngIf="(formModel.get('cascaderAddress').dirty && formModel.get('cascaderAddress').errors) ||
+                  (formModel.get('shopAddress').dirty && formModel.get('shopAddress').errors)"
+            >请选择门店所在省市区及输入详细地址</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-spin [nzSpinning]="mapReadLoading">
