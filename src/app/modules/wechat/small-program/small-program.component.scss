@@ -59,7 +59,7 @@ nz-card:not(:last-child) {
 }
 
 :host ::ng-deep {
-  .anchorBL {
+  .anchorBL, .anchorTR {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -70,7 +70,7 @@ nz-card:not(:last-child) {
     nz-cascader {
       width: 400px !important;
     }
-    input {
+    #shopAddress {
       flex: 0 1 auto !important;
     }
   }

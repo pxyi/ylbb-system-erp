@@ -1,13 +1,14 @@
-import { NzMessageService } from 'ng-zorro-antd';
+import { Observable } from 'rxjs';
+import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppState } from './../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
-import { YlbbResponse } from '../../../core/interface-config';
 import { AbmComponent } from 'angular-baidu-maps';
 
 declare const BMap: any;
+declare const OSS;
 @Component({
   selector: 'app-small-program',
   templateUrl: './small-program.component.html',
@@ -23,12 +24,28 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
 
   getInfoLoading: boolean = true;
 
+  private _aliOssClient;
+
   constructor(
     private store: Store<AppState>,
     private fb   : FormBuilder = new FormBuilder(),
     private http : HttpClient,
     private message  : NzMessageService
-  ) { }
+  ) { 
+    /* ----------------- 获取OSS上传凭证 ----------------- */
+    this.http.get<any>('http://oss.beibeiyue.com/oss/getOSSToken?type=1').subscribe(res => {
+      if (res.result == 0) {
+        let creds = res.data;
+        this._aliOssClient = new OSS.Wrapper({
+          region: 'oss-cn-beijing',
+          accessKeyId: creds.accessKeyId,
+          accessKeySecret: creds.accessKeySecret,
+          stsToken: creds.securityToken,
+          bucket: 'ylbb-business'
+        });
+      }
+    })
+  }
 
   ngOnInit() {
 
@@ -39,8 +56,12 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
       meituanName: [],                                                                         // 美团名称
       shopAddress: [],                                                                         // 详细地址
       cascaderAddress: [, [Validators.required]],                                              // 省市区
-      facilitie: [],                                                                           // 包含设施
-      businessTime: [],                                                                        // 营业时间
+
+      shopCoverImag: [, [Validators.required]],                                                // 门店封面图
+      shopImag: [, [Validators.required]],                                                     // 门店图片
+
+      facilitie: [this.facilitieItems],                                                        // 包含设施
+      businessTime: [, [Validators.required]],                                                 // 营业时间
       healthSafe: [],                                                                          // 卫生安全
       warmPrompt: [],                                                                          // 温馨提示
       trafficInformation: [],                                                                  // 交通信息
@@ -59,28 +80,9 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
 
     this.formModel.patchValue({ cascaderAddress: ["110000", "110100", "110104"] });
 
-    this.formModel.get('cascaderAddress').valueChanges.subscribe(res => {
-      if (res.length) {
-        this.provinceList.map(list => {
-          if (list.value == res[0]) {
-            this.provinceValue = list.label;
-          }
-        });
-        this.cityList.map(list => {
-          if (list.value == res[1]) {
-            this.cityValue = list.label;
-          }
-        });
-        this.areaList.map(list => {
-          if (list.value == res[2]) {
-            this.areaValue = list.label;
-          }
-        });
-      }
-    });
-
   }
 
+  /* ---------------- 默认回显坐标点 ---------------- */
   _mapMarkerInit() {
     if (this._map && this.formModel.get('longitude').value) {
       let point = new BMap.Point(this.formModel.get('longitude').value, this.formModel.get('latitude').value)
@@ -157,37 +159,135 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
 
   /* ------------------------- 省市区级联选择 ------------------------- */
   addressOptions: any[] = [];
-  provinceList: any[];
-  provinceValue: string;
-  cityList: any[];
-  cityValue: string;
-  areaList: any[];
-  areaValue: string;
   addressLoadData = (node: any, index: number) => {
     return new Promise((resolve) => {
       if (index < 0) {
         this.http.post<any>('/wechat/getPosition', {}).subscribe(res => {
           node.children = res.result.provinceList;
-          this.provinceList = res.result.provinceList;
           resolve();
         })
       } else if (index === 0) {
         this.http.post<any>('/wechat/getPosition', { provinceCode: node.value }).subscribe(res => {
           node.children = res.result.cityList;
-          this.cityList = res.result.cityList;
           resolve();
         })
       } else if (index === 1) {
         this.http.post<any>('/wechat/getPosition', { cityCode: node.value }).subscribe(res => {
           res.result.areaList.map(res => res.isLeaf = true);
           node.children = res.result.areaList;
-          this.areaList = res.result.areaList;
           resolve();
         })
       }
     });
   }
 
+  /* ------------------------- 图片上传 ------------------------- */
+  shopCoverImagItems: UploadFile[] = [];
+  shopImagItems: UploadFile[] = [];
+  previewImage: string;
+  previewVisible: boolean;
+  private _allowUpdateType = ['jpg', 'jpeg', 'png', 'gif'];
+  handlePreview = (file: UploadFile) => {
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
+  }
+
+  private _validatorUploadFile(file: UploadFile): Observable<any> {
+    return new Observable(observer => {
+      let fileType = file.name.split('.')[file.name.split('.').length - 1].toLowerCase();
+      if (this._allowUpdateType.indexOf(fileType) === -1) {
+        this.message.error(`请选择格式为 ${this._allowUpdateType.join(' | ')} 的图片`);
+        observer.next(null);
+        observer.complete();
+      } else if (!(file.size / 1024 / 1024 < 2)) {
+        this.message.error(`图片大小超出2MB，请更换图片`);
+        observer.next(null);
+        observer.complete();
+      } else {
+        let fileName = new Date().getTime() + this._mathRand() + `.${fileType}`;
+
+        this._aliOssClient.multipartUpload(fileName, file, {}).then(res => {
+          let imageSrc = res.url ? res.url : 'http://' + res.bucket + '.oss-cn-beijing.aliyuncs.com/' + res.name;
+          file.status = 'done';
+          file.url = imageSrc;
+          observer.next(file);
+          observer.complete();
+        }, err => {
+          observer.next(null);
+          observer.complete();
+          this.message.error('图片上传失败，请重新尝试');
+        })
+      }
+    })
+  }
+
+  shopCoverImagBeforeUpload = (file: UploadFile): boolean => {
+    this._validatorUploadFile(file).subscribe(res => {
+      if (res) {
+        this.shopCoverImagItems.push(file);
+        this.formModel.patchValue({
+          shopCoverImag: this.shopCoverImagItems[0]['url']
+        });
+      }
+    })
+    return false;
+  }
+  allowuploadNo = 1;
+  shopImagBeforeUpload = (file: UploadFile): boolean => {
+    this._validatorUploadFile(file).subscribe(res => {
+      if (res) {
+        this.shopImagItems.push(file);
+        let shopImagValue = [];
+        this.shopImagItems.map((item: any) => {
+          shopImagValue.push(item.url)
+        });
+        this.formModel.patchValue({
+          shopImag: shopImagValue.join(',')
+        });
+        setTimeout(() => {
+          this.allowuploadNo = this.shopImagItems.length < 6 ? this.shopImagItems.length + 1 : 6;
+        }, 500);
+      }
+    })
+    return false;
+  }
+  deleteshopCoverImag = (file: UploadFile) => {
+    this.formModel.patchValue({
+      shopCoverImag: ''
+    })
+    return true;
+  }
+  deleteshopImag = (file: UploadFile) => {
+    setTimeout(_ => {
+      let shopImagValue = [];
+      this.shopImagItems.map((item: any) => {
+        shopImagValue.push(item.url)
+      });
+      this.formModel.patchValue({
+        shopImag: shopImagValue.join(',')
+      })
+      this.allowuploadNo = this.allowuploadNo == 6 ? 6 : this.allowuploadNo - 1;
+    }, 0)
+    return true;
+  }
+
+  /* -------------------- 基础设施 -------------------- */
+  facilitieItems = [
+    { label: '家长休息区', value: '1' },
+    { label: '寄存区', value: '2' },
+    { label: '停车场', value: '3' },
+    { label: '免费WIFI', value: '4' }
+  ];
+
+
+  /* ------------------- 生成6位随机数 ------------------- */
+  private _mathRand(): string {
+    let num = '';
+    for (let i = 0; i < 6; i++) {
+      num += Math.floor(Math.random() * 10);
+    }
+    return num;
+  }
 
   ngOnDestroy(): void {
     this._map && this._map.removeEventListener('click', this._mapClick.bind(this));
