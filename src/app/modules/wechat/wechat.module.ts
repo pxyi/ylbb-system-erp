@@ -16,6 +16,7 @@ import { PreviewComponent } from './preview/preview.component';
       apiKey: '7NCxWo3ADYmuEiFY8GM4SW9yxoNGSnLG'
     })
   ],
-  declarations: [SmallProgramComponent, PreviewComponent]
+  declarations: [SmallProgramComponent, PreviewComponent],
+  entryComponents: [PreviewComponent]
 })
 export class WechatModule { }

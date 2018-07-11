@@ -7,12 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PreviewComponent implements OnInit {
 
-  @Input() previewInfo: object;
+  @Input() storeInfo;
+  @Input() shopImagItems: any[];
+
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.previewInfo)
+    console.log(this.storeInfo, this.shopImagItems)
   }
 
 }

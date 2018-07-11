@@ -1,0 +1,175 @@
+.wechat-store-effect{
+	width: 440px;
+	height: 888px;
+	padding: 172px 35px 0 30px;
+	background: url(http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/iphone-bg.png);
+	position: relative;
+}
+.store-effect {
+	width: 375px;
+	height: 604px;
+	background: #f6f6f8;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	.store-bottom-footer {
+		width: 375px;
+		color:#fff;
+		font-size: 17px;
+		line-height: 50px;
+		text-align: center;
+		background: #FF839A;
+		position: absolute;
+		bottom: 112px;
+		z-index: 9;
+	}
+}
+
+:host ::ng-deep nz-carousel{
+	height: 180px;
+	.slick-track {
+		width: 2250px !important;
+	}
+	.slick-slide {
+		width: 375px !important;
+	}
+}
+
+.store-info-header {
+	padding: 0 15px;
+	margin-bottom: 10px;
+	background: #fff;
+	& > h2 {
+		height: 44px;
+		padding: 16px 0 12px;
+		font-size: 16px;
+		line-height: 1;
+
+		& > a {
+			float: right;
+			line-height: 16px;
+			color:#FF839A;
+			font-size: 12px;
+		}
+	}
+
+	& > div {
+		padding-bottom:15px;
+		color:rgb(163, 163, 163);
+		font-size:13px;
+		line-height: 1;
+		overflow:hidden;
+		& > p {
+			width: 240px;
+			float:left;
+			overflow:hidden;
+			white-space:nowrap;
+			text-overflow:ellipsis;
+		}
+		& > span {
+			float: right;
+			color: #000;
+		}
+	}
+}
+
+.store-info-block {
+	margin-bottom: 10px;
+	padding: 0 15px;
+	background: #fff;
+
+	& > h2 {
+		padding: 20px 0 15px;
+		font-size: 16px;
+		line-height: 1;
+		border-bottom: solid 1px rgb(232, 232, 232);
+	}
+
+	.block-conent {
+		& > div{
+			padding: 15px 0;
+			position: relative;
+			&:not(:first-child) {
+				border-top: dashed 1px rgb(232, 232, 232);
+			}
+
+			h4 {
+				padding-bottom: 10px;
+				color: #333;
+				font-size: 14px;
+				line-height: 1;
+			}
+			p {
+				width: 250px;
+				color: #999;
+				font-size: 12px;
+				line-height: 1;
+				overflow:hidden;
+				white-space:nowrap;
+				text-overflow:ellipsis;
+			}
+			div {
+				padding-right: 13px;
+				color: #333;
+				font-size: 14px;
+				line-height: 18px;
+				background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAnCAYAAAAVW4iAAAAC4klEQVRIS72Xz0sUYRjHv8+bG0G/1AJjhejUrfBQd+lWlzBoBPOQpDtuq7YQllLhXAryIB7W2BncloKgfyAE6VCHoC5R1KUOBVGrRERICjs7O994ZVaW1NVtZ3qPMzzfz7zz/JZsNtsrIrcBfAdgtrS0vDUMo4yQjti2/RVAu9Yj+QlAenFxcc6yLC8MhjiO84TkGS0mIgTwjeQl0zTnQwHkcrm453kPAXQC2BGIrpDsaW1tnTMMw20EJNrYcZyjACZJnq0S+wHgRrFYfDAyMlL8V8gqQJ9MJnMgFotNA+itEvslIuOJRCLbMEAL2La9n+S0iFwAEAtEtV+uLy0t3RsdHV2uF7R2g4phPp8/5LruTZJJEVGB85dJTnmeN5lKpX7XA1kH0MYzMzN7YrFYmuQEgKaK40UkVygU0pZl+duFbAjQxvl8flexWBxXSl0lubsiqCFKqWv9/f0/twPZFKCNc7nc3nK5fJnkLQAViA7bR77vjyWTSZ39NU9NgLa0LGtnPB7vJpkBsC9QK4nI0+bmZsMwjJo+2RIQQJra2tr6lFJ3ABysfDLJZ57nXUylUl+CKrDuNtsCBCEcI9mtlLpLMh4olUVk3nXd9NDQ0MeN/tW2AcFNVHt7e6fv+3kAhwNBHVHvXNftGh4e/vw3pC6ANiYps7Ozp33fnwFwpOp3fRCRnoWFhTfVYVw3IBCUbDZ7Sik1RfJ4Vca/9n3/SjKZfLEW1luFWa33tm0f09EM4GSQ8SRZ0KUmkUg8X33WCEDbOo7TQVL7pKNKawFAl2marxoGBBF2nuTjSu0CUCI5Njg4ONUwYLMbKKXODQwMvGwIoH1A8r6InAjbB9FFUaR5YFnWukwWkTLJ9w1nsm3b0dUiy7Ka4vF4H8nwq2mk/SDSjqZ7cqlUGgcQfk+uTBW+70+ISLhTRaRzUa3JTo9Lpmmu1Ft9/89sGul0Hfl+EPmGE/mOFmyZkwB0Hx0Ie8v8AwgT9DfYYGcBAAAAAElFTkSuQmCC) no-repeat right center;
+				background-size: 8px 13px;
+				position: absolute;
+				top: 24px;
+				right: 5px;
+				b {
+					font-size: 18px;
+					line-height: 1;
+					font-weight: normal;
+				}
+			}
+		}
+	}
+
+	.store-info-cell {
+		padding-bottom: 5px;
+		& > div {
+			padding: 8px 0 8px 18px;
+			color: #ccc;
+			font-size: 13px;
+			line-height: 30px;
+			overflow: hidden;
+			position: relative;
+			&:not(:last-child) {
+				border-bottom:solid 1px rgb(232, 232, 232);
+			}
+		}
+		.cell-head {
+			padding-left: 0;
+			& > div {
+				float: left;
+				&:not(:last-child) {
+					margin-right: 15px;
+				}
+			}
+			img {
+				display: inline-block;
+				width: 14px;
+				margin-right: 3px;
+				vertical-align: sub;
+			}
+		}
+
+		.cell-time{
+			background: url(http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-time.png) no-repeat 0 16px;
+			background-size: 14px;
+		}
+		.cell-address{
+			background: url(http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-marker.png) no-repeat 0 16px;
+			background-size: 14px;
+		}
+		.cell-map{
+			background: url(http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-map.png) no-repeat 0 16px;
+			background-size: 14px;
+		}
+		.cell-tcc{
+			background: url(http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-space.png) no-repeat 0 16px;
+			background-size: 14px;
+		}
+	}
+}

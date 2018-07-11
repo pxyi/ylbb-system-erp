@@ -93,14 +93,13 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
         uploadfile.status = 'done';
         return uploadfile;
       });
+      res.result.cascaderAddress = res.result.province ? [res.result.province, res.result.city, res.result.area] : '';
       this.formModel.patchValue(res.result);
       setTimeout(_ => {
         this.allowuploadNo = this.shopImagItems.length < 6 ? this.shopImagItems.length + 1 : 6;
       }, 0);
       this._mapMarkerInit();
     });
-
-    this.formModel.patchValue({ cascaderAddress: ["110000", "110100", "110104"] });
 
   }
 
@@ -333,11 +332,14 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
   /* -------------------- 预览 -------------------- */
   preview() {
     const preview = this.modal.create({
-      nzTitle: '预览小程序效果',
+      nzWidth: 490,
+      nzBodyStyle: { background: 'rgba(0,0,0,0)' },
       nzContent: PreviewComponent,
       nzComponentParams: {
-        previewInfo: this.formModel.value
-      }
+        storeInfo: this.formModel.value,
+        shopImagItems: this.shopImagItems
+      },
+      nzFooter: null
     });
   }
 

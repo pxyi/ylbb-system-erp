@@ -1,3 +1,78 @@
-<p>
-  preview works!
-</p>
+<div class="wechat-store-effect">
+  <div class="store-effect">
+    <nz-carousel [nzAutoPlay]="true">
+      <div nz-carousel-content *ngFor="let item of shopImagItems">
+        <img *ngIf="item.url" [src]="item.url + '?x-oss-process=image/resize,m_fill,h_180,w_375'" alt="门店图片">
+      </div>
+    </nz-carousel>
+
+    <div class="store-info-header">
+      <h2>
+        <span>{{ storeInfo.shopName ? storeInfo.shopName : '门店名称'}}</span>
+        <a href="javascript:;">导航</a>
+      </h2>
+      <div>
+        <p>{{ storeInfo.shopAddress ? storeInfo.shopAddress : '门店详细地址' }}</p>
+        <span>1.25km</span>
+      </div>
+    </div>
+
+    <div class="store-info-block" [hidden]="true">
+      <h2>门店活动</h2>
+      <div class="block-conent">
+        <div>
+          <h4>暖冬游泳体验卡</h4>
+          <p>冬日游玩的好去处，宝宝早教+健身</p>
+          <div>￥
+            <b>29</b>.9</div>
+        </div>
+        <div>
+          <h4>暖冬游泳体验卡</h4>
+          <p>冬日游玩的好去处，宝宝早教+健身</p>
+          <div>￥
+            <b>29</b>.9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="store-info-block">
+      <h2>门店信息</h2>
+      <div class="store-info-cell">
+        <div class="cell-head" *ngIf="storeInfo.facilitie && (storeInfo.facilitie[0].checked || storeInfo.facilitie[1].checked || storeInfo.facilitie[2].checked || storeInfo.facilitie[3].checked)">
+          <div [hidden]="!storeInfo.facilitie[0].checked">
+            <img src="http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-rest.png" alt="家长休息区">
+            <span>家长休息区</span>
+          </div>
+          <div [hidden]="!storeInfo.facilitie[1].checked">
+            <img src="http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-deposit.png" alt="寄存区">
+            <span>寄存区</span>
+          </div>
+          <div [hidden]="!storeInfo.facilitie[2].checked">
+            <img src="http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-parking.png" alt="停车场">
+            <span>停车场</span>
+          </div>
+          <div [hidden]="!storeInfo.facilitie[3].checked">
+            <img src="http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/icon-wifi.png" alt="免费WIFI">
+            <span>免费WIFI</span>
+          </div>
+        </div>
+        <div class="cell-time">{{ storeInfo.businessTime ? storeInfo.businessTime : '10:00:00-21:00:00 周一至周五' }}</div>
+			  <div class="cell-address">{{ storeInfo.shopAddress ? storeInfo.shopAddress : '门店详细地址' }}</div>
+        <div class="cell-map">
+          {{ storeInfo.trafficInformation ? storeInfo.trafficInformation : '交通信息. 请列出地铁公交线路' }}
+        </div>
+        <div class="cell-tcc">
+          {{ storeInfo.parkingInformation ? storeInfo.parkingInformation : '停车场信息. 请列出附近停车场信息' }}
+        </div>
+        <div class="cell-time">
+          {{ storeInfo.healthSafe ? storeInfo.healthSafe : '卫生安全信息' }}
+        </div>
+        <div class="cell-time">
+          {{ storeInfo.warmPrompt ? storeInfo.warmPrompt : '温馨提示' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="store-bottom-footer">预约体验</div>
+  </div>
+</div>
