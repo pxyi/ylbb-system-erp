@@ -14,7 +14,7 @@ export class PreviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.storeInfo, this.shopImagItems)
+    
   }
 
 }
