@@ -12,14 +12,14 @@
     </div>
     <nz-tabset [(nzSelectedIndex)]="tabsetSelectIndex">
       <nz-tab nzTitle="详情"></nz-tab>
-      <nz-tab nzTitle="暂无进度" [nzDisabled]="true"></nz-tab>
+      <nz-tab nzTitle="审核进度（未开放）" [nzDisabled]="true"></nz-tab>
     </nz-tabset>
     <div class="operation-btns">
       <nz-button-group>
         <button nz-button>预览</button>
         <button nz-button>预览小程序</button>
       </nz-button-group>
-      <button nz-button nzType="primary">保存</button>
+      <button nz-button nzType="primary" (click)="submit()">保存</button>
     </div>
   </div>
 </ng-template>
@@ -98,7 +98,7 @@
                 <i class="anticon anticon-plus"></i>
                 <div class="ant-upload-text">选择图片</div>
               </nz-upload>
-              <nz-form-explain *ngIf="formModel.get('shopCoverImag').dirty && formModel.get('shopCoverImag').errors">请上传门店封面图</nz-form-explain>
+              <nz-form-explain [style.color]="'#f5222d'" *ngIf="formModel.get('shopCoverImag').dirty && formModel.get('shopCoverImag').errors">请上传门店封面图</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -125,7 +125,7 @@
                 <i class="anticon anticon-plus"></i>
                 <div class="ant-upload-text">选择图片</div>
               </nz-upload>
-              <nz-form-explain *ngIf="formModel.get('shopImag').dirty && formModel.get('shopImag').errors">请上传门店图片</nz-form-explain>
+              <nz-form-explain [style.color]="'#f5222d'" *ngIf="formModel.get('shopImag').dirty && formModel.get('shopImag').errors">请上传门店图片</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>

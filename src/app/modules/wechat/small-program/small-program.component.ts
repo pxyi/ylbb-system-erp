@@ -1,5 +1,6 @@
+import { PreviewComponent } from './../preview/preview.component';
 import { Observable } from 'rxjs';
-import { NzMessageService, UploadFile } from 'ng-zorro-antd';
+import { NzMessageService, UploadFile, NzModalService } from 'ng-zorro-antd';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppState } from './../../../core/reducers/reducers-config';
@@ -30,7 +31,8 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private fb   : FormBuilder = new FormBuilder(),
     private http : HttpClient,
-    private message  : NzMessageService
+    private message  : NzMessageService,
+    private modal: NzModalService
   ) { 
     /* ----------------- 获取OSS上传凭证 ----------------- */
     this.http.get<any>('http://oss.beibeiyue.com/oss/getOSSToken?type=1').subscribe(res => {
@@ -48,7 +50,6 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.formModel = this.fb.group({
       shopName: [{ value: '', disabled: true }],                                               // 门店名称
       shopTel: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(8)]], // 门店预约电话
@@ -57,8 +58,8 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
       shopAddress: [],                                                                         // 详细地址
       cascaderAddress: [, [Validators.required]],                                              // 省市区
 
-      shopCoverImag: [, [Validators.required]],                                                // 门店封面图
-      shopImag: [, [Validators.required]],                                                     // 门店图片
+      shopCoverImag: ['', [Validators.required]],                                              // 门店封面图
+      shopImag: ['', [Validators.required]],                                                   // 门店图片
 
       facilitie: [this.facilitieItems],                                                        // 包含设施
       businessTime: [, [Validators.required]],                                                 // 营业时间
@@ -74,7 +75,28 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
 
     this.http.post<any>('/wechat/selectSmallProgram', {}).subscribe(res => {
       this.getInfoLoading = false;
+      this.facilitieItems.map((item: any) => {
+        item.checked = res.result.facilitie.indexOf(item.value) > -1
+      });
+      res.result.facilitie = this.facilitieItems;
+      this.shopCoverImagItems = res.result.shopCoverImag.split(',').map((item, idx) => {
+        let uploadfile: any = {};
+        uploadfile.uid = idx;
+        uploadfile.url = item;
+        uploadfile.status = 'done';
+        return uploadfile;
+      });
+      this.shopImagItems = res.result.shopImag.split(',').map((item, idx) => {
+        let uploadfile: any = {};
+        uploadfile.uid = idx;
+        uploadfile.url = item;
+        uploadfile.status = 'done';
+        return uploadfile;
+      });
       this.formModel.patchValue(res.result);
+      setTimeout(_ => {
+        this.allowuploadNo = this.shopImagItems.length < 6 ? this.shopImagItems.length + 1 : 6;
+      }, 0);
       this._mapMarkerInit();
     });
 
@@ -187,6 +209,7 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
   previewImage: string;
   previewVisible: boolean;
   private _allowUpdateType = ['jpg', 'jpeg', 'png', 'gif'];
+  allowuploadNo = 1;
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
     this.previewVisible = true;
@@ -232,7 +255,6 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     })
     return false;
   }
-  allowuploadNo = 1;
   shopImagBeforeUpload = (file: UploadFile): boolean => {
     this._validatorUploadFile(file).subscribe(res => {
       if (res) {
@@ -251,13 +273,13 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     })
     return false;
   }
-  deleteshopCoverImag = (file: UploadFile) => {
+  deleteshopCoverImag = () => {
     this.formModel.patchValue({
       shopCoverImag: ''
     })
     return true;
   }
-  deleteshopImag = (file: UploadFile) => {
+  deleteshopImag = () => {
     setTimeout(_ => {
       let shopImagValue = [];
       this.shopImagItems.map((item: any) => {
@@ -279,6 +301,45 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     { label: '免费WIFI', value: '4' }
   ];
 
+
+  /* -------------------- 保存信息 -------------------- */
+  submit() {
+    for (const i in this.formModel.controls) {
+      this.formModel.controls[i].markAsDirty();
+      this.formModel.controls[i].updateValueAndValidity();
+    }
+    if (this.formModel.valid) {
+      let params = JSON.parse(JSON.stringify(this.formModel.value));
+      params.province = params.cascaderAddress[0];
+      params.city = params.cascaderAddress[1];
+      params.area = params.cascaderAddress[2];
+      params.facilitie = params.facilitie.reduce((aggr, curr, idx) => {
+        if (idx == 1) {
+          return aggr.checked ? (curr.checked ? aggr.value + ',' + curr.value : aggr.value) : curr.checked ? curr.value : '';
+        } else {
+          return curr.checked ? (aggr ? aggr + ',' + curr.value : curr.value) : aggr;
+        }
+      });
+      for (let param in params) {
+        if (params[param] === '' || params[param] === null) {
+          delete params[param]
+        }
+      }
+      this.http.post<any>('/wechat/saveSmallProgramData', { paramJson: JSON.stringify(params) }).subscribe(res => {
+        this.message.create(res.code == 1000 ? 'success' : 'error', res.info);
+      })
+    }
+  }
+  /* -------------------- 预览 -------------------- */
+  preview() {
+    const preview = this.modal.create({
+      nzTitle: '预览小程序效果',
+      nzContent: PreviewComponent,
+      nzComponentParams: {
+        previewInfo: this.formModel.value
+      }
+    });
+  }
 
   /* ------------------- 生成6位随机数 ------------------- */
   private _mathRand(): string {
