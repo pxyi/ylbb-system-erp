@@ -44,6 +44,12 @@ export class HeaderComponent implements OnInit {
         { text: '更新日志', value: '/system/changelog' },
         { text: '使用帮助', value: '/system/help' }
       ]
+    },
+    {
+      title: '微信',
+      children: [
+        { text: '微信小程序', value: '/home/wechat' }
+      ]
     }
   ]
 
