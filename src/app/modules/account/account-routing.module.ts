@@ -1,7 +1,26 @@
+import { LoginLogComponent } from './login-log/login-log.component';
+import { RoleComponent } from './role/role.component';
+import { AccountComponent } from './account/account.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '/account',
+    data: { title: '账号管理' },
+    component: AccountComponent
+  },
+  {
+    path: '/role',
+    data: { title: '角色管理' },
+    component: RoleComponent
+  },
+  {
+    path: '/loginlog',
+    data: { title: '登录日志' },
+    component: LoginLogComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
