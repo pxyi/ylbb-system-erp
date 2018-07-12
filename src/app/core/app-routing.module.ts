@@ -30,6 +30,11 @@ const routes: Routes = [
         loadChildren: 'src/app/modules/account/account.module#AccountModule'
       },
       {
+        path: 'interaction',
+        data: { title: '用户互动' },
+        loadChildren: 'src/app/modules/interaction/interaction.module#InteractionModule'
+      },
+      {
         path: 'wechat',
         data: { title: '微信' },
         loadChildren: 'src/app/modules/wechat/wechat.module#WechatModule'

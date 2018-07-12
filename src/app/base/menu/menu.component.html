@@ -40,7 +40,7 @@
     </li>
     <li nz-submenu [nzOpen]="routerState.currentPath.indexOf('/home/account') > -1">
       <span title>
-        <i class="anticon anticon-team"></i>
+        <i class="anticon anticon-usergroup-add"></i>
         <span>账户管理</span>
       </span>
       <ul>
@@ -59,6 +59,12 @@
       <span title>
         <i class="anticon anticon-wechat"></i>
         <span>微信小程序</span>
+      </span>
+    </li>
+    <li nz-menu-item [routerLink]="['/home/interaction']" [nzSelected]="routerState.currentPath == '/home/interaction'">
+      <span title>
+        <i class="anticon anticon-profile"></i>
+        <span>用户互动</span>
       </span>
     </li>
   </ul>

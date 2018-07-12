@@ -113,7 +113,7 @@ export interface QueryNode {
   readonly key         : string,
   readonly type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker',
   readonly valueKey?   : string[],
-  readonly options?    : string,
+  readonly options?    : any[],
   readonly optionsUrl? : string,
   readonly optionKey?  : OptionsKey,
   readonly placeholder?: string | string[],

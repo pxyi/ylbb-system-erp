@@ -1,0 +1,15 @@
+<div class="container">
+  <ea-list-page url="/userAdvice/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.member.name }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.email }}</td>
+      <td>{{ data.phone }}</td>
+      <td>{{ data.deal }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.status }}</td>
+      <td>{{ data.dealDate }}</td>
+      <td></td>
+    </ng-template>
+  </ea-list-page>
+</div>
