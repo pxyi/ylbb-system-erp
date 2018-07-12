@@ -1,6 +1,6 @@
 <div class="container">
   <ng-template #EaQueryBtns>
-    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost (click)="openCreate()">新增账号</button>
+    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost (click)="openCreate()">新增角色</button>
   </ng-template>
   <ea-list-page #EaListPage url="/roleManagement/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr"
     [EaQueryBtns]="EaQueryBtns">

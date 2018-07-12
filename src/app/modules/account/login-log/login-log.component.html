@@ -1,3 +1,12 @@
-<p>
-  login-log works!
-</p>
+<div class="container">
+  <ea-list-page url="/loginLog/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.userCode }}</td>
+      <td>{{ data.userName }}</td>
+      <td>{{ data.ip }}</td>
+      <td>{{ data.ipCity }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.xxxx || '' }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

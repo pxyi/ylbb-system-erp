@@ -9,8 +9,9 @@
     [EaTableTbodyTr]="EaTableTbodyTr"
     [EaQueryBtns]="EaQueryBtns">
     <ng-template #EaTableTbodyTr let-data>
-      <td>{{ data.name }}</td>
       <td>{{ data.code }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.email || '--' }}</td>
       <td>{{ data.createTime }}</td>
       <td><nz-tag [nzColor]="data.status == 0 ? '#2db7f5' : ''">{{ data.status == 0 ? '启用' : '停用' }}</nz-tag></td>
       <td></td>

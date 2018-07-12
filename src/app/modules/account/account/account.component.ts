@@ -11,20 +11,20 @@ export class AccountComponent implements OnInit {
 
   queryNode: QueryNode[] = [
     {
-      label: '角色代码',
+      label: '登录名',
       type : 'input',
       key: 'code',
-      placeholder: '请输入角色代码'
+      placeholder: '请输入登录名'
     },
     {
-      label: '角色名称',
+      label: '中文名',
       type: 'input',
       key: 'name',
-      placeholder: '请输入角色名称'
+      placeholder: '请输入中文名'
     }
   ]
 
-  tableThead: TheadNode[] | string[] = ['角色名称', '角色代码', '创建日期', '状态', '操作'];
+  tableThead: TheadNode[] | string[] = ['登录名', '中文名', '邮箱', '创建日期', '状态', '操作'];
 
   constructor() { }
 
