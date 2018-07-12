@@ -1,6 +1,6 @@
 <div class="container">
   <ng-template #EaQueryBtns>
-    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost>新增账号</button>
+    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost (click)="openCreate()">新增账号</button>
   </ng-template>
   <ea-list-page #EaListPage url="/roleManagement/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr"
     [EaQueryBtns]="EaQueryBtns">
@@ -68,3 +68,44 @@
     </ng-template>
   </ea-list-page>
 </div>
+
+
+<nz-modal [(nzVisible)]="showCreateRole" nzTitle="新增角色" [nzFooter]="modalFooter" (nzOnCancel)="showCreateRole = false">
+
+  <form nz-form [formGroup]="createRoleForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="name" [nzRequired]="true">角色名称</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" id="name" formControlName="name" placeholder="请输入角色名称">
+        <nz-form-explain *ngIf="createRoleForm.get('name').dirty && createRoleForm.get('name').errors">请输入角色名称!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="code" [nzRequired]="true">角色代码</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" id="code" formControlName="code" placeholder="请输入角色代码">
+        <nz-form-explain *ngIf="createRoleForm.get('code').dirty && createRoleForm.get('code').errors">请输入角色代码!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">状态</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <nz-radio-group formControlName="status">
+          <label nz-radio-button [nzValue]="0">启用</label>
+          <label nz-radio-button [nzValue]="1">停用</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="mono">备注</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <textarea nz-input formControlName="mono" id="mono" placeholder="请输入角色备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="showCreateRole = false">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="createLoading" (click)="crateRole()">确定</button>
+  </ng-template>
+</nz-modal>
