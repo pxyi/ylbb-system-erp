@@ -18,13 +18,16 @@ export class AppComponent {
       if (event instanceof NavigationStart) {
         store.dispatch({ type: 'goPath', payload: event.url });
         if (event.url.indexOf('/login') === -1) {
-          store.dispatch({ type: 'loginSource', payload: event.url })
+          store.dispatch({ type: 'loginSource', payload: event.url });
+        }
+        if (event.url.indexOf('/home/account/modify') > -1) {
+          store.dispatch({ type: 'loginSource', payload: '/home' });
         }
       }
 
       if (event instanceof NavigationEnd) {
         store.dispatch({ type: 'setBreadcrumb' });
-        store.dispatch({ type: 'currentPath', payload: event.url })
+        store.dispatch({ type: 'currentPath', payload: event.url });
       }
     });
   }

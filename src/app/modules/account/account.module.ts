@@ -6,6 +6,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account/account.component';
 import { RoleComponent } from './role/role.component';
 import { LoginLogComponent } from './login-log/login-log.component';
+import { ModifyPasswordComponent } from './modify-password/modify-password.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { LoginLogComponent } from './login-log/login-log.component';
     AccountRoutingModule,
     NgRelaxModule
   ],
-  declarations: [AccountComponent, RoleComponent, LoginLogComponent]
+  declarations: [AccountComponent, RoleComponent, LoginLogComponent, ModifyPasswordComponent]
 })
 export class AccountModule { }
