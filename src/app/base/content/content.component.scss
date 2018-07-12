@@ -1,5 +1,6 @@
 .ui-content{
   height: 100%;
+  min-height: 500px;
   overflow: auto;
 
   & > div {

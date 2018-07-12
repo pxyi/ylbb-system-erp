@@ -75,30 +75,34 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
 
     this.http.post<any>('/wechat/selectSmallProgram', {}).subscribe(res => {
       this.getInfoLoading = false;
-      this.facilitieItems.map((item: any) => {
-        item.checked = res.result.facilitie.indexOf(item.value) > -1
-      });
-      res.result.facilitie = this.facilitieItems;
-      this.shopCoverImagItems = res.result.shopCoverImag.split(',').map((item, idx) => {
-        let uploadfile: any = {};
-        uploadfile.uid = idx;
-        uploadfile.url = item;
-        uploadfile.status = 'done';
-        return uploadfile;
-      });
-      this.shopImagItems = res.result.shopImag.split(',').map((item, idx) => {
-        let uploadfile: any = {};
-        uploadfile.uid = idx;
-        uploadfile.url = item;
-        uploadfile.status = 'done';
-        return uploadfile;
-      });
-      res.result.cascaderAddress = res.result.province ? [res.result.province, res.result.city, res.result.area] : '';
-      this.formModel.patchValue(res.result);
-      setTimeout(_ => {
-        this.allowuploadNo = this.shopImagItems.length < 6 ? this.shopImagItems.length + 1 : 6;
-      }, 0);
-      this._mapMarkerInit();
+      if (res.code == 1000) {
+        if (res.result.facilitie) {
+          this.facilitieItems.map((item: any) => {
+            item.checked = res.result.facilitie.indexOf(item.value) > -1
+          });
+        }
+        res.result.facilitie = this.facilitieItems;
+        this.shopCoverImagItems = res.result.shopCoverImag.split(',').map((item, idx) => {
+          let uploadfile: any = {};
+          uploadfile.uid = idx;
+          uploadfile.url = item;
+          uploadfile.status = 'done';
+          return uploadfile;
+        });
+        this.shopImagItems = res.result.shopImag.split(',').map((item, idx) => {
+          let uploadfile: any = {};
+          uploadfile.uid = idx;
+          uploadfile.url = item;
+          uploadfile.status = 'done';
+          return uploadfile;
+        });
+        res.result.cascaderAddress = res.result.province ? [res.result.province, res.result.city, res.result.area] : '';
+        this.formModel.patchValue(res.result);
+        setTimeout(_ => {
+          this.allowuploadNo = this.shopImagItems.length < 6 ? this.shopImagItems.length + 1 : 6;
+        }, 0);
+        this._mapMarkerInit();
+      }
     });
 
   }
@@ -331,12 +335,14 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
   }
   /* -------------------- 预览 -------------------- */
   preview() {
+    let storeInfo = this.formModel.value;
+    storeInfo.shopName = this.formModel.get('shopName').value;
     const preview = this.modal.create({
       nzWidth: 490,
       nzBodyStyle: { background: 'rgba(0,0,0,0)' },
       nzContent: PreviewComponent,
       nzComponentParams: {
-        storeInfo: this.formModel.value,
+        storeInfo: storeInfo,
         shopImagItems: this.shopImagItems
       },
       nzFooter: null
