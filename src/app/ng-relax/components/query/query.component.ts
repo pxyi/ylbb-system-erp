@@ -25,12 +25,11 @@ export class QueryComponent implements OnInit {
 
   @Input('node') _node: QueryNode[] = [];
 
-  @Input() isCollapse: boolean = true;
-
   @Output() onSubmit: EventEmitter<object> = new EventEmitter();
 
   _queryForm: FormGroup;
   _showSlideBtn: boolean;
+  isCollapse: boolean = true;
 
   constructor(
     private http     : HttpClient,
@@ -110,7 +109,7 @@ export class QueryComponent implements OnInit {
   }
 }
 
-interface QueryNode {
+export interface QueryNode {
   readonly label       : string
   readonly key         : string,
   readonly valueKey    : string[],
