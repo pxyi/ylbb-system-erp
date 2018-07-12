@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
-import { QueryNode } from '../query/query.component';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
+import { QueryNode, QueryComponent } from '../query/query.component';
+import { TableComponent } from '../table/table.component';
 
 @Component({
   selector: 'ea-list-page',
@@ -7,6 +8,9 @@ import { QueryNode } from '../query/query.component';
   styleUrls: ['./list-page.component.scss']
 })
 export class ListPageComponent implements OnInit {
+
+  @ViewChild('EaQuery') EaQuery: QueryComponent;
+  @ViewChild('EaTable') EaTable: TableComponent;
 
   @Input() queryNode: QueryNode[] = [];
 
@@ -28,14 +32,10 @@ export class ListPageComponent implements OnInit {
 
   @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
 
-  private _EaTableTbodyTr: TemplateRef<void>;
-  @Input()
-  set EaTableTbodyTr(value: TemplateRef<void>) {
-    this._EaTableTbodyTr = value;
-  }
-  get EaTableTbodyTr(): TemplateRef<void> {
-    return this._EaTableTbodyTr;
-  }
+  @Input() EaTableTbodyTr: TemplateRef<void>;
+
+  @Input() EaQueryBtns: TemplateRef<void>;
+  
   private _EaBtns: TemplateRef<void>;
   @Input()
   set EaBtns(value: TemplateRef<void>) {

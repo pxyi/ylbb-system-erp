@@ -1,3 +1,70 @@
-<p>
-  role works!
-</p>
+<div class="container">
+  <ng-template #EaQueryBtns>
+    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost>新增账号</button>
+  </ng-template>
+  <ea-list-page #EaListPage url="/roleManagement/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaQueryBtns]="EaQueryBtns">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>
+        <ng-container *ngIf="data.edit">
+          <input nz-input type="text" [(ngModel)]="data.name" nzSize="small">
+        </ng-container>
+        <ng-container *ngIf="!data.edit">
+          {{ data.name }}
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="data.edit">
+          <input nz-input type="text" [(ngModel)]="data.code" nzSize="small">
+        </ng-container>
+        <ng-container *ngIf="!data.edit">
+          {{ data.code }}
+        </ng-container>
+      </td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <ng-container *ngIf="data.edit">
+          <input nz-input type="text" [(ngModel)]="data.memo" nzSize="small">
+        </ng-container>
+        <ng-container *ngIf="!data.edit">
+          {{ data.memo }}
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="data.edit">
+          <nz-radio-group [(ngModel)]="data.status" nzSize="small">
+            <label nz-radio-button [nzValue]="0">启用</label>
+            <label nz-radio-button [nzValue]="1">停用</label>
+          </nz-radio-group>
+        </ng-container>
+        <ng-container *ngIf="!data.edit">
+          <nz-tag [nzColor]="data.status == 0 ? '#2db7f5' : ''">{{ data.status == 0 ? '启用' : '停用' }}</nz-tag>
+        </ng-container>
+      </td>
+      <td>
+        <a href="javascript:;" (click)="editRole(data)">
+          <i class="anticon anticon-spin anticon-loading" *ngIf="data.loading"></i>
+          <ng-container *ngIf="!data.loading">
+            {{ data.edit ? '保存' : '编辑' }}
+          </ng-container>
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-dropdown>
+          <a nz-dropdown>更多<i class="anticon anticon-down"></i>
+          </a>
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <a nz-popconfirm nzTitle="确认删除此角色吗?" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="deleteRole(data.id)">删除</a>
+            </li>
+            <li nz-menu-item>
+              <a>分配菜单</a>
+            </li>
+            <li nz-menu-item>
+              <a>分配资源权限</a>
+            </li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

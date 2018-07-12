@@ -104,7 +104,6 @@ export class QueryComponent implements OnInit {
       }
     });
 
-    console.log('抛出查询条件', queryForm);
     this.onSubmit.emit(queryForm);
   }
 }
@@ -112,12 +111,12 @@ export class QueryComponent implements OnInit {
 export interface QueryNode {
   readonly label       : string
   readonly key         : string,
-  readonly valueKey    : string[],
   readonly type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker',
+  readonly valueKey?   : string[],
   readonly options?    : string,
   readonly optionsUrl? : string,
   readonly optionKey?  : OptionsKey,
-  readonly placeholder : string | string[],
+  readonly placeholder?: string | string[],
   readonly isHide?     : boolean,
 }
 export interface OptionsKey {

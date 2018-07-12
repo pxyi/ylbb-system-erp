@@ -1,3 +1,19 @@
-<p>
-  account works!
-</p>
+<div class="container">
+  <ng-template #EaQueryBtns>
+    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost>新增账号</button>
+  </ng-template>
+  <ea-list-page 
+    url="/accountManagement/list" 
+    [queryNode]="queryNode" 
+    [tableThead]="tableThead" 
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaQueryBtns]="EaQueryBtns">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.name }}</td>
+      <td>{{ data.code }}</td>
+      <td>{{ data.createTime }}</td>
+      <td><nz-tag [nzColor]="data.status == 0 ? '#2db7f5' : ''">{{ data.status == 0 ? '启用' : '停用' }}</nz-tag></td>
+      <td></td>
+    </ng-template>
+  </ea-list-page>
+</div>

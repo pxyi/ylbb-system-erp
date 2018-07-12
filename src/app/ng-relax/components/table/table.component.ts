@@ -129,3 +129,10 @@ class PageInfo {
     public pageSize   : number = 10
   ) { }
 }
+
+export interface TheadNode {
+  name  : string;
+  width?: string | number;
+  left? : number;
+  right?: number;
+}

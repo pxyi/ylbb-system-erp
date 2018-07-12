@@ -33,9 +33,22 @@
         <li nz-menu-item routerLink="/home/marketing/activity" [nzSelected]="routerState.currentPath.indexOf('/home/marketing/activity') > -1">
           <span>活动</span>
         </li>
-        <!-- <li nz-menu-item routerLink="/home/marketing/admin" [nzSelected]="routerState.currentPath.indexOf('/home/marketing/admin') > -1"><span>管理</span></li> -->
         <li nz-menu-item routerLink="/home/marketing/data" [nzSelected]="routerState.currentPath.indexOf('/home/marketing/data') > -1">
           <span>数据</span>
+        </li>
+      </ul>
+    </li>
+    <li nz-submenu [nzOpen]="routerState.currentPath.indexOf('/home/account') > -1">
+      <span title>
+        <i class="anticon anticon-team"></i>
+        <span>账户管理</span>
+      </span>
+      <ul>
+        <li nz-menu-item routerLink="/home/account/account" [nzSelected]="routerState.currentPath == '/home/account/account'">
+          <span>账号管理</span>
+        </li>
+        <li nz-menu-item routerLink="/home/account/role" [nzSelected]="routerState.currentPath == '/home/account/role'">
+          <span>角色管理</span>
         </li>
       </ul>
     </li>

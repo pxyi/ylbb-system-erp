@@ -25,6 +25,11 @@ const routes: Routes = [
         loadChildren: 'src/app/modules/customer/customer.module#CustomerModule'
       },
       {
+        path: 'account',
+        data: { title: '账户管理' },
+        loadChildren: 'src/app/modules/account/account.module#AccountModule'
+      },
+      {
         path: 'wechat',
         data: { title: '微信' },
         loadChildren: 'src/app/modules/wechat/wechat.module#WechatModule'

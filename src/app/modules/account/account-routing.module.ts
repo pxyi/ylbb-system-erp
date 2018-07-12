@@ -6,17 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '/account',
+    path: 'account',
     data: { title: '账号管理' },
     component: AccountComponent
   },
   {
-    path: '/role',
+    path: 'role',
     data: { title: '角色管理' },
     component: RoleComponent
   },
   {
-    path: '/loginlog',
+    path: 'loginlog',
     data: { title: '登录日志' },
     component: LoginLogComponent
   }
