@@ -1,3 +1,4 @@
+import { MenuConfig } from './../../core/menu-config';
 import { AppState } from './../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
@@ -17,6 +18,8 @@ export class MenuComponent implements OnInit {
   
   routerState: RouterState;
   shopNameFontSize = 24;
+
+  menuConfig: any[] = MenuConfig;
 
   constructor(
     private store: Store<AppState>

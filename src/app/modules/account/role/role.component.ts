@@ -1,8 +1,9 @@
+import { MenuComponent } from './menu/menu.component';
 import { YlbbResponse } from './../../../core/interface-config';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { HttpClient } from '@angular/common/http';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TheadNode } from '../../../ng-relax/components/table/table.component';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
@@ -33,6 +34,7 @@ export class RoleComponent implements OnInit {
 
   constructor(
     private http : HttpClient,
+    private modal: NzModalService,
     private message: NzMessageService,
     private fb: FormBuilder = new FormBuilder()
   ) { }
@@ -95,6 +97,40 @@ export class RoleComponent implements OnInit {
         this.createRoleForm.controls[i].updateValueAndValidity();
       }
     }
+  }
+
+  allocationMenu() {
+    const modal = this.modal.create({
+      nzTitle: '分配菜单',
+      nzContent: MenuComponent,
+      nzComponentParams: {
+        title: 'title in component',
+        subtitle: 'component sub title，will be changed after 2 sec'
+      },
+      nzFooter: [
+        {
+          label: '取消',
+          onClick: (componentInstance) => {
+            modal.close();
+          }
+        },
+        {
+          label: '确定',
+          type: 'primary',
+          loading: true,
+          onClick: (componentInstance) => {
+            // modal.close();
+            console.log('确定')
+          }
+        }
+      ]
+    });
+
+    // delay until modal instance created
+    window.setTimeout(() => {
+      const instance = modal.getContentComponent();
+      // instance.subtitle = 'sub title is changed';
+    }, 2000);
   }
 
 }
