@@ -99,28 +99,36 @@ export class RoleComponent implements OnInit {
     }
   }
 
-  allocationMenu() {
+  allocationMenu(roleId) {
+    let _message = this.message;
     const modal = this.modal.create({
       nzTitle: '分配菜单',
       nzContent: MenuComponent,
       nzComponentParams: {
-        title: 'title in component',
-        subtitle: 'component sub title，will be changed after 2 sec'
+        roleId,
       },
       nzFooter: [
         {
           label: '取消',
-          onClick: (componentInstance) => {
+          onClick: () => {
             modal.close();
           }
         },
         {
           label: '确定',
           type: 'primary',
-          loading: true,
-          onClick: (componentInstance) => {
-            // modal.close();
-            console.log('确定')
+          loading: false,
+          onClick(componentInstance) {
+            if (componentInstance.loading) {
+              _message.warning('请等待数据加载完毕...');
+            } else {
+              this.loading = true;
+              setTimeout(() => {
+                this.loading = false;
+                modal.close();
+              }, 2000);
+            }
+            console.log('确定', this, componentInstance.checkedNodes)
           }
         }
       ]

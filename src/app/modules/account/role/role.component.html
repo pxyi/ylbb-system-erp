@@ -58,7 +58,7 @@
               <a nz-popconfirm nzTitle="确认删除此角色吗?" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="deleteRole(data.id)">删除</a>
             </li>
             <li nz-menu-item>
-              <a (click)="allocationMenu()">分配菜单</a>
+              <a (click)="allocationMenu(data.id)">分配菜单</a>
             </li>
             <li nz-menu-item>
               <a>分配资源权限</a>

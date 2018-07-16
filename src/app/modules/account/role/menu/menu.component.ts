@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
+import { YlbbResponse } from './../../../../core/interface-config';
+import { HttpClient } from '@angular/common/http';
+import { MenuConfig } from './../../../../core/menu-config';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-menu',
@@ -7,60 +10,45 @@ import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  @ViewChild('NzTree') nzTree: NzTreeComponent;
 
-  expandKeys = [ '1001', '10001' ];
-  checkedKeys = [ '100011', '1002' ];
-  selectedKeys = [ '10001', '100011' ];
-  nodes = [
-    new NzTreeNode({
-      title   : 'root1',
-      key     : '1001',
-      children: [
-        {
-          title   : 'child1',
-          key     : '10001',
-          children: [
-            {
-              title : 'child1.1',
-              key   : '100011',
-              isLeaf: true
-            },
-            {
-              title : 'child1.2',
-              key   : '100012',
-              isLeaf: true
-            }
-          ]
-        },
-        {
-          title   : 'child2',
-          key     : '10002',
-          children: [
-            {
-              title   : 'grandchild1.2.1',
-              key     : '1000121',
-              isLeaf  : true
-            },
-            {
-              title : 'grandchild1.2.2',
-              key   : '1000122',
-              isLeaf: true
-            }
-          ]
-        }
-      ]
-    })
-  ];
+  @Input() roleId: string;
 
-  mouseAction(name: string, event: NzFormatEmitEvent): void {
-    console.log(name, event);
+  nodes: NzTreeNode[] = [];
+
+  checkedNodes: string[];
+
+  loading = true;
+
+  checkBoxChange() {
+    this.checkedNodes = [];
+    this.nzTree.getCheckedNodeList().map(res => {
+      if (res.children.length) {
+        res.children.map(cdRes => {
+          this.checkedNodes.push(cdRes.key);
+        })
+      } else {
+        this.checkedNodes.push(res.key);
+      }
+    });
   }
 
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
-    console.log(this.nodes)
+    MenuConfig.map(res => {
+      this.nodes.push(new NzTreeNode(res));
+    });
+
+    setTimeout(_ => {
+      this.loading = false;
+    }, 3000);
+    // this.http.post<YlbbResponse>('/xxxxxx', { id: this.roleId }).subscribe(res => {
+    //   this.loading = false;
+    // })
   }
 
 }
