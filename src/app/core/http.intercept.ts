@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -42,6 +43,8 @@ export class NoopInterceptor implements HttpInterceptor {
               window.localStorage.removeItem('userInfo');
               this.router.navigateByUrl('/login');
             }
+          } else {
+            this.message.error('网络错误，请刷新重试');
           }
         }
       })
@@ -49,7 +52,8 @@ export class NoopInterceptor implements HttpInterceptor {
   }
 
   constructor(
-    private router: Router
+    private router: Router,
+    private message: NzMessageService
   ) { }
 
 }

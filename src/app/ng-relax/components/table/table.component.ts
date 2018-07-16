@@ -60,7 +60,7 @@ export class TableComponent implements OnInit {
   _request(isReset?: boolean): void {
     if (this._pageInfo.loading) { return; }
     this._pageInfo.loading = true;
-    let params = Object.assign({ paramJson: JSON.stringify(Object.assign(this._params, this.paramsDefault)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
+    let params = Object.assign({ paramJson: JSON.stringify(Object.assign(this.paramsDefault, this._params)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
     this.http.post<any>(this.url, params).subscribe(res => {
       if (res.code == 1000) {
         this.dataSet = res.result.list;
@@ -76,6 +76,8 @@ export class TableComponent implements OnInit {
       } else {
         this.message.warning(res.info);
       }
+      this._pageInfo.loading = false;
+    }, err => {
       this._pageInfo.loading = false;
     });
   }
