@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
 import { TheadNode } from '../../../ng-relax/components/table/table.component';
@@ -26,9 +28,35 @@ export class AccountComponent implements OnInit {
 
   tableThead: TheadNode[] | string[] = ['登录名', '中文名', '邮箱', '创建日期', '状态', '操作'];
 
-  constructor() { }
+  createAccountForm: FormGroup;
+  showCreateAccount: boolean;
+  createLoading: boolean;
+
+  constructor(
+    private fb: FormBuilder = new FormBuilder(),
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
+    this.createAccountForm = this.fb.group({
+      code: [, [Validators.required]],
+      name: [, [Validators.required]],
+      password : [, [Validators.required]],
+      email: [],
+      status: [],
+      mono: []
+    })
+  }
+
+
+  openCreate() {
+    this.showCreateAccount = true;
+    this.createAccountForm.reset();
+    this.createAccountForm.patchValue({ status: 0 });
+  }
+
+  crateAccount() {
+    // /accountManagement/modify
   }
 
 }

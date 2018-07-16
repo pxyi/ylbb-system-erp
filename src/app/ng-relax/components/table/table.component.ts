@@ -11,7 +11,7 @@ export class TableComponent implements OnInit {
 
   @Input() thead        : any[] = [];
 
-  @Input('url') _url    : string;
+  @Input() url          : string;
 
   @Input() paramsDefault: any = {};
 
@@ -61,7 +61,7 @@ export class TableComponent implements OnInit {
     if (this._pageInfo.loading) { return; }
     this._pageInfo.loading = true;
     let params = Object.assign({ paramJson: JSON.stringify(Object.assign(this._params, this.paramsDefault)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
-    this.http.post<any>(this._url, params).subscribe(res => {
+    this.http.post<any>(this.url, params).subscribe(res => {
       if (res.code == 1000) {
         this.dataSet = res.result.list;
         this._pageInfo.pageNum = res.result.pageNum;

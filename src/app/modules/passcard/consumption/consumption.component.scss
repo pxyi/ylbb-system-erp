@@ -1,0 +1,44 @@
+.passcard-header {
+  display: flex;
+  h2 {
+    flex: auto;
+    margin-bottom: 16px;
+  }
+  .passcard-btns {
+    flex: 0 1 auto;
+    margin-bottom: 16px;
+  }
+}
+.detail-row {
+  & > div {
+    color: rgba(0,0,0,.65);
+    line-height: 22px;
+    padding-bottom: 8px;
+    span {
+      color: rgba(0,0,0,.5);
+    }
+  }
+}
+.main-info {
+  text-align: right;
+  & > div {
+    display: inline-block;
+    &:not(:first-child) {
+      margin-left: 45px;
+    }
+    p {
+      margin: 0;
+      line-height: 21px;
+      color: rgba(0,0,0,.45);
+    }
+    div {
+      font-weight: 400;
+      color: rgba(0,0,0,.85);
+      font-size: 20px;
+      line-height: 1.5;
+    }
+  }
+}
+.passcard-detail {
+  margin-bottom: 40px;
+}

@@ -42,6 +42,7 @@
         </ng-container>
       </td>
       <td>
+        <a href="javascript:;" *ngIf="!data.loading && data.edit" (click)="data.edit = false;">取消</a>
         <a href="javascript:;" (click)="editRole(data)">
           <i class="anticon anticon-spin anticon-loading" *ngIf="data.loading"></i>
           <ng-container *ngIf="!data.loading">

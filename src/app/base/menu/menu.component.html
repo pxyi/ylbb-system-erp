@@ -38,6 +38,12 @@
         </li>
       </ul>
     </li>
+    <li nz-menu-item [routerLink]="['/home/passcard']" [nzSelected]="routerState.currentPath == '/home/passcard'">
+      <span title>
+        <i class="anticon anticon-idcard"></i>
+        <span>全国通卡</span>
+      </span>
+    </li>
     <li nz-submenu [nzOpen]="routerState.currentPath.indexOf('/home/account') > -1">
       <span title>
         <i class="anticon anticon-usergroup-add"></i>

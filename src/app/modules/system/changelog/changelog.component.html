@@ -27,10 +27,10 @@
                 <li *ngFor="let log of item.features">{{ log }}</li>
               </ul>
             </div>
-            <h4 *ngIf="item.fixes && item.fixes.length">Bug修复</h4>
+            <h4 *ngIf="item['fixes'] && item['fixes'].length">Bug修复</h4>
             <div class="markdown">
               <ul>
-                <li *ngFor="let log of item.fixes">{{ log }}</li>
+                <li *ngFor="let log of item['fixes']">{{ log }}</li>
               </ul>
             </div>
           </div>

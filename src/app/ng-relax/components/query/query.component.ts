@@ -109,17 +109,18 @@ export class QueryComponent implements OnInit {
 }
 
 export interface QueryNode {
-  readonly label       : string
-  readonly key         : string,
-  readonly type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker',
-  readonly valueKey?   : string[],
-  readonly options?    : any[],
-  readonly optionsUrl? : string,
-  readonly optionKey?  : OptionsKey,
-  readonly placeholder?: string | string[],
-  readonly isHide?     : boolean,
+  label       : string;
+  key         : string;
+  type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker';
+  default?    : any;
+  valueKey?   : string[];
+  options?    : any[];
+  optionsUrl? : string;
+  optionKey?  : OptionsKey;
+  placeholder?: string | string[];
+  isHide?     : boolean;
 }
 export interface OptionsKey {
-  label: string,
-  value: string
+  label: string;
+  value: string;
 }

@@ -30,6 +30,11 @@ const routes: Routes = [
         loadChildren: 'src/app/modules/account/account.module#AccountModule'
       },
       {
+        path: 'passcard',
+        data: { title: '全国通卡' },
+        loadChildren: 'src/app/modules/passcard/passcard.module#PasscardModule'
+      },
+      {
         path: 'interaction',
         data: { title: '用户互动' },
         loadChildren: 'src/app/modules/interaction/interaction.module#InteractionModule'

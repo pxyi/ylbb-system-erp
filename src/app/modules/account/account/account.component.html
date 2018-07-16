@@ -1,6 +1,6 @@
 <div class="container">
   <ng-template #EaQueryBtns>
-    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost>新增账号</button>
+    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost (click)="openCreate()">新增账号</button>
   </ng-template>
   <ea-list-page 
     url="/accountManagement/list" 
@@ -18,3 +18,51 @@
     </ng-template>
   </ea-list-page>
 </div>
+
+
+<nz-modal [(nzVisible)]="showCreateAccount" nzTitle="新增角色" [nzFooter]="modalFooter" (nzOnCancel)="showCreateAccount = false">
+
+  <form nz-form [formGroup]="createAccountForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="code" [nzRequired]="true">登录名</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" id="code" formControlName="code" placeholder="请输入登录名">
+        <nz-form-explain *ngIf="createAccountForm.get('code').dirty && createAccountForm.get('code').errors">请输入登录名!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="name" [nzRequired]="true">中文名</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" id="name" formControlName="name" placeholder="请输入中文名">
+        <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').errors">请输入中文名!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="password" [nzRequired]="true">密码</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="password" id="password" formControlName="password" placeholder="请输入密码">
+        <nz-form-explain *ngIf="createAccountForm.get('password').dirty && createAccountForm.get('password').errors">不填则为默认密码：123456!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">状态</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <nz-radio-group formControlName="status">
+          <label nz-radio-button [nzValue]="0">启用</label>
+          <label nz-radio-button [nzValue]="1">停用</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="mono">备注</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <textarea nz-input formControlName="mono" id="mono" placeholder="请输入角色备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="showCreateAccount = false">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="createLoading" (click)="crateAccount()">确定</button>
+  </ng-template>
+</nz-modal>
