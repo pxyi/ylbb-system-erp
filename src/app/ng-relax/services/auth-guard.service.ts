@@ -3,7 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, CanLoad, Route } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from './reducers/reducers-config';
+import { AppState } from '../../core/reducers/reducers-config';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {

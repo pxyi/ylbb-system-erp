@@ -1,3 +1,4 @@
+import { AuthGuardService } from './services/auth-guard.service';
 import { RouterModule } from '@angular/router';
 import { CacheService } from './services/cache.service';
 import { NgModule } from '@angular/core';
@@ -39,7 +40,8 @@ registerLocaleData(zh);
     },
     CacheService,
     HttpService,
-    MonthdiffPipe
+    MonthdiffPipe,
+    AuthGuardService
   ],
   exports: [
     QueryComponent,

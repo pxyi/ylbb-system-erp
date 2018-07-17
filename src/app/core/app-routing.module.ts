@@ -1,4 +1,4 @@
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuardService } from '../ng-relax/services/auth-guard.service';
 import { UserInfoResolver } from './userInfo-resolver.service';
 import { BaseComponent } from '../base/base.component';
 import { NgModule } from '@angular/core';

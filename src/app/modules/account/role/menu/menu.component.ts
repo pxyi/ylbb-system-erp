@@ -1,4 +1,4 @@
-import { HttpService } from './../../../../ng-relax/services/http.service';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { MenuConfig } from '../../../../core/menu-config';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
