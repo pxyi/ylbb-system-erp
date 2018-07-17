@@ -17,6 +17,8 @@ export class MenuComponent implements OnInit {
 
   checkedNodes: string[];
 
+  roleInfoId: number;
+
   loading = true;
 
   checkBoxChange() {
@@ -44,7 +46,10 @@ export class MenuComponent implements OnInit {
 
     this.http.post('/roleManagement/queryRoleMenu', { paramJson: JSON.stringify({ roleId: this.roleId }) }, false).then(res => {
       this.loading = false;
-      res.code == 1000 && (this.checkedNodes = res.result.split(','));
+      if (res.code == 1000 && res.result) {
+        this.checkedNodes = res.result.roleJsonInfo.split(',');
+        this.roleInfoId = res.result.id;
+      }
     })
   }
 

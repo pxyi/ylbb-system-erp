@@ -3,8 +3,17 @@ import { Action } from '@ngrx/store';
 export function userInfoReducer (state: UserInfoState, action: Action) {
   switch (action.type) {
     case 'setUserInfo':
-      window.localStorage.setItem('userInfo', JSON.stringify(action['payload']));
-      return action['payload'];
+      try {
+        let roleAllowPath = [];
+        action['payload'].roles.map(role => {
+          role.roleJsonInfo && (roleAllowPath = roleAllowPath.concat(role.roleJsonInfo.split(',')));
+        });
+        action['payload']['roleAllowPath'] = Array.from(new Set(roleAllowPath)).join(',');
+        window.localStorage.setItem('userInfo', JSON.stringify(action['payload']));
+        return action['payload'];
+      } catch (error) {
+        return state;
+      }
     
     default:
       return state;
@@ -16,5 +25,6 @@ export interface UserInfoState {
   id      : number;
   roles   : any[];
   status  : number;
-  store   : object
+  store   : object;
+  roleAllowPath?: string;
 }

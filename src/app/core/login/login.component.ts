@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
     this.http.post<any>('/auth/login', params).subscribe(res => {
       this.loginLoading = false;
       if (res.code == 1000) {
-        this.store.dispatch({ type: 'setUserInfo', payload: res.result });
+        window.localStorage.setItem('userInfo', JSON.stringify(res.result));
         /* ------------------ 存储用户名密码 ------------------ */
         if (params.remember && !authCode) {
           window.localStorage.setItem('username', JSON.stringify(this.loginForm.value));

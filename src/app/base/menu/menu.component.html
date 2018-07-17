@@ -5,28 +5,30 @@
   </div>
   <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" nzTheme='dark'>
     <ng-container *ngFor="let item of menuConfig">
-      <ng-container *ngIf="item.isLeaf">
-        <li nz-menu-item [routerLink]="[item.key]" [nzSelected]="routerState.currentPath == item.key">
-          <span title>
-            <i class="anticon" [ngClass]="[item.icon]"></i>
-            <span>{{ item.title }}</span>
-          </span>
-        </li>
-      </ng-container>
-      <ng-container *ngIf="!item.isLeaf && item.children">
-        <li nz-submenu [nzOpen]="routerState.currentPath.indexOf(item.key) > -1">
-          <span title>
-            <i class="anticon" [ngClass]="[item.icon]"></i>
-            <span>{{ item.title }}</span>
-          </span>
-          <ul>
-            <ng-container *ngFor="let cdItem of item.children">
-              <li nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath == cdItem.key">
-                <span>{{ cdItem.title }}</span>
-              </li>
-            </ng-container>
-          </ul>
-        </li>
+      <ng-container *ngIf="roleAllowPath.indexOf(item.key) > -1">
+        <ng-container *ngIf="item.isLeaf">
+          <li nz-menu-item [routerLink]="[item.key]" [nzSelected]="routerState.currentPath == item.key">
+            <span title>
+              <i class="anticon" [ngClass]="[item.icon]"></i>
+              <span>{{ item.title }}</span>
+            </span>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="!item.isLeaf && item.children">
+          <li nz-submenu [nzOpen]="routerState.currentPath.indexOf(item.key) > -1">
+            <span title>
+              <i class="anticon" [ngClass]="[item.icon]"></i>
+              <span>{{ item.title }}</span>
+            </span>
+            <ul>
+              <ng-container *ngFor="let cdItem of item.children">
+                <li nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath == cdItem.key">
+                  <span>{{ cdItem.title }}</span>
+                </li>
+              </ng-container>
+            </ul>
+          </li>
+        </ng-container>
       </ng-container>
     </ng-container>
   </ul>

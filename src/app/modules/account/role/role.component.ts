@@ -118,6 +118,7 @@ export class RoleComponent implements OnInit {
               http.post('/roleManagement/saveRoleMenu', { 
                 paramJson: JSON.stringify({ 
                   roleId: componentInstance.roleId, 
+                  id: componentInstance.roleInfoId || '',
                   roleJsonInfo: componentInstance.checkedNodes.join(',') 
                 }) 
               }).then(res => {
