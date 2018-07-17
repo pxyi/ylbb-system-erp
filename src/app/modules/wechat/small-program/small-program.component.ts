@@ -48,6 +48,7 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
       }
     });
     new Image().src = 'https://ylbb-system.oss-cn-beijing.aliyuncs.com/wechat/small-program-qrcode.png';
+    new Image().src = 'http://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/store/iphone-bg.png';
   }
 
   ngOnInit() {
