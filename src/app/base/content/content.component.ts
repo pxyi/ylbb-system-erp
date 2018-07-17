@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { RouterState } from './../../core/reducers/router-reducer';
+import { RouterState } from '../../core/reducers/router-reducer';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';

@@ -1,6 +1,6 @@
-import { UserInfoState } from './../core/reducers/userInfo-reducer';
+import { UserInfoState } from './reducers/userInfo-reducer';
 import { NzMessageService } from 'ng-zorro-antd';
-import { AppState } from './../core/reducers/reducers-config';
+import { AppState } from './reducers/reducers-config';
 import { Injectable }             from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable }             from 'rxjs';

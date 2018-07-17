@@ -1,5 +1,5 @@
-import { RouterState } from './../reducers/router-reducer';
-import { AppState } from './../reducers/reducers-config';
+import { RouterState } from '../reducers/router-reducer';
+import { AppState } from '../reducers/reducers-config';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

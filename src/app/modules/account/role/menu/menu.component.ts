@@ -1,6 +1,6 @@
-import { YlbbResponse } from './../../../../core/interface-config';
+import { YlbbResponse } from '../../../../core/interface-config';
 import { HttpClient } from '@angular/common/http';
-import { MenuConfig } from './../../../../core/menu-config';
+import { MenuConfig } from '../../../../core/menu-config';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
 

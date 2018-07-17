@@ -1,4 +1,4 @@
-import { AppState } from './../../../core/reducers/reducers-config';
+import { AppState } from '../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { NewinformationComponent } from './newinformation.component';
 import { Observable } from 'rxjs';

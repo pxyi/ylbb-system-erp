@@ -1,4 +1,4 @@
-import { NgRelaxModule } from './../../ng-relax/ng-relax.module';
+import { NgRelaxModule } from '../../ng-relax/ng-relax.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbmModule } from 'angular-baidu-maps';

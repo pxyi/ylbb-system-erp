@@ -1,9 +1,9 @@
-import { PreviewComponent } from './../preview/preview.component';
+import { PreviewComponent } from '../preview/preview.component';
 import { Observable } from 'rxjs';
 import { NzMessageService, UploadFile, NzModalService } from 'ng-zorro-antd';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AppState } from './../../../core/reducers/reducers-config';
+import { AppState } from '../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { AbmComponent } from 'angular-baidu-maps';

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, FormControl, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { YlbbResponse } from '../../../core/interface-config';
-import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-modify-password',

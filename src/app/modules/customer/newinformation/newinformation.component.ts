@@ -1,4 +1,4 @@
-import { CacheService } from './../../../ng-relax/services/cache.service';
+import { CacheService } from '../../../ng-relax/services/cache.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';

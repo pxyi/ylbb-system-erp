@@ -1,7 +1,7 @@
 import { MenuComponent } from './menu/menu.component';
-import { YlbbResponse } from './../../../core/interface-config';
+import { YlbbResponse } from '../../../core/interface-config';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
+import { ListPageComponent } from '../../../ng-relax/components/list-page/list-page.component';
 import { HttpClient } from '@angular/common/http';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Component, OnInit, ViewChild } from '@angular/core';

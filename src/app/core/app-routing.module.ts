@@ -1,5 +1,5 @@
-import { UserInfoResolver } from './../base/userInfo-resolver.service';
-import { BaseComponent } from './../base/base.component';
+import { UserInfoResolver } from './userInfo-resolver.service';
+import { BaseComponent } from '../base/base.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';

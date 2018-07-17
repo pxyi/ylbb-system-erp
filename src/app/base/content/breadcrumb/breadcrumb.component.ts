@@ -1,4 +1,4 @@
-import { AppState } from './../../../core/reducers/reducers-config';
+import { AppState } from '../../../core/reducers/reducers-config';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 

@@ -1,8 +1,8 @@
-import { MenuConfig } from './../../core/menu-config';
-import { AppState } from './../../core/reducers/reducers-config';
+import { MenuConfig } from '../../core/menu-config';
+import { AppState } from '../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterState } from './../../core/reducers/router-reducer';
+import { RouterState } from '../../core/reducers/router-reducer';
 import { UserInfoState } from '../../core/reducers/userInfo-reducer';
 
 @Component({

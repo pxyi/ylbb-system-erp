@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { AppState } from './../../../core/reducers/reducers-config';
+import { AppState } from '../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
 import { DatePipe } from '@angular/common'
 

@@ -3,6 +3,7 @@
     <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost (click)="openCreate()">新增账号</button>
   </ng-template>
   <ea-list-page 
+    #EaListPage
     url="/accountManagement/list" 
     [queryNode]="queryNode" 
     [tableThead]="tableThead" 
@@ -14,7 +15,26 @@
       <td>{{ data.email || '--' }}</td>
       <td>{{ data.createTime }}</td>
       <td><nz-tag [nzColor]="data.status == 0 ? '#2db7f5' : ''">{{ data.status == 0 ? '启用' : '停用' }}</nz-tag></td>
-      <td></td>
+      <td>
+        <a href="javascript:;" (click)="editAccount(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-dropdown>
+          <a nz-dropdown>更多
+            <i class="anticon anticon-down"></i>
+          </a>
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <a nz-popconfirm nzTitle="确认删除此角色吗？" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="deleteAccount(data.id)">删除</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="allocationRole(data.id)">分配角色</a>
+            </li>
+            <li nz-menu-item>
+              <a nz-popconfirm nzTitle=" 确定重置密码？" nzOkText="确定" nzCancelText="取消" (nzOnConfirm)="resetPassword(data.id)">重置密码</a>
+            </li>
+          </ul>
+        </nz-dropdown>
+      </td>
     </ng-template>
   </ea-list-page>
 </div>
@@ -26,7 +46,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6" nzFor="code" [nzRequired]="true">登录名</nz-form-label>
       <nz-form-control [nzSpan]="16">
-        <input nz-input type="text" id="code" formControlName="code" placeholder="请输入登录名">
+        <input nz-input type="text" id="code" formControlName="code" placeholder="请输入登录名" [disabled]="!!createAccountId">
         <nz-form-explain *ngIf="createAccountForm.get('code').dirty && createAccountForm.get('code').errors">请输入登录名!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
@@ -37,7 +57,7 @@
         <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').errors">请输入中文名!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="!createAccountId">
       <nz-form-label [nzSpan]="6" nzFor="password" [nzRequired]="true">密码</nz-form-label>
       <nz-form-control [nzSpan]="16">
         <input nz-input type="password" id="password" formControlName="password" placeholder="请输入密码">
@@ -45,7 +65,13 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" [nzRequired]="true">状态</nz-form-label>
+      <nz-form-label [nzSpan]="6" nzFor="email">邮箱</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" id="email" formControlName="email" placeholder="请输入邮箱">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">状态</nz-form-label>
       <nz-form-control [nzSpan]="16">
         <nz-radio-group formControlName="status">
           <label nz-radio-button [nzValue]="0">启用</label>
@@ -54,9 +80,9 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="mono">备注</nz-form-label>
+      <nz-form-label [nzSpan]="6" nzFor="memo">备注</nz-form-label>
       <nz-form-control [nzSpan]="16">
-        <textarea nz-input formControlName="mono" id="mono" placeholder="请输入角色备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+        <textarea nz-input formControlName="memo" id="memo" placeholder="请输入角色备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
       </nz-form-control>
     </nz-form-item>
   </form>
