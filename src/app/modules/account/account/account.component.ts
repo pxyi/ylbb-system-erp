@@ -1,7 +1,6 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { ListPageComponent } from '../../../ng-relax/components/list-page/list-page.component';
 import { NzMessageService } from 'ng-zorro-antd';
-import { YlbbResponse } from '../../../core/interface-config';
-import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
@@ -41,7 +40,7 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
-    private http: HttpClient,
+    private http: HttpService,
     private message: NzMessageService
   ) { }
 
@@ -71,13 +70,10 @@ export class AccountComponent implements OnInit {
         params.id = this.createAccountId;
         delete params.password;
       }
-      this.http.post<YlbbResponse>('/accountManagement/modify', { paramJson: JSON.stringify(params) }).subscribe(res => {
-        if (res.code == 1000) {
-          this.EaListPage.EaTable._request();
-          this.showCreateAccount = false;
-          this.createLoading = false;
-        }
-        this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
+      this.http.post('/accountManagement/modify', { paramJson: JSON.stringify(params) }).then(res => {
+        this.EaListPage.EaTable._request();
+        this.showCreateAccount = false;
+        this.createLoading = false;
       })
     } else {
       for (let i in this.createAccountForm.controls) {
@@ -95,8 +91,7 @@ export class AccountComponent implements OnInit {
   }
 
   deleteAccount(id) {
-    this.http.post<YlbbResponse>('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id }) }).subscribe(res => {
-      this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
+    this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id }) }).then(res => {
       this.EaListPage.EaTable._request();
     })
   }
@@ -106,9 +101,7 @@ export class AccountComponent implements OnInit {
   }
 
   resetPassword(id) {
-    this.http.post<YlbbResponse>('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id, password: 123456 }) }).subscribe(res => {
-      this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
-    })
+    this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id, password: 123456 }) });
   }
 
 }

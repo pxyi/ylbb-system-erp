@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -171,7 +171,7 @@ export class NointentionComponent {
   @ViewChild('EaTable') table;
 
   constructor(
-    private http    : HttpClient,
+    private http    : HttpService,
     private message : NzMessageService 
   ) { }
 
@@ -179,12 +179,9 @@ export class NointentionComponent {
   }
 
   gainClue(): void {
-    this.http.post<any>('/customer/gainClue', { paramJson: JSON.stringify({ id: this.checkedItems.join(',') }) }).subscribe(res => {
-      this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
-      if (res.code == 1000) {
-        this.checkedItems = [];
-        this.table._request();
-      }
+    this.http.post('/customer/gainClue', { paramJson: JSON.stringify({ id: this.checkedItems.join(',') }) }).then(res => {
+      this.checkedItems = [];
+      this.table._request();
     })
   }
 }

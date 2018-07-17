@@ -1,7 +1,7 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { PreviewComponent } from '../preview/preview.component';
 import { Observable } from 'rxjs';
 import { NzMessageService, UploadFile, NzModalService } from 'ng-zorro-antd';
-import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppState } from '../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
@@ -30,12 +30,12 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private fb   : FormBuilder = new FormBuilder(),
-    private http : HttpClient,
+    private http : HttpService,
     private message  : NzMessageService,
     private modal: NzModalService
   ) { 
     /* ----------------- 获取OSS上传凭证 ----------------- */
-    this.http.get<any>('http://oss.beibeiyue.com/oss/getOSSToken?type=1').subscribe(res => {
+    this.http.get('http://oss.beibeiyue.com/oss/getOSSToken?type=1', {}, false).then(res => {
       if (res.result == 0) {
         let creds = res.data;
         this._aliOssClient = new OSS.Wrapper({
@@ -74,7 +74,7 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
     })
     this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
 
-    this.http.post<any>('/wechat/selectSmallProgram', {}).subscribe(res => {
+    this.http.post('/wechat/selectSmallProgram', {}, false).then(res => {
       this.getInfoLoading = false;
       if (res.code == 1000) {
         if (res.result.facilitie) {
@@ -188,17 +188,17 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
   addressLoadData = (node: any, index: number) => {
     return new Promise((resolve) => {
       if (index < 0) {
-        this.http.post<any>('/wechat/getPosition', {}).subscribe(res => {
+        this.http.post('/wechat/getPosition', {}, false).then(res => {
           node.children = res.result.provinceList;
           resolve();
         })
       } else if (index === 0) {
-        this.http.post<any>('/wechat/getPosition', { provinceCode: node.value }).subscribe(res => {
+        this.http.post('/wechat/getPosition', { provinceCode: node.value }, false).then(res => {
           node.children = res.result.cityList;
           resolve();
         })
       } else if (index === 1) {
-        this.http.post<any>('/wechat/getPosition', { cityCode: node.value }).subscribe(res => {
+        this.http.post('/wechat/getPosition', { cityCode: node.value }, false).then(res => {
           res.result.areaList.map(res => res.isLeaf = true);
           node.children = res.result.areaList;
           resolve();
@@ -329,9 +329,7 @@ export class SmallProgramComponent implements OnInit, OnDestroy {
           delete params[param]
         }
       }
-      this.http.post<any>('/wechat/saveSmallProgramData', { paramJson: JSON.stringify(params) }).subscribe(res => {
-        this.message.create(res.code == 1000 ? 'success' : 'error', res.info);
-      })
+      this.http.post('/wechat/saveSmallProgramData', { paramJson: JSON.stringify(params) });
     }
   }
   /* -------------------- 预览 -------------------- */

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from './../../../ng-relax/services/http.service';
 import { DatePipe } from '@angular/common';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -78,7 +78,7 @@ export class PreviewCustomerComponent implements OnInit {
   constructor(
     private routeInfo : ActivatedRoute,
     private fb        : FormBuilder = new FormBuilder(),
-    private http      : HttpClient,
+    private http      : HttpService,
     private message   : NzMessageService,
     private format    : DatePipe,
     private modal     : NzModalService,
@@ -93,7 +93,7 @@ export class PreviewCustomerComponent implements OnInit {
       this.selectUserInfoInit();
 
       /* ------------------- 查看跟进记录 ------------------- */
-      this.http.post<any>('/customer/showFollowRecord', { paramJson: JSON.stringify({ id: this._id }) }).subscribe(res => {
+      this.http.post('/customer/showFollowRecord', { paramJson: JSON.stringify({ id: this._id }) }, false).then(res => {
         if (res.code == 1000) {
           this.followRecord = res.result;
         }
@@ -105,10 +105,8 @@ export class PreviewCustomerComponent implements OnInit {
     })
 
     /* ------------------- 获取记录标签 ------------------- */
-    this.http.post<any>('/common/labelList', {}).subscribe( res => {
-      if (res.code == 1000) {
-        this.labelList = res.result;
-      }
+    this.http.post('/common/labelList').then( res => {
+      this.labelList = res.result;
     })
 
     this.recordFormModel = this.fb.group({
@@ -152,16 +150,12 @@ export class PreviewCustomerComponent implements OnInit {
 
 
     /* ------------------- 客户状态 ------------------- */
-    this.http.post<any>('/common/showMemberStatus', {}).subscribe(res => {
-      if (res.code == 1000) {
-        this.showMemberStatus = res.result;
-      }
+    this.http.post('/common/showMemberStatus').then(res => {
+      this.showMemberStatus = res.result;
     });
     /* ------------------- 跟进方式 ------------------- */
-    this.http.post<any>('/common/followTypeList', {}).subscribe(res => {
-      if (res.code == 1000) {
-        this.followTypeList = res.result;
-      }
+    this.http.post('/common/followTypeList').then(res => {
+      this.followTypeList = res.result;
     })
   }
 
@@ -172,7 +166,7 @@ export class PreviewCustomerComponent implements OnInit {
 
     /* ------------------- 查看用户信息 ------------------- */
     this.isLoading = true;
-    this.http.post<any>('/customer/showCustomerInfo', { paramJson: JSON.stringify({ id: this._id }) }).subscribe(res => {
+    this.http.post('/customer/showCustomerInfo', { paramJson: JSON.stringify({ id: this._id }) }, false).then(res => {
       this.isLoading = false;
       this.userInfo = res.result.member || {};
       this.currentUserName = res.result.currentUserName;
@@ -212,17 +206,14 @@ export class PreviewCustomerComponent implements OnInit {
         params.reserveMinute = params.reserve.reserveHour ? params.reserve.reserveHour.split(':')[1] : '';
       }
       delete params.reserve;
-      this.http.post<any>('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }).subscribe( res => {
-        this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
-        if (res.code == 1000) {
-          if (isReset) {
-            this.router.navigateByUrl('/home/customer/potentail?reset=true');
-          } else {
-            this.selectUserInfoInit();
-            res.result.contentLabel = this._resetFollowRecordContent(res.result.content);
-            this.followRecord.unshift(res.result);
-            this.recordFormModel.reset();
-          }
+      this.http.post('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }).then( res => {
+        if (isReset) {
+          this.router.navigateByUrl('/home/customer/potentail?reset=true');
+        } else {
+          this.selectUserInfoInit();
+          res.result.contentLabel = this._resetFollowRecordContent(res.result.content);
+          this.followRecord.unshift(res.result);
+          this.recordFormModel.reset();
         }
       })
     }
@@ -230,11 +221,8 @@ export class PreviewCustomerComponent implements OnInit {
 
   /* -------------------- 转为无意向客户 -------------------- */
   intentionCustomer(): void {
-    this.http.post<any>('/customer/transitioNoIntentionCustomer', { paramJson: JSON.stringify({ id: this._id }) }).subscribe( res => {
-      this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
-      if (res.code == 1000) {
-        this.router.navigateByUrl('/home/customer/potentail?reset=true');
-      }
+    this.http.post('/customer/transitioNoIntentionCustomer', { paramJson: JSON.stringify({ id: this._id }) }).then( res => {
+      this.router.navigateByUrl('/home/customer/potentail?reset=true');
     });
   }
 
@@ -288,7 +276,7 @@ export class PreviewCustomerComponent implements OnInit {
         params.reserveMinute = params.reserve.reserveHour ? params.reserve.reserveHour.split(':')[1] : '';
       }
       delete params.reserve;
-      this.http.post<any>('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }).subscribe(res => {
+      this.http.post('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }, false).then(res => {
         this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
         this._saveUpdateFollowRecordLoading = false;
         if (res.code == 1000) {
@@ -317,15 +305,12 @@ export class PreviewCustomerComponent implements OnInit {
 
   /* -------------------- 修改到店记录状态 -------------------- */
   editToShopRecord(status: number, id: number): void {
-    this.http.post<any>('/customer/editToShopRecord', { paramJson: JSON.stringify({ id: id, status: status }) }).subscribe(res => {
-      this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
-      if (res.code == 1000) {
-        this.followRecord.map( item => {
-          if (item.id == id) {
-            item.status = status;
-          }
-        })
-      }
+    this.http.post('/customer/editToShopRecord', { paramJson: JSON.stringify({ id: id, status: status }) }).then(res => {
+      this.followRecord.map( item => {
+        if (item.id == id) {
+          item.status = status;
+        }
+      })
     })
   }
 

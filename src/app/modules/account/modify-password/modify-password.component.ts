@@ -1,8 +1,7 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, FormControl, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { YlbbResponse } from '../../../core/interface-config';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -18,7 +17,7 @@ export class ModifyPasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
-    private http: HttpClient,
+    private http: HttpService,
     private message: NzMessageService,
     private router: Router
   ) { }
@@ -34,7 +33,7 @@ export class ModifyPasswordComponent implements OnInit {
   modifyPassword() {
     if (this.passwordForm.valid) {
       this.modifyLoading = true;
-      this.http.post<YlbbResponse>('/passwordModify/modify', { paramJson: JSON.stringify(this.passwordForm.value) }).subscribe(res => {
+      this.http.post('/passwordModify/modify', { paramJson: JSON.stringify(this.passwordForm.value) }, false).then(res => {
         this.modifyLoading = false;
         if (res.code == 1000) {
           window.localStorage.removeItem('userInfo');

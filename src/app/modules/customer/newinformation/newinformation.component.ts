@@ -1,5 +1,5 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { CacheService } from '../../../ng-relax/services/cache.service';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,7 +37,7 @@ export class NewinformationComponent implements OnInit {
     private fb        : FormBuilder = new FormBuilder(),
     private routeInfo : ActivatedRoute,
     private router    : Router,
-    private http      : HttpClient,
+    private http      : HttpService,
     private message   : NzMessageService,
     private modal     : NzModalService,
     private format    : DatePipe,
@@ -52,7 +52,7 @@ export class NewinformationComponent implements OnInit {
       this._customerFormInit();
       if (this._id != '0') {
         this._selectLoading = true;
-        this.http.post<any>('/customer/showCustomerInfo', { paramJson: JSON.stringify({ id: this._id }) }).subscribe(res => {
+        this.http.post('/customer/showCustomerInfo', { paramJson: JSON.stringify({ id: this._id }) }, false).then(res => {
           this._selectLoading = false;
           if (res.code == 1000) {
             res.result.member.birthday = res.result.member.birthday ? new Date(res.result.member.birthday) : '';
@@ -61,13 +61,11 @@ export class NewinformationComponent implements OnInit {
           }
         });
 
-        this.http.post<any>('/common/lookParentTelphone', { paramJson: JSON.stringify({ id: this._id }) }).subscribe(res => {
-          if (res.code == 1000) {
-            this.customerForm.patchValue({
-              mobilePhone: res.result.mobilePhone
-            });
-            this.customerFormInitValue['mobilePhone'] = res.result.mobilePhone;
-          }
+        this.http.post('/common/lookParentTelphone', { paramJson: JSON.stringify({ id: this._id }) }).then(res => {
+          this.customerForm.patchValue({
+            mobilePhone: res.result.mobilePhone
+          });
+          this.customerFormInitValue['mobilePhone'] = res.result.mobilePhone;
         });
 
       }
@@ -139,7 +137,7 @@ export class NewinformationComponent implements OnInit {
       this._submitLoading = true;
       let params = this._id == '0' ? this.customerForm.value : Object.assign(this.customerForm.value, { id: this._id });
       if (params.birthday) { params.birthday = this.format.transform(params.birthday, 'yyyy-MM-dd') }
-      this.http.post<any>('/customer/modifyUserInfo', { paramJson: JSON.stringify(params) }).subscribe(res => {
+      this.http.post('/customer/modifyUserInfo', { paramJson: JSON.stringify(params) }, false).then(res => {
         this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
         if (res.code == 1000) {
           this.router.navigateByUrl('/home/customer/all');
@@ -169,7 +167,7 @@ export class NewinformationComponent implements OnInit {
   submitHousing(): void {
     if (this.housingName.length && !this.isConfirmLoading) {
       this.isConfirmLoading = true;
-      this.http.post<any>(`/common/addCommunity`, { paramJson: JSON.stringify({ name: this.housingName }) }).subscribe(res => {
+      this.http.post(`/common/addCommunity`, { paramJson: JSON.stringify({ name: this.housingName }) }, false).then(res => {
         this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
         if (res.code == 1000) {
           this._ceateHousingModal.destroy();
@@ -193,7 +191,7 @@ export class NewinformationComponent implements OnInit {
     return Observable.create(observer => {
       let params: any = { mobilePhone: this.customerForm.get('mobilePhone').value };
       if (this._id != '0') { params.id = this._id; }
-      this.http.post<any>('/common/checkTelphoneNum', { paramJson: JSON.stringify(params) }).subscribe(res => {
+      this.http.post('/common/checkTelphoneNum', { paramJson: JSON.stringify(params) }, false).then(res => {
         observer.next(res.result ? null : { error: true, duplicated: true });
         observer.complete();
       }, err => {
