@@ -33,7 +33,7 @@ const routes: Routes = [
       {
         path: 'passcard',
         data: { title: '全国通卡' },
-        canLoad: [AuthGuardService],
+        // canLoad: [AuthGuardService],
         loadChildren: 'src/app/modules/passcard/passcard.module#PasscardModule'
       },
       {

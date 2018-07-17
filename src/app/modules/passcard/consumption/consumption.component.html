@@ -13,26 +13,26 @@
   <div class="passcard-detail" nz-row>
     <div nz-col [nzSpan]="16" class="detail-row">
       <div nz-col [nzSpan]="12">
-        本店保证金等级：<span>0.0元</span>
+        本店保证金等级：<span>{{ amountDetails?.bondlevel }}元</span>
       </div>
       <div nz-col [nzSpan]="12">
-        本店会员预约跨店：<span>0.0元</span>
+        本店会员预约跨店：<span>{{ amountDetails?.reservedCrossed }}元</span>
       </div>
       <div nz-col [nzSpan]="12">
-        提现申请：<span>0.0元</span>
+        提现申请：<span>{{ amountDetails?.preFreezeAmount }}元</span>
       </div>
       <div nz-col [nzSpan]="12">
-        退还保证金：<span>0.0元</span>
+        退还保证金：<span>{{ amountDetails?.returnBond }}元</span>
       </div>
     </div>
     <div nz-col [nzSpan]="8" class="main-info">
       <div>
         <p>冻结金额</p>
-        <div>¥ 0.0</div>
+        <div>¥ {{ amountDetails?.freezeAmount }}</div>
       </div>
       <div>
         <p>保证金余额</p>
-        <div>¥ 568.08</div>
+        <div>¥ {{ amountDetails?.bondbalance }}</div>
       </div>
     </div>
   </div>

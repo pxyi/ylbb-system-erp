@@ -100,7 +100,9 @@ export class ConsumptionComponent implements OnInit {
 
   tableThead: string[] = ['卡号', '卡类型', '姓名', '小名', '全国通卡跨店', '消费金额', '消费时间', '已使用卡次', '单次扣除卡次', '类型', '消费商品', '消费类型', '消费门店', '办卡门店', '服务泳师', '满意度', '体重', '泳圈型号', '游泳时长', '测量', '拍照', '备注']
 
-  paramsDefault: any;
+  paramsDefault;
+
+  amountDetails;
 
   constructor(
     private store: Store<AppState>,
@@ -117,6 +119,7 @@ export class ConsumptionComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
+    this.http.post('/tongka/amountDetails', {}, false).then(res => this.amountDetails = res.result);
   }
 
   presentation() {
@@ -125,7 +128,7 @@ export class ConsumptionComponent implements OnInit {
         nzTitle: '温馨提示',
         nzContent: res.info
       })
-    })
+    });
   }
 
 }
