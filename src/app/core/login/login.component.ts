@@ -1,3 +1,4 @@
+import { NzModalService } from 'ng-zorro-antd';
 import { RouterState } from '../reducers/router-reducer';
 import { AppState } from '../reducers/reducers-config';
 import { HttpClient } from '@angular/common/http';
@@ -30,13 +31,15 @@ export class LoginComponent implements OnInit {
     private router     : Router,
     private fb         : FormBuilder = new FormBuilder(),
     private activated  : ActivatedRoute,
-    private store      : Store<AppState>
+    private store      : Store<AppState>,
+    private modal      : NzModalService
   ) {
     store.select('routerState').subscribe( res => this.baseRouter = res);
   }
 
   ngOnInit() {
     window.document.title = '鱼乐贝贝ERP-登录';
+    this.modal.closeAll();
 
     /* ------------------- 判断本地是否存储用户名密码 ------------------- */
     try {

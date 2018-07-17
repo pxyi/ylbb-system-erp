@@ -16,17 +16,34 @@
         <label for="search"><i class="anticon anticon-search"></i></label>
       </ng-template>
       <nz-autocomplete #auto>
-        <nz-auto-optgroup *ngFor="let group of autoComplateOptions" [nzLabel]="groupTitle">
-          <ng-template #groupTitle>
-            <span>{{group.title}}</span>
-          </ng-template>
-          <nz-auto-option *ngFor="let option of group.children" [nzLabel]="option.text" [nzValue]="option">
-            <p class="search-item" (click)="keyupEnter(option)">
-              {{option.text}}
-              <span>{{ option.value.split('/')[option.value.split('/').length -1] }}</span>
-            </p>
-          </nz-auto-option>
-        </nz-auto-optgroup>
+        <ng-container *ngFor="let group of autoComplateOptions">
+          <ng-container *ngIf="group.isLeaf">
+            <nz-auto-optgroup [nzLabel]="groupTitle">
+              <ng-template #groupTitle>
+                <span>{{ group.title }}</span>
+              </ng-template>
+              <nz-auto-option [nzLabel]="group.title" [nzValue]="group">
+                <p class="search-item" (click)="keyupEnter(group)">
+                  {{ group.title }}
+                  <span>{{ group.key.split('/')[group.key.split('/').length -1] }}</span>
+                </p>
+              </nz-auto-option>
+            </nz-auto-optgroup>
+          </ng-container>
+          <ng-container *ngIf="!group.isLeaf">
+            <nz-auto-optgroup [nzLabel]="groupTitle">
+              <ng-template #groupTitle>
+                <span>{{ group.title }}</span>
+              </ng-template>
+              <nz-auto-option *ngFor="let option of group.children" [nzLabel]="option.title" [nzValue]="option">
+                <p class="search-item" (click)="keyupEnter(option)">
+                  {{ option.title }}
+                  <span>{{ option.key.split('/')[option.key.split('/').length -1] }}</span>
+                </p>
+              </nz-auto-option>
+            </nz-auto-optgroup>
+          </ng-container>
+        </ng-container>
       </nz-autocomplete>
     </div>
 

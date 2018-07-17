@@ -1,5 +1,4 @@
-import { YlbbResponse } from '../../../../core/interface-config';
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from './../../../../ng-relax/services/http.service';
 import { MenuConfig } from '../../../../core/menu-config';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
@@ -35,7 +34,7 @@ export class MenuComponent implements OnInit {
 
 
   constructor(
-    private http: HttpClient
+    private http: HttpService
   ) { }
 
   ngOnInit() {
@@ -43,12 +42,10 @@ export class MenuComponent implements OnInit {
       this.nodes.push(new NzTreeNode(res));
     });
 
-    setTimeout(_ => {
+    this.http.post('/roleManagement/queryRoleMenu', { paramJson: JSON.stringify({ roleId: this.roleId }) }, false).then(res => {
       this.loading = false;
-    }, 3000);
-    // this.http.post<YlbbResponse>('/xxxxxx', { id: this.roleId }).subscribe(res => {
-    //   this.loading = false;
-    // })
+      res.code == 1000 && (this.checkedNodes = res.result.split(','));
+    })
   }
 
 }

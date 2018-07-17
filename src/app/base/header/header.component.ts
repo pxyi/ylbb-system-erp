@@ -1,3 +1,4 @@
+import { MenuConfig } from './../../core/menu-config';
 import { Router } from '@angular/router';
 import { UserInfoState } from '../../core/reducers/userInfo-reducer';
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
@@ -23,41 +24,20 @@ export class HeaderComponent implements OnInit {
   searchValue: string;
   onChange(value: any): void {
     this.autoComplateOptions = !value ? this.complateOptions : JSON.parse(JSON.stringify(this.complateOptions)).filter( res => {
-      res.children = res.children.filter(item => item.text.indexOf(value) > -1);
-      return res.children.length > 0;
+      !res.isLeaf && (res.children = res.children.filter(item => item.title.indexOf(value) > -1));
+      return res.isLeaf ? res.title.indexOf(value) > -1 : res.children.length > 0;
     })
   }
   ngOnInit() {
   }
   autoComplateOptions: any[] = [];
-  complateOptions = [ 
-    {
-      title: '客户管理',
-      children: [
-        { text: '潜在客户', value: '/home/customer/potentail' },
-        { text: '无意向客户', value: '/home/customer/nointention' }
-      ]
-    },
-    {
-      title: '系统管理',
-      children: [
-        { text: '更新日志', value: '/system/changelog' },
-        { text: '使用帮助', value: '/system/help' }
-      ]
-    },
-    {
-      title: '微信',
-      children: [
-        { text: '微信小程序', value: '/home/wechat' }
-      ]
-    }
-  ]
+  complateOptions = MenuConfig;
 
   keyupEnter(value?) {
     if (value) {
-      this.router.navigateByUrl(value['value']);
+      this.router.navigateByUrl(value['key']);
     } else if (typeof this.searchValue === 'object') {
-      this.router.navigateByUrl(this.searchValue['value']);
+      this.router.navigateByUrl(this.searchValue['key']);
     }
   }
 

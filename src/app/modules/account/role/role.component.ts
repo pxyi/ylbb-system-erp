@@ -92,7 +92,7 @@ export class RoleComponent implements OnInit {
   }
 
   allocationMenu(roleId) {
-    let _message = this.message;
+    let { message, http } = this;
     const modal = this.modal.create({
       nzTitle: '分配菜单',
       nzContent: MenuComponent,
@@ -112,25 +112,24 @@ export class RoleComponent implements OnInit {
           loading: false,
           onClick(componentInstance) {
             if (componentInstance.loading) {
-              _message.warning('请等待数据加载完毕...');
+              message.warning('请等待数据加载完毕...');
             } else {
               this.loading = true;
-              setTimeout(() => {
-                this.loading = false;
+              http.post('/roleManagement/saveRoleMenu', { 
+                paramJson: JSON.stringify({ 
+                  roleId: componentInstance.roleId, 
+                  roleJsonInfo: componentInstance.checkedNodes.join(',') 
+                }) 
+              }).then(res => {
                 modal.close();
-              }, 2000);
+              }, err => {
+                this.loading = false;
+              })
             }
-            console.log('确定', this, componentInstance.checkedNodes)
           }
         }
       ]
     });
-
-    // delay until modal instance created
-    window.setTimeout(() => {
-      const instance = modal.getContentComponent();
-      // instance.subtitle = 'sub title is changed';
-    }, 2000);
   }
 
 }
