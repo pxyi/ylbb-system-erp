@@ -14,7 +14,7 @@ import { MenuComponent } from './base/menu/menu.component';
 import { StoreModule } from '@ngrx/store';
 import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
-import { AuthGuardService } from './base/auth-guard.service';
+import { AuthGuardService } from './core/auth-guard.service';
 import { UserInfoResolver } from './core/userInfo-resolver.service';
 
 @NgModule({

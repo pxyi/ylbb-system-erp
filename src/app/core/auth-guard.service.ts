@@ -3,12 +3,11 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, CanLoad, Route } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../core/reducers/reducers-config';
+import { AppState } from './reducers/reducers-config';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {
   canActivate() {
-
     /* ---------------------- 获取本地存储用户信息 ---------------------- */
     try {
       let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
@@ -22,10 +21,13 @@ export class AuthGuardService implements CanActivate, CanLoad {
     }
   }
 
-  canLoad(route: Route): Observable<boolean> {
+  canLoad(route: Route): Observable<boolean> | boolean {
     return new Observable(observer => {
-      observer.next(!!window.localStorage.getItem('userInfo'));
-      observer.complete();
+      this.store.select('userInfoState').subscribe(res => {
+        console.log(route, res);
+        observer.next(true);
+        observer.complete();
+      })
     })
   }
 

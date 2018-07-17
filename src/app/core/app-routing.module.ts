@@ -1,3 +1,4 @@
+import { AuthGuardService } from './auth-guard.service';
 import { UserInfoResolver } from './userInfo-resolver.service';
 import { BaseComponent } from '../base/base.component';
 import { NgModule } from '@angular/core';
@@ -32,6 +33,7 @@ const routes: Routes = [
       {
         path: 'passcard',
         data: { title: '全国通卡' },
+        canLoad: [AuthGuardService],
         loadChildren: 'src/app/modules/passcard/passcard.module#PasscardModule'
       },
       {

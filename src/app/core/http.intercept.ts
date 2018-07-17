@@ -42,7 +42,7 @@ export class NoopInterceptor implements HttpInterceptor {
             if (event.body.code == 3000) {
               window.localStorage.removeItem('userInfo');
               this.router.navigateByUrl('/login');
-            } else if (event.body.code != 1000) {
+            } else if (event.body.code && event.body.code != 1000) {
               this.message.warning(event.body.info);
             }
           } else {
