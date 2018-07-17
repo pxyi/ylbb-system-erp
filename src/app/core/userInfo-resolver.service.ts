@@ -17,18 +17,10 @@ export class UserInfoResolver implements Resolve<UserInfoState> {
  
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserInfoState> {
     return new Observable(observer => {
-      try {
-        let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
-        this.store.dispatch({ type: 'setUserInfo', payload: userInfo });
-        if (!userInfo.id) throw "未登录";
-          observer.next(userInfo);
+        this.store.select('userInfoState').subscribe(res => {
+          observer.next(res);
           observer.complete();
-      } catch (e) {
-        this.message.warning('请登录!');
-        this.router.navigateByUrl('/login');
-        observer.next(null);
-        observer.complete();
-      }
+        })
     })
   }
 }

@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { AppState } from './reducers/reducers-config';
 import { Store } from '@ngrx/store';
@@ -10,7 +11,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   constructor(
     private store  : Store<AppState>,
-    private router : Router
+    private router : Router,
+    private message: NzMessageService
   ) { 
 
     /* ---------- 监听路由变化, 获取登录来源页, 去往页面， 当前页 ---------- */
@@ -30,5 +32,14 @@ export class AppComponent {
         store.dispatch({ type: 'currentPath', payload: event.url });
       }
     });
+
+    try {
+      let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+      this.store.dispatch({ type: 'setUserInfo', payload: userInfo });
+      if (!userInfo.id) throw "未登录";
+    } catch (e) {
+      this.message.warning('请登录!');
+      this.router.navigateByUrl('/login');
+    }
   }
 }

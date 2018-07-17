@@ -24,8 +24,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canLoad(route: Route): Observable<boolean> | boolean {
     return new Observable(observer => {
       this.store.select('userInfoState').subscribe(res => {
-        console.log(route, res);
-        observer.next(true);
+        if (res.roleAllowPath.indexOf(`/home/${route.path}`) === -1) {
+          this.router.navigateByUrl('/system/error/403');
+        }
+        observer.next(res.roleAllowPath.indexOf(`/home/${route.path}`) > -1);
         observer.complete();
       })
     })

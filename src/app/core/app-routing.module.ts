@@ -23,27 +23,31 @@ const routes: Routes = [
       {
         path: 'customer',
         data: { title: '客户管理' },
+        canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/customer/customer.module#CustomerModule'
       },
       {
         path: 'account',
         data: { title: '账户管理' },
+        canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/account/account.module#AccountModule'
       },
       {
         path: 'passcard',
         data: { title: '全国通卡' },
-        // canLoad: [AuthGuardService],
+        canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/passcard/passcard.module#PasscardModule'
       },
       {
         path: 'interaction',
         data: { title: '用户互动' },
+        canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/interaction/interaction.module#InteractionModule'
       },
       {
         path: 'wechat',
         data: { title: '微信' },
+        canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/wechat/wechat.module#WechatModule'
       }
     ]
