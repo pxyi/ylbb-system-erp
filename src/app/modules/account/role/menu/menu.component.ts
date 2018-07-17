@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
 
   nodes: NzTreeNode[] = [];
 
-  checkedNodes: string[];
+  checkedNodes: string[] = ['/home'];
 
   roleInfoId: number;
 
