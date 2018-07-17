@@ -17,6 +17,7 @@ import zh from '@angular/common/locales/zh';
 import { MonthdiffPipe } from './pipes/monthdiff.pipe';
 import { QuoteComponent } from './components/quote/quote.component';
 import { ListPageComponent } from './components/list-page/list-page.component';
+import { HttpService } from './services/http.service';
 registerLocaleData(zh);
 
 @NgModule({
@@ -37,6 +38,7 @@ registerLocaleData(zh);
       multi: true,
     },
     CacheService,
+    HttpService,
     MonthdiffPipe
   ],
   exports: [

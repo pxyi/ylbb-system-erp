@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { AppState } from '../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
 import { DatePipe } from '@angular/common'
+import { YlbbResponse } from '../../../core/interface-config';
 
 @Component({
   selector: 'app-consumption',
@@ -106,6 +107,7 @@ export class ConsumptionComponent implements OnInit {
     private store: Store<AppState>,
     private http: HttpClient,
     private message: NzMessageService,
+    private modal: NzModalService,
     private datePipe: DatePipe
   ) {
     let nowDate = new Date();
@@ -116,6 +118,15 @@ export class ConsumptionComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
+  }
+
+  presentation() {
+    this.http.post<YlbbResponse>('/tongka/preApp', {}).subscribe(res => {
+      this.modal[res.code === 1000 ? 'success' : 'warning']({
+        nzTitle: '温馨提示',
+        nzContent: res.info
+      })
+    })
   }
 
 }
