@@ -1,8 +1,7 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { MenuComponent } from './menu/menu.component';
-import { YlbbResponse } from '../../../core/interface-config';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListPageComponent } from '../../../ng-relax/components/list-page/list-page.component';
-import { HttpClient } from '@angular/common/http';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TheadNode } from '../../../ng-relax/components/table/table.component';
@@ -33,7 +32,7 @@ export class RoleComponent implements OnInit {
   tableThead: TheadNode[] | string[] = ['角色名称', '角色代码', '创建日期', '备注', '状态', '操作'];
 
   constructor(
-    private http : HttpClient,
+    private http : HttpService,
     private modal: NzModalService,
     private message: NzMessageService,
     private fb: FormBuilder = new FormBuilder()
@@ -51,10 +50,9 @@ export class RoleComponent implements OnInit {
   editRole(data) {
     if (data.edit) {
       data.loading = true;
-      this.http.post<YlbbResponse>('/roleManagement/modify', { paramJson: JSON.stringify(data) }).subscribe(res => {
+      this.http.post('/roleManagement/modify', { paramJson: JSON.stringify(data) }).then(res => {
         data.loading = false;
         data.edit = false;
-        this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
       });
     } else {
       data.edit = true;
@@ -62,11 +60,8 @@ export class RoleComponent implements OnInit {
   }
 
   deleteRole(id) {
-    this.http.post<YlbbResponse>('/roleManagement/deleteRole', { paramJson: JSON.stringify({id}) }).subscribe(res => {
-      if (res.code == 1000) {
-        this.EaListPage.EaTable._request();
-      }
-      this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
+    this.http.post('/roleManagement/deleteRole', { paramJson: JSON.stringify({id}) }).then(res => {
+      this.EaListPage.EaTable._request();
     })
   }
 
@@ -83,13 +78,10 @@ export class RoleComponent implements OnInit {
   crateRole() {
     if (this.createRoleForm.valid) {
       this.createLoading = true;
-      this.http.post<YlbbResponse>('/roleManagement/modify', { paramJson: JSON.stringify(this.createRoleForm.value) }).subscribe(res => {
-        if (res.code == 1000) {
-          this.EaListPage.EaTable._request();
-          this.showCreateRole = false;
-          this.createLoading = false;
-        }
-        this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
+      this.http.post('/roleManagement/modify', { paramJson: JSON.stringify(this.createRoleForm.value) }).then(res => {
+        this.EaListPage.EaTable._request();
+        this.showCreateRole = false;
+        this.createLoading = false;
       })
     } else {
       for (let i in this.createRoleForm.controls) {
