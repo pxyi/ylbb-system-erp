@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
 import { UserInfoResolver } from './core/userInfo-resolver.service';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UserInfoResolver } from './core/userInfo-resolver.service';
     StoreModule.forRoot(reducersConfig)
   ],
   providers: [
-    UserInfoResolver
+    UserInfoResolver,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent]
 })
