@@ -105,7 +105,7 @@ export class PreviewCustomerComponent implements OnInit {
     })
 
     /* ------------------- 获取记录标签 ------------------- */
-    this.http.post('/common/labelList').then( res => {
+    this.http.post('/common/labelList', {}, false).then( res => {
       this.labelList = res.result;
     })
 
@@ -150,11 +150,11 @@ export class PreviewCustomerComponent implements OnInit {
 
 
     /* ------------------- 客户状态 ------------------- */
-    this.http.post('/common/showMemberStatus').then(res => {
+    this.http.post('/common/showMemberStatus', {}, false).then(res => {
       this.showMemberStatus = res.result;
     });
     /* ------------------- 跟进方式 ------------------- */
-    this.http.post('/common/followTypeList').then(res => {
+    this.http.post('/common/followTypeList', {}, false).then(res => {
       this.followTypeList = res.result;
     })
   }
