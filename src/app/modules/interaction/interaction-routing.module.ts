@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     data: { title: '用户建议' },
-    canDeactivate: [ AuthGuardService ],
+    canActivate: [ AuthGuardService ],
     component: ProposalComponent
   }
 ];
