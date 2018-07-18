@@ -18,8 +18,15 @@ export class UserInfoResolver implements Resolve<UserInfoState> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserInfoState> {
     return new Observable(observer => {
         this.store.select('userInfoState').subscribe(res => {
-          observer.next(res);
-          observer.complete();
+          if (res) {
+            observer.next(res);
+            observer.complete();
+          } else {
+            let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+            this.store.dispatch({ type: 'setUserInfo', payload: userInfo });
+            observer.next(userInfo);
+            observer.complete();
+          }
         })
     })
   }
