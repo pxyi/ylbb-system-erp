@@ -1,4 +1,4 @@
-import { AuthGuardService } from './../../ng-relax/services/auth-guard.service';
+import { AuthGuardService } from 'src/app/ng-relax/services/auth-guard.service';
 import { ModifyPasswordComponent } from './modify-password/modify-password.component';
 import { LoginLogComponent } from './login-log/login-log.component';
 import { RoleComponent } from './role/role.component';
@@ -10,20 +10,20 @@ const routes: Routes = [
   {
     path: 'account',
     data: { title: '账号管理' },
-    canActivate: [ AuthGuardService ],
-    component: AccountComponent
+    component: AccountComponent,
+    canActivate: [ AuthGuardService ]
   },
   {
     path: 'role',
     data: { title: '角色管理' },
-    canActivate: [ AuthGuardService ],
-    component: RoleComponent
+    component: RoleComponent,
+    canActivate: [ AuthGuardService ]
   },
   {
     path: 'loginlog',
     data: { title: '登录日志' },
-    canActivate: [ AuthGuardService ],
-    component: LoginLogComponent
+    component: LoginLogComponent,
+    canActivate: [ AuthGuardService ]
   },
   {
     path: 'modify',

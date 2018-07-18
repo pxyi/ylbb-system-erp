@@ -1,3 +1,4 @@
+import { AuthGuardService } from './../../ng-relax/services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PotentialComponent } from './potential/potential.component';
@@ -5,14 +6,13 @@ import { NewinformationComponent } from './newinformation/newinformation.compone
 import { NointentionComponent } from './nointention/nointention.component';
 import { PreviewCustomerComponent } from './preview/preview.component';
 import { NewinformationCanDeactivate } from './newinformation/newinfomation.guard';
-import { AuthGuardService } from 'src/app/ng-relax/services/auth-guard.service';
 
 const routes: Routes = [
   {
     path: 'potentail',
     data: { title: '潜在客户' },
-    canActivate: [ AuthGuardService ],
     component: PotentialComponent,
+    canActivate: [ AuthGuardService ],
     children: [
       {
         path: 'preview/:id',
@@ -32,8 +32,8 @@ const routes: Routes = [
   {
     path: 'nointention',
     data: { title: '无意向客户' },
-    canActivate: [ AuthGuardService ],
-    component: NointentionComponent
+    component: NointentionComponent,
+    canActivate: [ AuthGuardService ]
   },
 ];
 

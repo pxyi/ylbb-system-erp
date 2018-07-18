@@ -41,7 +41,7 @@ registerLocaleData(zh);
     CacheService,
     HttpService,
     MonthdiffPipe,
-    AuthGuardService
+    AuthGuardService,
   ],
   exports: [
     QueryComponent,
