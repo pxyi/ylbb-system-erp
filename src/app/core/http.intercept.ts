@@ -32,8 +32,14 @@ export class NoopInterceptor implements HttpInterceptor {
         setHeaders: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
         withCredentials: true
       })
-    } else if (req.method === 'GET') {
-      
+    } else if (req.method === 'PUT') {
+      let formData = new FormData();
+      for (let key of req.body) {
+        formData.set(key, req.body[key]);
+      }
+      req = req.clone({
+        body: formData
+      });
     }
     return next.handle(req).pipe(
       tap(event => {
