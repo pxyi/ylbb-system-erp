@@ -28,16 +28,18 @@
   <div>
     <div nz-col [nzSpan]="4" [style.line-height]="'32px'">处理结果：</div>
     <div nz-col [nzSpan]="20">
-      <nz-radio-group [(ngModel)]="result.status">
+      <nz-radio-group [(ngModel)]="result.status" *ngIf="!isPreview">
         <label nz-radio-button [nzValue]="0">未处理</label>
         <label nz-radio-button [nzValue]="1">已处理</label>
       </nz-radio-group>
+      <p *ngIf="isPreview">已处理</p>
     </div>
   </div>
   <div>
     <div nz-col [nzSpan]="4" [style.line-height]="'32px'">处理意见：</div>
     <div nz-col [nzSpan]="20">
-      <textarea nz-input placeholder="请输入处理意见" [(ngModel)]="result.deal" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      <textarea nz-input placeholder="请输入处理意见" *ngIf="!isPreview" [(ngModel)]="result.deal" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      <p *ngIf="isPreview">{{ result.deal }}</p>
     </div>
   </div>
 </div>

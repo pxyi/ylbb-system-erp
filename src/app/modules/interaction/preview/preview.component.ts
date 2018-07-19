@@ -12,7 +12,9 @@ export class PreviewComponent implements OnInit {
 
   @Input() source: boolean;
 
-  result: any = {status: 0, deal: ''}
+  result: any = {status: 0, deal: ''};
+
+  isPreview: boolean = true;
 
   constructor(
     private http: HttpService
@@ -21,6 +23,7 @@ export class PreviewComponent implements OnInit {
   ngOnInit() {
     this.http.post('/userAdvice/queryById', { paramJson: JSON.stringify({ id: this.id }) }, false).then(res => {
       res.code == 1000 && (this.result = res.result);
+      this.isPreview = res.result.status == 1;
     });
   }
 
