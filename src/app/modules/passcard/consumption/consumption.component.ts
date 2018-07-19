@@ -19,27 +19,14 @@ export class ConsumptionComponent implements OnInit {
     {
       label: '会员卡号',
       type: 'input',
-      key: 'memberId',
+      key: 'cardCode',
       placeholder: '请输入会员卡号'
     },
     {
       label: '会员姓名',
       type: 'input',
-      key: 'memberName ',
+      key: 'memberName',
       placeholder: '请输入会员姓名'
-    },
-    {
-      label: '消费日期',
-      type: 'rangepicker',
-      key: 'xiaofeiTime',
-      valueKey: ['startDate', 'endDate']
-    },
-    {
-      label: '服务泳师',
-      type: 'select',
-      key: 'teacherId',
-      optionsUrl: '/tongka/teacherList',
-      placeholder: '请选择服务泳师'
     },
     {
       label: '会员小名',
@@ -49,9 +36,30 @@ export class ConsumptionComponent implements OnInit {
       isHide: true
     },
     {
+      label: '消费日期',
+      type: 'rangepicker',
+      key: 'xiaofeiTime',
+      valueKey: ['startDate', 'endDate']
+    },
+    {
+      label: '消费类型',
+      type: 'select',
+      key: 'consumeType',
+      default: 1,
+      options: [{ name: '本店会员跨店', id: 1 }, { name: '它店会员到店', id: 2 }],
+      placeholder: '请选择消费类型'
+    },
+    {
+      label: '服务泳师',
+      type: 'select',
+      key: 'teacherId',
+      optionsUrl: '/tongka/teacherList',
+      placeholder: '请选择服务泳师'
+    },
+    {
       label: '婴儿类型',
       type: 'select',
-      key: 'babyType ',
+      key: 'babyType',
       options: [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿'} ],
       placeholder: '请选择婴儿类型',
       isHide: true
@@ -87,18 +95,10 @@ export class ConsumptionComponent implements OnInit {
       options: [{ name: '满意', id: '满意' }, { name: '表扬', id: '表扬' }, { name: '一般', id: '一般' }, { name: '不好', id: '不好' }],
       placeholder: '请选择满意度',
       isHide: true
-    },
-    {
-      label: '消费类型',
-      type: 'select',
-      key: 'isCrossed',
-      options: [{ name: '本店会员跨店', id: 1 }, { name: '它店会员到店', id: 2 }],
-      placeholder: '请选择消费类型',
-      isHide: true
-    },
+    }
   ]
 
-  tableThead: string[] = ['卡号', '卡类型', '姓名', '小名', '全国通卡跨店', '消费金额', '消费时间', '已使用卡次', '单次扣除卡次', '类型', '消费商品', '消费类型', '消费门店', '办卡门店', '服务泳师', '满意度', '体重', '泳圈型号', '游泳时长', '测量', '拍照', '备注']
+  tableThead: string[] = ['卡号', '卡类型', '姓名', '小名', '是否跨店消费', '消费金额', '消费时间', '已使用卡次', '单次扣除卡次', '类型', '消费商品', '消费类型', '消费门店', '办卡门店', '服务泳师', '满意度', '体重', '泳圈型号', '游泳时长', '测量', '拍照', '备注']
 
   paramsDefault;
 
@@ -113,8 +113,8 @@ export class ConsumptionComponent implements OnInit {
   ) {
     let nowDate = new Date();
     let noewDateString = this.datePipe.transform(nowDate, 'yyyy-MM-dd');
-    this.paramsDefault = { startDate: noewDateString, endDate: noewDateString };
-    this.queryNode[2].default = [nowDate, nowDate];
+    this.paramsDefault = { startDate: noewDateString, endDate: noewDateString, consumeType: 1 };
+    this.queryNode[3].default = [nowDate, nowDate];
   }
 
   ngOnInit() {

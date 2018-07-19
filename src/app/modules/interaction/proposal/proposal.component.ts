@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
+import { PreviewComponent } from './../preview/preview.component';
+import { NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
 
 @Component({
@@ -7,6 +11,8 @@ import { QueryNode } from '../../../ng-relax/components/query/query.component';
   styleUrls: ['./proposal.component.scss']
 })
 export class ProposalComponent implements OnInit {
+
+  @ViewChild('EaListPage') EaListPage: ListPageComponent;
 
   queryNode: QueryNode[] = [
     {
@@ -30,11 +36,48 @@ export class ProposalComponent implements OnInit {
     }
   ]
 
-  tableThead: string[] = ['会员姓名', '家长姓名', '邮箱', '电话', '内容', '	提交时间', '处理状态', '处理时间', '操作'];
+  tableThead: any[] = ['会员姓名', '家长姓名', '电话', '内容', '	提交时间', '处理状态', '处理时间', { name: '操作', width: 100, right: 0}];
 
-  constructor() { }
+  constructor(
+    private http: HttpService,
+    private modal: NzModalService,
+    private message: NzMessageService
+  ) { }
 
   ngOnInit() {
+  }
+
+  showModal(id, source?: boolean) {
+    let { message, http, EaListPage } =  this;
+    const modal = this.modal.create({
+      nzTitle: '用户建议',
+      nzContent: PreviewComponent,
+      nzComponentParams: {
+        id, source
+      },
+      nzFooter: source ? [
+        {
+          label: '取消',
+          onClick: () => {
+            modal.close();
+          }
+        },
+        {
+          label: '确定',
+          type: 'primary',
+          loading: false,
+          onClick(componentInstance) {
+            this.loading = true;
+            http.post('/userAdvice/save', { paramJson: JSON.stringify(componentInstance.result) }).then(res => {
+              EaListPage.EaTable._request();
+              modal.close();
+            }, err => {
+              this.loading = false;
+            })
+          }
+        }
+      ] : null
+    });
   }
 
 }

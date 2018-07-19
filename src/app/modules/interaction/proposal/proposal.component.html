@@ -1,15 +1,17 @@
 <div class="container">
-  <ea-list-page url="/userAdvice/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
+  <ea-list-page #EaListPage url="/userAdvice/list" [queryNode]="queryNode" [allowSpace]="false" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
     <ng-template #EaTableTbodyTr let-data>
       <td>{{ data.member.name }}</td>
       <td>{{ data.name }}</td>
-      <td>{{ data.email }}</td>
       <td>{{ data.phone }}</td>
-      <td>{{ data.deal }}</td>
+      <td>{{ data.content }}</td>
       <td>{{ data.createDate }}</td>
-      <td>{{ data.status }}</td>
-      <td>{{ data.dealDate }}</td>
-      <td></td>
+      <td><nz-tag [nzColor]="data.status == 0 ? '' : '#2db7f5'">{{ data.status == 0 ? '未处理' : '已处理' }}</nz-tag></td>
+      <td>{{ data.dealDate || '--' }}</td>
+      <td nzWidth="100px" nzRight="0">
+        <a href="javascript:;" *ngIf="data.status == 0" (click)="showModal(data.id, true)">处理</a>
+        <a href="javascript:;" *ngIf="data.status != 0" (click)="showModal(data.id)">查看</a>
+      </td>
     </ng-template>
   </ea-list-page>
 </div>
