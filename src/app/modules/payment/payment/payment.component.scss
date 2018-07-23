@@ -1,0 +1,33 @@
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.box {
+  margin: 40px 0;
+}
+.price {
+  color: #f5222d;
+  font-size: 24px;
+  margin: 0 6px;
+  vertical-align: sub;
+}
+
+:host ::ng-deep {
+  .detail .ant-form-item {
+    margin-bottom: 12px;
+  }
+}
+.payment {
+  text-align: center;
+  p {
+    color: rgba($color: #000000, $alpha: .45);
+    span {
+      color: #f5222d;
+      font-size: 24px;
+      vertical-align: sub;
+    }
+  }
+  .paybox {
+    height: 400px;
+  }
+}

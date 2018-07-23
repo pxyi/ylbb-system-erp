@@ -6,7 +6,7 @@
         <nz-form-control [nzSpan]="19">
           <ng-container *ngIf="control.type === 'input'">
             <nz-input-group [nzSuffix]="suffixIconButton">
-              <input [formControlName]="control.key" nz-input [placeholder]="control.placeholder">
+              <input [formControlName]="control.key" nz-input [placeholder]="control.placeholder || '请输入' + control.label">
             </nz-input-group>
             <ng-template #suffixIconButton>
               <i class="anticon anticon-close-circle" (click)="_clearControlValue(control.key)"></i>
@@ -14,7 +14,7 @@
           </ng-container>
 
           <ng-container *ngIf="control.type === 'select'">
-            <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder">
+            <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder || '请选择' + control.label">
               <nz-option *ngFor="let option of control.options" [nzLabel]="option[control.optionKey?.label]" [nzValue]="option[control.optionKey?.value]"
                 [nzDisabled]="option?.disabled"></nz-option>
             </nz-select>
@@ -24,7 +24,7 @@
           </ng-container>
 
           <ng-container *ngIf="control.type === 'datepicker'">
-            <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder"></nz-date-picker>
+            <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder || '请选择' + control.label"></nz-date-picker>
           </ng-container>
 
           <ng-container *ngIf="control.type === 'rangepicker'">

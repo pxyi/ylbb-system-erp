@@ -49,6 +49,12 @@ const routes: Routes = [
         data: { title: '微信' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/wechat/wechat.module#WechatModule'
+      },
+      {
+        path: 'payment',
+        data: { title: '充值中心' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/payment/payment.module#PaymentModule'
       }
     ]
   },

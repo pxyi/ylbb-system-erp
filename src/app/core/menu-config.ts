@@ -80,4 +80,21 @@ export const MenuConfig = [
     icon  : 'anticon-profile',
     isLeaf: true
   },
+  {
+    title : '充值中心',
+    key   : '/home/payment',
+    icon  : 'anticon-pay-circle',
+    children: [
+      {
+        title : '在线充值',
+        key   : '/home/payment',
+        isLeaf: true
+      },
+      {
+        title: '充值记录',
+        key: '/home/payment/record',
+        isLeaf: true
+      }
+    ]
+  },
 ];
