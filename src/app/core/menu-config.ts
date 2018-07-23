@@ -82,7 +82,7 @@ export const MenuConfig = [
   },
   {
     title : '充值中心',
-    key   : '/home/payment',
+    key   : '/home/payments',
     icon  : 'anticon-pay-circle',
     children: [
       {
