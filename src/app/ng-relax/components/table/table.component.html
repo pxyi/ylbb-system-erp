@@ -5,6 +5,8 @@
   [nzFrontPagination]="false"
   [ngClass]="[ allowSpace ? 'break' : 'nowrap' ]"
   [nzData]="dataSet"
+  [nzSize]="size"
+  [nzShowPagination]="showPage"
   [nzLoading]="_pageInfo.loading"
   [nzTotal]="_pageInfo.totalPage"
   [(nzPageIndex)]="_pageInfo.pageNum"

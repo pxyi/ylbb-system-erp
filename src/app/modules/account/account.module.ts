@@ -8,6 +8,7 @@ import { RoleComponent } from './role/role.component';
 import { LoginLogComponent } from './login-log/login-log.component';
 import { ModifyPasswordComponent } from './modify-password/modify-password.component';
 import { MenuComponent } from './role/menu/menu.component';
+import { DistributionComponent } from './account/distribution/distribution.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { MenuComponent } from './role/menu/menu.component';
     AccountRoutingModule,
     NgRelaxModule
   ],
-  declarations: [AccountComponent, RoleComponent, LoginLogComponent, ModifyPasswordComponent, MenuComponent],
-  entryComponents: [MenuComponent]
+  declarations: [AccountComponent, RoleComponent, LoginLogComponent, ModifyPasswordComponent, MenuComponent, DistributionComponent],
+  entryComponents: [MenuComponent, DistributionComponent]
 })
 export class AccountModule { }

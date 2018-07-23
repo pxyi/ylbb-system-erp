@@ -1,6 +1,7 @@
+import { DistributionComponent } from './distribution/distribution.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { ListPageComponent } from '../../../ng-relax/components/list-page/list-page.component';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
@@ -41,7 +42,8 @@ export class AccountComponent implements OnInit {
   constructor(
     private fb: FormBuilder = new FormBuilder(),
     private http: HttpService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private modal: NzModalService
   ) { }
 
   ngOnInit() {
@@ -97,7 +99,25 @@ export class AccountComponent implements OnInit {
   }
 
   allocationRole(id) {
+    const modal = this.modal.create({
+      nzTitle: '分配角色',
+      nzContent: DistributionComponent,
+      nzComponentParams: { id },
+      nzFooter: [
+        {
+          label: '取消',
+          onClick() { modal.close(); }
+        },
+        {
+          label: '确定',
+          type: 'primary',
+          loading: false,
+          onClick(component) {
 
+          }
+        }
+      ]
+    })
   }
 
   resetPassword(id) {

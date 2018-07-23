@@ -1,0 +1,6 @@
+<ea-table url="/roleManagement/list" size="small" [showPage]="false" [checked]="true" [thead]="['角色名', '角色代码']" [(checkedItems)]="checkedItems" [EaTableTbodyTr]="EaTableTbodyTr">
+  <ng-template let-data #EaTableTbodyTr>
+    <td>{{ data.name }}</td>
+    <td>{{ data.code }}</td>
+  </ng-template>
+</ea-table>

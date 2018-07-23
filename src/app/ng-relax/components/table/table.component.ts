@@ -25,6 +25,10 @@ export class TableComponent implements OnInit {
 
   @Input() allowSpace   : boolean = true;
 
+  @Input() showPage     : boolean = true;
+
+  @Input() size         : 'default' | 'small' | 'middle';
+
   @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
 
 
