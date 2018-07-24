@@ -1,6 +1,5 @@
 import { HttpService } from './../../../../ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { resolve } from 'path';
 
 @Component({
   selector: 'app-distribution',
@@ -24,13 +23,19 @@ export class DistributionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  tableReady(dataset) {
     this.http.post('/accountManagement/userRoleList', {
       paramJson: JSON.stringify({ id: this.id })
     }, false).then(res => {
       res.result.roles.map(item => {
         this.checkedItems.push(item.id);
-      })
-      console.log(this.checkedItems);
+        dataset.map(data => {
+          data.id == item.id && (data.checked = true);
+          data.disabled = data.status != 0;
+        });
+      });
     })
   }
 

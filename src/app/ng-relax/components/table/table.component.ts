@@ -31,6 +31,11 @@ export class TableComponent implements OnInit {
 
   @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
 
+  @Output() ready       : EventEmitter<any> = new EventEmitter();
+  private _readyComplate: boolean;
+
+  @Output() private _dataChange : EventEmitter<any> = new EventEmitter();
+
 
   private _EaTableTbodyTr: TemplateRef<void>;
   @Input()
@@ -76,6 +81,11 @@ export class TableComponent implements OnInit {
           this.dataSet.map((res: any) => res.checked = this.checkedItems.indexOf(res[this.checkKey]) > -1);
           this.isChecked();
         }
+        if (!this._readyComplate) {
+          this.ready.emit(this.dataSet);
+          this._readyComplate = true;
+        }
+        this._dataChange.emit(this.dataSet);
 
       } else {
         this.message.warning(res.info);
