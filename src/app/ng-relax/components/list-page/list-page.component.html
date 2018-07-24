@@ -2,6 +2,6 @@
 
 <ng-container *ngTemplateOutlet="EaBtns"></ng-container>
 
-<ea-table #EaTable [thead]="tableThead" [paramsDefault]="paramsDefault" [EaTableTbodyTr]="EaTableTbodyTr" [checked]="checked" (checkedItems)="checkedChange($event)"
+<ea-table #EaTable [thead]="tableThead" [paramsDefault]="paramsDefault" [EaTableTbodyTr]="EaTableTbodyTr" [EaTableTbodyExpand]="EaTableTbodyExpand" [checked]="checked" [checkedKey]="checkedKey" (checkedItems)="checkedChange($event)"
   [allowSpace]="allowSpace" [url]="url">
 </ea-table>

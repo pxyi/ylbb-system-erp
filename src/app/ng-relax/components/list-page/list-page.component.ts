@@ -22,9 +22,7 @@ export class ListPageComponent implements OnInit {
 
   @Input() checkedItems: any[];
 
-  @Input() checkKey: string = 'id';
-
-  @Input() expand: boolean;
+  @Input() checkedKey: string = 'id';
 
   @Input() checked: boolean;
 
@@ -33,6 +31,8 @@ export class ListPageComponent implements OnInit {
   @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
 
   @Input() EaTableTbodyTr: TemplateRef<void>;
+
+  @Input() EaTableTbodyExpand: TemplateRef<void>;
 
   @Input() EaQueryBtns: TemplateRef<void>;
   

@@ -17,9 +17,7 @@ export class TableComponent implements OnInit {
 
   @Input() checkedItems : any[];
 
-  @Input() checkKey     : string = 'id';
-
-  @Input() expand       : boolean;
+  @Input() checkedKey   : string = 'id';
 
   @Input() checked      : boolean;
 
@@ -44,6 +42,17 @@ export class TableComponent implements OnInit {
   }
   get EaTableTbodyTr(): TemplateRef<void> {
     return this._EaTableTbodyTr;
+  }
+
+  showExpand: boolean;
+  private _EaTableTbodyExpand: TemplateRef<void>;
+  @Input()
+  set EaTableTbodyExpand(value: TemplateRef<void>) {
+    this.showExpand = !!value;
+    this._EaTableTbodyExpand = value;
+  }
+  get EaTableTbodyExpand(): TemplateRef<void> {
+    return this._EaTableTbodyExpand;
   }
 
   dataSet   : any[] = [];
@@ -78,7 +87,7 @@ export class TableComponent implements OnInit {
 
         /* ------------------- 如果存在选择列表则初始数据 ------------------- */
         if (this.checkedItems) {
-          this.dataSet.map((res: any) => res.checked = this.checkedItems.indexOf(res[this.checkKey]) > -1);
+          this.dataSet.map((res: any) => res.checked = this.checkedItems.indexOf(res[this.checkedKey]) > -1);
           this.isChecked();
         }
         if (!this._readyComplate) {
@@ -119,12 +128,12 @@ export class TableComponent implements OnInit {
   _resetCheckedItems(): void {
     this.dataSet.map((res: any) => {
       if (res.checked) {
-        if (this.checkedItems.indexOf(res[this.checkKey]) === -1) {
-          this.checkedItems.push(res[this.checkKey]);
+        if (this.checkedItems.indexOf(res[this.checkedKey]) === -1) {
+          this.checkedItems.push(res[this.checkedKey]);
         }
       } else {
-        if (this.checkedItems.indexOf(res[this.checkKey]) > -1) {
-          this.checkedItems.splice(this.checkedItems.indexOf(res[this.checkKey]), 1);
+        if (this.checkedItems.indexOf(res[this.checkedKey]) > -1) {
+          this.checkedItems.splice(this.checkedItems.indexOf(res[this.checkedKey]), 1);
         }
       }
     })
