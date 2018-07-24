@@ -1,10 +1,8 @@
-import { AppState } from './../../../core/reducers/reducers-config';
+import { AutographService } from './../autograph.service';
 import { YlbbResponse } from './../../../ng-relax/services/http.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode, QueryComponent } from 'src/app/ng-relax/components/query/query.component';
-import { Md5 } from "ts-md5/dist/md5";
-import { Store } from '@ngrx/store';
 import { PageInfo } from 'src/app/ng-relax/components/table/table.component';
 
 @Component({
@@ -20,7 +18,7 @@ export class RecordComponent implements OnInit {
     {
       label: '业务类型',
       type : 'select',
-      key: 'code',
+      key: 'productId',
       optionKey: { label: 'productName', value: 'id' }
     },
     {
@@ -36,7 +34,7 @@ export class RecordComponent implements OnInit {
     }
   ];
 
-  autograph: any = { sign: '', time: new Date().getTime(), shopId: null };
+  sign;
 
 
   domain = 'http://tpay.beibeiyue.com/pay';
@@ -45,24 +43,22 @@ export class RecordComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private store: Store<AppState>
+    private autograph: AutographService
   ) {
     this._getSign();
-
-    this.store.select('userInfoState').subscribe((res: any) => {
-      this.autograph.shopId = res.store.id;
-    });
   }
 
   ngOnInit() {
   }
 
-  private async _getSign() {
-    let res: any = await this.http.post('/payment/intoOnlinePayment', {}).toPromise();
-    this.autograph.sign = Md5.hashStr(res.result.sign + this.autograph.time);
-    this.request();
-    let category = await this.http.post<YlbbResponse>(`${this.domain}/product/name/all/${JSON.stringify(this.autograph)}`, {}).toPromise();
-    category.code == 1000 && this.eaQuery.patchValue('code', { options: category.result });
+  private _getSign() {
+    this.autograph.getAutograph().then(res => {
+      this.sign = res;
+      this.request();
+      this.http.post<YlbbResponse>(`${this.domain}/product/name/all/${JSON.stringify(this.sign)}`, {}).subscribe(category => {
+        category.code == 1000 && this.eaQuery.patchValue('productId', { options: category.result });
+      })
+    });
   }
 
   dataSet: any[];
@@ -74,7 +70,7 @@ export class RecordComponent implements OnInit {
 
   request() {
     this._pageInfo.loading = true;
-    this.http.post<YlbbResponse>(`${this.domain}/order/erp/${JSON.stringify(Object.assign(this.queryParams, this.autograph))}`, {}).subscribe(res => {
+    this.http.post<YlbbResponse>(`${this.domain}/order/erp/${JSON.stringify(Object.assign(this.queryParams, this.sign))}`, {}).subscribe(res => {
       if (res.code == 1000) {
         this.dataSet = res.result.ordersList;
         this._pageInfo.totalPage = res.result.sumSize;

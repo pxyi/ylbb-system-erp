@@ -1,3 +1,5 @@
+import { AppState } from './../../../core/reducers/reducers-config';
+import { Store } from '@ngrx/store';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,20 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
 
-  currentPage = 1;
+  /* -------- 当前页 -------- */
+  currentPage = 0;
 
+  /* -------- 商品列表 -------- */
+  commodityItems: any[] = [];
+
+  /* -------- 支付方式 -------- */
   payType;
 
   formGroup: FormGroup;
 
   constructor(
-    private fb: FormBuilder = new FormBuilder()
+    private fb: FormBuilder = new FormBuilder(),
+    private store: Store<AppState>
   ) { 
     this.formGroup = this.fb.group({
+      shopName: [{ disabled: true, value: '' }],
+      shopUserName: [{ disabled: true, value: '' }],
       phone: [, [Validators.required, Validators.pattern(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/)]],
       remark: [],
       commodity: [, [Validators.required]],
       price: [, [Validators.required]]
+    });
+    this.store.select('userInfoState').subscribe(res => {
+      this.formGroup.patchValue({ shopName: res.store['shopName'], shopUserName: res.name });
     })
   }
 

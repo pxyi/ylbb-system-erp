@@ -13,13 +13,13 @@
           <nz-form-item>
             <nz-form-label [nzSpan]="8">门店</nz-form-label>
             <nz-form-control style="width: 300px; float: left;">
-              <input nz-input disabled value="北京青年路测试">
+              <input nz-input formControlName="shopName">
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
             <nz-form-label [nzSpan]="8">操作人</nz-form-label>
             <nz-form-control style="width: 300px; float: left;">
-              <input nz-input disabled value="管理员">
+              <input nz-input formControlName="shopUserName">
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
@@ -27,12 +27,6 @@
             <nz-form-control style="width: 300px; float: left;">
               <input nz-input id="phone" formControlName="phone" maxlength="11" placeholder="请输入接受短信手机号码">
               <nz-form-explain *ngIf="formGroup.get('phone').dirty && formGroup.get('phone').errors">请输入接受短信手机号码!</nz-form-explain>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzFor="remark">备注</nz-form-label>
-            <nz-form-control style="width: 300px; float: left;">
-              <input nz-input id="remark" formControlName="remark" placeholder="请输入备注">
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
@@ -53,6 +47,12 @@
                 <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="formGroup.get('price').dirty && formGroup.get('price').errors">请选择充值套餐!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzFor="remark">备注</nz-form-label>
+            <nz-form-control style="width: 300px; float: left;">
+              <textarea nz-input id="remark" formControlName="remark" placeholder="请输入备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
             </nz-form-control>
           </nz-form-item>
           <div nz-row>
