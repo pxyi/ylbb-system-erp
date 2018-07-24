@@ -66,6 +66,13 @@ export class QueryComponent implements OnInit {
     });
   }
 
+  patchValue(key: string, value: object): void {
+    this._node.map(res => {
+      res.key === key && (res = Object.assign(res, value));
+      return res;
+    })
+  }
+
   /* --------------- 重置 --------------- */
   _reset(): void {
     this._queryForm.reset();

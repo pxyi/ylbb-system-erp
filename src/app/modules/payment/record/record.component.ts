@@ -1,9 +1,11 @@
+import { AppState } from './../../../core/reducers/reducers-config';
 import { YlbbResponse } from './../../../ng-relax/services/http.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
-import { TheadNode } from 'src/app/ng-relax/components/table/table.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { QueryNode, QueryComponent } from 'src/app/ng-relax/components/query/query.component';
 import { Md5 } from "ts-md5/dist/md5";
+import { Store } from '@ngrx/store';
+import { PageInfo } from 'src/app/ng-relax/components/table/table.component';
 
 @Component({
   selector: 'app-record',
@@ -12,45 +14,74 @@ import { Md5 } from "ts-md5/dist/md5";
 })
 export class RecordComponent implements OnInit {
 
+  @ViewChild('eaQuery') eaQuery: QueryComponent;
 
   queryNode: QueryNode[] = [
     {
       label: '业务类型',
-      type : 'input',
+      type : 'select',
       key: 'code',
-      placeholder: '请输入登录名'
+      optionKey: { label: 'productName', value: 'id' }
     },
     {
-      label: '中文名',
-      type: 'input',
-      key: 'name',
-      placeholder: '请输入中文名'
+      label: '交易时间',
+      type: 'datepicker',
+      key: 'orderCreate'
+    },
+    {
+      label: '交易状态',
+      type: 'select',
+      options: [ { name: '失败', id: 0 }, { name: '成功', id: 1 } ],
+      key: 'payStatus'
     }
-  ]
+  ];
 
-  tableThead: TheadNode[] | string[] = ['登录名', '中文名', '邮箱', '创建日期', '状态', '操作'];
+  autograph: any = { sign: '', time: new Date().getTime(), shopId: null };
 
-  sign;
-
-  categoryOptions: any[] = [];
 
   domain = 'http://tpay.beibeiyue.com/pay';
 
+  _pageInfo: PageInfo = new PageInfo();
+
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private store: Store<AppState>
   ) {
-    this._getSin();
+    this._getSign();
+
+    this.store.select('userInfoState').subscribe((res: any) => {
+      this.autograph.shopId = res.store.id;
+    });
   }
 
   ngOnInit() {
   }
 
-  private async _getSin() {
+  private async _getSign() {
     let res: any = await this.http.post('/payment/intoOnlinePayment', {}).toPromise();
-    let nowDate = new Date().getTime();
-    this.sign = Md5.hashStr(res.rseult + nowDate);
-    let category = await this.http.post<YlbbResponse>(`${this.domain}/product/name/all/${JSON.stringify({ sign: this.sign, time: nowDate })}`, {}).toPromise();
-    category.code == 100 && (this.categoryOptions = category.result);
+    this.autograph.sign = Md5.hashStr(res.result.sign + this.autograph.time);
+    this.request();
+    let category = await this.http.post<YlbbResponse>(`${this.domain}/product/name/all/${JSON.stringify(this.autograph)}`, {}).toPromise();
+    category.code == 1000 && this.eaQuery.patchValue('code', { options: category.result });
+  }
+
+  dataSet: any[];
+  queryParams = {};
+  query(e) {
+    this.queryParams = e;
+    this.request();
+  }
+
+  request() {
+    this._pageInfo.loading = true;
+    this.http.post<YlbbResponse>(`${this.domain}/order/erp/${JSON.stringify(Object.assign(this.queryParams, this.autograph))}`, {}).subscribe(res => {
+      if (res.code == 1000) {
+        this.dataSet = res.result.ordersList;
+        this._pageInfo.totalPage = res.result.sumSize;
+        this._pageInfo.pageNum = res.result.pageSum;
+      }
+      this._pageInfo.loading = false;
+    })
   }
 
 }

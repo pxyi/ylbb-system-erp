@@ -146,7 +146,7 @@ export class TableComponent implements OnInit {
  * @interface   初始化分页信息
  * @description 2018-02-28
  */
-class PageInfo {
+export class PageInfo {
   constructor(
     public loading    : boolean = false,
     public totalPage  : number = 0,
