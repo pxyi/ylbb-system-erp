@@ -7,6 +7,7 @@ import { AppState } from '../../core/reducers/reducers-config';
 @Injectable()
 export class AutographService {
 
+  domain = 'http://tpay.beibeiyue.com/pay';
 
   getAutograph(): Promise<object> {
     return new Promise((resolve, reject) => {
@@ -16,7 +17,12 @@ export class AutographService {
           resolve({
             sign: Md5.hashStr(res.result.sign + nowDate),
             time: nowDate,
-            shopId: userInfo.store.id
+            shopId: userInfo.store.id,
+            shopName: userInfo.store.shopName,
+            loginId: userInfo.id,
+            loginName: userInfo.name,
+            productCount: 1,
+            orderFrom: 'ERP'
           })
         }, err => reject(err));
       }, err => reject(err));

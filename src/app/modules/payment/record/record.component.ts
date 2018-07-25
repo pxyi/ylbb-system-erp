@@ -37,7 +37,7 @@ export class RecordComponent implements OnInit {
   sign;
 
 
-  domain = 'http://tpay.beibeiyue.com/pay';
+  domain;
 
   _pageInfo: PageInfo = new PageInfo();
 
@@ -46,6 +46,7 @@ export class RecordComponent implements OnInit {
     private autograph: AutographService
   ) {
     this._getSign();
+    this.domain = this.autograph.domain;
   }
 
   ngOnInit() {

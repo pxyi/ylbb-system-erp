@@ -23,36 +23,34 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzFor="phone">接收短信手机号码</nz-form-label>
+            <nz-form-label [nzSpan]="8" nzFor="orderPhone">接收短信手机号码</nz-form-label>
             <nz-form-control style="width: 300px; float: left;">
-              <input nz-input id="phone" formControlName="phone" maxlength="11" placeholder="请输入接受短信手机号码">
-              <nz-form-explain *ngIf="formGroup.get('phone').dirty && formGroup.get('phone').errors">请输入接受短信手机号码!</nz-form-explain>
+              <input nz-input id="orderPhone" formControlName="orderPhone" maxlength="11" placeholder="请输入接受短信手机号码">
+              <nz-form-explain *ngIf="formGroup.get('orderPhone').dirty && formGroup.get('orderPhone').errors">请输入接受短信手机号码!</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
             <nz-form-label [nzSpan]="8" nzFor="commodity">选择商品</nz-form-label>
             <nz-form-control style="width: 300px; float: left;">
-              <nz-select nzAllowClear formControlName="commodity" nzPlaceHolder="请选择商品">
-                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+              <nz-select formControlName="commodity" nzPlaceHolder="请选择商品">
+                <nz-option *ngFor="let option of commodityItems" [nzLabel]="option.productName" [nzValue]="option.id"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="formGroup.get('commodity').dirty && formGroup.get('commodity').errors">请选择商品!</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzFor="price">选择充值套餐</nz-form-label>
+          <nz-form-item *ngIf="formGroup.get('commodity').value">
+            <nz-form-label [nzSpan]="8" nzFor="productMoneryId">选择充值套餐</nz-form-label>
             <nz-form-control style="width: 300px; float: left;">
-              <nz-select nzAllowClear formControlName="price" nzPlaceHolder="请选择充值套餐">
-                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+              <nz-select formControlName="productMoneryId" nzPlaceHolder="请选择充值套餐">
+                <nz-option *ngFor="let option of productItems" [nzLabel]="option.productBody" [nzValue]="option.id"></nz-option>
               </nz-select>
-              <nz-form-explain *ngIf="formGroup.get('price').dirty && formGroup.get('price').errors">请选择充值套餐!</nz-form-explain>
+              <nz-form-explain *ngIf="formGroup.get('productMoneryId').dirty && formGroup.get('productMoneryId').errors">请选择充值套餐!</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzFor="remark">备注</nz-form-label>
+            <nz-form-label [nzSpan]="8" nzFor="remarks">备注</nz-form-label>
             <nz-form-control style="width: 300px; float: left;">
-              <textarea nz-input id="remark" formControlName="remark" placeholder="请输入备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+              <textarea nz-input id="remarks" formControlName="remarks" placeholder="请输入备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
             </nz-form-control>
           </nz-form-item>
           <div nz-row>
@@ -66,27 +64,27 @@
       <div *ngIf="currentPage == 1" class="detail">
           <nz-form-item>
             <nz-form-label [nzSpan]="10">订单编号</nz-form-label>
-            <nz-form-control [nzSpan]="14">180719012060</nz-form-control>
+            <nz-form-control [nzSpan]="14">{{ orderDetail.orderNo }}</nz-form-control>
           </nz-form-item>
           <nz-form-item>
             <nz-form-label [nzSpan]="10">所属门店</nz-form-label>
-            <nz-form-control [nzSpan]="14">北京青年路测试</nz-form-control>
+            <nz-form-control [nzSpan]="14">{{ orderDetail.shopName }}</nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzFor="phone">接收短信手机号码</nz-form-label>
-            <nz-form-control [nzSpan]="14">13555555555</nz-form-control>
+            <nz-form-label [nzSpan]="10">接收短信手机号码</nz-form-label>
+            <nz-form-control [nzSpan]="14">{{ orderDetail.orderPhone }}</nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzFor="commodity">商品名</nz-form-label>
-            <nz-form-control [nzSpan]="14">通卡保证金</nz-form-control>
+            <nz-form-label [nzSpan]="10">商品名</nz-form-label>
+            <nz-form-control [nzSpan]="14">{{ orderDetail.productName }}</nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzFor="remark">备注</nz-form-label>
-            <nz-form-control [nzSpan]="14"></nz-form-control>
+            <nz-form-label [nzSpan]="10">备注</nz-form-label>
+            <nz-form-control [nzSpan]="14">{{ orderDetail.remarks }}</nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzFor="price">支付金额</nz-form-label>
-            <nz-form-control [nzSpan]="14">需支付<span class="price">3000</span>元</nz-form-control>
+            <nz-form-label [nzSpan]="10">支付金额</nz-form-label>
+            <nz-form-control [nzSpan]="14">需支付<span class="price">{{ orderDetail.totalMoney }}</span>元</nz-form-control>
           </nz-form-item>
           <div nz-row style="margin-top: 30px;">
             <div nz-col nzOffset="8">
@@ -96,20 +94,43 @@
           </div>
       </div>
       <div *ngIf="currentPage == 2" class="payment">
-        <p>*待支付金额：<span>3000</span>元，请点击图片选择支付方式</p>
-        <nz-radio-group [(ngModel)]="payType">
-          <label nz-radio nzValue="A">
-            <img style="width: 100px;" src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/zfb.png" alt="">
-          </label>
-          <label nz-radio nzValue="B">
+        <p>*待支付金额：<span>{{ orderDetail.totalMoney }}</span>元，请点击图片选择支付方式</p>
+        <nz-radio-group [(ngModel)]="payType" (ngModelChange)="payment()">
+          <label nz-radio nzValue="zfb">
             <img style="width: 100px;" src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/zfb.png" alt="">
           </label>
         </nz-radio-group>
-        <div class="paybox">
-          
+        <nz-spin [nzSpinning]="showPaymentLoading">
+          <div class="paybox" [hidden]="!showPaymentQrcode">
+            <canvas id="paycode"></canvas>
+            <p>请用支付宝扫码完成支付</p>
+            <h4>订单创建成功，请尽快支付，支付剩余时间<span>0时{{ paymentTimeMM }}分{{ paymentTimeSS }}秒</span></h4>
+          </div>
+        </nz-spin>
+      </div>
+      <div *ngIf="currentPage == 3">
+        <div class="payment-reault">
+          <i class="anticon" 
+            [style.color]="paymentResult > 0 ? '#52c41a' : '#f5222d'"
+            [ngClass]="[paymentResult > 0 ? 'anticon-check-circle' : 'anticon-close-circle']"></i>
+          <h2>支付{{ paymentResult > 0 ? '成功' : '失败' }}</h2>
+          <p [ngSwitch]="paymentResult">
+            <ng-container *ngSwitchCase="1">支付成功，可在我的支付记录页查看支付记录</ng-container>
+            <ng-container *ngSwitchCase="-1">支付超时，请返回订单首页重新支付</ng-container>
+            <ng-container *ngSwitchDefault>支付失败...</ng-container>
+          </p>
+          <div>
+            <ng-container *ngIf="paymentResult > 0">
+              <button nz-button nzType="default" (click)="currentPage = 0; paymentResult = 0;">再次充值</button>
+              <button nz-button nzType="primary">查看支付记录</button>
+            </ng-container>
+            <ng-container *ngIf="paymentResult < 0">
+              <button nz-button nzType="default">返回首页</button>
+              <button nz-button nzType="primary" (click)="currentPage = 0; paymentResult = 0;">返回重新支付</button>
+            </ng-container>
+          </div>
         </div>
       </div>
-      <div *ngIf="currentPage == 3">03</div>
     </div>
   </div>
 </div>

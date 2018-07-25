@@ -45,7 +45,7 @@ export class NoopInterceptor implements HttpInterceptor {
       tap(event => {
         if (event instanceof HttpResponse) {
           if (event.status == 200 || event.status == 304) {
-            if (event.body.code == 3000) {
+            if (event.body && event.body.code == 3000) {
               window.localStorage.removeItem('userInfo');
               this.router.navigateByUrl('/login');
             }
