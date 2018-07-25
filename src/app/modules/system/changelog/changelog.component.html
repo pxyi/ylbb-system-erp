@@ -24,18 +24,18 @@
           <nz-timeline-item *ngFor="let item of changelog">
             <div class="item">
               <h3>{{ item.version }}<nz-tag>{{ item.updateDate }}</nz-tag></h3>
-              <h4 *ngIf="item.features && item.features.length">新增功能</h4>
+              <!-- <h4 *ngIf="item.features && item.features.length">新增功能</h4> -->
               <div class="markdown">
                 <ul>
-                  <li *ngFor="let log of item.features">{{ log }}</li>
+                  <li *ngFor="let log of item.childList">{{ log }}</li>
                 </ul>
               </div>
-              <h4 *ngIf="item['fixes'] && item['fixes'].length">Bug修复</h4>
-              <div class="markdown">
+              <!-- <h4 *ngIf="item['fixes'] && item['fixes'].length">Bug修复</h4> -->
+              <!-- <div class="markdown">
                 <ul>
                   <li *ngFor="let log of item['fixes']">{{ log }}</li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </nz-timeline-item>
         </nz-timeline>
