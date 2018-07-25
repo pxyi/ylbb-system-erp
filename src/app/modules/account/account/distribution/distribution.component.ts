@@ -10,11 +10,22 @@ export class DistributionComponent implements OnInit {
 
   @Input() id;
 
-  checkedItems: any[] = [];
+  dataSet
 
   submit(): Promise<boolean> {
+    let checkedItems = [];
+    this.dataSet.map(res => res.checked && checkedItems.push(res.id));
     return new Promise((resolve, reject) => {
-
+      this.http.post('/accountManagement/addUserRole', {
+        paramJson: JSON.stringify({
+          id: this.id,
+          roleIds: checkedItems.join(',')
+        })
+      }).then(res => {
+        resolve(true);
+      }, err => {
+        reject(false);
+      })
     })
   }
 
@@ -23,19 +34,12 @@ export class DistributionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
-
-  tableReady(dataset) {
     this.http.post('/accountManagement/userRoleList', {
       paramJson: JSON.stringify({ id: this.id })
     }, false).then(res => {
-      res.result.roles.map(item => {
-        this.checkedItems.push(item.id);
-        dataset.map(data => {
-          data.id == item.id && (data.checked = true);
-          data.disabled = data.status != 0;
-        });
-      });
+      let checkedItems = res.result.roleIds.split(',');
+      this.dataSet = res.result.roles;
+      this.dataSet.map(res => res.checked = checkedItems.indexOf(res.id + '') > -1);
     })
   }
 

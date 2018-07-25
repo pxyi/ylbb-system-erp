@@ -113,7 +113,13 @@ export class AccountComponent implements OnInit {
           type: 'primary',
           loading: false,
           onClick(component) {
-
+            this.loading = true;
+            component.submit().then(res => {
+              this.loading = false;
+              modal.close();
+            }, err => {
+              this.loading = false;
+            })
           }
         }
       ]
