@@ -122,12 +122,15 @@ export class ConsumptionComponent implements OnInit {
     this.http.post('/tongka/amountDetails', {}, false).then(res => this.amountDetails = res.result);
   }
 
+  presentationLoading: boolean;
   presentation() {
+    this.presentationLoading = true;
     this.http.post('/tongka/preApp', {}, false).then(res => {
-      this.modal[res.code === 1000 ? 'success' : 'warning']({
+      this.modal[res.code == 2001 ? 'success' : 'warning']({
         nzTitle: '温馨提示',
         nzContent: res.info
       })
+      this.presentationLoading = false;
     });
   }
 
