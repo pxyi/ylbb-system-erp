@@ -16,12 +16,14 @@
     </nz-tabset>
     <div class="operation-btns">
       <nz-button-group>
-        <button nz-button (click)="preview()">预览</button>
+        <ng-template #contentTemplate>
+          <div>
+            <img src="https://ylbb-system.oss-cn-beijing.aliyuncs.com/wechat/small-program-qrcode.png" alt="微信扫码">
+          </div>
+        </ng-template>
         <button nz-button nz-popover nzTitle="微信扫码预览" [nzContent]="contentTemplate" nzPlacement="rightBottom">预览小程序</button>
+        <button nz-button [style.margin-left]="'-1px'" (click)="preview()">预览</button>
       </nz-button-group>
-      <ng-template #contentTemplate>
-        <div><img src="https://ylbb-system.oss-cn-beijing.aliyuncs.com/wechat/small-program-qrcode.png" alt="微信扫码"></div>
-      </ng-template>
       <button nz-button nzType="primary" (click)="submit()">保存</button>
     </div>
   </div>
