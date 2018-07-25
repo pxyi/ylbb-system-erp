@@ -1,3 +1,4 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangelogComponent implements OnInit {
 
-  changelog = [
+  changelog: any = [
     {
       version  : 'v1.1.0-beta',
       time     : '2018-04-17',
@@ -23,9 +24,18 @@ export class ChangelogComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  loading: boolean;
+
+  constructor(
+    private http: HttpService
+  ) { }
 
   ngOnInit() {
+    this.loading = true;
+    this.http.post('/version/getNewestVersion', {}, false).then(res => {
+      // res.code == 1000 && (this.changelog = res.result.version);
+      this.loading = false;
+    });
   }
 
 }

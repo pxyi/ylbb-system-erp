@@ -2,11 +2,13 @@
   <div class="content">
     <h1>
       <span>更新日志</span>
-      <nz-affix  style="float: right;">
-        <button nz-button [nzType]="'primary'" routerLink="/home">
-          <span>返回首页</span>
-        </button>
-      </nz-affix>
+      <div style="float: right">
+        <nz-affix>
+          <button nz-button [nzType]="'primary'" routerLink="/home">
+            <span>返回首页</span>
+          </button>
+        </nz-affix>
+      </div>
     </h1>
     <h4>发布周期</h4>
     <div class="markdown">
@@ -16,27 +18,29 @@
         <li>含有破坏性升级的版本更新不在发布周期内。</li>
       </ul>
     </div>
-    <div class="changelog">
-      <nz-timeline>
-        <nz-timeline-item *ngFor="let item of changelog">
-          <div class="item">
-            <h3>{{ item.version }}<nz-tag>{{ item.time }}</nz-tag></h3>
-            <h4 *ngIf="item.features && item.features.length">新增功能</h4>
-            <div class="markdown">
-              <ul>
-                <li *ngFor="let log of item.features">{{ log }}</li>
-              </ul>
+    <nz-spin [nzSpinning]="loading">
+      <div class="changelog">
+        <nz-timeline>
+          <nz-timeline-item *ngFor="let item of changelog">
+            <div class="item">
+              <h3>{{ item.version }}<nz-tag>{{ item.updateDate }}</nz-tag></h3>
+              <h4 *ngIf="item.features && item.features.length">新增功能</h4>
+              <div class="markdown">
+                <ul>
+                  <li *ngFor="let log of item.features">{{ log }}</li>
+                </ul>
+              </div>
+              <h4 *ngIf="item['fixes'] && item['fixes'].length">Bug修复</h4>
+              <div class="markdown">
+                <ul>
+                  <li *ngFor="let log of item['fixes']">{{ log }}</li>
+                </ul>
+              </div>
             </div>
-            <h4 *ngIf="item['fixes'] && item['fixes'].length">Bug修复</h4>
-            <div class="markdown">
-              <ul>
-                <li *ngFor="let log of item['fixes']">{{ log }}</li>
-              </ul>
-            </div>
-          </div>
-        </nz-timeline-item>
-      </nz-timeline>
-    </div>
+          </nz-timeline-item>
+        </nz-timeline>
+      </div>
+    </nz-spin>
   </div>
 
   <nz-back-top></nz-back-top>

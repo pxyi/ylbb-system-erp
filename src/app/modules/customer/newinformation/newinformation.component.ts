@@ -135,12 +135,13 @@ export class NewinformationComponent implements OnInit {
       }
     } else {
       this._submitLoading = true;
+      this.customerFormInitValue = this.customerForm.value;
       let params = this._id == '0' ? this.customerForm.value : Object.assign(this.customerForm.value, { id: this._id });
       if (params.birthday) { params.birthday = this.format.transform(params.birthday, 'yyyy-MM-dd') }
       this.http.post('/customer/modifyUserInfo', { paramJson: JSON.stringify(params) }, false).then(res => {
         this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
         if (res.code == 1000) {
-          this.router.navigateByUrl('/home/customer/all');
+          this.router.navigateByUrl('/home/customer/potential');
         } else {
           this._submitLoading = false;
         }

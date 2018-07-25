@@ -9,7 +9,7 @@ import { NewinformationCanDeactivate } from './newinformation/newinfomation.guar
 
 const routes: Routes = [
   {
-    path: 'potentail',
+    path: 'potential',
     data: { title: '潜在客户' },
     component: PotentialComponent,
     canActivate: [ AuthGuardService ],
@@ -26,7 +26,6 @@ const routes: Routes = [
     path: 'newinfo/:id',
     data: { title: '新建潜在客户' },
     component: NewinformationComponent,
-    canActivate: [ AuthGuardService ],
     canDeactivate: [ NewinformationCanDeactivate ]
   },
   {

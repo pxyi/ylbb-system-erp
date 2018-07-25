@@ -13,7 +13,7 @@ export const MenuConfig = [
     children : [
       {
         title : '潜在客户',
-        key   : '/home/customer/potentail',
+        key   : '/home/customer/potential',
         isLeaf: true
       },
       {
@@ -41,28 +41,6 @@ export const MenuConfig = [
     ]
   },
   {
-    title : '账户管理',
-    key   : '/home/account',
-    icon  : 'anticon-usergroup-add',
-    children: [
-      {
-        title : '账号管理',
-        key   : '/home/account/account',
-        isLeaf: true
-      },
-      {
-        title : '角色管理',
-        key   : '/home/account/role',
-        isLeaf: true
-      },
-      {
-        title : '登录日志',
-        key   : '/home/account/loginlog',
-        isLeaf: true
-      }
-    ]
-  },
-  {
     title : '全国通卡',
     key   : '/home/passcard',
     icon  : 'anticon-idcard',
@@ -72,12 +50,6 @@ export const MenuConfig = [
     title : '微信小程序',
     key   : '/home/wechat',
     icon  : 'anticon-wechat',
-    isLeaf: true
-  },
-  {
-    title : '用户互动',
-    key   : '/home/interaction',
-    icon  : 'anticon-profile',
     isLeaf: true
   },
   {
@@ -96,5 +68,33 @@ export const MenuConfig = [
         isLeaf: true
       }
     ]
+  },
+  {
+    title: '账户管理',
+    key: '/home/account',
+    icon: 'anticon-usergroup-add',
+    children: [
+      {
+        title: '账号管理',
+        key: '/home/account/account',
+        isLeaf: true
+      },
+      {
+        title: '角色管理',
+        key: '/home/account/role',
+        isLeaf: true
+      },
+      {
+        title: '登录日志',
+        key: '/home/account/loginlog',
+        isLeaf: true
+      }
+    ]
+  },
+  {
+    title: '用户互动',
+    key: '/home/interaction',
+    icon: 'anticon-profile',
+    isLeaf: true
   },
 ];
