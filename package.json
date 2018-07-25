@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 8088 --prod=dev",
-    "build": "ng build --prod",
-    "test": "ng test",
+    "build": "ng build --prod --configuration=prod",
+    "test": "ng build --prod --configuration=test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
