@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-member',
   templateUrl: './member.component.html',
   styleUrls: ['./member.component.scss']
 })
-export class MemberComponent {
+export class MemberComponent implements OnInit {
+  
+  @ViewChild('EaTable') table;
 
   queryNode = [
     {
@@ -13,13 +16,6 @@ export class MemberComponent {
       key         : 'nick',
       type        : 'input',
       placeholder : '请输入宝宝昵称'
-    },
-    {
-      label       : '跟进状态',
-      key         : 'followStageId',
-      type        : 'select',
-      optionsUrl  : '/common/followStageList',
-      placeholder : '请选择跟进状态'
     },
     {
       label       : '来源',
@@ -102,6 +98,22 @@ export class MemberComponent {
   
   tableNode = [
     {
+      name  : '卡号',
+      width : '120px'
+    },
+    {
+      name  : '卡类型',
+      width : '100px'
+    },
+    {
+      name  : '总卡次（正价/赠送）',
+      width : '140px'
+    },
+    {
+      name  : '剩余卡次（正价/赠送）',
+      width : '120px'
+    },
+    {
       name  : '宝宝昵称',
       width : '100px'
     },
@@ -134,7 +146,7 @@ export class MemberComponent {
       width : '140px'
     }, 
     {
-      name  : '入库时间',
+      name  : '办卡时间',
       width : '140px'
     },
     {
@@ -146,23 +158,20 @@ export class MemberComponent {
       width : '140px'
     },
     {
-      name  : '来源',
+      name  : '渠道来源',
       width : '80px'
-    },
-    {
-      name  : '客户状态',
-      width : '80px'
-    },
-    {
-      name  : '跟进阶段',
-      width : '120px'
-    },
-    {
-      name  : '收集者',
-      width : '120px'
     }
   ]
 
-  constructor() { }
+  constructor(
+    private activatedRoute: ActivatedRoute
+  ) { }
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((res: any) => {
+      if (res.params.reset) {
+        this.table._request();
+      }
+    })
+  }
 
 }

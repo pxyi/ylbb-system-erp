@@ -1,7 +1,7 @@
 <div class="container">
   <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
 
-  <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr"
+  <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [paramsDefault]="{traceType: 0, followStageId: 2}"
     [allowSpace]="false" url="/customer/potentialCustomerList">
     <ng-template let-data #EaTableTbodyTr>
       <td nzWidth="120px" nzLeft="0">

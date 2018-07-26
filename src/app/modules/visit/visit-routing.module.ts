@@ -39,7 +39,15 @@ const routes: Routes = [
     path: 'member',
     data: { title: '会员回访' },
     component: MemberComponent,
-    canActivate: [ AuthGuardService ]
+    canActivate: [ AuthGuardService ],
+    children: [
+      {
+        path: 'preview/:id',
+        data: { title: '客户详情' },
+        component: PreviewCustomerComponent,
+        outlet: 'aux'
+      }
+    ]
   }
 ];
 

@@ -29,9 +29,7 @@
           </div>
           <div class="head-buttons">
             <button nz-button [nzType]="'primary'" style="margin-right: 12px;" [routerLink]="['/home/customer/newinfo', _id]">编辑</button>
-            <nz-button-group>
-              <button nz-button nz-popconfirm [nzTitle]="'确定要移到无意向客户吗？'" (nzOnConfirm)="intentionCustomer()">移到无意向客户</button>
-            </nz-button-group>
+            <button nz-button nz-popconfirm [nzTitle]="'确定要移到无意向客户吗？'" (nzOnConfirm)="intentionCustomer()">移到无意向客户</button>
           </div>
         </div>
 

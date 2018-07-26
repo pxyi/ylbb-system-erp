@@ -90,7 +90,8 @@ export class PreviewCustomerComponent implements OnInit {
   ngOnInit() {
 
     this.closeLink = this.router.url.indexOf('/visit/clue') > -1 ? '/home/visit/clue' : 
-                     this.router.url.indexOf('/visit/nocard') > -1 ? '/home/visit/nocard' : '/home/customer/potential';
+                     this.router.url.indexOf('/visit/nocard') > -1 ? '/home/visit/nocard' : 
+                     this.router.url.indexOf('/visit/member') > -1 ? '/home/visit/member' : '/home/customer/potential';
 
     this.routeInfo.params.subscribe( param => {
       this._id = param.id;
@@ -211,6 +212,9 @@ export class PreviewCustomerComponent implements OnInit {
         params.reserveMinute = params.reserve.reserveHour ? params.reserve.reserveHour.split(':')[1] : '';
       }
       delete params.reserve;
+      if (this.router.url.indexOf('/visit/') > -1) {
+        params.followStageId = this.router.url.indexOf('/visit/clue') > -1 ? 2 : this.router.url.indexOf('/visit/nocard') > -1 ? 3 : this.router.url.indexOf('/visit/member') > -1 ? 4 : '';
+      }
       this.http.post('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }).then( res => {
         if (isReset) {
           this.router.navigateByUrl('/home/customer/potentail?reset=true');
