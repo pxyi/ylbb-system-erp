@@ -1,0 +1,17 @@
+<ea-table
+  url="/tongka/listWithdraw"
+  [thead]="['提交时间', '保证金余额', '提现金额', '处理时间', '状态']"
+  [EaTableTbodyTr]="EaTableTbodyTr">
+
+  <ng-template let-data #EaTableTbodyTr>
+    <td>{{ data.createTime }}</td>
+    <td>{{ data.bondBalance }}</td>
+    <td>{{ data.presentAmount }}</td>
+    <td>{{ data.updateTime }}</td>
+    <td>
+      <nz-tag [nzColor]="data.dealStatus == 0 ? '' : data.dealStatus == 1 ? '#2db7f5' : '#f50'">
+        {{ data.dealStatus == 0 ? '待处理' : data.dealStatus == 1 ? '已完成' : '未通过' }}
+      </nz-tag>
+    </td>
+  </ng-template>
+</ea-table>

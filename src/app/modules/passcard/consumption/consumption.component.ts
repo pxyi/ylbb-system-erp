@@ -1,3 +1,4 @@
+import { PutforwardComponent } from './../putforward/putforward.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { AppState } from '../../../core/reducers/reducers-config';
 import { Store } from '@ngrx/store';
@@ -132,6 +133,15 @@ export class ConsumptionComponent implements OnInit {
       })
       this.presentationLoading = false;
     });
+  }
+
+  putForward() {
+    this.modal.create({
+      nzWidth: 800,
+      nzTitle: '提现记录',
+      nzContent: PutforwardComponent,
+      nzFooter: null
+    })
   }
 
 }

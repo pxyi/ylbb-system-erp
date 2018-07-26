@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { PasscardRoutingModule } from './passcard-routing.module';
 import { ConsumptionComponent } from './consumption/consumption.component';
+import { PutforwardComponent } from './putforward/putforward.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { ConsumptionComponent } from './consumption/consumption.component';
     PasscardRoutingModule,
     NgRelaxModule
   ],
-  declarations: [ConsumptionComponent]
+  declarations: [ConsumptionComponent, PutforwardComponent],
+  entryComponents: [PutforwardComponent]
 })
 export class PasscardModule { }

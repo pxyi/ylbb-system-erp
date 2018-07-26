@@ -3,7 +3,7 @@
     <h2>通卡消费记录</h2>
     <div class="passcard-btns">
       <nz-button-group [style.margin-right]="'8px'">
-        <button nz-button>提现记录</button>
+        <button nz-button (click)="putForward()">提现记录</button>
         <button nz-button (click)="presentation()" [nzLoading]="presentationLoading">申请提现</button>
       </nz-button-group>
       <button nz-button nzType="primary" routerLink="/home/payment">充值</button>

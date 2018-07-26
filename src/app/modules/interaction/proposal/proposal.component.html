@@ -4,7 +4,7 @@
       <td>{{ data.member.name }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.phone }}</td>
-      <td>{{ data.content }}</td>
+      <td><span nz-tooltip [nzTitle]="data.content" class="ellipsis">{{ data.content }}</span></td>
       <td>{{ data.createDate }}</td>
       <td><nz-tag [nzColor]="data.status == 0 ? '' : '#2db7f5'">{{ data.status == 0 ? '未处理' : '已处理' }}</nz-tag></td>
       <td>{{ data.dealDate || '--' }}</td>
