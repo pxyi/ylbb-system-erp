@@ -55,6 +55,12 @@ const routes: Routes = [
         data: { title: '充值中心' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/payment/payment.module#PaymentModule'
+      },
+      {
+        path: 'visit',
+        data: { title: '回访管理' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/visit/visit.module#VisitModule'
       }
     ]
   },

@@ -17,6 +17,7 @@ import { NewinformationCanDeactivate } from './newinformation/newinfomation.guar
     NgRelaxModule
   ],
   declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective],
-  providers: [NewinformationCanDeactivate]
+  providers: [NewinformationCanDeactivate],
+  exports: [ PreviewCustomerComponent, GetMobileDirective ]
 })
 export class CustomerModule { }

@@ -24,6 +24,28 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '回访管理',
+    key   : '/home/visit',
+    icon  : 'anticon-form',
+    children : [
+      {
+        title : '线索回访',
+        key   : '/home/visit/clue',
+        isLeaf: true
+      },
+      {
+        title : '未办卡回访',
+        key   : '/home/visit/nocard',
+        isLeaf: true
+      },
+      {
+        title : '会员回访',
+        key   : '/home/visit/member',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '推广活动',
     key   : '/home/marketing',
     icon  : 'anticon-area-chart',

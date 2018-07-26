@@ -85,7 +85,12 @@ export class PreviewCustomerComponent implements OnInit {
     private router    : Router
   ) { }
 
+  closeLink: string;
+
   ngOnInit() {
+
+    this.closeLink = this.router.url.indexOf('/visit/clue') > -1 ? '/home/visit/clue' : 
+                     this.router.url.indexOf('/visit/nocard') > -1 ? '/home/visit/nocard' : '/home/customer/potential';
 
     this.routeInfo.params.subscribe( param => {
       this._id = param.id;
@@ -222,7 +227,7 @@ export class PreviewCustomerComponent implements OnInit {
   /* -------------------- 转为无意向客户 -------------------- */
   intentionCustomer(): void {
     this.http.post('/customer/transitioNoIntentionCustomer', { paramJson: JSON.stringify({ id: this._id }) }).then( res => {
-      this.router.navigateByUrl('/home/customer/potentail?reset=true');
+      this.router.navigateByUrl(`${this.closeLink}?reset=true`);
     });
   }
 
