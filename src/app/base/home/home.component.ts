@@ -26,15 +26,15 @@ export class HomeComponent implements OnInit {
 
     this.http.post('/customer/noCardReturnVisitList', 
       { paramJson: JSON.stringify({ "traceType": 0, "followStageId": 2 }), pageNum: 1, pageSize: 1 }, false)
-      .then(res => this.clueNum = res.result.totalPage);
+      .then(res => res.code == 1000 && (this.clueNum = res.result.totalPage));
 
     this.http.post('/customer/noCardReturnVisitList',
       { paramJson: JSON.stringify({ "traceType": 5, "followStageId": 3 }), pageNum: 1, pageSize: 1 }, false)
-      .then(res => this.nocardNum = res.result.totalPage);
+      .then(res => res.code == 1000 && (this.nocardNum = res.result.totalPage));
 
     this.http.post('/customer/memberReturnVisitList',
       { paramJson: JSON.stringify({ "traceType": 6, "followStageId": 4 }), pageNum: 1, pageSize: 1 }, false)
-      .then(res => this.memberNum = res.result.totalPage);
+      .then(res => res.code == 1000 && (this.memberNum = res.result.totalPage));
   }
 
 }
