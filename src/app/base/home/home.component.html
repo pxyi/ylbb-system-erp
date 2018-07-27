@@ -1,0 +1,28 @@
+<div class="container" style="text-align: center; line-height: 200px; color: rgba(0, 0, 0, .45)">好像还没有什么东西可以展示的~！</div>
+
+
+<ng-template #BreadcrumbTmpt>
+  <div class="header">
+    <div class="user-info">
+      <img src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" alt="">
+      <h2>您好，祝你开心每一天！</h2>
+      <p>欢迎使用鱼乐贝贝ERP后台管理系统</p>
+    </div>
+    <div class="user-cell">
+      <div routerLink="/home/visit/clue">
+        <p>今日线索</p>
+        <h4>{{ clueNum }}</h4>
+      </div>
+      <nz-divider nzType="vertical"></nz-divider>
+      <div routerLink="/home/visit/nocard">
+        <p>体验未办卡</p>
+        <h4>{{ nocardNum }}</h4>
+      </div>
+      <nz-divider nzType="vertical"></nz-divider>
+      <div routerLink="/home/visit/member">
+        <p>今日会员</p>
+        <h4>{{ memberNum }}</h4>
+      </div>
+    </div>
+  </div>
+</ng-template>

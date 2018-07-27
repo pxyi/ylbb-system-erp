@@ -16,6 +16,7 @@ import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
 import { UserInfoResolver } from './core/userInfo-resolver.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HomeComponent } from './base/home/home.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     MenuComponent,
     ContentComponent,
     FooterComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@
   <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
 
   <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [paramsDefault]="{traceType: 0, followStageId: 2}"
-    [allowSpace]="false" url="/customer/potentialCustomerList">
+    [allowSpace]="false" url="/customer/NoCardReturnVisitList">
     <ng-template let-data #EaTableTbodyTr>
       <td nzWidth="120px" nzLeft="0">
         <a href="javascript: void(0);" [routerLink]="{outlets: {aux: 'preview/' + data.id}}">{{ data.nick }}</a>

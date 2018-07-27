@@ -1,3 +1,4 @@
+import { HomeComponent } from './../base/home/home.component';
 import { AuthGuardService } from '../ng-relax/services/auth-guard.service';
 import { UserInfoResolver } from './userInfo-resolver.service';
 import { BaseComponent } from '../base/base.component';
@@ -20,6 +21,11 @@ const routes: Routes = [
     component: BaseComponent,
     resolve: { userInfo: UserInfoResolver },
     children: [
+      {
+        path: '',
+        data: { title: '工作台', hideTitle: true },
+        component: HomeComponent
+      },
       {
         path: 'customer',
         data: { title: '客户管理' },

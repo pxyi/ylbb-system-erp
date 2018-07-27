@@ -1,0 +1,54 @@
+.header {
+  display: flex;
+  .user-info {
+    flex: auto;
+    margin-bottom: 24px;  
+    img {
+      display: block;
+      float: left;
+      height: 72px;
+    }
+    h2 {
+      padding-left: 96px;
+      font-size: 20px;
+      line-height: 38px;
+      font-weight: 500;
+      color: rgba(0,0,0,.85);
+      margin-bottom: 4px;
+    }
+    p {
+      padding-left: 96px;
+      color: rgba(0,0,0,.45);
+      line-height: 22px;
+      margin-bottom: 0;
+    }
+  }
+  .user-cell {
+    & > div {
+      display: inline-block;
+      padding: 0 32px;
+      cursor: pointer;
+      outline: none;
+      &:hover > h4 {
+        opacity: .5;
+      }
+      p {
+        color: rgba(0,0,0,.45);
+        font-size: 14px;
+        line-height: 22px;
+        margin-bottom: 4px;
+      }
+      h4 {
+        color: rgba(0,0,0,.85);
+        font-size: 30px;
+        line-height: 38px;
+        text-align: right;
+        transition: all .2s;
+      }
+    }
+  }
+}
+nz-divider {
+  margin-bottom: 28px;
+  height: 40px;
+}
