@@ -10,10 +10,11 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return new Observable(observer => {
       this.store.select('userInfoState').subscribe(res => {
-        if (res.roleAllowPath.indexOf(state.url) === -1) {
+        let stateUrl = state.url.indexOf('/(') > -1 ? state.url.split('/(')[0] : state.url;
+        if (res.roleAllowPath.indexOf(stateUrl) === -1) {
           this.router.navigateByUrl('/system/error/403');
         }
-        observer.next(res.roleAllowPath.indexOf(state.url) > -1);
+        observer.next(res.roleAllowPath.indexOf(stateUrl) > -1);
         observer.complete();
       })
     })
