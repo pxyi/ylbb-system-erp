@@ -2,7 +2,7 @@
   <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
 
   <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [allowSpace]="false" [paramsDefault]="{traceType: 6, followStageId: 4}"
-    url="/customer/potentialCustomerList">
+    url="/customer/memberReturnVisitList">
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.cardCode }}</td>
       <td>{{ data.cardTypeName }}</td>

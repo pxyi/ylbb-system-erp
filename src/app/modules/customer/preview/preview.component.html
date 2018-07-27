@@ -151,65 +151,68 @@
                   <nz-tag nzColor="blue" (click)="tapTag('#'+ item.name +'#', recordFormModel)" *ngFor="let item of labelList">#{{ item.name }}#</nz-tag>
                 </div>
                 <div class="form-content">
-                  <div style="float: left;" formGroupName="reserve">
-                    <div style="float: left; margin-right: 10px;">
-                      <nz-form-item>
-                        <nz-form-control>
-                          <nz-switch formControlName="status" nzCheckedChildren="已预约到店" nzUnCheckedChildren="未预约到店"></nz-switch>
-                        </nz-form-control>
-                      </nz-form-item>
+                  <ng-container *ngIf="closeLink != '/home/visit/member'">
+                    <div style="float: left;" formGroupName="reserve">
+                      <div style="float: left; margin-right: 10px;">
+                        <nz-form-item>
+                          <nz-form-control>
+                            <nz-switch formControlName="status" nzCheckedChildren="已预约到店" nzUnCheckedChildren="未预约到店"></nz-switch>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+
+                      <div style="float: left; width: 140px; margin-right: 10px;" *ngIf="recordFormModel.get('reserve').get('status').value">
+                        <nz-form-item>
+                          <nz-form-control>
+                            <nz-date-picker formControlName="reserveDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择预约时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+                            <nz-form-explain *ngIf="recordFormModel.get('reserve').get('reserveDate').dirty && recordFormModel.get('reserve').get('reserveDate').hasError('required')">请选择预约时间</nz-form-explain>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+                      <div style="float: left; width: 120px; margin-right: 10px;" *ngIf="recordFormModel.get('reserve').get('status').value">
+                        <nz-form-item>
+                          <nz-form-control>
+                            <nz-select formControlName="reserveHour" nzPlaceHolder="预约时间段">
+                              <nz-option *ngFor="let item of reserveHourList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+                            </nz-select>
+                            <nz-form-explain  *ngIf="recordFormModel.get('reserve').get('reserveHour').dirty && recordFormModel.get('reserve').get('reserveHour').hasError('required')">请选择预约时间段</nz-form-explain>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
                     </div>
 
-                    <div style="float: left; width: 140px; margin-right: 10px;" *ngIf="recordFormModel.get('reserve').get('status').value">
+                    <div style="float: left;width: 120px; margin-right: 10px;">
                       <nz-form-item>
                         <nz-form-control>
-                          <nz-date-picker formControlName="reserveDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择预约时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
-                          <nz-form-explain *ngIf="recordFormModel.get('reserve').get('reserveDate').dirty && recordFormModel.get('reserve').get('reserveDate').hasError('required')">请选择预约时间</nz-form-explain>
-                        </nz-form-control>
-                      </nz-form-item>
-                    </div>
-                    <div style="float: left; width: 120px; margin-right: 10px;" *ngIf="recordFormModel.get('reserve').get('status').value">
-                      <nz-form-item>
-                        <nz-form-control>
-                          <nz-select formControlName="reserveHour" nzPlaceHolder="预约时间段">
-                            <nz-option *ngFor="let item of reserveHourList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+                          <nz-select formControlName="followType" nzPlaceHolder="跟进方式">
+                            <nz-option *ngFor="let item of followTypeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
                           </nz-select>
-                          <nz-form-explain  *ngIf="recordFormModel.get('reserve').get('reserveHour').dirty && recordFormModel.get('reserve').get('reserveHour').hasError('required')">请选择预约时间段</nz-form-explain>
+                          <nz-form-explain *ngIf="recordFormModel.get('followType').dirty && recordFormModel.get('followType').hasError('required')">请选择跟进方式</nz-form-explain>
                         </nz-form-control>
                       </nz-form-item>
                     </div>
-                  </div>
 
-                  <div style="float: left;width: 120px; margin-right: 10px;">
-                    <nz-form-item>
-                      <nz-form-control>
-                        <nz-select formControlName="followType" nzPlaceHolder="跟进方式">
-                          <nz-option *ngFor="let item of followTypeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
-                        </nz-select>
-                        <nz-form-explain *ngIf="recordFormModel.get('followType').dirty && recordFormModel.get('followType').hasError('required')">请选择跟进方式</nz-form-explain>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
+                    <div style="float: left;width: 120px; margin-right: 10px;">
+                      <nz-form-item>
+                        <nz-form-control>
+                          <nz-select formControlName="memberStatusId" nzPlaceHolder="客户状态">
+                            <nz-option *ngFor="let item of showMemberStatus" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+                          </nz-select>
+                          <nz-form-explain *ngIf="recordFormModel.get('memberStatusId').dirty && recordFormModel.get('memberStatusId').hasError('required')">请选择跟进状态</nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
 
-                  <div style="float: left;width: 120px; margin-right: 10px;">
-                    <nz-form-item>
-                      <nz-form-control>
-                        <nz-select formControlName="memberStatusId" nzPlaceHolder="客户状态">
-                          <nz-option *ngFor="let item of showMemberStatus" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
-                        </nz-select>
-                        <nz-form-explain *ngIf="recordFormModel.get('memberStatusId').dirty && recordFormModel.get('memberStatusId').hasError('required')">请选择跟进状态</nz-form-explain>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
+                    <div style="float: left;width: 160px;">
+                      <nz-form-item>
+                        <nz-form-control>
+                          <nz-date-picker formControlName="nextFollowTime" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择下次跟进时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+                          <nz-form-explain *ngIf="recordFormModel.get('nextFollowTime').dirty && recordFormModel.get('nextFollowTime').hasError('required')">请选择下次跟进时间</nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </ng-container>
 
-                  <div style="float: left;width: 160px;">
-                    <nz-form-item>
-                      <nz-form-control>
-                        <nz-date-picker formControlName="nextFollowTime" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择下次跟进时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
-                        <nz-form-explain *ngIf="recordFormModel.get('memberStatusId').dirty && recordFormModel.get('memberStatusId').hasError('required')">请选择跟进状态</nz-form-explain>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
                   <div nz-form-item class="form-btn">
                     <nz-popconfirm *ngIf="!recordFormModel.get('nextFollowTime').value" nzTitle="下次跟进时间未填写，保存后此客户将放入暂无意向客户中，确认继续发布？" nzOkText="继续发布" nzCancelText="取消" (nzOnConfirm)="_submitFollowRecord(true)">
                       <button nz-button nzType="primary" nz-popconfirm style="margin-top: 4px;">发布</button>
@@ -297,7 +300,7 @@
       <div class="tags-content" *ngIf="labelList.length">
         <nz-tag [ngStyle]="{'display': 'inline-block', 'margin-bottom': '8px'}" nzColor="blue" (click)="tapTag('#'+ item.name +'#', _updateFollowRecordFormModel)" *ngFor="let item of labelList">#{{ item.name }}#</nz-tag>
       </div>
-      <div class="form-content">
+      <div class="form-content" *ngIf="closeLink != '/home/visit/member'">
         <div style="float: left;" formGroupName="reserve">
           <div style="float: left; margin-right: 10px;">
             <nz-form-item>
@@ -352,7 +355,7 @@
           <nz-form-item>
             <nz-form-control>
               <nz-date-picker formControlName="nextFollowTime" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择下次跟进时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
-              <nz-form-explain *ngIf="_updateFollowRecordFormModel.get('memberStatusId').dirty && _updateFollowRecordFormModel.get('memberStatusId').hasError('required')">请选择跟进状态</nz-form-explain>
+              <nz-form-explain *ngIf="_updateFollowRecordFormModel.get('nextFollowTime').dirty && _updateFollowRecordFormModel.get('nextFollowTime').hasError('required')">请选择下次跟进时间</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>

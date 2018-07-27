@@ -152,8 +152,8 @@
 }
 
 .tags-content {
-    padding-bottom: 10px;
     nz-tag {
+        display: inline-block;
         margin-bottom: 8px;
     }
 }

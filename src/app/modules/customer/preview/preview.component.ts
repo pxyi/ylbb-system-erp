@@ -116,14 +116,14 @@ export class PreviewCustomerComponent implements OnInit {
     })
 
     this.recordFormModel = this.fb.group({
-      content       : ['', [Validators.required, Validators.maxLength(200)]],     // 记录内容
-      followType    : [null, [Validators.required]],                                // 跟进方式
-      memberStatusId: [null, [Validators.required]],                                // 客户状态
-      nextFollowTime: [''],                                                       // 下次跟进时间
+      content       : ['', [Validators.maxLength(200)].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],       // 记录内容
+      followType    : [null, [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],                                // 跟进方式
+      memberStatusId: [null, [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],                                // 客户状态
+      nextFollowTime: ['', [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],                                  // 下次跟进时间
       reserve       : this.fb.group({
                         status        : [false],
-                        reserveDate   : ['', [Validators.required]],
-                        reserveHour   : [null, [Validators.required]]
+                        reserveDate   : ['', [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],
+                        reserveHour   : [null, [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])]
                     })
     });
 
@@ -137,14 +137,14 @@ export class PreviewCustomerComponent implements OnInit {
     this._updateFollowRecordFormModel = this.fb.group({
       id            : [''],
       memberId      : [''],
-      content       : ['', [Validators.required, Validators.max(200)]],                                     
-      followType    : [null, [Validators.required]],                     
-      memberStatusId: [null, [Validators.required]],                     
-      nextFollowTime: [''],
+      content       : ['', [Validators.max(200)].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],                                     
+      followType    : [, [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],                     
+      memberStatusId: [, [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],                     
+      nextFollowTime: ['', [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],
       reserve       : this.fb.group({
                         status        : [false],
-                        reserveDate   : ['', [Validators.required]],
-                        reserveHour   : ['', [Validators.required]]
+                        reserveDate   : ['', [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])],
+                        reserveHour   : ['', [].concat(this.router.url.indexOf('/visit/member') > -1 ? [] : [Validators.required])]
                     })                                          
     });
     this._updateFollowRecordFormModel.get('reserve').get('status').valueChanges.subscribe(res => {
@@ -193,9 +193,11 @@ export class PreviewCustomerComponent implements OnInit {
   _submitFollowRecord(isReset?: boolean): void {
     for (const key in this.recordFormModel.controls) {
       this.recordFormModel.controls[key].markAsDirty();
+      this.recordFormModel.controls[key].updateValueAndValidity();
     }
     for (const key in this.recordFormModel.get('reserve')['controls']) {
       this.recordFormModel.get('reserve')['controls'][key].markAsDirty();
+      this.recordFormModel.get('reserve')['controls'][key].updateValueAndValidity();
     }
 
     let [ model, reserve ] = [ this.recordFormModel, this.recordFormModel.get('reserve') ];
@@ -264,9 +266,11 @@ export class PreviewCustomerComponent implements OnInit {
   saveUpdateFollowRecord(): void {
     for (const key in this._updateFollowRecordFormModel.controls) {
       this._updateFollowRecordFormModel.controls[key].markAsDirty();
+      this._updateFollowRecordFormModel.controls[key].updateValueAndValidity();
     }
     for (const key in this._updateFollowRecordFormModel.get('reserve')['controls']) {
       this._updateFollowRecordFormModel.get('reserve')['controls'][key].markAsDirty();
+      this._updateFollowRecordFormModel.get('reserve')['controls'][key].updateValueAndValidity();
     }
 
 
