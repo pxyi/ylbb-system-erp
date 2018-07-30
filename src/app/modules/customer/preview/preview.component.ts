@@ -191,20 +191,16 @@ export class PreviewCustomerComponent implements OnInit {
 
   /* ------------------- 发布跟进记录 ------------------- */
   _submitFollowRecord(isReset?: boolean): void {
-    for (const key in this.recordFormModel.controls) {
+    for (let key in this.recordFormModel.controls) {
       this.recordFormModel.controls[key].markAsDirty();
       this.recordFormModel.controls[key].updateValueAndValidity();
-    }
-    for (const key in this.recordFormModel.get('reserve')['controls']) {
-      this.recordFormModel.get('reserve')['controls'][key].markAsDirty();
-      this.recordFormModel.get('reserve')['controls'][key].updateValueAndValidity();
     }
 
     let [ model, reserve ] = [ this.recordFormModel, this.recordFormModel.get('reserve') ];
     let mainValid = model.get('content').valid && model.get('memberStatusId').valid && model.get('followType').valid;
     let childValid = reserve.get('status').value && reserve.get('reserveDate').valid && reserve.get('reserveHour').valid || !reserve.get('status').value;
     if (mainValid && childValid) {
-      let params = this.recordFormModel.value;
+      let params = JSON.parse(JSON.stringify(this.recordFormModel.value));
       params.memberId = this._id;
       params.nextFollowTime = params.nextFollowTime ? this.format.transform(params.nextFollowTime, 'yyyy-MM-dd') : '';
       params.status = params.reserve.status ? 1 : 0;
@@ -214,9 +210,7 @@ export class PreviewCustomerComponent implements OnInit {
         params.reserveMinute = params.reserve.reserveHour ? params.reserve.reserveHour.split(':')[1] : '';
       }
       delete params.reserve;
-      if (this.router.url.indexOf('/visit/') > -1) {
-        params.followStageId = this.router.url.indexOf('/visit/clue') > -1 ? 2 : this.router.url.indexOf('/visit/nocard') > -1 ? 3 : this.router.url.indexOf('/visit/member') > -1 ? 4 : '';
-      }
+      params.followStageId = this.router.url.indexOf('/visit/clue') > -1 ? 2 : this.router.url.indexOf('/visit/nocard') > -1 ? 3 : this.router.url.indexOf('/visit/member') > -1 ? 4 : 2;
       this.http.post('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }).then( res => {
         if (isReset) {
           this.router.navigateByUrl('/home/customer/potentail?reset=true');

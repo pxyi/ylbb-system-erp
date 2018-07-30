@@ -19,13 +19,6 @@ export class PotentialComponent implements OnInit {
       placeholder : '请输入宝宝昵称'
     },
     {
-      label       : '跟进阶段',
-      key         : 'followStageId',
-      type        : 'select',
-      optionsUrl  : '/common/followStageList',
-      placeholder : '请选择跟进状态'
-    },
-    {
       label       : '来源',
       key         : 'sourceId',
       type        : 'select',

@@ -1,12 +1,12 @@
 <ea-slide [closeLink]="closeLink">
 
-  <nz-spin [nzSpinning]="isLoading" nzTip="正在读取数据...">
+  <!-- <nz-spin [nzSpinning]="isLoading" nzTip="正在读取数据..."> -->
 
     <div class="box">
 
         <div class="header">
           <div class="head-image">
-            <img src="/assets/images/default-boy.png" alt="用户头像">
+            <img src="./assets/images/default-boy.png" alt="用户头像">
           </div>
           <div class="head-title">{{ userInfo?.nick }}</div>
           <div class="head-content">
@@ -164,18 +164,18 @@
                       <div style="float: left; width: 140px; margin-right: 10px;" *ngIf="recordFormModel.get('reserve').get('status').value">
                         <nz-form-item>
                           <nz-form-control>
-                            <nz-date-picker formControlName="reserveDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择预约时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
-                            <nz-form-explain *ngIf="recordFormModel.get('reserve').get('reserveDate').dirty && recordFormModel.get('reserve').get('reserveDate').hasError('required')">请选择预约时间</nz-form-explain>
+                            <nz-date-picker [ngClass]="{'input-err': recordFormModel.get('reserve').get('reserveDate').hasError('required')}" formControlName="reserveDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择预约时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+                            <nz-form-explain style="color: #f5222d" *ngIf="recordFormModel.get('reserve').get('reserveDate').hasError('required')">请选择预约时间</nz-form-explain>
                           </nz-form-control>
                         </nz-form-item>
                       </div>
                       <div style="float: left; width: 120px; margin-right: 10px;" *ngIf="recordFormModel.get('reserve').get('status').value">
                         <nz-form-item>
                           <nz-form-control>
-                            <nz-select formControlName="reserveHour" nzPlaceHolder="预约时间段">
+                            <nz-select [ngClass]="{'input-err': recordFormModel.get('reserve').get('reserveHour').hasError('required')}" formControlName="reserveHour" nzPlaceHolder="预约时间段">
                               <nz-option *ngFor="let item of reserveHourList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
                             </nz-select>
-                            <nz-form-explain  *ngIf="recordFormModel.get('reserve').get('reserveHour').dirty && recordFormModel.get('reserve').get('reserveHour').hasError('required')">请选择预约时间段</nz-form-explain>
+                            <nz-form-explain style="color: #f5222d" *ngIf="recordFormModel.get('reserve').get('reserveHour').hasError('required')">请选择预约时间段</nz-form-explain>
                           </nz-form-control>
                         </nz-form-item>
                       </div>
@@ -280,7 +280,7 @@
 
     </div>
 
-  </nz-spin>
+  <!-- </nz-spin> -->
 
 </ea-slide>
 

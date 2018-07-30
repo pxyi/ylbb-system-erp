@@ -124,29 +124,24 @@
 }
 
 :host ::ng-deep {
-    nz-spin {
-        &, .ant-spin-container {
-            height: 100%;
-        }
 
-        nz-tabset {
-            flex: auto;
             .ant-tabs {
-                width: 100%;
-                height: 100%;
-                position: absolute;
                 display: flex;
                 flex-direction: column;
-                nz-tabs-nav {
+                .ant-tabs-bar {
                     flex: 0 0 auto;
                 }
                 .ant-tabs-content {
                     flex: auto;
                 }
-                nz-tab-body {
+                .ant-tabs-tabpane {
                     overflow-y: auto;
                 }
             }
+    
+    .input-err {
+        .ant-input, .ant-select-selection {
+            border-color: #f5222d;
         }
     }
 }
