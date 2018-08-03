@@ -33,6 +33,11 @@ const routes: Routes = [
         loadChildren: 'src/app/modules/customer/customer.module#CustomerModule'
       },
       {
+        path: 'marketing',
+        data: { title: '营销管理' },
+        loadChildren: 'src/app/modules/marketing/marketing.module#MarketingModule'
+      },
+      {
         path: 'account',
         data: { title: '账户管理' },
         canLoad: [ AuthGuardService ],

@@ -45,23 +45,12 @@ export const MenuConfig = [
       }
     ]
   },
-  // {
-  //   title : '推广活动',
-  //   key   : '/home/marketing',
-  //   icon  : 'anticon-area-chart',
-  //   children: [
-  //     {
-  //       title : '活动',
-  //       key   : '/home/marketing/activity',
-  //       isLeaf: true
-  //     },
-  //     {
-  //       title: '数据',
-  //       key: '/home/marketing/data',
-  //       isLeaf: true
-  //     }
-  //   ]
-  // },
+  {
+    title : '推广活动',
+    key   : '/home/marketing',
+    icon  : 'anticon-area-chart',
+    isLeaf: true
+  },
   // {
   //   title : '全国通卡',
   //   key   : '/home/passcard',

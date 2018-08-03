@@ -1,0 +1,85 @@
+<ng-template #breadcrumbTmpt>
+  <div style="width: 80%; max-width: 600px; margin: 0 auto 30px;">
+    <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
+      <input type="text" nz-input [(ngModel)]="queryForm.name" placeholder="请输入活动名称" (keyup.enter)="searchSubmit()">
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button nz-button nzType="primary" nzSize="large" (click)="searchSubmit()" nzSearch>搜索</button>
+    </ng-template>
+  </div>
+</ng-template>
+
+<div class="container">
+  <div class="search-form">
+    <div class="form-item">
+      <div class="item-label">场景:</div>
+      <div class="item-content">
+        <nz-tag nzMode="checkable" [nzChecked]="!queryForm.scencesId.length || queryForm.scencesId.length === sceneItems.length" (nzCheckedChange)="queryCheckAll($event, 'scencesId')">全部</nz-tag>
+        <nz-tag nzMode="checkable" *ngFor="let item of sceneItems" [nzChecked]="queryForm.scencesId.indexOf(item.id) > -1" (nzCheckedChange)="queryCheckChange($event, 'scencesId', item.id)">{{ item.name }}</nz-tag>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="item-label">节日:</div>
+      <div class="item-content">
+        <nz-tag nzMode="checkable" [nzChecked]="!queryForm.festivalId.length || queryForm.festivalId.length === festivalItems.length" (nzCheckedChange)="queryCheckAll($event, 'festivalId')">全部</nz-tag>
+        <nz-tag nzMode="checkable" *ngFor="let item of festivalItems" [nzChecked]="queryForm.festivalId.indexOf(item.id) > -1" (nzCheckedChange)="queryCheckChange($event, 'festivalId', item.id)">{{ item.name }}</nz-tag>
+      </div>
+    </div>
+  </div>
+</div>
+<nz-spin [nzSpinning]="activityLoading">
+  <div class="content">
+    <div *ngIf="!activityItems.length" class="activity-null">暂无可参加活动，如有需要请联系您的专属运营顾问</div>
+    <div class="activity-box" nz-row [nzGutter]="24">
+      <ng-container *ngFor="let item of activityItems">
+        <div nz-col [nzSpan]="24" [nzLg]="12" [nzXl]="8" [nzXXl]="6" *ngIf="item.status != -1">
+          <nz-card [nzCover]="coverTemplate" [nzActions]="[actionSetting]" [nzHoverable]="true">
+            <nz-card-meta [nzTitle]="item.name" [nzDescription]="item.introduce"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <div style="height: 180px; overflow: hidden;">
+              <img alt="example" style="width: 100%;" [src]="item.thumbnail" />
+            </div>
+          </ng-template>
+          <ng-template #actionSetting>
+            <button style="width: 80%" nz-button [nzType]="'primary'" *ngIf="item.joinStatus == 0" (click)="currentActivity = item; showJoinActivity = true;" [nzLoading]="item.loading">我要参加</button>
+
+            <nz-button-group *ngIf="item.joinStatus == 1">
+              <button nz-button (click)="cancelActivity(item)" [nzLoading]="item.loading">取消参加</button>
+              <button nz-button nz-popover nzTitle="请扫码打开页面下载" [nzContent]="contentTemplate" style="border-top-right-radius: 4px;border-bottom-right-radius: 4px;">下载门店推广图</button>
+              <ng-template #contentTemplate><img style="width: 150px" src="http://qr.liantu.com/api.php?text=http://localhost:8088/assets/download-wx.html?id={{ item.id }}|{{ item.storeId }}" /></ng-template>
+            </nz-button-group>
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nz-spin>
+
+
+<nz-modal [(nzVisible)]="showJoinActivity" nzTitle="参加活动" (nzOnCancel)="showJoinActivity = false" (nzOnOk)="joinActivity()">
+  <div nz-row style="margin-bottom: 16px;">
+    <div nz-col [nzSpan]="6" style="line-height: 30px; text-align: right; padding-right: 12px;">
+      <label>代金券价格:</label>
+    </div>
+    <div nz-col [nzSpan]="14">
+      <input nz-input [(ngModel)]="activityJoinForm.coupon" nzPlaceHolder="请选择活动价格" style="width: 100%;" />
+    </div>
+  </div>
+  <div nz-row style="margin-bottom: 16px;">
+    <div nz-col [nzSpan]="6" style="line-height: 30px; text-align: right; padding-right: 12px;">
+      <label>活动价格:</label>
+    </div>
+    <div nz-col [nzSpan]="14">
+      <input nz-input [(ngModel)]="activityJoinForm.originalPrice" nzPlaceHolder="请选择活动价格" style="width: 100%;" />
+    </div>
+  </div>
+  <div nz-row style="margin-bottom: 16px;">
+    <div nz-col [nzSpan]="6" style="line-height: 30px; text-align: right; padding-right: 12px;">
+      <label>接收短信手机号:</label>
+    </div>
+    <div nz-col [nzSpan]="14">
+      <input nz-input [(ngModel)]="activityJoinForm.bossPhone" nzPlaceHolder="请选择活动价格" style="width: 100%;" />
+    </div>
+  </div>
+</nz-modal>
