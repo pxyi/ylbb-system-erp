@@ -1,0 +1,50 @@
+.search-form {
+  .form-item {
+    display: flex;
+    color: rgba($color: #000, $alpha: .85);
+    font-size: 14px;
+    line-height: 32px;
+    &:not(:last-child) {
+      padding-bottom: 11px;
+      margin-bottom: 16px;
+      border-bottom: dashed 1px rgb(232, 232, 232);
+    }
+    .item-label {
+      margin-right: 24px;
+      flex: 0 0 auto;
+    }
+    .item-content {
+      flex: auto;
+    }
+  }
+}
+:host ::ng-deep {
+  nz-tag {
+    margin-right: 24px;
+    .ant-tag {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+  .ant-card-actions {
+    background: none;
+    li span {
+      width: 100%;
+    }
+  }
+  .ant-card-meta-title {
+    transition: color .2s;
+  }
+  nz-card:hover .ant-card-meta-title {
+    color: #1890ff;
+  }
+}
+.content {
+  margin-top: 24px;
+  .activity-null {
+    color: rgba($color: #000, $alpha: .3);
+    font-size: 16px;
+    line-height: 200px;
+    text-align: center;
+  }
+}
