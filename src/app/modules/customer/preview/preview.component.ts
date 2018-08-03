@@ -213,7 +213,10 @@ export class PreviewCustomerComponent implements OnInit {
       params.followStageId = this.router.url.indexOf('/visit/clue') > -1 ? 2 : this.router.url.indexOf('/visit/nocard') > -1 ? 3 : this.router.url.indexOf('/visit/member') > -1 ? 4 : 2;
       this.http.post('/customer/addFollowRecord', { paramJson: JSON.stringify(params) }).then( res => {
         if (isReset) {
-          this.router.navigateByUrl('/home/customer/potentail?reset=true');
+          let path = this.router.url.indexOf('/visit/clue') > -1 ? '/home/visit/clue?reset=true' :
+            this.router.url.indexOf('/visit/nocard') > -1 ? '/home/visit/nocard?reset=true' :
+              this.router.url.indexOf('/visit/member') > -1 ? '/home/visit/member?reset=true' : '/home/customer/potential?reset=true';
+          this.router.navigateByUrl(path);
         } else {
           this.selectUserInfoInit();
           res.result.contentLabel = this._resetFollowRecordContent(res.result.content);
