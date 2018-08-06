@@ -116,11 +116,11 @@ export class MemberComponent implements OnInit {
     {
       name  : '宝宝昵称',
       width : '100px',
-      left  : 0
     },
     {
       name  : '宝宝姓名',
-      width : '100px'
+      width : '100px',
+      left  : 0
     },
     {
       name  : '宝宝生日',
