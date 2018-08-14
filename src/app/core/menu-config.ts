@@ -24,6 +24,38 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '会员卡管理',
+    key   : '/home/membercard',
+    icon  : 'anticon-credit-card',
+    children : [
+      {
+        title : '会员卡列表',
+        key   : '/home/membercard/list',
+        isLeaf: true
+      },
+      {
+        title : '卡片变更日志',
+        key   : '/home/membercard/changelog',
+        isLeaf: true
+      },
+      {
+        title : '补卡日志',
+        key   : '/home/membercard/patchlog',
+        isLeaf: true
+      },
+      {
+        title : '卡类型管理',
+        key   : '/home/membercard/cardtype',
+        isLeaf: true
+      },
+      {
+        title : '卡业务管理',
+        key   : '/home/membercard/cardbusiness',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '回访管理',
     key   : '/home/visit',
     icon  : 'anticon-form',

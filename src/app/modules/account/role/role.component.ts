@@ -99,6 +99,10 @@ export class RoleComponent implements OnInit {
       nzComponentParams: {
         roleId,
       },
+      nzBodyStyle: {
+        'max-height': '600px',
+        'overflow': 'auto'
+      },
       nzFooter: [
         {
           label: '取消',
