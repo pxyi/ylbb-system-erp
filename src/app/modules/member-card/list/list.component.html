@@ -1,3 +1,42 @@
 <div class="container">
-  
+  <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
+
+  <div class="list-buttons" style="margin-bottom: 16px;">
+    <button nz-button [nzType]="'primary'" routerLink="/home/customer/newinfo/0">
+      <i class="anticon anticon-plus"></i>
+      <span>新建名单</span>
+    </button>
+  </div>
+
+
+  <ea-tip [isShow]="checkedItems.length" type="info">选择
+    <a href="javascript: void(0)">{{ checkedItems.length }}条</a> 相关记录</ea-tip>
+
+  <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [checked]="true" [(checkedItems)]="checkedItems"
+    [allowSpace]="false" url="/memberCard/list">
+    <ng-template let-data #EaTableTbodyTr>
+      <td nzWidth="120px" nzLeft="0">
+        <a href="javascript: void(0);" [routerLink]="{outlets: {aux: 'preview/' + data.id}}">{{ data.nick }}</a>
+      </td>
+      <td>{{ data.name || '--' }}</td>
+      <td>{{ data.birthday || '--' }}</td>
+      <td>
+        <i class="iconfont" [title]="data.sex" [ngClass]="[ data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i>
+      </td>
+      <td>{{ data.birthday | monthdiff }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>
+        
+      </td>
+      <td>{{ data.communityName || '--' }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
+      <td>{{ data.lastFollowTime || '--' }}</td>
+      <td>{{ data.sourceName || '--' }}</td>
+      <td>{{ data.memberStatus || '--' }}</td>
+      <td>{{ data.followStage + (data.followNum ? '('+ data.followNum +')' : '') }}</td>
+      <td>{{ data.contributors || '--' }}</td>
+    </ng-template>
+  </ea-table>
+
 </div>

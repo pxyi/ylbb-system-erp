@@ -10,25 +10,21 @@ export class ListComponent implements OnInit {
 
     queryNode: QueryNode[] = [
     {
-      label       : '宝宝昵称',
-      key         : 'nick',
-      type        : 'input',
-      placeholder : '请输入宝宝昵称'
+      label       : '卡号',
+      key         : 'cardCode',
+      type        : 'input'
     },
     {
-      label       : '来源',
-      key         : 'sourceId',
-      type        : 'select',
-      optionsUrl  : '/common/sourceList',
-      placeholder : '请选择客户来源'
-    },
-    {
-      label       : '家长姓名',
-      key         : 'parentName',
-      type        : 'input',
-      placeholder : '请输入家长姓名',
-      isHide      : true
+      label       : '会员姓名',
+      key         : 'memberName',
+      type        : 'input'
     }, 
+    {
+      label       : '卡类型',
+      key         : 'cardTypeId',
+      type        : 'select',
+      optionsUrl  : '/common/sourceList'
+    },
     {
       label       : '手机号码',
       key         : 'mobilePhone',

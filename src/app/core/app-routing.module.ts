@@ -78,6 +78,12 @@ const routes: Routes = [
         data: { title: '会员卡管理' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/member-card/member-card.module#MemberCardModule'
+      },
+      {
+        path: 'consumption',
+        data: { title: '消费管理' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/consumption/consumption.module#ConsumptionModule'
       }
     ]
   },

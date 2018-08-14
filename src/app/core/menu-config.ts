@@ -56,6 +56,43 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '消费管理',
+    key   : '/home/consumption',
+    icon  : 'anticon-red-envelope',
+    children : [
+      {
+        title : '消费列表',
+        key   : '/home/consumption/list',
+        isLeaf: true
+      },
+      {
+        title : '消费撤销记录',
+        key   : '/home/consumption/revoke',
+        isLeaf: true
+      },
+      {
+        title : '消费短信记录',
+        key   : '/home/consumption/shortmsg',
+        isLeaf: true
+      },
+      {
+        title : '满意度修改记录',
+        key   : '/home/consumption/satisfaction',
+        isLeaf: true
+      },
+      {
+        title : '会员课程进度',
+        key   : '/home/consumption/curriculum',
+        isLeaf: true
+      },
+      {
+        title : '福利消费列表',
+        key   : '/home/consumption/welfare',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '回访管理',
     key   : '/home/visit',
     icon  : 'anticon-form',
