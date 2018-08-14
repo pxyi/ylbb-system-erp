@@ -1,0 +1,38 @@
+<form nz-form [formGroup]="_queryForm">
+  <div class="eq-query-simp-box">
+    <div class="query-title">{{ title }}</div>
+    <div class="query-cell" *ngFor="let control of _node">
+
+      <ng-container *ngIf="control.type === 'input'">
+        <nz-input-group [nzSuffix]="suffixIconButton">
+          <input [formControlName]="control.key" nz-input (keyup.enter)="_submit()" [placeholder]="control.placeholder || '请输入' + control.label">
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <i class="anticon anticon-search" (click)="_submit()"></i>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="control.type === 'select'">
+        <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder || '请选择' + control.label" (ngModelChange)="_submit()">
+          <nz-option *ngFor="let option of control.options" [nzLabel]="option[control.optionKey?.label]" [nzValue]="option[control.optionKey?.value]"
+            [nzDisabled]="option?.disabled"></nz-option>
+        </nz-select>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'radio'">
+        <nz-radio-group [formControlName]="control.key" (ngModelChange)="_submit()">
+          <label nz-radio-button *ngFor="let option of control.options" [nzValue]="option[control.optionKey?.value]">{{ option[control.optionKey?.label] }}</label>
+        </nz-radio-group>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'datepicker'">
+        <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder || '请选择' + control.label" (ngModelChange)="_submit()"></nz-date-picker>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'rangepicker'">
+        <nz-range-picker [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd" [nzPlaceHolder]="[control.placeholder || '开始日期', control.placeholder || '结束日期']" (ngModelChange)="_submit()"></nz-range-picker>
+      </ng-container>
+
+    </div>
+  </div>
+</form>

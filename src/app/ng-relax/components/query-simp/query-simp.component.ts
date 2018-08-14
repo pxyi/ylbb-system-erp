@@ -1,27 +1,21 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { QueryNode } from '../query/query.component';
+import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CacheService } from '../../services/cache.service';
 
 @Component({
-  selector: 'ea-query',
-  templateUrl: './query.component.html',
-  styleUrls: ['./query.component.scss'],
+  selector: 'ea-query-simp',
+  templateUrl: './query-simp.component.html',
+  styleUrls: ['./query-simp.component.scss'],
   host: {
-    '[class.ea-query]': 'true'
+    '[class.ea-query-simp]': 'true'
   }
 })
-export class QueryComponent implements OnInit {
+export class QuerySimpComponent implements OnInit {
 
-  private _EaQueryBtns: TemplateRef<void>;
-  @Input()
-  set EaQueryBtns(value: TemplateRef<void>) {
-    this._EaQueryBtns = value;
-  }
-  get EaQueryBtns(): TemplateRef<void> {
-    return this._EaQueryBtns;
-  }
+  @Input() title: string = '';
 
   @Input('node') _node: QueryNode[] = [];
 
@@ -48,7 +42,7 @@ export class QueryComponent implements OnInit {
       } else {
         this._queryForm.addControl(res.key, new FormControl(res.default || null));
       }
-      if (res.type === 'select') {
+      if (res.type === 'select' || res.type === 'radio') {
         res.optionKey = res.optionKey || { label: 'name', value: 'id' };
         if (res.optionsUrl && res.noCache) {
           this.http.post<any>(res.optionsUrl, {}).subscribe(result => {
@@ -71,16 +65,6 @@ export class QueryComponent implements OnInit {
       res.key === key && (res = Object.assign(res, value));
       return res;
     })
-  }
-
-  /* --------------- 重置 --------------- */
-  _reset(): void {
-    this._queryForm.reset();
-  }
-
-  /* ------------- 清空Input ------------- */
-  _clearControlValue(key: string): void {
-    this._queryForm.get(key).reset();
   }
 
 
@@ -113,21 +97,5 @@ export class QueryComponent implements OnInit {
 
     this.onSubmit.emit(queryForm);
   }
-}
 
-export interface QueryNode {
-  label       : string;
-  key         : string;
-  type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker' | 'radio';
-  default?    : any;
-  valueKey?   : string[];
-  options?    : any[];
-  optionsUrl? : string;
-  optionKey?  : OptionsKey;
-  placeholder?: string | string[];
-  isHide?     : boolean;
-}
-export interface OptionsKey {
-  label: string;
-  value: string;
 }

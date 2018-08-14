@@ -1,4 +1,10 @@
-<ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns"></ea-query>
+<ng-container *ngIf="type === 'default'">
+  <ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns"></ea-query>
+</ng-container>
+<ng-container *ngIf="type === 'simpify'">
+  <ea-query-simp #EaQuery [node]="queryNode" [title]="title" (onSubmit)="EaTable.request($event)"></ea-query-simp>
+</ng-container>
+
 
 <ng-container *ngTemplateOutlet="EaBtns"></ng-container>
 

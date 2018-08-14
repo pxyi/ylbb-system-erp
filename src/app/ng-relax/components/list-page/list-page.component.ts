@@ -12,6 +12,10 @@ export class ListPageComponent implements OnInit {
   @ViewChild('EaQuery') EaQuery: QueryComponent;
   @ViewChild('EaTable') EaTable: TableComponent;
 
+  @Input() type: 'default' | 'simpify' = 'default';
+
+  @Input('queryTitle') title: string;
+
   @Input() queryNode: QueryNode[] = [];
 
   @Input() tableThead: any[] = [];
