@@ -87,7 +87,7 @@ export class NewinformationComponent implements OnInit {
       name: [''],                                                                               // 宝宝姓名
       sex: ['男'],                                                                             // 宝宝性别
       ethnic: [''],                                                                               // 民族
-      birthday: [''],                                                                               // 宝宝生日
+      birthday: ['', [Validators.required]],                                                       // 宝宝生日
       constellation: [{ value: '', disabled: true }],                                                                               // 星座
       babyType: [''],                                                                               // 宝宝类型
       communityId: [''],                                                                               // 所属小区

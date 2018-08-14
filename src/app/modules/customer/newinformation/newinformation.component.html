@@ -55,6 +55,7 @@
           <nz-form-label [nzSpan]="6">宝宝生日</nz-form-label>
           <nz-form-control [nzSpan]="18">
             <nz-date-picker formControlName="birthday" nzPlaceHolder="请选择宝宝生日" [style.width]="'100%'" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+            <nz-form-explain *ngIf="getFormControl('birthday').dirty && getFormControl('birthday').hasError('required')">请选择宝宝生日</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
