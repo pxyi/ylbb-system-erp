@@ -47,7 +47,7 @@
             <nz-button-group *ngIf="item.joinStatus == 1">
               <button nz-button (click)="cancelActivity(item)" [nzLoading]="item.loading">取消参加</button>
               <button nz-button nz-popover nzTitle="请扫码打开页面下载" [nzContent]="contentTemplate" style="border-top-right-radius: 4px;border-bottom-right-radius: 4px;">下载门店推广图</button>
-              <ng-template #contentTemplate><img style="width: 150px" src="http://qr.liantu.com/api.php?text=http://localhost:8088/assets/download-wx.html?id={{ item.id }}|{{ item.storeId }}" /></ng-template>
+              <ng-template #contentTemplate><img style="width: 150px" src="http://qr.liantu.com/api.php?text=http://erp.beibeiyue.com/assets/download-wx.html?id={{ item.id }}|{{ item.storeId }}" /></ng-template>
             </nz-button-group>
           </ng-template>
         </div>
