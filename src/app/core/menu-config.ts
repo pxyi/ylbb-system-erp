@@ -115,6 +115,28 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '积分管理',
+    key   : '/home/integral',
+    icon  : 'anticon-gift',
+    children : [
+      {
+        title : '会员积分列表',
+        key   : '/home/integral/list',
+        isLeaf: true
+      },
+      {
+        title : '积分变更日志',
+        key   : '/home/integral/change',
+        isLeaf: true
+      },
+      {
+        title : '积分兑换日志',
+        key   : '/home/integral/exchange',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '推广活动',
     key   : '/home/marketing',
     icon  : 'anticon-area-chart',

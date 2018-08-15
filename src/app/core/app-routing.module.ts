@@ -84,6 +84,12 @@ const routes: Routes = [
         data: { title: '消费管理' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/consumption/consumption.module#ConsumptionModule'
+      },
+      {
+        path: 'integral',
+        data: { title: '积分管理' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/integral/integral.module#IntegralModule'
       }
     ]
   },
