@@ -90,6 +90,12 @@ const routes: Routes = [
         data: { title: '积分管理' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/integral/integral.module#IntegralModule'
+      },
+      {
+        path: 'message',
+        data: { title: '消息管理' },
+        canLoad: [AuthGuardService],
+        loadChildren: 'src/app/modules/message/message.module#MessageModule'
       }
     ]
   },

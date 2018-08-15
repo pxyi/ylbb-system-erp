@@ -137,6 +137,28 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '消息管理',
+    key   : '/home/message',
+    icon  : 'anticon-message',
+    children : [
+      {
+        title : '消息发送',
+        key   : '/home/message/sendout',
+        isLeaf: true
+      },
+      {
+        title : '消息模板配置',
+        key   : '/home/message/template',
+        isLeaf: true
+      },
+      {
+        title : '消息发送日志',
+        key   : '/home/message/sendlog',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '推广活动',
     key   : '/home/marketing',
     icon  : 'anticon-area-chart',
