@@ -176,6 +176,33 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '基础资料',
+    key   : '/home/configuration',
+    icon  : 'anticon-rocket',
+    children: [
+      {
+        title : '基础设置',
+        key   : '/home/configuration/setting',
+        isLeaf: true
+      },
+      {
+        title: '泳圈管理',
+        key: '/home/configuration/swimming',
+        isLeaf: true
+      },
+      {
+        title : '社区管理',
+        key   : '/home/configuration/community',
+        isLeaf: true
+      },
+      {
+        title: '知识汇总',
+        key: '/home/configuration/knowledge',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '经营分析',
     key   : '/home/analysis',
     icon  : 'anticon-area-chart',

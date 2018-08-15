@@ -102,6 +102,12 @@ const routes: Routes = [
         data: { title: '经营分析' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/analysis/analysis.module#AnalysisModule'
+      },
+      {
+        path: 'configuration',
+        data: { title: '基础资料' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/configuration/configuration.module#ConfigurationModule'
       }
     ]
   },

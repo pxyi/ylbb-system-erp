@@ -1,9 +1,16 @@
+.ui-menu {
+  height: 100%;
+}
 .ui-logo{
+  width: 100%;
   height: 64px;
   line-height: 64px;
   background: #002140;
   overflow: hidden;
   white-space: nowrap;
+  position: absolute;
+  top: 0;
+  z-index: 1;
   & > img{
     height: 32px;
     margin-left: 26px;
@@ -33,7 +40,10 @@
     font-size: 14px;
   }
   .ant-menu.ant-menu-root {
+    height: 100%;
+    padding-top: 64px;
     background: #001529;
+    overflow-y: auto;
   }
 
   .ant-menu.ant-menu-sub.ng-star-inserted{
