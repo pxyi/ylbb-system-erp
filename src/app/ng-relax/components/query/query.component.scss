@@ -11,6 +11,21 @@
     text-align: right;
   }
 } 
+
+.between-one {
+  width: calc(50% - 15px);
+}
+.between-two {
+  width: 30px;
+  border-left: 0px; 
+  pointer-events: none; 
+  background-color: rgb(255, 255, 255);
+}
+.between-three {
+  width: calc(50% - 15px);
+  border-left: 0px;
+}
+
 :host ::ng-deep { 
   nz-input-group {
     &:hover .anticon {

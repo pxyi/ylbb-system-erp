@@ -36,7 +36,7 @@ export class QuerySimpComponent implements OnInit {
     this._queryForm = new FormGroup({});
     this._node.map((res: any, idx) => {
       if (res.isHide) { this._showSlideBtn = true; }
-      if (res.type === 'numbetween') {
+      if (res.type === 'between') {
         this._queryForm.addControl(res.valueKey[0], new FormControl(res.default ? res.default[0] : ''));
         this._queryForm.addControl(res.valueKey[1], new FormControl(res.default ? res.default[1] : ''));
       } else {
@@ -83,12 +83,12 @@ export class QuerySimpComponent implements OnInit {
             queryForm[res.valueKey[0]] = this.datePipe.transform(queryForm[res.key][0].getTime(), 'yyyy-MM-dd');
             queryForm[res.valueKey[1]] = this.datePipe.transform(queryForm[res.key][1].getTime(), 'yyyy-MM-dd');
           }
+          delete queryForm[res.key];
         }
         if (res.type === 'between') {
           if (!queryForm[res.valueKey[0]]) delete queryForm[res.valueKey[0]];
           if (!queryForm[res.valueKey[1]]) delete queryForm[res.valueKey[1]];
         }
-        delete queryForm[res.key];
       }
       if (queryForm[res.key] === '' || queryForm[res.key] === null || queryForm[res.key] === undefined) {
         delete queryForm[res.key];

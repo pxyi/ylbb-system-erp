@@ -15,6 +15,12 @@ export class ListComponent implements OnInit {
       type        : 'input'
     },
     {
+      label       : '区间',
+      key         : 'cardCodedd',
+      type        : 'between',
+      valueKey    : ['start', 'end']
+    },
+    {
       label       : '会员姓名',
       key         : 'memberName',
       type        : 'input'
@@ -45,7 +51,6 @@ export class ListComponent implements OnInit {
       key         : 'birthday',
       type        : 'rangepicker',
       valueKey    : ['babyBirthdayStart', 'babyBirthdayEnd'],
-      placeholder : ['选择开始时间', '选择结束时间'],
       isHide      : true
     },
     {
