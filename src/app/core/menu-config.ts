@@ -161,7 +161,7 @@ export const MenuConfig = [
   {
     title : '推广活动',
     key   : '/home/marketing',
-    icon  : 'anticon-area-chart',
+    icon  : 'anticon-rocket',
     children: [
       {
         title : '活动',
@@ -174,6 +174,12 @@ export const MenuConfig = [
         isLeaf: true
       }
     ]
+  },
+  {
+    title : '经营分析',
+    key   : '/home/analysis',
+    icon  : 'anticon-area-chart',
+    isLeaf: true
   },
   {
     title : '全国通卡',

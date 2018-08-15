@@ -94,8 +94,14 @@ const routes: Routes = [
       {
         path: 'message',
         data: { title: '消息管理' },
-        canLoad: [AuthGuardService],
+        canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/message/message.module#MessageModule'
+      },
+      {
+        path: 'analysis',
+        data: { title: '经营分析' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/analysis/analysis.module#AnalysisModule'
       }
     ]
   },
