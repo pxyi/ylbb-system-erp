@@ -30,6 +30,8 @@ export class ListPageComponent implements OnInit {
 
   @Input() checked: boolean;
 
+  @Input() isRadio: boolean = false;
+
   @Input() allowSpace: boolean = true;
 
   @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();

@@ -12,6 +12,16 @@ export const MenuConfig = [
     icon  : 'anticon-team',
     children : [
       {
+        title : '客户列表',
+        key   : '/home/customer/list',
+        isLeaf: true
+      },
+      {
+        title : '刷卡消费',
+        key   : '/home/customer/paycard',
+        isLeaf: true
+      },
+      {
         title : '潜在客户',
         key   : '/home/customer/potential',
         isLeaf: true
@@ -19,6 +29,11 @@ export const MenuConfig = [
       {
         title : '无意向客户',
         key   : '/home/customer/nointention',
+        isLeaf: true
+      },
+      {
+        title : '成长相册',
+        key   : '/home/customer/album',
         isLeaf: true
       }
     ]
@@ -178,7 +193,7 @@ export const MenuConfig = [
   {
     title : '基础资料',
     key   : '/home/configuration',
-    icon  : 'anticon-rocket',
+    icon  : 'anticon-tool',
     children: [
       {
         title : '基础设置',

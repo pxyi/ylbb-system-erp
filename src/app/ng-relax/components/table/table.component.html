@@ -16,7 +16,7 @@
   <thead>
     <tr>
       <th nz-th nzCheckbox *ngIf="checked" [style.text-align]="'center'">
-        <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)"></label>
+        <label nz-checkbox *ngIf="!isRadio" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)"></label>
       </th>
       <th nzShowExpand *ngIf="showExpand"></th>
       <ng-container *ngFor="let head of thead">
@@ -42,7 +42,7 @@
   <tbody>
     <ng-template ngFor let-data [ngForOf]="dataSet">
       <tr>
-        <td nzShowCheckbox *ngIf="checked" [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="isChecked($event)"></td>
+        <td nzShowCheckbox *ngIf="checked" [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="isChecked($event, data)"></td>
         <td nzShowExpand [(nzExpand)]="data.expand" *ngIf="showExpand"></td>
         <ng-container *ngTemplateOutlet="EaTableTbodyTr; context: { $implicit: data }"></ng-container>
       </tr>

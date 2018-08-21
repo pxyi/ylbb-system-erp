@@ -9,6 +9,9 @@ import { NointentionComponent } from './nointention/nointention.component';
 import { PreviewCustomerComponent } from './preview/preview.component';
 import { GetMobileDirective } from './get-mobile.directive';
 import { NewinformationCanDeactivate } from './newinformation/newinfomation.guard';
+import { ListComponent } from './list/list.component';
+import { PaycardComponent } from './paycard/paycard.component';
+import { AlbumComponent } from './album/album.component';
 
 @NgModule({
   imports: [
@@ -16,7 +19,7 @@ import { NewinformationCanDeactivate } from './newinformation/newinfomation.guar
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective],
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, AlbumComponent],
   providers: [NewinformationCanDeactivate],
   exports: [ PreviewCustomerComponent, GetMobileDirective ]
 })

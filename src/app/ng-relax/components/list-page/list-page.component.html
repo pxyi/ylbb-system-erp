@@ -5,9 +5,10 @@
   <ea-query-simp #EaQuery [node]="queryNode" [title]="title" (onSubmit)="EaTable.request($event)"></ea-query-simp>
 </ng-container>
 
+<div class="ea-btns">
+  <ng-container *ngTemplateOutlet="EaBtns"></ng-container>
+</div>
 
-<ng-container *ngTemplateOutlet="EaBtns"></ng-container>
-
-<ea-table #EaTable [thead]="tableThead" [paramsDefault]="paramsDefault" [EaTableTbodyTr]="EaTableTbodyTr" [EaTableTbodyExpand]="EaTableTbodyExpand" [checked]="checked" [checkedKey]="checkedKey" (checkedItems)="checkedChange($event)"
+<ea-table #EaTable [thead]="tableThead" [paramsDefault]="paramsDefault" [EaTableTbodyTr]="EaTableTbodyTr" [EaTableTbodyExpand]="EaTableTbodyExpand" [checked]="checked" [isRadio]="isRadio" [checkedKey]="checkedKey" (checkedItems)="checkedChange($event)"
   [allowSpace]="allowSpace" [url]="url">
 </ea-table>

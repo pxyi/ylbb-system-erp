@@ -1,0 +1,55 @@
+<div class="container">
+  <ea-list-page 
+    url="/member/list"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '婴儿类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注']"
+    [checked]="true"
+    [checkedItems]="checkedItems"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns"
+  >
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.memberCard }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.sex }}</td>
+      <td>{{ data.babyNumber }}</td>
+      <td>{{ data.monthAge }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.xxx }}</td>
+      <td>{{ data.babyType }}</td>
+      <td>{{ data.memberPoint.memberPoint }}</td>
+      <td>{{ data.expireDays }}</td>
+      <td>{{ data.xxx }}</td>
+      <td>{{ data.xxx }}</td>
+      <td>{{ data.loginTimes }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.comment }}</td>
+    </ng-template>
+
+    <ng-template #EaBtns>
+      <div class="ea-btns">
+        <button nz-button nzType="primary"><i class="anticon anticon-plus"></i>新增客户</button>
+        <button nz-button><i class="anticon anticon-file-excel"></i>导入客户</button>
+        <nz-dropdown>
+          <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
+          <ul nz-menu>
+            <li nz-menu-item><a>预约</a></li>
+            <li nz-menu-item><a>消费</a></li>
+            <li nz-menu-item><a>编辑</a></li>
+            <li nz-menu-item><a>建卡</a></li>
+            <li nz-menu-item><a>查卡</a></li>
+            <li nz-menu-item><a>重置密码</a></li>
+            <li nz-menu-item><a>消费记录</a></li>
+            <li nz-menu-item><a>增加积分</a></li>
+            <li nz-menu-item><a>积分兑换</a></li>
+            <li nz-menu-item><a>成长相册</a></li>
+            <li nz-menu-item><a>360°视图</a></li>
+          </ul>
+        </nz-dropdown>
+      </div>
+    </ng-template>
+  </ea-list-page>
+</div>

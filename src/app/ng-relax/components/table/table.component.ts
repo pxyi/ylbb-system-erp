@@ -15,11 +15,13 @@ export class TableComponent implements OnInit {
 
   @Input() paramsDefault: any = {};
 
+  @Input() checked      : boolean;
+
   @Input() checkedItems : any[];
 
   @Input() checkedKey   : string = 'id';
 
-  @Input() checked      : boolean;
+  @Input() isRadio      : boolean = false;
 
   @Input() allowSpace   : boolean = true;
 
@@ -117,12 +119,18 @@ export class TableComponent implements OnInit {
   }
 
   /* --------------------- 点击选择 --------------------- */
-  isChecked(): void {
-    let allChecked = this.dataSet.every((value: any) => value.checked === true);
-    let allUnChecked = !allChecked;
-    this._allChecked = allChecked;
-    this._indeterminate = (!allChecked) && (!allUnChecked);
-    this._resetCheckedItems();
+  isChecked(e?, data?): void {
+    if (this.isRadio && data) {
+      this.checkedItems = e ? [data[this.checkedKey]] : [];
+      this.checkedItemsChange.emit(this.checkedItems);
+      this.dataSet.map(res => res.checked = res[this.checkedKey] != data[this.checkedKey] ? false : e);
+    } else {
+      let allChecked = this.dataSet.every((value: any) => value.checked === true);
+      let allUnChecked = !allChecked;
+      this._allChecked = allChecked;
+      this._indeterminate = (!allChecked) && (!allUnChecked);
+      this._resetCheckedItems();
+    }
   }
 
   _resetCheckedItems(): void {
