@@ -121,7 +121,8 @@ export class TableComponent implements OnInit {
   /* --------------------- 点击选择 --------------------- */
   isChecked(e?, data?): void {
     if (this.isRadio && data) {
-      this.checkedItems = e ? [data[this.checkedKey]] : [];
+      this.checkedItems.map(_ => this.checkedItems.splice(0, 1));
+      e && this.checkedItems.push(data[this.checkedKey]);
       this.checkedItemsChange.emit(this.checkedItems);
       this.dataSet.map(res => res.checked = res[this.checkedKey] != data[this.checkedKey] ? false : e);
     } else {

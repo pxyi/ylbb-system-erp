@@ -1,3 +1,5 @@
+import { NzMessageService } from 'ng-zorro-antd';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { Component, OnInit } from '@angular/core';
 
@@ -65,11 +67,22 @@ export class ListComponent implements OnInit {
     }
   ]
 
-  checkedItems: any[];
-  
-  constructor() { }
+  checkedItems: any[] = [];
+
+  constructor(
+    private http: HttpService,
+    private message: NzMessageService
+  ) { }
 
   ngOnInit() {
+  }
+
+  operation() {
+    if (!this.checkedItems.length) {
+      this.message.warning('请选择一条数据进行操作');
+    } else {
+      
+    }
   }
 
 }
