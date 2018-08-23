@@ -12,6 +12,11 @@ import { NewinformationCanDeactivate } from './newinformation/newinfomation.guar
 import { ListComponent } from './list/list.component';
 import { PaycardComponent } from './paycard/paycard.component';
 import { AlbumComponent } from './album/album.component';
+import { UpdateComponent } from './list/update/update.component';
+import { AppointComponent } from './list/appoint/appoint.component';
+import { ConsumptionComponent } from './list/consumption/consumption.component';
+import { ConstructionComponent } from './list/construction/construction.component';
+import { QueryCardComponent } from './list/query-card/query-card.component';
 
 @NgModule({
   imports: [
@@ -19,8 +24,9 @@ import { AlbumComponent } from './album/album.component';
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, AlbumComponent],
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, AlbumComponent, UpdateComponent, AppointComponent, ConsumptionComponent, ConstructionComponent, QueryCardComponent],
   providers: [NewinformationCanDeactivate],
-  exports: [ PreviewCustomerComponent, GetMobileDirective ]
+  exports: [ PreviewCustomerComponent, GetMobileDirective ],
+  entryComponents: [AppointComponent, ConstructionComponent, ConsumptionComponent, QueryCardComponent, UpdateComponent]
 })
 export class CustomerModule { }

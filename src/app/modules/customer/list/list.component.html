@@ -32,26 +32,44 @@
 
     <ng-template #EaBtns>
       <div class="ea-btns">
-        <button nz-button nzType="primary"><i class="anticon anticon-plus"></i>新增客户</button>
+        <button nz-button nzType="primary" (click)="updateId = null; showDrawer = true; drawerTitle = '新增用户'"><i class="anticon anticon-plus"></i>新增客户</button>
         <button nz-button><i class="anticon anticon-file-excel"></i>导入客户</button>
         <nz-dropdown>
           <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
           <ul nz-menu>
-            <li nz-menu-item><a (click)="operation()">预约</a></li>
-            <li nz-menu-item><a (click)="operation()">消费</a></li>
-            <li nz-menu-item><a (click)="operation()">编辑</a></li>
-            <li nz-menu-item><a (click)="operation()">建卡</a></li>
-            <li nz-menu-item><a (click)="operation()">查卡</a></li>
-            <li nz-menu-item><a (click)="operation()">重置密码</a></li>
-            <li nz-menu-item><a (click)="operation()">消费记录</a></li>
-            <li nz-menu-item><a (click)="operation()">增加积分</a></li>
-            <li nz-menu-item><a (click)="operation()">积分兑换</a></li>
-            <li nz-menu-item><a (click)="operation()">成长相册</a></li>
-            <li nz-menu-item><a (click)="operation()">360°视图</a></li>
+            <li nz-menu-item><a (click)="operation('appoint')">预约</a></li>
+            <li nz-menu-item><a (click)="operation('consumption')">消费</a></li>
+            <li nz-menu-item><a (click)="operation('update')">编辑</a></li>
+            <li nz-menu-item><a (click)="operation('construction')">建卡</a></li>
+            <li nz-menu-item><a (click)="operation('queryCard')">查卡</a></li>
+            <li nz-menu-item><a (click)="operation('重置密码')">重置密码</a></li>
+            <li nz-menu-item><a (click)="operation('消费记录')">消费记录</a></li>
+            <li nz-menu-item><a (click)="operation('增加积分')">增加积分</a></li>
+            <li nz-menu-item><a (click)="operation('积分兑换')">积分兑换</a></li>
+            <li nz-menu-item><a (click)="operation('成长相册')">成长相册</a></li>
+            <li nz-menu-item><a (click)="operation('360°视图')">360°视图</a></li>
           </ul>
         </nz-dropdown>
       </div>
-      {{ checkedItems | json }}
     </ng-template>
   </ea-list-page>
 </div>
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  [nzTitle]="drawerTitle" 
+  (nzOnClose)="showDrawer = false">
+  <!-- <div [hidden]="drawerTitle !== '预约'">
+    <app-appoint [id]="checkedId"></app-appoint>
+  </div>
+  <div [hidden]="drawerTitle !== '新增用户' && drawerTitle !== '编辑用户信息'">
+    <app-update [id]="checkedId"></app-update>
+  </div> -->
+  <ng-template #drawerContainer></ng-template>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" (click)="saveDrawer()">保存</button>
+  </div>
+</nz-drawer>
+
