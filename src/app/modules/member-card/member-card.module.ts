@@ -8,6 +8,10 @@ import { PatchLogComponent } from './patch-log/patch-log.component';
 import { CardTypeComponent } from './card-type/card-type.component';
 import { CardBusinessComponent } from './card-business/card-business.component';
 import { NgRelaxModule } from '../../ng-relax/ng-relax.module';
+import { AdjustmentComponent } from './list/adjustment/adjustment.component';
+import { ChangeComponent } from './list/change/change.component';
+import { ContinuedComponent } from './list/continued/continued.component';
+import { AddComponent } from './card-type/add/add.component';
 
 @NgModule({
   imports: [
@@ -15,6 +19,7 @@ import { NgRelaxModule } from '../../ng-relax/ng-relax.module';
     MemberCardRoutingModule,
     NgRelaxModule
   ],
-  declarations: [ListComponent, ChangeLogComponent, PatchLogComponent, CardTypeComponent, CardBusinessComponent]
+  declarations: [ListComponent, ChangeLogComponent, PatchLogComponent, CardTypeComponent, CardBusinessComponent, AdjustmentComponent, ChangeComponent, ContinuedComponent, AddComponent],
+  entryComponents: [AdjustmentComponent, ChangeComponent, ContinuedComponent, AddComponent]
 })
 export class MemberCardModule { }

@@ -31,7 +31,7 @@
     </ng-template>
 
     <ng-template #EaBtns>
-      <div class="ea-btns">
+      <div class="ea-button-group">
         <button nz-button nzType="primary" (click)="updateId = null; showDrawer = true; drawerTitle = '新增用户'"><i class="anticon anticon-plus"></i>新增客户</button>
         <button nz-button><i class="anticon anticon-file-excel"></i>导入客户</button>
         <nz-dropdown>
@@ -60,12 +60,6 @@
   [nzVisible]="showDrawer" 
   [nzTitle]="drawerTitle" 
   (nzOnClose)="showDrawer = false">
-  <!-- <div [hidden]="drawerTitle !== '预约'">
-    <app-appoint [id]="checkedId"></app-appoint>
-  </div>
-  <div [hidden]="drawerTitle !== '新增用户' && drawerTitle !== '编辑用户信息'">
-    <app-update [id]="checkedId"></app-update>
-  </div> -->
   <ng-template #drawerContainer></ng-template>
   <div class="footer">
     <button nz-button (click)="showDrawer = false">取消</button>

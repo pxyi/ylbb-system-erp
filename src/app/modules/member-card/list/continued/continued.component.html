@@ -1,0 +1,70 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="memberName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有正价卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="times">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有赠送卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="freeTimes">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>失效日期</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="expireDate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>续卡类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="changeCardType" nzPlaceHolder="请选择续卡类型">
+            <nz-option nzLabel="男" nzValue="男"></nz-option>
+            <nz-option nzLabel="女" nzValue="女"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('changeCardType').dirty && formGroup.get('changeCardType').hasError('required')">请请选择续卡类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

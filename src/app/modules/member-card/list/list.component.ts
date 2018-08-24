@@ -1,5 +1,9 @@
+import { ContinuedComponent } from './continued/continued.component';
+import { ChangeComponent } from './change/change.component';
+import { AdjustmentComponent } from './adjustment/adjustment.component';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-list',
@@ -8,7 +12,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-    queryNode: QueryNode[] = [
+  @ViewChild('drawerContainer', {read: ViewContainerRef}) container: ViewContainerRef;
+  componentRef: ComponentRef<any>;
+
+  operationComponents = {
+    adjustment: {
+      title: '通卡调整',
+      component: AdjustmentComponent
+    },
+    change: {
+      title: '卡项变更',
+      component: ChangeComponent
+    },
+    continued: {
+      title: '续卡',
+      component: ContinuedComponent
+    },
+
+  }
+
+  queryNode: QueryNode[] = [
     {
       label       : '卡号',
       key         : 'cardCode',
@@ -94,75 +117,34 @@ export class ListComponent implements OnInit {
       isHide      : true
     },
   ];
-  tableNode = [
-    {
-      name  : '宝宝昵称',
-      width : '120px',
-      left  : 0
-    },
-    {
-      name  : '宝宝姓名',
-      width : '100px'
-    },
-    {
-      name  : '宝宝生日',
-      width : '100px'
-    },
-    {
-      name  : '性别',
-      width : '60px'
-    },
-    {
-      name  : '月龄',
-      width : '60px'
-    },
-    {
-      name  : '家长姓名',
-      width : '100px'
-    },
-    {
-      name  : '家长电话',
-      width : '100px'
-    },
-    {
-      name  : '所属小区',
-      width : '140px'
-    }, 
-    {
-      name  : '入库时间',
-      width : '140px'
-    },
-    {
-      name  : '下次跟进时间',
-      width : '140px'
-    },
-    {
-      name  : '最后跟进时间',
-      width : '140px'
-    },
-    {
-      name  : '来源',
-      width : '80px'
-    },
-    {
-      name  : '客户状态',
-      width : '80px'
-    },
-    {
-      name  : '跟进阶段',
-      width : '120px'
-    },
-    {
-      name  : '收集者',
-      width : '120px'
-    }
-  ]
+  
   checkedItems: any[] = [];
 
+  showDrawer: boolean;
+  drawerTitle: string;
 
-  constructor() { }
+  constructor(
+    private message: NzMessageService,
+    private resolver: ComponentFactoryResolver
+  ) { }
 
   ngOnInit() {
+  }
+
+  operation(type) {
+    if (!this.checkedItems.length) {
+      this.message.warning('请选择一条数据进行操作');
+    } else if (this.operationComponents[type]) {
+      this.showDrawer = true;
+      this.drawerTitle = this.operationComponents[type].title;
+
+      this.container.clear();
+      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(this.operationComponents[type].component);
+      this.componentRef = this.container.createComponent(factory);
+    }
+  }
+
+  saveDrawer() {
   }
 
 }

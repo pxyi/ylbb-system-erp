@@ -1,3 +1,31 @@
-<p>
-  change-log works!
-</p>
+<div class="container">
+  <ea-query-simp [node]="queryNode" title="变更日志" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <ea-table
+    #table
+    url="/cardChangeLog/list"
+    [allowSpace]="false"
+    [thead]="['标识','卡号','原过期日期','现过期日期','重开卡日期','原卡次','现卡次','原金额','现金额','原卡类型','现卡类型','原停卡限制','现停卡限制','原通卡次数','现通卡次数','操作人','操作日期','类型']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.id }}</td>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.orgExpireDate }}</td>
+      <td>{{ data.newExpireDate }}</td>
+      <td>{{ data.reopenDate }}</td>
+      <td>{{ data.orgTimesCount }}</td>
+      <td>{{ data.newTimesCount }}</td>
+      <td>{{ data.orgBalance }}</td>
+      <td>{{ data.newBalance }}</td>
+      <td>{{ data.orgCardTypeName }}</td>
+      <td>{{ data.newCardTypeName }}</td>
+      <td>{{ data.orgTurnCard }}</td>
+      <td>{{ data.newTurnCard }}</td>
+      <td>{{ data.orgTongTimes }}</td>
+      <td>{{ data.newTongTimes }}</td>
+      <td>{{ data.admin }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.comment }}</td>
+    </ng-template>
+  </ea-table>
+</div>

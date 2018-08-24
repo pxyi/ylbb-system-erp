@@ -1,42 +1,67 @@
 <div class="container">
-  <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
+  <ea-list-page
+    url="/memberCard/list"
+    [queryNode]="queryNode"
+    [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数', '通卡次数(剩余)', '金额', '有效期', '状态', '业务类型', '停卡截止日期', '备注']"
+    [checked]="true"
+    [isRadio]="true"
+    [(checkedItems)]="checkedItems"
+    [allowSpace]="false"
+    [EaBtns]="EaBtns"
+    [EaTableTbodyTr]="EaTableTbodyTr">
 
-  <div class="list-buttons" style="margin-bottom: 16px;">
-    <button nz-button [nzType]="'primary'" routerLink="/home/customer/newinfo/0">
-      <i class="anticon anticon-plus"></i>
-      <span>新建名单</span>
-    </button>
-  </div>
+  </ea-list-page>
 
+  <ng-template #EaBtns>
+    <div class="ea-button-group" style="margin-bottom: 16px;">
+      <button nz-button [nzType]="'primary'" (click)="operation('adjustment')">通卡调整</button>
+      <button nz-button [nzType]="'primary'" (click)="operation('change')">卡项变更</button>
+      <button nz-button [nzType]="'primary'" (click)="operation('continued')">续卡</button>
+      <button nz-button>预约</button>
+      <button nz-button>消费</button>
+      <nz-dropdown>
+        <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
+        <ul nz-menu>
+          <li nz-menu-item><a (click)="operation('appoint')">停卡</a></li>
+          <li nz-menu-item><a (click)="operation('consumption')">重开卡</a></li>
+          <li nz-menu-item><a (click)="operation('update')">补卡</a></li>
+          <li nz-menu-item><a (click)="operation('construction')">换卡号</a></li>
+        </ul>
+      </nz-dropdown>
+    </div>
+  </ng-template>
 
-  <ea-tip [isShow]="checkedItems.length" type="info">选择
-    <a href="javascript: void(0)">{{ checkedItems.length }}条</a> 相关记录</ea-tip>
-
-  <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [checked]="true" [(checkedItems)]="checkedItems"
-    [allowSpace]="false" url="/memberCard/list">
-    <ng-template let-data #EaTableTbodyTr>
-      <td nzWidth="120px" nzLeft="0">
-        <a href="javascript: void(0);" [routerLink]="{outlets: {aux: 'preview/' + data.id}}">{{ data.nick }}</a>
-      </td>
-      <td>{{ data.name || '--' }}</td>
-      <td>{{ data.birthday || '--' }}</td>
-      <td>
-        <i class="iconfont" [title]="data.sex" [ngClass]="[ data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i>
-      </td>
-      <td>{{ data.birthday | monthdiff }}</td>
-      <td>{{ data.parentName }}</td>
-      <td>
-        
-      </td>
-      <td>{{ data.communityName || '--' }}</td>
-      <td>{{ data.createDate }}</td>
-      <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
-      <td>{{ data.lastFollowTime || '--' }}</td>
-      <td>{{ data.sourceName || '--' }}</td>
-      <td>{{ data.memberStatus || '--' }}</td>
-      <td>{{ data.followStage + (data.followNum ? '('+ data.followNum +')' : '') }}</td>
-      <td>{{ data.contributors || '--' }}</td>
-    </ng-template>
-  </ea-table>
-
+  <ng-template let-data #EaTableTbodyTr>
+    <td>
+     {{ data.nick }}
+    </td>
+    <td>{{ data.name || '--' }}</td>
+    <td>{{ data.birthday || '--' }}</td>
+    <td>
+      <i class="iconfont" [title]="data.sex" [ngClass]="[ data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i>
+    </td>
+    <td>{{ data.birthday | monthdiff }}</td>
+    <td>{{ data.parentName }}</td>
+    <td>{{ data.communityName || '--' }}</td>
+    <td>{{ data.createDate }}</td>
+    <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
+    <td>{{ data.lastFollowTime || '--' }}</td>
+    <td>{{ data.sourceName || '--' }}</td>
+    <td>{{ data.memberStatus || '--' }}</td>
+    <td>{{ data.followStage + (data.followNum ? '('+ data.followNum +')' : '') }}</td>
+    <td>{{ data.contributors || '--' }}</td>
+  </ng-template>
 </div>
+
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  [nzTitle]="drawerTitle" 
+  (nzOnClose)="showDrawer = false">
+  <ng-template #drawerContainer></ng-template>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" (click)="saveDrawer()">保存</button>
+  </div>
+</nz-drawer>
