@@ -1,12 +1,14 @@
-import { QueryCardComponent } from './query-card/query-card.component';
+import { ExchangeComponent } from './exchange/exchange.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { AppointComponent } from './appoint/appoint.component';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ComponentFactory } from '@angular/core';
 import { UpdateComponent } from './update/update.component';
 import { ConstructionComponent } from './construction/construction.component';
+import { Router } from '@angular/router';
+import { AddIntegralComponent } from './add-integral/add-integral.component';
 
 @Component({
   selector: 'app-list',
@@ -91,9 +93,13 @@ export class ListComponent implements OnInit {
       title     : '建卡',
       component : ConstructionComponent
     },
-    queryCard: {
-      title     : '查卡',
-      component : QueryCardComponent
+    addIntegral: {
+      title     : '增加积分',
+      component : AddIntegralComponent
+    },
+    exchange: {
+      title     : '积分兑换',
+      component : ExchangeComponent
     }
   }
 
@@ -104,7 +110,9 @@ export class ListComponent implements OnInit {
   constructor(
     private http: HttpService,
     private message: NzMessageService,
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private router: Router,
+    private modal: NzModalService
   ) { 
   }
 
@@ -114,18 +122,26 @@ export class ListComponent implements OnInit {
   operation(type) {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
-    } else {
-      if (this.operationComponents[type].component) {
-        this.showDrawer = true;
-        this.drawerTitle = this.operationComponents[type].title;
+    } else if (type === 'queryCard') {
+      this.router.navigateByUrl('/home/membercard/list')
+    } else if (type === 'consumptionLog') {
+      this.router.navigateByUrl('/home/consumption/list')
+    } else if (type === 'resetPassword') {
+      this.modal.confirm({
+        nzTitle: '<i>您确定要重置密码?</i>',
+        nzContent: '<b>确认重置密码，重置密码后请重新登录</b>',
+        nzOnOk: () => console.log('OK')
+      });
+    } else if (this.operationComponents[type].component) {
+      this.showDrawer = true;
+      this.drawerTitle = this.operationComponents[type].title;
 
-        this.container.clear();
-        let component = this.operationComponents[type].component;
-        const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(component);
-        this.componentRef = this.container.createComponent(factory);
-        this.componentRef.instance.id = this.checkedItems[0];
-        // this.componentRef.instance.complate.subscribe(event => console.log(event));
-      }
+      this.container.clear();
+      let component = this.operationComponents[type].component;
+      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(component);
+      this.componentRef = this.container.createComponent(factory);
+      this.componentRef.instance.id = this.checkedItems[0];
+      // this.componentRef.instance.complate.subscribe(event => console.log(event));
     }
   }
 
