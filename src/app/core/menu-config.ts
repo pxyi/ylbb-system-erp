@@ -177,18 +177,7 @@ export const MenuConfig = [
     title : '推广活动',
     key   : '/home/marketing',
     icon  : 'anticon-rocket',
-    children: [
-      {
-        title : '活动',
-        key   : '/home/marketing/activity',
-        isLeaf: true
-      },
-      {
-        title: '数据',
-        key: '/home/marketing/data',
-        isLeaf: true
-      }
-    ]
+    isLeaf: true
   },
   {
     title : '基础资料',

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AppState } from './../../../core/reducers/reducers-config';
+import { HttpService } from './../../../ng-relax/services/http.service';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-paycard',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaycardComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('breadcrumbTmpt') breadcrumbTmpt: TemplateRef<any>;
+
+  memberCard: number;
+
+  dataSet: any[] = [];
+
+  constructor(
+    private http: HttpService,
+    private store: Store<AppState>
+  ) { 
+  }
 
   ngOnInit() {
+    this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
+  }
+
+  searchSubmit() {
+
   }
 
 }
