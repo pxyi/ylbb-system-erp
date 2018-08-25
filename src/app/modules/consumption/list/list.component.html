@@ -1,3 +1,61 @@
 <div class="container">
-  <ea-query-simp [node]="queryNode" title="消费列表"></ea-query-simp>
+  <ea-list-page 
+    url="/member/list"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '婴儿类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注']"
+    [checked]="true"
+    [isRadio]="true"
+    [checkedItems]="checkedItems"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns"
+  >
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.memberCard }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.sex }}</td>
+      <td>{{ data.babyNumber }}</td>
+      <td>{{ data.monthAge }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.communityName }}</td>
+      <td>{{ data.babyType }}</td>
+      <td>{{ data.memberPoint }}</td>
+      <td>{{ data.expireDays }}</td>
+      <td>{{ data.weighRemind ? '需要' : '不需要' }}</td>
+      <td>{{ data.photoRemind ? '需要' : '不需要' }}</td>
+      <td>{{ data.loginTimes }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.comment }}</td>
+    </ng-template>
+
+    <ng-template #EaBtns>
+      <div class="ea-button-group">
+        <button nz-button nzType="primary" (click)="operation('preview')"><i class="anticon anticon-eye-o"></i>查看</button>
+        <button nz-button (click)="operation('satisfaction')"><i class="anticon anticon-form"></i>修改满意度</button>
+        <nz-dropdown>
+          <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
+          <ul nz-menu>
+            <li nz-menu-item><a (click)="operation('revoke')">撤销</a></li>
+            <li nz-menu-item><a (click)="operation('message')">发短信</a></li>
+            <li nz-menu-item><a (click)="operation('curriculum')">添加课程</a></li>
+          </ul>
+        </nz-dropdown>
+      </div>
+    </ng-template>
+  </ea-list-page>
 </div>
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  [nzTitle]="drawerTitle" 
+  (nzOnClose)="showDrawer = false">
+  <ng-template #drawerContainer></ng-template>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" (click)="saveDrawer()">保存</button>
+  </div>
+</nz-drawer>
+

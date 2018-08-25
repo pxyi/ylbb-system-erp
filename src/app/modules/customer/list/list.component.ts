@@ -145,6 +145,15 @@ export class ListComponent implements OnInit {
     }
   }
 
+  insertCustomer() {
+    this.showDrawer = true;
+    this.drawerTitle = '新增客户';
+    this.container.clear();
+    const factory: ComponentFactory<UpdateComponent> = this.resolver.resolveComponentFactory(UpdateComponent);
+    this.componentRef = this.container.createComponent(factory);
+    this.componentRef.instance.id = null;
+  }
+
   saveDrawer(e) {
     this.componentRef.instance.save()
   }
