@@ -9,32 +9,57 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AppointComponent implements OnInit {
 
+  @Input() id;
+
+  @Input() userInfo;
   
   formGroup: FormGroup;
+
+  communityList: any[] = [];
+  cardList: any[] = [];
 
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder()
   ) { 
-    this.formGroup = this.fb.group({
-      name: [, [Validators.required]],
-      nick: [],
-      sex: [, [Validators.required]],
-      monthAge: [, [Validators.required]],
-      babyType: [, [Validators.required]],
-      communityId: [, [Validators.required]],
-      cardId: [],
-      spec: [],
-      reserveDateId: [, [Validators.required]],
-      reserveHourId: [, [Validators.required]],
-      swimTeacher: [, [Validators.required]],
-      ringId: [],
-      comment: []
-    })
   }
 
   ngOnInit() {
-    
+    this.formGroup = this.fb.group({
+      name: [this.userInfo.name, [Validators.required]],
+      nick: [this.userInfo.nick],
+      sex: [this.userInfo.sex, [Validators.required]],
+      monthAge: [this.userInfo.monthAge, [Validators.required]],
+      babyType: [this.userInfo.babyType, [Validators.required]],
+      communityId: [this.userInfo.communityId, [Validators.required]],
+      cardId: [],
+      spec: [0],
+      reserveDate: [, [Validators.required]],
+      reserveHour: [, [Validators.required]],
+      swimTeacherId: [, [Validators.required]],
+      ringId: [],
+      comment: []
+    });
+    this.formGroup.patchValue(this.userInfo);
+    this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+    this.http.post('/memberCard/getMemberCards', { memberId: this.id }, false).then(res => this.cardList = res.result);
+  }
+
+  save(): Promise<boolean> {
+    return new Promise(resolve => {
+      if (this.formGroup.invalid) {
+        for (let i in this.formGroup.controls) {
+          this.formGroup.controls[i].markAsDirty();
+          this.formGroup.controls[i].updateValueAndValidity();
+        }
+        resolve(false);
+      } else {
+        this.http.post('/reserve/createReserve', {
+          id: this.id,
+          paramJson: JSON.stringify(this.formGroup.value)
+        }).then(res => resolve(true)).catch(err => resolve(false));
+      }
+    })
   }
 
 

@@ -1,14 +1,33 @@
 <form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8" *ngIf="!this.userInfo['memberCard']">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="cardCode">卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode" id="cardCode" placeholder="请输入卡号">
+          <nz-form-explain *ngIf="formGroup.get('cardCode').dirty && formGroup.get('cardCode').hasError('required')">请输入卡号！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="serialNumber">序列号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="serialNumber" id="serialNumber" placeholder="请输入序列号">
+          <nz-form-explain style="color: #f5222d;">有实物卡时请刷卡(序列号最大为11位)！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label nzRequired>卡类型</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="cardType" nzPlaceHolder="请选择卡类型">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
-            <nz-option nzLabel="女" nzValue="女"></nz-option>
+          <nz-select formControlName="cardTypeId" [nzShowSearch]="true" nzPlaceHolder="请选择卡类型">
+            <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('cardType').dirty && formGroup.get('cardType').hasError('required')">请选择卡类型！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('cardTypeId').dirty && formGroup.get('cardTypeId').hasError('required')">请选择卡类型！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -16,7 +35,7 @@
       <nz-form-item>
         <nz-form-label>会员名称</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="memberName" placeholder="请输入会员名称">
+          <input nz-input formControlName="memberName" readonly placeholder="请输入会员名称">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -26,7 +45,7 @@
       <nz-form-item>
         <nz-form-label>有效次数</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="times" placeholder="请输入有效次数">
+          <input nz-input formControlName="times" readonly placeholder="请输入有效次数">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -34,7 +53,7 @@
       <nz-form-item>
         <nz-form-label>赠送次数</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="freeTimes" placeholder="请输入赠送次数">
+          <input nz-input formControlName="freeTimes" readonly placeholder="请输入赠送次数">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -44,7 +63,7 @@
       <nz-form-item>
         <nz-form-label>已使用次数</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="usedTimes" placeholder="请输入已使用次数">
+          <input nz-input formControlName="usedTimes" readonly placeholder="请输入已使用次数">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -52,7 +71,7 @@
       <nz-form-item>
         <nz-form-label>总金额</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="balance" placeholder="请输入总金额">
+          <input nz-input formControlName="balance" readonly placeholder="请输入总金额">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -62,7 +81,7 @@
       <nz-form-item>
         <nz-form-label>开卡赠送积分</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="openPoints" placeholder="请输入开卡赠送积分">
+          <input nz-input formControlName="openPoints" readonly placeholder="请输入开卡赠送积分">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -70,7 +89,7 @@
       <nz-form-item>
         <nz-form-label>生效日期</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="effectDate" placeholder="请输入生效日期">
+          <input nz-input formControlName="effectDate" readonly placeholder="请输入生效日期">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -80,7 +99,7 @@
       <nz-form-item>
         <nz-form-label>失效日期</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="expireDate" placeholder="请输入失效日期">
+          <input nz-input formControlName="expireDate" readonly placeholder="请输入失效日期">
         </nz-form-control>
       </nz-form-item>
     </div>
