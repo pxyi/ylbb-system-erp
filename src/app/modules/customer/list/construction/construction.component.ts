@@ -28,6 +28,7 @@ export class ConstructionComponent implements OnInit {
 
   ngOnInit() {
     let formControls: any = {
+      memberId: [this.id],
       cardCode: [, [Validators.required]],
       cardTypeId: [, [Validators.required]],
       memberName: [this.userInfo.name],
@@ -42,13 +43,12 @@ export class ConstructionComponent implements OnInit {
       comment: []
     }
     if (!this.userInfo.memberCard) {
-      formControls.serialNumber = [, [Validators.maxLength(11)]];
+      formControls.serialNumber = [];
     }
     this.formGroup = this.fb.group(formControls);
     this.formGroup.get('cardTypeId').valueChanges.subscribe(id => {
       this.http.post('/cardTypeManagement/getCardType', { id }, false).then(res => {
         this.formGroup.patchValue(res.result);
-        console.log(this.formGroup.value)
       })
     })
   }
@@ -78,7 +78,6 @@ export class ConstructionComponent implements OnInit {
 
   /* -------------------- 建卡请求 -------------------- */
   createCard(resolve) {
-    console.log(this.formGroup.value)
     this.http.post('/member/createCard', {
       paramJson: JSON.stringify(this.formGroup.value)
     }).then(res => resolve(true)).catch(err => resolve(false));

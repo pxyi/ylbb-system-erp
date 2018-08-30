@@ -34,7 +34,7 @@
     <ng-template #EaBtns>
       <div class="ea-button-group">
         <button nz-button nzType="primary" (click)="insertCustomer()"><i class="anticon anticon-plus"></i>新增客户</button>
-        <button nz-button><i class="anticon anticon-file-excel"></i>导入客户</button>
+        <button nz-button (click)="importCustomer()"><i class="anticon anticon-file-excel"></i>导入客户</button>
         <nz-dropdown>
           <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
           <ul nz-menu>

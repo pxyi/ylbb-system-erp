@@ -1,3 +1,4 @@
+import { ImportComponent } from './import/import.component';
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
@@ -137,7 +138,7 @@ export class ListComponent implements OnInit {
     } else if (type === 'resetPassword') {
       this.modal.confirm({
         nzTitle: '<i>您确定要重置密吗?</i>',
-        nzContent: '<b>确认重置密码，重置密码后请重新登录</b>',
+        nzContent: '<b>您确定要重置密吗</b>',
         nzOnOk: () => this.http.post('/member/modifyPassword', { id: this.checkedItems[0] }).then(res => { })
       });
     } else if (type === 'construction') {
@@ -168,6 +169,15 @@ export class ListComponent implements OnInit {
     const factory: ComponentFactory<UpdateComponent> = this.resolver.resolveComponentFactory(UpdateComponent);
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.id = null;
+  }
+
+  /* ------------------------ 导入客户 ------------------------ */
+  importCustomer() {
+    this.showDrawer = true;
+    this.drawerTitle = '导入客户';
+    this.container.clear();
+    const factory: ComponentFactory<ImportComponent> = this.resolver.resolveComponentFactory(ImportComponent);
+    this.componentRef = this.container.createComponent(factory);
   }
 
   /**
