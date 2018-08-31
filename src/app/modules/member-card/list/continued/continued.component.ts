@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ContinuedComponent implements OnInit {
 
+  cardTypeList: any[] = [];
+
   formGroup: FormGroup;
 
   constructor(
@@ -23,7 +25,8 @@ export class ContinuedComponent implements OnInit {
       balance: [{ value: null, disabled: true }],
       expireDate: [{ value: null, disabled: true }],
       changeCardType: [, [Validators.required]]
-    })
+    });
+    this.http.post('/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
   }
   ngOnInit() {
   }

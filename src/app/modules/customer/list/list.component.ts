@@ -42,8 +42,9 @@ export class ListComponent implements OnInit {
     },
     {
       label       : '所属社区',
-      key         : 'communityName',
-      type        : 'input',
+      key         : 'communityId',
+      type        : 'select',
+      optionsUrl  : '/member/communityList',
       isHide      : true
     },
     {
