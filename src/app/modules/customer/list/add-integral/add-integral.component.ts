@@ -25,7 +25,7 @@ export class AddIntegralComponent implements OnInit {
     this.formGroup = this.fb.group({
       memberId: [this.id],
       name: [{ value: this.userInfo.name, disabled: true }, [Validators.required]],
-      point: [, [Validators.required]],
+      memberPoint: [, [Validators.required]],
       comment: []
     })
   }

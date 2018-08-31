@@ -73,7 +73,7 @@ export class AccountComponent implements OnInit {
         delete params.password;
       }
       this.http.post('/accountManagement/modify', { paramJson: JSON.stringify(params) }).then(res => {
-        this.EaListPage.EaTable._request();
+        this.EaListPage.eaTable._request();
         this.showCreateAccount = false;
         this.createLoading = false;
       })
@@ -94,7 +94,7 @@ export class AccountComponent implements OnInit {
 
   deleteAccount(id) {
     this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id }) }).then(res => {
-      this.EaListPage.EaTable._request();
+      this.EaListPage.eaTable._request();
     })
   }
 

@@ -1,3 +1,5 @@
+import { DatePipe } from '@angular/common';
+import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { UpdateCurriculumComponent } from './curriculum/curriculum.component';
 import { MessageComponent } from './message/message.component';
 import { UpdateRevokeComponent } from './revoke/revoke.component';
@@ -15,6 +17,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+
+  @ViewChild('listPage') listPage: ListPageComponent;
 
   @ViewChild('drawerContainer', {read: ViewContainerRef}) container: ViewContainerRef;
   componentRef: ComponentRef<any>;
@@ -39,7 +43,7 @@ export class ListComponent implements OnInit {
       label       : '服务泳师',
       key         : 'teacherId',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
+      optionsUrl  : '/tongka/teacherList'
     },
     {
       label       : '婴儿类型',
@@ -53,7 +57,7 @@ export class ListComponent implements OnInit {
       key         : 'commodityId',
       type        : 'select',
       options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
-      isHide      : true
+      isHide      : true 
     },
     {
       label       : '业务类型',
@@ -66,7 +70,7 @@ export class ListComponent implements OnInit {
       label       : '卡类型',
       key         : 'cardTypeId',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
+      optionsUrl  : '/cardTypeManagement/findList',
       isHide      : true
     },
     {
@@ -81,7 +85,7 @@ export class ListComponent implements OnInit {
       key         : 'date',
       valueKey    : ['startDate', 'endDate'],
       type        : 'rangepicker',
-      isHide      : true
+      default     : [new Date(), new Date()]
     }
   ]
 
@@ -113,15 +117,24 @@ export class ListComponent implements OnInit {
   showDrawer: boolean;
   drawerTitle: string;
 
+  paramsDefault;
+
   constructor(
     private http: HttpService,
     private message: NzMessageService,
     private resolver: ComponentFactoryResolver,
-    private router: Router
-  ) { }
+    private router: Router,
+    private format: DatePipe
+  ) { 
+    this.paramsDefault = {
+      startDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
+      endDate: this.format.transform(new Date(), 'yyyy-MM-dd')
+    }
+  }
 
   ngOnInit() {
   }
+
   operation(type) {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');

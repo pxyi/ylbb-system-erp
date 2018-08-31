@@ -10,7 +10,7 @@
 </ng-template>
 
 <div class="container">
-  <nz-table #basicTable [nzData]="dataSet">
+  <nz-table #basicTable [nzData]="dataSet" [nzShowPagination]="false" [nzLoading]="loading">
     <thead>
       <tr>
         <th>姓名</th>
@@ -23,12 +23,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
-        <td>{{data.name}}</td>
-        <td>{{data.age}}</td>
-        <td>{{data.address}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.sex }}</td>
+        <td>{{ data.cardCode }}</td>
+        <td>{{ data.phone }}</td>
+        <td>{{ data.expireDays }}</td>
+        <td><a (click)="consumption(data.id)">消费</a></td>
       </tr>
     </tbody>
   </nz-table>

@@ -132,9 +132,9 @@ export class ListComponent implements OnInit {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
     } else if (type === 'queryCard') {
-      this.router.navigateByUrl('/home/membercard/list')
+      this.router.navigateByUrl(`/home/membercard/list`);
     } else if (type === 'consumptionLog') {
-      this.router.navigateByUrl('/home/consumption/list')
+      this.router.navigateByUrl(`/home/consumption/list`);
     } else if (type === 'resetPassword') {
       this.modal.confirm({
         nzTitle: '<i>您确定要重置密吗?</i>',
@@ -193,7 +193,7 @@ export class ListComponent implements OnInit {
         this.saveLoading = false;
         if (res) { 
           this.showDrawer = false; 
-          this.listPage.EaTable._request(); 
+          this.listPage.eaTable._request(); 
         }
     });
   }
@@ -203,11 +203,11 @@ export class ListComponent implements OnInit {
   @ViewChild("drawerContainer", { read: ViewContainerRef }) container: ViewContainerRef;
   createComponent(operationComponent) {
     this.container.clear();
-    const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(operationComponent.component);
+    const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(operationComponent.component || operationComponent);
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.id = this.checkedItems[0];
     if (operationComponent.userInfo) {
-      this.listPage.EaTable.dataSet.map(res => {
+      this.listPage.eaTable.dataSet.map(res => {
         if (res.id == this.checkedItems[0]) {
           this.componentRef.instance.userInfo = res;
         }

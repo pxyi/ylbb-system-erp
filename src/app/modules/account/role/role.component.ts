@@ -61,7 +61,7 @@ export class RoleComponent implements OnInit {
 
   deleteRole(id) {
     this.http.post('/roleManagement/deleteRole', { paramJson: JSON.stringify({id}) }).then(res => {
-      this.EaListPage.EaTable._request();
+      this.EaListPage.eaTable._request();
     })
   }
 
@@ -79,7 +79,7 @@ export class RoleComponent implements OnInit {
     if (this.createRoleForm.valid) {
       this.createLoading = true;
       this.http.post('/roleManagement/modify', { paramJson: JSON.stringify(this.createRoleForm.value) }).then(res => {
-        this.EaListPage.EaTable._request();
+        this.EaListPage.eaTable._request();
         this.showCreateRole = false;
         this.createLoading = false;
       })
