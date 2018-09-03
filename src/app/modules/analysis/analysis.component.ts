@@ -32,31 +32,14 @@ formModel : FormGroup;
     private http: HttpService,
     private message: NzMessageService,
     private format: DatePipe,
-
+    
 
   ) {
 
     this.getform(this.pageId);
-    this.formData.selectList.map((item,index)=>{
-      item.inputKeyValue = item.inputKeyValue.split(';');
-        item.inputKeyValue.map((items,indexs)=>{
-          let str = items.split(':')[0];
-          this.formData.selectList[index].inputKeyValue[indexs] = str;
-        })
-    })
-    this.menu =  []; 
     this.formModel = new FormGroup({
 
     });
-    this.formData.datePickerList.map(res => {
-      this.formModel.addControl(res.fieldName, new FormControl())   
-    })
-    this.formData.selectList.map(res => {
-     this.formModel.addControl(res.fieldName, new FormControl())
-    })
-    this.formData.textFieldList.map(res => {
-      this.formModel.addControl(res.fieldName, new FormControl())
-    })    
   }
   changefind(){
     let index = this.selectindex -1;
@@ -64,9 +47,14 @@ formModel : FormGroup;
   }
   subData(){
     let params =JSON.parse(JSON.stringify(this.formModel.value));
+    console.log(params);
+    
+    if (this.formData.datePickerList){
     this.formData.datePickerList.map(res => {
       params[res.fieldName] = this.format.transform(params[res.fieldName], 'yyyy-MM-dd');
     })
+    }
+  
     params.reportId =  this.pageId;
     for (let i in params){
         if(params[i]==null||params[i]==''){
@@ -79,13 +67,43 @@ formModel : FormGroup;
     });
   }
   elder(index){
-    let eportId = index=='0'?'14':(index=='1'?'2':(index=='2'?'3':(index=='3'?'8':'42')));
-    this.pageId = eportId;
-    this.getform(eportId);
+    let reportId = index=='0'?'14':(index=='1'?'2':(index=='2'?'3':(index=='3'?'8':'42')));
+    this.pageId = reportId;
+    this.getform(reportId);
   }
-  getform(eportId){
-    this.http.post('/report/buildQueryPage', { paramJson: JSON.stringify({ eportId : eportId}) }, false).then(res => {
-        this.formData = res.result;
+  getform(reportId){
+    this.http.post('/report/buildQueryPage', { paramJson: JSON.stringify({ reportId : reportId}) }, false).then(res => {
+      this.formData = res.result;  
+  
+      if (this.formData.selectList){
+        this.formData.selectList.map((item, index) => {
+          if (item.inputKeyValue){
+            item.inputKeyValue = item.inputKeyValue.split(';');
+            item.inputKeyValue.map((items, indexs) => {
+              let str = items.split(':')[0];
+              this.formData.selectList[index].inputKeyValue[indexs] = str;
+            })
+          }
+        })
+      }
+       
+      if (this.formData.datePickerList){
+        this.formData.datePickerList.map(res => {
+          this.formModel.addControl(res.fieldName, new FormControl())
+        })
+      }
+    
+      if (this.formData.selectList){
+        this.formData.selectList.map(res => {
+          this.formModel.addControl(res.fieldName, new FormControl())
+        })
+      }
+      if (this.formData.textFieldList){ 
+        this.formData.textFieldList.map(res => {
+          this.formModel.addControl(res.fieldName, new FormControl())
+        }) 
+      }
+      console.log(this.formModel);
     });
   }
   ngOnInit() {

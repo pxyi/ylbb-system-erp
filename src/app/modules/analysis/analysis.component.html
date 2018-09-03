@@ -52,7 +52,7 @@
   <div class="header" style="margin-top: 10px;">
         <form [formGroup]="formModel" (submit)="subData()">
      
-            <span *ngFor="let item of formData.datePickerList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
+             <span *ngFor="let item of formData.datePickerList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
               <nz-form-label>{{item.chineseName}}</nz-form-label>
               <nz-date-picker [formControlName]="item.fieldName" nzFormat="yyyy-MM-dd" [nzFormat]="dateFormat"></nz-date-picker>
             </span>
@@ -64,7 +64,7 @@
             </span>
             <span *ngFor="let item of formData.textFieldList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
               <nz-form-label>{{item.chineseName}}</nz-form-label>
-                  <input nz-input placeholder="请输入" [formControlName]="item.fieldName" [(ngModel)]="value">
+                  <input nz-input style="width: 200px;" placeholder="请输入" [formControlName]="item.fieldName" [(ngModel)]="value">
             </span>
               <span style="margin:0 15px 10px 0; display: inline-block">
                 <button nz-button  nzType="primary" >搜索</button>
