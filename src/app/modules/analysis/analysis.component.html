@@ -1,87 +1,87 @@
 <div class="content">
- <div class="header">
-          <nz-tabset (nzSelectChange)="elder($event.index)">
-            <nz-tab nzTitle="销售分析查询" >
-                        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)" >
-                            <label nz-radio-button nzValue="14">收入分析</label>
-                            <label nz-radio-button nzValue="40">门店收入环比（月）</label>
-                            <label nz-radio-button nzValue="19">门店客流客单查询</label>
-                            <label nz-radio-button nzValue="21">门店客单客流查询（月份）</label>
-                            <label nz-radio-button nzValue="23">会员消费频次排行</label>
-                        </nz-radio-group>
-            </nz-tab>
-            <nz-tab nzTitle="基本资料查询">
-                        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
-                          <label nz-radio-button nzValue="2">过期客户查询</label>
-                          <label nz-radio-button nzValue="12">会员生日查询</label>
-                          <label nz-radio-button nzValue="28">会员生日综合查询</label>
-                        </nz-radio-group>
-            </nz-tab>
-            <nz-tab nzTitle="营业分析查询">
-                        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
-                          <label nz-radio-button nzValue="3">营业时段分析</label>
-                          <label nz-radio-button nzValue="10">营业分析</label>
-                          <label nz-radio-button nzValue="20">门店消费同比（年）</label>
-                          <label nz-radio-button nzValue="39">门店消费环比（月）</label>
-                          <label nz-radio-button nzValue="33">会员相册上传情况查询</label>
-                          <label nz-radio-button nzValue="30">周到店会员查询</label>
-                          <label nz-radio-button nzValue="32">会员周消费占比</label>
-                          <label nz-radio-button nzValue="35">小区消费汇总</label>
-                          <label nz-radio-button nzValue="37">小区办卡情况</label>
-                          <label nz-radio-button nzValue="36">小区销售商品汇总</label>
-                          <label nz-radio-button nzValue="38">小区办卡</label>
-                        </nz-radio-group>
-            </nz-tab>   
-            <nz-tab nzTitle="营销综合分析">
-                    <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
-                      <label nz-radio-button nzValue="8">未完成次数及金额查询</label>
-                      <label nz-radio-button nzValue="7">已完成次数及金额查询</label>
-                      <label nz-radio-button nzValue="9">时段内未到店消费客户查询</label>
-                      <label nz-radio-button nzValue="15">已撤销消费记录查询</label>
-                      <label nz-radio-button nzValue="4">段时间内到期客户查询</label>
-                    </nz-radio-group>
-            </nz-tab>
-            <nz-tab nzTitle="卡数据分析">
-                    <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
-                      <label nz-radio-button nzValue="42">卡收入明细查询</label>
-                      <label nz-radio-button nzValue="43">卡消费明细查询</label>
-                    </nz-radio-group>
-            </nz-tab>
-            </nz-tabset>
-  </div> 
+  <div class="header">
+    <nz-tabset (nzSelectChange)="elder($event.index)">
+      <nz-tab nzTitle="销售分析查询">
+        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
+          <label nz-radio-button nzValue="14">收入分析</label>
+          <label nz-radio-button nzValue="40">门店收入环比（月）</label>
+          <label nz-radio-button nzValue="19">门店客流客单查询</label>
+          <label nz-radio-button nzValue="21">门店客单客流查询（月份）</label>
+          <label nz-radio-button nzValue="23">会员消费频次排行</label>
+        </nz-radio-group>
+      </nz-tab>
+      <nz-tab nzTitle="基本资料查询">
+        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
+          <label nz-radio-button nzValue="2">过期客户查询</label>
+          <label nz-radio-button nzValue="12">会员生日查询</label>
+          <label nz-radio-button nzValue="28">会员生日综合查询</label>
+        </nz-radio-group>
+      </nz-tab>
+      <nz-tab nzTitle="营业分析查询">
+        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
+          <label nz-radio-button nzValue="3">营业时段分析</label>
+          <label nz-radio-button nzValue="10">营业分析</label>
+          <label nz-radio-button nzValue="20">门店消费同比（年）</label>
+          <label nz-radio-button nzValue="39">门店消费环比（月）</label>
+          <label nz-radio-button nzValue="33">会员相册上传情况查询</label>
+          <label nz-radio-button nzValue="30">周到店会员查询</label>
+          <label nz-radio-button nzValue="32">会员周消费占比</label>
+          <label nz-radio-button nzValue="35">小区消费汇总</label>
+          <label nz-radio-button nzValue="37">小区办卡情况</label>
+          <label nz-radio-button nzValue="36">小区销售商品汇总</label>
+          <label nz-radio-button nzValue="38">小区办卡</label>
+        </nz-radio-group>
+      </nz-tab>
+      <nz-tab nzTitle="营销综合分析">
+        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
+          <label nz-radio-button nzValue="8">未完成次数及金额查询</label>
+          <label nz-radio-button nzValue="7">已完成次数及金额查询</label>
+          <label nz-radio-button nzValue="9">时段内未到店消费客户查询</label>
+          <label nz-radio-button nzValue="15">已撤销消费记录查询</label>
+          <label nz-radio-button nzValue="4">段时间内到期客户查询</label>
+        </nz-radio-group>
+      </nz-tab>
+      <nz-tab nzTitle="卡数据分析">
+        <nz-radio-group [(ngModel)]="pageId" [nzButtonStyle]="'solid'" (ngModelChange)="getform(pageId)">
+          <label nz-radio-button nzValue="42">卡收入明细查询</label>
+          <label nz-radio-button nzValue="43">卡消费明细查询</label>
+        </nz-radio-group>
+      </nz-tab>
+    </nz-tabset>
+  </div>
   <div class="header" style="margin-top: 10px;">
-        <form [formGroup]="formModel" (submit)="subData()">
-     
-             <span *ngFor="let item of formData.datePickerList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
-              <nz-form-label>{{item.chineseName}}</nz-form-label>
-              <nz-date-picker [formControlName]="item.fieldName" nzFormat="yyyy-MM-dd" [nzFormat]="dateFormat"></nz-date-picker>
-            </span>
-            <span *ngFor="let item of formData.selectList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
-             <nz-form-label>{{item.chineseName}}</nz-form-label>
-                <nz-select style="width: 200px;"  [formControlName]="item.fieldName"  nzPlaceHolder="请选择">
-                  <nz-option *ngFor="let items of item.inputKeyValue" [nzLabel]="items" [nzValue]="items"></nz-option>
-                </nz-select>
-            </span>
-            <span *ngFor="let item of formData.textFieldList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
-              <nz-form-label>{{item.chineseName}}</nz-form-label>
-                  <input nz-input style="width: 200px;" placeholder="请输入" [formControlName]="item.fieldName" [(ngModel)]="value">
-            </span>
-              <span style="margin:0 15px 10px 0; display: inline-block">
-                <button nz-button  nzType="primary" >搜索</button>
-              </span>
-              <span style="margin:0 15px 10px 0; display: inline-block">
-                <button nz-button  nzType="default">导出</button>
-              </span>
-        </form>
-       
+    <form [formGroup]="formModel" (submit)="subData()">
+
+      <span *ngFor="let item of formData.datePickerList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>{{item.chineseName}}</nz-form-label>
+        <nz-date-picker [formControlName]="item.fieldName" nzFormat="yyyy-MM-dd" [nzFormat]="dateFormat"></nz-date-picker>
+      </span>
+      <span *ngFor="let item of formData.selectList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>{{item.chineseName}}</nz-form-label>
+        <nz-select style="width: 200px;" [formControlName]="item.fieldName" nzPlaceHolder="请选择">
+          <nz-option *ngFor="let items of item.dataSource" [nzLabel]="items.name" [nzValue]="items.key"></nz-option>
+        </nz-select>
+      </span>
+      <span *ngFor="let item of formData.textFieldList; let index = index" [attr.data-index]="index" style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>{{item.chineseName}}</nz-form-label>
+        <input nz-input style="width: 200px;" placeholder="请输入" [formControlName]="item.fieldName" [(ngModel)]="value">
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <button nz-button nzType="primary">搜索</button>
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <button nz-button nzType="default">导出</button>
+      </span>
+    </form>
+
   </div>
 
-   
-   <div class="main">
+
+  <div class="main">
     <nz-table #basicTable [nzData]="ListContent" nzShowPagination="false">
       <thead>
         <tr>
-          <th *ngFor="let item of ListHeader">{{item}}</th>     
+          <th *ngFor="let item of ListHeader">{{item}}</th>
         </tr>
       </thead>
       <tbody>
@@ -90,6 +90,6 @@
         </tr>
       </tbody>
     </nz-table>
- 
+
   </div>
 </div>
