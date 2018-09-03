@@ -155,7 +155,7 @@ export class ListComponent implements OnInit {
 
   @ViewChild('listPage') listPage: ListPageComponent;
   saveLoading: boolean;
-  saveDrawer(e) {
+  saveDrawer() {
     this.saveLoading = true;
     this.componentRef.instance.save().then(res => {
       this.saveLoading = false;

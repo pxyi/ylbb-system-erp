@@ -152,7 +152,7 @@ export class ListComponent implements OnInit {
   }
 
 
-  saveDrawer(e) {
+  saveDrawer() {
     this.componentRef.instance.save()
   }
 
