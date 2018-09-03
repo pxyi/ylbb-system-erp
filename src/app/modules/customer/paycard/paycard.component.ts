@@ -16,6 +16,8 @@ export class PaycardComponent implements OnInit {
 
   dataSet: any[] = [];
 
+  loading: boolean;
+
   constructor(
     private http: HttpService,
     private store: Store<AppState>
@@ -27,7 +29,17 @@ export class PaycardComponent implements OnInit {
   }
 
   searchSubmit() {
+    this.loading = true;
+    this.http.post('/payofcard/getpayofcardlist', { 
+      paramJson: JSON.stringify({ cardNo: this.memberCard }) 
+    }, false).then(res => {
+      this.loading = false;
+      this.dataSet = res.code == 1000 ? res.result : [];
+    }, err => this.loading = false);
+  }
 
+  consumption(id) {
+    
   }
 
 }

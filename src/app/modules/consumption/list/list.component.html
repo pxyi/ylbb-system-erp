@@ -1,9 +1,11 @@
 <div class="container">
   <ea-list-page 
-    url="/member/list"
+    #listPage
+    url="/consume/consumeRecordList"
     [allowSpace]="false"
     [queryNode]="queryNode"
-    [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '婴儿类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注']"
+    [paramsDefault]="paramsDefault"
+    [tableThead]="['卡号', '卡类型', '姓名', '小名', '全国通卡跨店', '消费金额', '消费时间', '已使用卡次', '单次扣除卡次', '类型', '消费商品', '服务泳师', '满意度', '体重', '泳圈型号', '游泳时长', '测量', '拍照', '备注']"
     [checked]="true"
     [isRadio]="true"
     [checkedItems]="checkedItems"
@@ -11,22 +13,24 @@
     [EaBtns]="EaBtns"
   >
     <ng-template let-data #EaTableTbodyTr>
-      <td>{{ data.memberCard }}</td>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.cardTypeName }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.nick }}</td>
-      <td>{{ data.sex }}</td>
-      <td>{{ data.babyNumber }}</td>
-      <td>{{ data.monthAge }}</td>
-      <td>{{ data.parentName }}</td>
-      <td>{{ data.mobilePhone }}</td>
-      <td>{{ data.communityName }}</td>
-      <td>{{ data.babyType }}</td>
-      <td>{{ data.memberPoint }}</td>
-      <td>{{ data.expireDays }}</td>
+      <td>{{ data.isCrossed }}</td>
+      <td>{{ data.consumption | currency: '￥' }}</td>
+      <td>{{ data.consumeDate | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ data.usedTimes }}</td>
+      <td>{{ data.deductionTimes }}</td>
+      <td>{{ data.type }}</td>
+      <td>{{ data.commodityName }}</td>
+      <td>{{ data.swimTeacherName }}</td>
+      <td>{{ data.satisfaction }}</td>
+      <td>{{ data.weight }}</td>
+      <td>{{ data.swimRingName }}</td>
+      <td>{{ data.swimDuration }}</td>
       <td>{{ data.weighRemind ? '需要' : '不需要' }}</td>
       <td>{{ data.photoRemind ? '需要' : '不需要' }}</td>
-      <td>{{ data.loginTimes }}</td>
-      <td>{{ data.createDate }}</td>
       <td>{{ data.comment }}</td>
     </ng-template>
 

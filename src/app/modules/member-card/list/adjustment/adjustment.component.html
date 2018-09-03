@@ -66,8 +66,8 @@
       <nz-form-item>
         <nz-form-label nzRequired>需要增加的通卡卡次</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="changeBalance" placeholder="请输入需要增加的通卡卡次">
-          <nz-form-explain *ngIf="formGroup.get('changeBalance').dirty && formGroup.get('changeBalance').hasError('required')">请输入需要增加的通卡卡次！</nz-form-explain>
+          <input nz-input formControlName="tongNum" placeholder="请输入需要增加的通卡卡次" maxlength="4">
+          <nz-form-explain [style.color]="'#f5222d'">*目前剩余卡次 >= (之前剩余通卡卡次 + 调整的通卡卡次) > 目前剩余的通卡卡次</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

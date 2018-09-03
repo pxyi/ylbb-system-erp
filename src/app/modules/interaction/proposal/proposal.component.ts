@@ -69,7 +69,7 @@ export class ProposalComponent implements OnInit {
           onClick(componentInstance) {
             this.loading = true;
             http.post('/userAdvice/save', { paramJson: JSON.stringify(componentInstance.result) }).then(res => {
-              EaListPage.EaTable._request();
+              EaListPage.eaTable._request();
               modal.close();
             }, err => {
               this.loading = false;

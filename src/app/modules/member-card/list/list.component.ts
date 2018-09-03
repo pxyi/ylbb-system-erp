@@ -1,3 +1,4 @@
+import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { ContinuedComponent } from './continued/continued.component';
 import { ChangeComponent } from './change/change.component';
 import { AdjustmentComponent } from './adjustment/adjustment.component';
@@ -11,9 +12,6 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
-  @ViewChild('drawerContainer', {read: ViewContainerRef}) container: ViewContainerRef;
-  componentRef: ComponentRef<any>;
 
   operationComponents = {
     adjustment: {
@@ -38,12 +36,6 @@ export class ListComponent implements OnInit {
       type        : 'input'
     },
     {
-      label       : '区间',
-      key         : 'cardCodedd',
-      type        : 'between',
-      valueKey    : ['start', 'end']
-    },
-    {
       label       : '会员姓名',
       key         : 'memberName',
       type        : 'input'
@@ -52,71 +44,35 @@ export class ListComponent implements OnInit {
       label       : '卡类型',
       key         : 'cardTypeId',
       type        : 'select',
-      optionsUrl  : '/common/sourceList'
+      optionsUrl  : '/cardTypeManagement/findList'
     },
     {
-      label       : '手机号码',
-      key         : 'mobilePhone',
+      label       : '卡状态',
+      key         : 'status',
+      type        : 'select',
+      options     : [ { name: '正常', id: '0' }, { name: '停卡', id: '1' }, { name: '过期', id: '2' } ]
+    },
+    {
+      label       : '婴儿类型',
+      key         : 'babyType',
+      type        : 'select',
+      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
+      isHide      : true
+    },
+    {
+      label       : '剩余卡次',
+      key         : 'remainTimes',
+      type        : 'between',
+      valueKey    : ['startCardTimes', 'endCardTimes'],
+      isHide      : true
+    },
+    {
+      label       : '所属社区',
+      key         : 'communityName',
       type        : 'input',
-      placeholder : '请输入家长手机号码',
       isHide      : true
-    },
-    {
-      label       : '宝宝性别',
-      key         : 'sex',
-      type        : 'select',
-      options     : [ { name: '男', id: '男' }, { name: '女', id: '女' } ],
-      placeholder : '请选择宝宝性别',
-      isHide      : true
-    },
-    {
-      label       : '宝宝生日',
-      key         : 'birthday',
-      type        : 'rangepicker',
-      valueKey    : ['babyBirthdayStart', 'babyBirthdayEnd'],
-      isHide      : true
-    },
-    {
-      label       : '创建时间',
-      key         : 'createTime',
-      type        : 'rangepicker',
-      valueKey    : ['createDateStart', 'createDateEnd'],
-      placeholder : ['选择开始时间', '选择结束时间'],
-      isHide      : true
-    },
-    {
-      label       : '下次跟进',
-      key         : 'nextFollowTime',
-      type        : 'rangepicker',
-      valueKey    : ['nextFollowTimeStart', 'nextFollowTimeEnd'],
-      placeholder : ['选择开始时间', '选择结束时间'],
-      isHide      : true
-    },
-    {
-      label       : '最后跟进',
-      key         : 'lastFollowTime',
-      type        : 'rangepicker',
-      valueKey    : ['lastFollowTimeStart', 'lastFollowTimeEnd'],
-      placeholder : ['选择开始时间', '选择结束时间'],
-      isHide      : true
-    },
-    {
-      label       : '收集者',
-      key         : 'collectorId',
-      type        : 'select',
-      optionsUrl  : '/common/collectorList',
-      placeholder : '请选择收集者',
-      isHide      : true
-    },
-    {
-      label       : '推荐人',
-      key         : 'recommendedId',
-      type        : 'select',
-      optionsUrl  : '/common/recommenderList',
-      placeholder : '请选择推荐人',
-      isHide      : true
-    },
-  ];
+    }, 
+  ]
   
   checkedItems: any[] = [];
 
@@ -137,14 +93,37 @@ export class ListComponent implements OnInit {
     } else if (this.operationComponents[type]) {
       this.showDrawer = true;
       this.drawerTitle = this.operationComponents[type].title;
-
-      this.container.clear();
-      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(this.operationComponents[type].component);
-      this.componentRef = this.container.createComponent(factory);
+      this.createComponent(this.operationComponents[type]);
     }
   }
 
-  saveDrawer() {
+
+  @ViewChild('listPage') listPage: ListPageComponent;
+  saveLoading: boolean;
+  saveDrawer(e) {
+    this.saveLoading = true;
+    this.componentRef.instance.save().then(res => {
+      this.saveLoading = false;
+      if (res) {
+        this.showDrawer = false;
+        this.listPage.eaTable._request();
+      }
+    });
+  }
+
+    /* ----------------- 新增抽屉组件并传参Id及用户信息 ----------------- */
+  componentRef: ComponentRef<any>;
+  @ViewChild("drawerContainer", { read: ViewContainerRef }) container: ViewContainerRef;
+  createComponent(operationComponent) {
+    this.container.clear();
+    const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(operationComponent.component || operationComponent);
+    this.componentRef = this.container.createComponent(factory);
+    this.componentRef.instance.id = this.checkedItems[0];
+    this.listPage.eaTable.dataSet.map(res => {
+      if (res.id == this.checkedItems[0]) {
+        this.componentRef.instance.memberCardInfo = res;
+      }
+    })
   }
 
 }

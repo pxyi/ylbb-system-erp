@@ -2,10 +2,9 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="name">姓名</nz-form-label>
+        <nz-form-label nzRequired>姓名</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入宝宝姓名" formControlName="name" id="name">
-          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入宝宝姓名！</nz-form-explain>
+          <input nz-input placeholder="请输入宝宝姓名" formControlName="name">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -13,7 +12,7 @@
       <nz-form-item>
         <nz-form-label nzFor="nick">小名</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入宝宝小名" formControlName="nick" id="nick">
+          <input nz-input placeholder="请输入宝宝小名" formControlName="nick">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -23,11 +22,7 @@
       <nz-form-item>
         <nz-form-label nzRequired>性别</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="sex" nzPlaceHolder="请选择宝宝性别">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
-            <nz-option nzLabel="女" nzValue="女"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('sex').dirty && formGroup.get('sex').hasError('required')">请选择宝宝性别！</nz-form-explain>
+          <input nz-input placeholder="请选择宝宝性别" formControlName="sex">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -35,8 +30,7 @@
       <nz-form-item>
         <nz-form-label nzRequired nzFor="monthAge">宝贝月龄</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入宝贝月龄" formControlName="monthAge" id="monthAge">
-          <nz-form-explain *ngIf="formGroup.get('monthAge').dirty && formGroup.get('monthAge').hasError('required')">请输入宝贝月龄！</nz-form-explain>
+          <input nz-input placeholder="请输入宝贝月龄" formControlName="monthAge">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -46,11 +40,7 @@
       <nz-form-item>
         <nz-form-label nzRequired>婴儿类型</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="babyType" nzPlaceHolder="请选择婴儿类型">
-            <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
-            <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('babyType').dirty && formGroup.get('babyType').hasError('required')">请输入婴儿类型！</nz-form-explain>
+          <input nz-input placeholder="请选择婴儿类型" formControlName="babyType">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -58,11 +48,7 @@
       <nz-form-item>
         <nz-form-label nzRequired>所属社区</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="communityId" nzPlaceHolder="请选择所属社区">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
-            <nz-option nzLabel="女" nzValue="女"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('communityId').dirty && formGroup.get('communityId').hasError('required')">请选择所属社区！</nz-form-explain>
+          <input nz-input placeholder="请选择所属社区" formControlName="communityName">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -83,16 +69,6 @@
         <nz-form-control>
           <input nz-input formControlName="exchangeRemark" placeholder="请输入兑换内容" id="exchangeRemark">
           <nz-form-explain *ngIf="formGroup.get('exchangeRemark').dirty && formGroup.get('exchangeRemark').hasError('required')">请输入兑换内容！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
-  <div nz-row nzGutter="8">
-    <div nz-col nzSpan="24">
-      <nz-form-item>
-        <nz-form-label nzFor="comment">备注</nz-form-label>
-        <nz-form-control>
-          <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
         </nz-form-control>
       </nz-form-item>
     </div>

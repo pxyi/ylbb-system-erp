@@ -74,9 +74,8 @@
       <nz-form-item>
         <nz-form-label nzRequired>所属社区</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="communityId" nzPlaceHolder="请选择所属社区">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
-            <nz-option nzLabel="女" nzValue="女"></nz-option>
+          <nz-select formControlName="communityId" [nzShowSearch]="true" nzPlaceHolder="请选择所属社区">
+            <nz-option *ngFor="let option of communityList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('communityId').dirty && formGroup.get('communityId').hasError('required')">请选择所属社区！</nz-form-explain>
         </nz-form-control>
@@ -142,7 +141,7 @@
       <nz-form-item>
         <nz-form-label>客户来源</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="source" nzPlaceHolder="请选择客户来源">
+          <nz-select formControlName="source" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
             <nz-option nzLabel="灯箱路牌" nzValue="灯箱路牌"></nz-option>
             <nz-option nzLabel="朋友推荐" nzValue="朋友推荐"></nz-option>
             <nz-option nzLabel="网络推广" nzValue="网络推广"></nz-option>

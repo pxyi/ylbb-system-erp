@@ -1,3 +1,5 @@
+import { ImportComponent } from './import/import.component';
+import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { AppointComponent } from './appoint/appoint.component';
@@ -40,8 +42,9 @@ export class ListComponent implements OnInit {
     },
     {
       label       : '所属社区',
-      key         : 'communityName',
-      type        : 'input',
+      key         : 'communityId',
+      type        : 'select',
+      optionsUrl  : '/member/communityList',
       isHide      : true
     },
     {
@@ -76,14 +79,17 @@ export class ListComponent implements OnInit {
 
   checkedItems: any[] = [];
 
+  /* ------------ 操作按钮对应的抽屉组件 ------------ */
   operationComponents = {
     appoint: {
       title     : '预约',
       component : AppointComponent,
+      userInfo  : true
     },
     consumption: {
       title     : '消费',
-      component : ConsumptionComponent
+      component : ConsumptionComponent,
+      userInfo  : true
     },
     update: {
       title     : '编辑',
@@ -91,18 +97,22 @@ export class ListComponent implements OnInit {
     },
     construction: {
       title     : '建卡',
-      component : ConstructionComponent
+      component : ConstructionComponent,
+      userInfo  : true
     },
     addIntegral: {
       title     : '增加积分',
-      component : AddIntegralComponent
+      component : AddIntegralComponent,
+      userInfo  : true
     },
     exchange: {
       title     : '积分兑换',
-      component : ExchangeComponent
+      component : ExchangeComponent,
+      userInfo  : true
     }
   }
 
+  saveLoading: boolean;
 
   showDrawer: boolean;
   drawerTitle: string;
@@ -123,28 +133,36 @@ export class ListComponent implements OnInit {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
     } else if (type === 'queryCard') {
-      this.router.navigateByUrl('/home/membercard/list')
+      this.router.navigateByUrl(`/home/membercard/list`);
     } else if (type === 'consumptionLog') {
-      this.router.navigateByUrl('/home/consumption/list')
+      this.router.navigateByUrl(`/home/consumption/list`);
     } else if (type === 'resetPassword') {
       this.modal.confirm({
-        nzTitle: '<i>您确定要重置密码?</i>',
-        nzContent: '<b>确认重置密码，重置密码后请重新登录</b>',
-        nzOnOk: () => console.log('OK')
+        nzTitle: '<i>您确定要重置密吗?</i>',
+        nzContent: '<b>您确定要重置密吗</b>',
+        nzOnOk: () => this.http.post('/member/modifyPassword', { id: this.checkedItems[0] }).then(res => { })
       });
+    } else if (type === 'construction') {
+      this.http.post('/member/checkMemberInfo', {id : this.checkedItems[0]}, false).then(res => {
+        if (res.code == 2043) {
+          this.message.warning(res.info);
+          this.showDrawer = true;
+          this.drawerTitle = '编辑-请补全基本信息';
+          this.createComponent(UpdateComponent);
+        } else {
+          this.showDrawer = true;
+          this.drawerTitle = '建卡';
+          this.createComponent(this.operationComponents[type]);
+        }
+      })
     } else if (this.operationComponents[type].component) {
       this.showDrawer = true;
       this.drawerTitle = this.operationComponents[type].title;
-
-      this.container.clear();
-      let component = this.operationComponents[type].component;
-      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(component);
-      this.componentRef = this.container.createComponent(factory);
-      this.componentRef.instance.id = this.checkedItems[0];
-      // this.componentRef.instance.complate.subscribe(event => console.log(event));
+      this.createComponent(this.operationComponents[type]);
     }
   }
 
+  /* ----------------- 新增客户，创建新增客户抽屉 ----------------- */
   insertCustomer() {
     this.showDrawer = true;
     this.drawerTitle = '新增客户';
@@ -154,14 +172,49 @@ export class ListComponent implements OnInit {
     this.componentRef.instance.id = null;
   }
 
-  saveDrawer(e) {
-    this.componentRef.instance.save()
+  /* ------------------------ 导入客户 ------------------------ */
+  importCustomer() {
+    this.showDrawer = true;
+    this.drawerTitle = '导入客户';
+    this.container.clear();
+    const factory: ComponentFactory<ImportComponent> = this.resolver.resolveComponentFactory(ImportComponent);
+    this.componentRef = this.container.createComponent(factory);
   }
 
+  /**
+   * @method 点击抽屉保存按钮调用子组件save方法
+   * @returns Promise<boolean>
+   *            true : 操作成功，关闭抽屉，并刷新列表
+   *            false: 操作失败
+   */
+  @ViewChild('listPage') listPage: ListPageComponent;
+  saveDrawer(e) {
+    this.saveLoading = true;
+    this.componentRef.instance.save().then(res => { 
+        this.saveLoading = false;
+        if (res) { 
+          this.showDrawer = false; 
+          this.listPage.eaTable._request(); 
+        }
+    });
+  }
 
-
-  
+  /* ----------------- 新增抽屉组件并传参Id及用户信息 ----------------- */
   componentRef: ComponentRef<any>;
   @ViewChild("drawerContainer", { read: ViewContainerRef }) container: ViewContainerRef;
+  createComponent(operationComponent) {
+    this.container.clear();
+    const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(operationComponent.component || operationComponent);
+    this.componentRef = this.container.createComponent(factory);
+    this.componentRef.instance.id = this.checkedItems[0];
+    if (operationComponent.userInfo) {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+          this.componentRef.instance.userInfo = res;
+        }
+      })
+    }
+  }
+
 
 }

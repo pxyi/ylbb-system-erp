@@ -18,6 +18,7 @@ import { ConsumptionComponent } from './list/consumption/consumption.component';
 import { ConstructionComponent } from './list/construction/construction.component';
 import { AddIntegralComponent } from './list/add-integral/add-integral.component';
 import { ExchangeComponent } from './list/exchange/exchange.component';
+import { ImportComponent } from './list/import/import.component';
 
 @NgModule({
   imports: [
@@ -25,9 +26,9 @@ import { ExchangeComponent } from './list/exchange/exchange.component';
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, AlbumComponent, UpdateComponent, AppointComponent, ConsumptionComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent],
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, AlbumComponent, UpdateComponent, AppointComponent, ConsumptionComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent],
   providers: [NewinformationCanDeactivate],
   exports: [ PreviewCustomerComponent, GetMobileDirective ],
-  entryComponents: [AppointComponent, ConstructionComponent, ConsumptionComponent, UpdateComponent, AddIntegralComponent, ExchangeComponent]
+  entryComponents: [AppointComponent, ConstructionComponent, ConsumptionComponent, UpdateComponent, AddIntegralComponent, ExchangeComponent, ImportComponent]
 })
 export class CustomerModule { }

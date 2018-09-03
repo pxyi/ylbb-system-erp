@@ -28,10 +28,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="changeTimes">变更正价卡次</nz-form-label>
+        <nz-form-label nzFor="changeTimes">变更正价卡次</nz-form-label>
         <nz-form-control>
           <input nz-input formControlName="changeTimes" id="changeTimes" placeholder="例如：增加5，减少-5">
-          <nz-form-explain *ngIf="formGroup.get('changeTimes').dirty && formGroup.get('changeTimes').hasError('required')">请输入变更正价卡次！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('changeTimes').dirty">
+            <ng-container *ngIf="formGroup.get('changeTimes').hasError('pattern')">请输入正确的变更正价卡次！</ng-container>
+          </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -47,10 +49,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="changeFreeTimes">变更赠送卡次</nz-form-label>
+        <nz-form-label nzFor="changeFreeTimes">变更赠送卡次</nz-form-label>
         <nz-form-control>
           <input nz-input formControlName="changeFreeTimes" id="changeFreeTimes" placeholder="例如：增加5，减少-5">
-          <nz-form-explain *ngIf="formGroup.get('changeFreeTimes').dirty && formGroup.get('changeFreeTimes').hasError('required')">请输入变更赠送卡次！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('changeFreeTimes').dirty">
+            <ng-container *ngIf="formGroup.get('changeFreeTimes').hasError('pattern')">请输入正确的变更赠送卡次！</ng-container>
+          </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -67,10 +71,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="changeBalance">变更金额</nz-form-label>
+        <nz-form-label nzFor="changeBalance">变更金额</nz-form-label>
         <nz-form-control>
           <input nz-input formControlName="changeBalance" id="changeBalance" placeholder="例如：增加5，减少-5">
-          <nz-form-explain *ngIf="formGroup.get('changeBalance').dirty && formGroup.get('changeBalance').hasError('required')">请输入变更金额！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('changeBalance').dirty">
+            <ng-container *ngIf="formGroup.get('changeBalance').hasError('pattern')">请输入正确的变更金额！</ng-container>
+          </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -86,10 +92,9 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>变更失效日期</nz-form-label>
+        <nz-form-label>变更失效日期</nz-form-label>
         <nz-form-control>
           <nz-date-picker formControlName="changeExpireDate" nzPlaceHolder="请选择变更失效日期" nzFormat="yyyy-MM-dd"></nz-date-picker>
-          <nz-form-explain *ngIf="formGroup.get('changeExpireDate').dirty && formGroup.get('changeExpireDate').hasError('required')">请选择变更失效日期！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -105,13 +110,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>变更卡类型</nz-form-label>
+        <nz-form-label>变更卡类型</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="changeCardType" nzPlaceHolder="请选择变更卡类型">
             <nz-option nzLabel="男" nzValue="男"></nz-option>
             <nz-option nzLabel="女" nzValue="女"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('changeCardType').dirty && formGroup.get('changeCardType').hasError('required')">请选择变更卡类型！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
