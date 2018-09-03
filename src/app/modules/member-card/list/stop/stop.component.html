@@ -1,0 +1,31 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="memberName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>停卡至</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker formControlName="reopenDate" nzPlaceHolder="请选择停卡至什么时候" nzFormat="yyyy-MM-dd"></nz-date-picker>
+          <nz-form-explain *ngIf="formGroup.get('reopenDate').dirty && formGroup.get('reopenDate').hasError('required')">请选择停卡至什么时候！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

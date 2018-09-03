@@ -1,6 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { DrawerSave } from '../../../../ng-relax/decorators/drawer.decorator';
 
 @Component({
   selector: 'app-appoint',
@@ -17,6 +18,7 @@ export class AppointComponent implements OnInit {
 
   communityList: any[] = [];
   cardList: any[] = [];
+  teacherList: any[] = [];
 
   constructor(
     private http: HttpService,
@@ -43,24 +45,10 @@ export class AppointComponent implements OnInit {
     this.formGroup.patchValue(this.userInfo);
     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
     this.http.post('/memberCard/getMemberCards', { memberId: this.id }, false).then(res => this.cardList = res.result);
+    this.http.post('/tongka/teacherList', {}, false).then(res => this.teacherList = res.result);
   }
 
-  save(): Promise<boolean> {
-    return new Promise(resolve => {
-      if (this.formGroup.invalid) {
-        for (let i in this.formGroup.controls) {
-          this.formGroup.controls[i].markAsDirty();
-          this.formGroup.controls[i].updateValueAndValidity();
-        }
-        resolve(false);
-      } else {
-        this.http.post('/reserve/createReserve', {
-          id: this.id,
-          paramJson: JSON.stringify(this.formGroup.value)
-        }).then(res => resolve(true)).catch(err => resolve(false));
-      }
-    })
-  }
+  @DrawerSave('/reserve/createReserve') save: () => Promise<boolean>;
 
 
   _disabledDate(current: Date): boolean {

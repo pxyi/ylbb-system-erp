@@ -12,6 +12,10 @@ import { AdjustmentComponent } from './list/adjustment/adjustment.component';
 import { ChangeComponent } from './list/change/change.component';
 import { ContinuedComponent } from './list/continued/continued.component';
 import { AddComponent } from './card-type/add/add.component';
+import { StopComponent } from './list/stop/stop.component';
+import { OpenComponent } from './list/open/open.component';
+import { SupplementComponent } from './list/supplement/supplement.component';
+import { NumberComponent } from './list/number/number.component';
 
 @NgModule({
   imports: [
@@ -19,7 +23,7 @@ import { AddComponent } from './card-type/add/add.component';
     MemberCardRoutingModule,
     NgRelaxModule
   ],
-  declarations: [ListComponent, ChangeLogComponent, PatchLogComponent, CardTypeComponent, CardBusinessComponent, AdjustmentComponent, ChangeComponent, ContinuedComponent, AddComponent],
-  entryComponents: [AdjustmentComponent, ChangeComponent, ContinuedComponent, AddComponent]
+  declarations: [ListComponent, ChangeLogComponent, PatchLogComponent, CardTypeComponent, CardBusinessComponent, AdjustmentComponent, ChangeComponent, ContinuedComponent, AddComponent, StopComponent, OpenComponent, SupplementComponent, NumberComponent],
+  entryComponents: [AdjustmentComponent, ChangeComponent, ContinuedComponent, AddComponent, StopComponent, OpenComponent, SupplementComponent, NumberComponent]
 })
 export class MemberCardModule { }

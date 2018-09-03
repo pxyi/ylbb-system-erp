@@ -113,7 +113,6 @@ export class AnalysisComponent implements OnInit {
           this.formModel.addControl(res.fieldName, new FormControl())
         })
       }
-      console.log(this.formModel);
     });
   }
   ngOnInit() {

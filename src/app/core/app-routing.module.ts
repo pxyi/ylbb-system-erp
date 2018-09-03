@@ -103,12 +103,17 @@ const routes: Routes = [
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/analysis/analysis.module#AnalysisModule'
       },
-      
       {
         path: 'configuration',
         data: { title: '基础资料' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/configuration/configuration.module#ConfigurationModule'
+      },
+      {
+        path: 'humanresources',
+        data: { title: '人力资源' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/human-resources/human-resources.module#HumanResourcesModule'
       }
     ]
   },

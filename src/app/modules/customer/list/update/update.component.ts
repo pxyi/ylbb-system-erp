@@ -1,6 +1,7 @@
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { DrawerSave } from '../../../../ng-relax/decorators/drawer.decorator';
 
 @Component({
   selector: 'app-update',
@@ -52,21 +53,7 @@ export class UpdateComponent implements OnInit {
     }
   } 
 
-  save(): Promise<boolean> {
-    return new Promise((resolve) => {
-      if (this.formGroup.invalid) {
-        for (let i in this.formGroup.controls) {
-          this.formGroup.controls[i].markAsDirty();
-          this.formGroup.controls[i].updateValueAndValidity();
-        }
-        resolve(false);
-      } else {
-        this.http.post('/member/modifyMember', {
-          paramJson: JSON.stringify(this.formGroup.value)
-        }).then(res => resolve(true)).catch(err => resolve(false));
-      }
-    })
-  }
+  @DrawerSave('/member/modifyMember') save: () => Promise<boolean>;
 
 
   /* ------------ 宝宝生日禁止选择今天以后的日期 ------------ */
