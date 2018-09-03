@@ -45,7 +45,7 @@
     <td>{{ data.effectDate }}</td>
     <td>{{ data.expireDate }}</td>
     <td><nz-tag [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
-    <td>{{ data.status == 1 ? '停卡' : '正常' }}</td>
+    <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '停卡' : '正常' }}</nz-tag></td>
     <td>{{ data.ctcName }}</td>
     <td>{{ data.stopEndDate || '--' }}</td>
     <td>{{ data.comment }}</td>

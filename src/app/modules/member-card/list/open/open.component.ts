@@ -1,6 +1,7 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpService } from './../../../../ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { DrawerSave } from 'src/app/ng-relax/decorators/drawer.decorator';
 
 @Component({
   selector: 'app-open',
@@ -25,11 +26,11 @@ export class OpenComponent implements OnInit {
       id: [this.id],
       cardCode: [{value: this.memberCardInfo.cardCode, disabled: true}],
       memberName: [{ value: this.memberCardInfo.memberName, disabled: true }],
-      // cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
+      modifyDate: [{ value: this.memberCardInfo.modifyDate, disabled: true }],
       stopEndDate: [{ value: this.memberCardInfo.stopEndDate, disabled: true }],
     })
   }
 
-
+  @DrawerSave('/memberCard/reopenCard') save: () => Promise<boolean>;
 
 }
