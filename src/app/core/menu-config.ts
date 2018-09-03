@@ -242,6 +242,28 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '人力资源',
+    key   : '/home/humanresources',
+    icon  : 'anticon-idcard',
+    children: [
+      {
+        title : '职位与薪酬管理',
+        key   : '/home/humanresources/positionsalary',
+        isLeaf: true
+      },
+      {
+        title : '部门管理',
+        key   : '/home/humanresources/department',
+        isLeaf: true
+      },
+      {
+        title : '员工管理',
+        key   : '/home/humanresources/staff',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title: '账户管理',
     key: '/home/account',
     icon: 'anticon-usergroup-add',

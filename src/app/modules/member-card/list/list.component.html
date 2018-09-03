@@ -3,7 +3,7 @@
     #listPage
     url="/memberCard/list"
     [queryNode]="queryNode"
-    [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数', '通卡次数(剩余)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期', '备注']"
+    [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '通卡次数(剩余)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期', '备注']"
     [checked]="true"
     [isRadio]="true"
     [(checkedItems)]="checkedItems"
@@ -23,10 +23,10 @@
       <nz-dropdown>
         <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
         <ul nz-menu>
-          <li nz-menu-item><a (click)="operation('appoint')">停卡</a></li>
-          <li nz-menu-item><a (click)="operation('consumption')">重开卡</a></li>
-          <li nz-menu-item><a (click)="operation('update')">补卡</a></li>
-          <li nz-menu-item><a (click)="operation('construction')">换卡号</a></li>
+          <li nz-menu-item><a (click)="operation('stop')">停卡</a></li>
+          <li nz-menu-item><a (click)="operation('open')">重开卡</a></li>
+          <li nz-menu-item><a (click)="operation('supplement')">补卡</a></li>
+          <li nz-menu-item><a (click)="operation('number')">换卡号</a></li>
         </ul>
       </nz-dropdown>
     </div>
@@ -39,13 +39,13 @@
     <td>{{ data.monthAge }}</td>
     <td>{{ data.babyType }}</td>
     <td>{{ data.allTimes }}（{{ data.times }}/{{ data.freeTimes }}）</td>
-    <td>{{ data.remainTimes }}</td>
+    <td>{{ data.remainTimes + data.remainFreeTimes }}（{{ data.remainTimes }}/{{ data.remainFreeTimes }}）</td>
     <td>{{ data.tongTimes }}</td>
     <td>{{ data.balance | currency: '￥' }}</td>
     <td>{{ data.effectDate }}</td>
     <td>{{ data.expireDate }}</td>
     <td><nz-tag [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
-    <td>{{ data.turnCard ? '停卡' : '正常' }}</td>
+    <td>{{ data.status == 1 ? '停卡' : '正常' }}</td>
     <td>{{ data.ctcName }}</td>
     <td>{{ data.stopEndDate || '--' }}</td>
     <td>{{ data.comment }}</td>

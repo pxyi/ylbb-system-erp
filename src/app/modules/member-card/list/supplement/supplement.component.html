@@ -1,0 +1,40 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="memberName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="newSerial">新卡序列号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="newSerial" id="newSerial" placeholder="请输入新卡序列号什么时候">
+          <nz-form-explain *ngIf="formGroup.get('newSerial').dirty && formGroup.get('newSerial').hasError('required')">请输入新卡序列号什么时候！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="newCode">新卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="newCode" id="newCode" placeholder="请输入新卡号什么时候">
+          <nz-form-explain *ngIf="formGroup.get('newCode').dirty && formGroup.get('newCode').hasError('required')">请输入新卡号什么时候！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

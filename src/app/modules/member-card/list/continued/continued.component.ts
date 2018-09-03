@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DrawerSave } from '../../../../ng-relax/decorators/drawer.decorator';
 
 @Component({
   selector: 'app-continued',
@@ -8,6 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./continued.component.scss']
 })
 export class ContinuedComponent implements OnInit {
+
+  @Input() id;
+
+  @Input() memberCardInfo;
 
   cardTypeList: any[] = [];
 
@@ -17,18 +22,22 @@ export class ContinuedComponent implements OnInit {
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder()
   ) {
-    this.formGroup = this.fb.group({
-      cardCode: [{ value: null, disabled: true }],
-      memberName: [{ value: null, disabled: true }],
-      times: [{ value: null, disabled: true }],
-      freeTimes: [{ value: null, disabled: true }],
-      balance: [{ value: null, disabled: true }],
-      expireDate: [{ value: null, disabled: true }],
-      changeCardType: [, [Validators.required]]
-    });
     this.http.post('/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
   }
+
   ngOnInit() {
+    this.formGroup = this.fb.group({
+      id: [this.id],
+      cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
+      memberName: [{ value: this.memberCardInfo.memberName, disabled: true }],
+      times: [{ value: this.memberCardInfo.times, disabled: true }],
+      freeTimes: [{ value: this.memberCardInfo.freeTimes, disabled: true }],
+      balance: [{ value: this.memberCardInfo.balance, disabled: true }],
+      expireDate: [{ value: this.memberCardInfo.expireDate, disabled: true }],
+      changeCardType: [, [Validators.required]]
+    });
   }
+
+  @DrawerSave('/memberCard/continueCard') save: any;
 
 }

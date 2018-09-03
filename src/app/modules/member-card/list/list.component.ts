@@ -1,3 +1,5 @@
+import { SupplementComponent } from './supplement/supplement.component';
+import { StopComponent } from './stop/stop.component';
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { ContinuedComponent } from './continued/continued.component';
 import { ChangeComponent } from './change/change.component';
@@ -5,6 +7,8 @@ import { AdjustmentComponent } from './adjustment/adjustment.component';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
+import { OpenComponent } from './open/open.component';
+import { NumberComponent } from './number/number.component';
 
 @Component({
   selector: 'app-list',
@@ -26,7 +30,22 @@ export class ListComponent implements OnInit {
       title: '续卡',
       component: ContinuedComponent
     },
-
+    stop: {
+      title: '停卡',
+      component: StopComponent
+    },
+    open: {
+      title: '重开卡',
+      component: OpenComponent
+    },
+    supplement: {
+      title: '补卡',
+      component: SupplementComponent
+    },
+    number: {
+      title: '换卡号',
+      component: NumberComponent
+    }
   }
 
   queryNode: QueryNode[] = [
@@ -90,6 +109,42 @@ export class ListComponent implements OnInit {
   operation(type) {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
+    } else if (type === 'stop') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+          if (res.turnCard) {
+            this.message.warning('该卡有停卡限制,不能停卡！');
+          } else {
+            this.showDrawer = true;
+            this.drawerTitle = this.operationComponents[type].title;
+            this.createComponent(this.operationComponents[type]);
+          }
+        }
+      })
+    } else if (type === 'open') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+          if (res.status == 1) {
+            this.showDrawer = true;
+            this.drawerTitle = this.operationComponents[type].title;
+            this.createComponent(this.operationComponents[type]);
+          } else {
+            this.message.warning('该卡不能重开卡！');
+          }
+        }
+      })
+    } else if (type === 'supplement') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+          if (res.serialNumber) {
+            this.showDrawer = true;
+            this.drawerTitle = this.operationComponents[type].title;
+            this.createComponent(this.operationComponents[type]);
+          } else {
+            this.message.warning('该卡是电子卡片,请点击换卡号！');
+          }
+        }
+      })
     } else if (this.operationComponents[type]) {
       this.showDrawer = true;
       this.drawerTitle = this.operationComponents[type].title;
