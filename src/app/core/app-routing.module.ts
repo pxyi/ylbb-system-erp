@@ -103,6 +103,7 @@ const routes: Routes = [
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/analysis/analysis.module#AnalysisModule'
       },
+      
       {
         path: 'configuration',
         data: { title: '基础资料' },
