@@ -43,8 +43,8 @@
   </div>
 </form>
 
-<nz-tabset>
-  <nz-tab nzTitle="计次服务">
+<nz-tabset [(nzSelectedIndex)]="consumptionType">
+  <nz-tab nzTitle="计次服务" [nzDisabled]="!userInfo.memberCard">
     <form nz-form [formGroup]="timesCountGroup">
       <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">
@@ -52,9 +52,9 @@
             <nz-form-label nzRequired>消费卡</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="cardId" nzPlaceHolder="请选择消费卡">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option *ngFor="let option of memberCardList" [nzLabel]="option.ctName" [nzValue]="option.id"></nz-option>
               </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('cardId').dirty && timesCountGroup.get('cardId').hasError('required')">请选择消费卡！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -63,8 +63,7 @@
             <nz-form-label nzRequired>服务泳师</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="timesCountGroup.get('swimTeacherId').dirty && timesCountGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
             </nz-form-control>

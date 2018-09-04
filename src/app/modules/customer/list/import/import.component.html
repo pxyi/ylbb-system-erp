@@ -1,9 +1,9 @@
 <nz-upload
   nzType="drag"
-  [nzLimit]="1"
-  [(nzFileList)]="fileList"
   [nzBeforeUpload]="importBeforeUpload"
-  (nzChange)="fileChange($event)">
+  [(nzFileList)]="fileList"
+  nzAction="/member/uploadExcel"
+  [nzWithCredentials]="true">
   <p class="ant-upload-drag-icon">
     <i class="anticon anticon-inbox"></i>
   </p>

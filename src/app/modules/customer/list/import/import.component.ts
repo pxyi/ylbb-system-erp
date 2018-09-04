@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UploadFile } from 'ng-zorro-antd';
 
@@ -10,16 +11,17 @@ export class ImportComponent implements OnInit {
 
   fileList = [];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
   }
 
-  fileChange(file) {
-
-  }
 
   importBeforeUpload = (file: UploadFile): boolean => {
+    this.http.put('/member/uploadExcel', { excelFile: file }).subscribe(res => console.log(res))
+    console.log(file);
     return false;
   }
 
