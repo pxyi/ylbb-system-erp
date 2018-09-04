@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
+import { serialize } from 'src/app/ng-relax/services/http.service';
 
 @Component({
   selector: 'ea-table',
@@ -81,7 +82,10 @@ export class TableComponent implements OnInit {
     if (this._pageInfo.loading) { return; }
     this._pageInfo.loading = true;
     let params = Object.assign({ paramJson: JSON.stringify(Object.assign(JSON.parse(JSON.stringify(this.paramsDefault)), this._params)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
-    this.http.post<any>(this.url, params).subscribe(res => {
+    this.http.post<any>(this.url, serialize(params), {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'),
+      withCredentials: true
+    }).subscribe(res => {
       if (res.code == 1000) {
         this.dataSet = res.result.list;
         this._pageInfo.pageNum = res.result.pageNum;

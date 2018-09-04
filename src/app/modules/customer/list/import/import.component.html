@@ -1,7 +1,7 @@
 <nz-upload
   nzType="drag"
-  [nzBeforeUpload]="importBeforeUpload"
   [(nzFileList)]="fileList"
+  [nzName]="'excelFile'"
   nzAction="/member/uploadExcel"
   [nzWithCredentials]="true">
   <p class="ant-upload-drag-icon">

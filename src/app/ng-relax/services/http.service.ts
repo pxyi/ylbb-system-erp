@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -21,7 +21,10 @@ export class HttpService {
   */
   post(url: string, query: object = {}, auto = true): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.post<YlbbResponse>(url, query).subscribe(res => {
+      this.http.post<YlbbResponse>(url, serialize(query), {
+        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'),
+        withCredentials: true
+      }).subscribe(res => {
         (auto && res.code) && this.message.create(res.code == 1000 ? 'success' : 'warning', res.info);
         (auto && res.code != 1000) ? reject(res) : resolve(res);
       });

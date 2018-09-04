@@ -1,11 +1,12 @@
 import { NzModalService } from 'ng-zorro-antd';
 import { RouterState } from '../reducers/router-reducer';
 import { AppState } from '../reducers/reducers-config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { serialize } from 'src/app/core/http.intercept';
 
 declare const CryptoJS;
 
@@ -91,7 +92,10 @@ export class LoginComponent implements OnInit {
       params = JSON.parse(JSON.stringify(this.loginForm.value));
       params.password = this._encrypt(params.password);
     }
-    this.http.post<any>('/auth/login', params).subscribe(res => {
+    this.http.post<any>('/auth/login', serialize(params), {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'),
+      withCredentials: true
+    }).subscribe(res => {
       this.loginLoading = false;
       if (res.code == 1000) {
         window.localStorage.setItem('userInfo', JSON.stringify(res.result));

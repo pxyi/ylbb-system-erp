@@ -20,27 +20,6 @@ export class NoopInterceptor implements HttpInterceptor {
         url: environment.domain + req.url
       });
     }
-    /**
-     * If Method Post
-     *    序列化请求参数 {key1: value1, key2: value2} => key1=value1&key2=value2
-     *    设置请求头为 Form 表单方式提交
-     *    允许跨域存取cookies
-     */
-    if (req.method === 'POST') {
-      req = req.clone({
-        body: serialize(req.body),
-        setHeaders: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        withCredentials: true
-      })
-    } else if (req.method === 'PUT') {
-      let formData = new FormData();
-      for (let key of req.body) {
-        formData.set(key, req.body[key]);
-      }
-      req = req.clone({
-        body: formData
-      });
-    }
     return next.handle(req).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
