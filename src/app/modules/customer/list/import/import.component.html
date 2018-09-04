@@ -1,9 +1,10 @@
 <nz-upload
   nzType="drag"
-  [(nzFileList)]="fileList"
   [nzName]="'excelFile'"
+  [nzFileType]="'application/vnd.ms-excel'"
   nzAction="/member/uploadExcel"
-  [nzWithCredentials]="true">
+  [nzWithCredentials]="true"
+  (nzChange)="uploadComplate($event)">
   <p class="ant-upload-drag-icon">
     <i class="anticon anticon-inbox"></i>
   </p>
