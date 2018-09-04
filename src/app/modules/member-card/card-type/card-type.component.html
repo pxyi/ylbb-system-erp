@@ -1,7 +1,7 @@
 <div class="container">
   <ea-query-simp [node]="queryNode" title="卡类型管理" (onSubmit)="table.request($event)"></ea-query-simp>
 
-  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="updateCardType(null)"><i class="anticon anticon-plus"></i>新增卡类型</button>
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="updateCardType()"><i class="anticon anticon-plus"></i>新增卡类型</button>
 
   <ea-table 
     #table 
@@ -18,16 +18,16 @@
       <td>{{ data.freeTimes }}</td>
       <td>{{ data.balance }}</td>
       <td>{{ data.openPoints }}</td>
-      <td>{{ data.status }}</td>
+      <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '停卡' : '正常' }}</nz-tag></td>
       <td>{{ data.tong ? '是' : '否' }}</td>
       <td>
-        <a (click)="updateCardType(data.id)">编辑</a>
+        <a (click)="updateCardType(data)">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>
         <nz-dropdown>
           <a nz-dropdown>更多<i class="anticon anticon-down"></i></a>
           <ul nz-menu>
             <li nz-menu-item><a (click)="operation(data.id, 'delete')">删除</a></li>
-            <li nz-menu-item><a (click)="operation(data.id, 'disable')">禁用</a></li>
+            <li nz-menu-item><a (click)="operation(data.id, 'disable', data.status)">{{ data.status == 1 ? '启用' : '禁用' }}</a></li>
           </ul>
         </nz-dropdown>
       </td>
@@ -44,6 +44,6 @@
   <ng-template #drawerContainer></ng-template>
   <div class="footer">
     <button nz-button (click)="showDrawer = false">取消</button>
-    <button nz-button nzType="primary" (click)="saveDrawer()">保存</button>
+    <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
   </div>
 </nz-drawer>

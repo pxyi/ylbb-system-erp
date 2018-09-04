@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PositionSalaryComponent implements OnInit {
 
+  showDrawer: boolean;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  saveDrawer() {
+
+  }
+  
+  operation(type, id) {
+    
+  }
+
+  updateCardType(id) {
+    
   }
 
 }
