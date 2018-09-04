@@ -1,3 +1,49 @@
-<p>
-  department works!
-</p>
+<div class="container">
+  <ea-query-simp [node]="[{label: '职位名称', key: 'position', type: 'input'}]" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="updateCardType(null)"><i class="anticon anticon-plus"></i>新增职位</button>
+
+  <ea-table 
+    #table 
+    url="/cardTypeManagement/list" 
+    [allowSpace]="false" 
+    [thead]="['卡类型名称','业务类型','有效时长','计费类型','正价次数','赠送次数','金额','开卡积分','状态','跨店消费','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.categoryName }}</td>
+      <td>{{ data.effectMonth }}</td>
+      <td>{{ data.feeType }}</td>
+      <td>{{ data.times }}</td>
+      <td>{{ data.freeTimes }}</td>
+      <td>{{ data.balance }}</td>
+      <td>{{ data.openPoints }}</td>
+      <td>{{ data.status }}</td>
+      <td>{{ data.tong }}</td>
+      <td>
+        <a (click)="updateCardType(data.id)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-dropdown>
+          <a nz-dropdown>更多<i class="anticon anticon-down"></i></a>
+          <ul nz-menu>
+            <li nz-menu-item><a (click)="operation(data.id, 'delete')">删除</a></li>
+            <li nz-menu-item><a (click)="operation(data.id, 'disable')">禁用</a></li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
+
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  nzTitle="编辑卡类型" 
+  (nzOnClose)="showDrawer = false">
+  <ng-template #drawerContainer></ng-template>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" (click)="saveDrawer()">保存</button>
+  </div>
+</nz-drawer>

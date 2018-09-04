@@ -1,3 +1,55 @@
-<p>
-  staff works!
-</p>
+<div class="container">
+  <ea-list-page
+    #listPage
+    url="/memberCard/list"
+    [queryNode]="queryNode"
+    [tableThead]="[ '姓名', '英文名', '性别', '手机', 'QQ', '身份证', '部门', '年龄', '生日', '职位', '状态', '泳师', '是否提成', '服务区域', '网约', '操作' ]"
+    [checked]="true"
+    [isRadio]="true"
+    [(checkedItems)]="checkedItems"
+    [allowSpace]="false"
+    [EaBtns]="EaBtns"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+  </ea-list-page>
+
+  <ng-template #EaBtns>
+    <div class="ea-button-group" style="margin-bottom: 16px;">
+      <button nz-button [nzType]="'primary'" (click)="operation('adjustment')">新增员工</button>
+      <button nz-button>编辑员工</button>
+      <button nz-button>重置密码</button>
+      <button nz-button>上传头像</button>
+    </div>
+  </ng-template>
+
+  <ng-template let-data #EaTableTbodyTr>
+    <td>{{ data.name }}</td>
+    <td>{{ data.nameEn }}</td>
+    <td><i class="iconfont" [title]="data.sex" [ngClass]="[data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i></td>
+    <td>{{ data.mobile }}</td>
+    <td>{{ data.qq }}</td>
+    <td>{{ data.idCardNo }}</td>
+    <td>{{ data.depName }}</td>
+    <td>{{ data.age }}</td>
+    <td>{{ data.birthday }}</td>
+    <td>{{ data.position }}</td>
+    <td>{{ data.state }}</td>
+    <td>{{ data.teacher }}</td>
+    <td>{{ data.notStatistics }}</td>
+    <td>{{ data.serviceArea }}</td>
+    <td>{{ data.online }}</td>
+    <td></td>
+  </ng-template>
+</div>
+
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  [nzTitle]="drawerTitle" 
+  (nzOnClose)="showDrawer = false">
+  <ng-template #drawerContainer></ng-template>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
+  </div>
+</nz-drawer>
