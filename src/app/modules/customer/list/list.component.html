@@ -23,7 +23,7 @@
       <td>{{ data.communityName }}</td>
       <td>{{ data.babyType }}</td>
       <td>{{ data.memberPoint }}</td>
-      <td>{{ data.expireDays }}</td>
+      <td><nz-tag *ngIf="data.expireDays || data.expireDays == 0" [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
       <td>{{ data.weighRemind ? '需要' : '不需要' }}</td>
       <td>{{ data.photoRemind ? '需要' : '不需要' }}</td>
       <td>{{ data.loginTimes }}</td>
@@ -66,4 +66,3 @@
     <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
   </div>
 </nz-drawer>
-

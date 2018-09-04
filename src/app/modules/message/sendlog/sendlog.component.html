@@ -1,3 +1,39 @@
-<p>
-  sendlog works!
-</p>
+<ng-template #breadcrumbTmpt>
+  <nz-tabset [(nzSelectedIndex)]="selectIndex" (nzSelectedIndexChange)="indexChange()">
+    <nz-tab nzTitle="短信发送记录"></nz-tab>
+    <nz-tab nzTitle="消息发送记录"></nz-tab>
+  </nz-tabset>
+</ng-template>
+
+<div class="container" *ngIf="selectIndex === 0">
+  <ea-list-page 
+    url="/member/list"
+    [allowSpace]="false"
+    [queryNode]="shortQueryNode"
+    [tableThead]="[ '手机号', '发送时间', '发送内容', '发送状态' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.mobile }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.content }}</td>
+      <td>{{ data.status }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>
+
+<div class="container" *ngIf="selectIndex === 1">
+  <ea-list-page 
+    url="/member/list"
+    [allowSpace]="false"
+    [queryNode]="newsQueryNode"
+    [tableThead]="[ '接收会员', '发送时间', '消息内容', '是否已读', '消息类型' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.content }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.readFlag }}</td>
+      <td>{{ data.type }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

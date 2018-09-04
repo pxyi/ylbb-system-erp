@@ -1,3 +1,59 @@
-<p>
-  template works!
-</p>
+<div class="container">
+  <ea-query-simp [node]="queryNode" title="消息模板配置" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="updateTemplate(null)"><i class="anticon anticon-plus"></i>新增消息模板</button>
+
+  <ea-table 
+    #table 
+    url="/cardTypeManagement/list" 
+    [allowSpace]="false" 
+    [thead]="[ '标题', '内容', '创建日期', { name: '操 作', width: '140px' } ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.title }}</td>
+      <td>{{ data.content }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>
+        <a (click)="updateTemplate(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="deleteTemplate(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
+
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  nzTitle="编辑消息模板" 
+  (nzOnClose)="showDrawer = false">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="title">模板标题</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入模板标题" formControlName="title" id="title">
+            <nz-form-explain *ngIf="formGroup.get('title').dirty && formGroup.get('title').hasError('required')">请输入模板标题！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="content">模板内容</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input placeholder="请输入模板内容" formControlName="content" id="content" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+            <nz-form-explain *ngIf="formGroup.get('content').dirty && formGroup.get('content').hasError('required')">请输入模板内容！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveTemplate()">保存</button>
+  </div>
+</nz-drawer>

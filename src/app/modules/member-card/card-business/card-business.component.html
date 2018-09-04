@@ -14,7 +14,7 @@
       <td>
         <a (click)="updateId = data.id; name = data.name; showModal = true;">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="deleteBusiness(data.id)">删除</a>
+        <a nz-popconfirm nzTitle="确定要删除此业务类型吗?" (nzOnConfirm)="deleteBusiness(data.id)">删除</a>
       </td>
     </ng-template>
   </ea-table>

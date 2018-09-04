@@ -25,6 +25,7 @@ export class NumberComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.fb.group({
       id: [this.id],
+      type: [1],
       cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
       memberName: [{ value: this.memberCardInfo.memberName, disabled: true }],
       newCode: [, [Validators.required]],

@@ -24,6 +24,7 @@ export class SupplementComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.fb.group({
       id: [this.id],
+      type: [0],
       cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
       memberName: [{ value: this.memberCardInfo.memberName, disabled: true }],
       newSerial: [, [Validators.required]],
@@ -31,6 +32,6 @@ export class SupplementComponent implements OnInit {
     });
   }
 
-  @DrawerSave('/memberCard/pauseCard') save: () => Promise<boolean>;
+  @DrawerSave('/memberCard/replaceCard') save: () => Promise<boolean>;
 
 }
