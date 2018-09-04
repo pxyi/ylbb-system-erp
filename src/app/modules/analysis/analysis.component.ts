@@ -9,18 +9,18 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./analysis.component.scss']
 })
 export class AnalysisComponent implements OnInit {
-nickName = new FormControl('tom');
-formModel : FormGroup;
+  nickName = new FormControl('tom');
+  formModel: FormGroup;
   selectindex: any;
   AllList: any;
   findList: any;
   findindex: any;
-  menu : any;
-  pageId : string = "14";
+  menu: any;
+  pageId: string = "14";
   formList = {};
   dataSet = [];
-  ListHeader:any;
-  ListContent:any;
+  ListHeader: any;
+  ListContent: any;
   formData: any = {
     "datePickerList": [],
     "selectList": [],
@@ -32,7 +32,7 @@ formModel : FormGroup;
     private http: HttpService,
     private message: NzMessageService,
     private format: DatePipe,
-    
+
 
   ) {
 
@@ -41,67 +41,77 @@ formModel : FormGroup;
 
     });
   }
-  changefind(){
-    let index = this.selectindex -1;
+  changefind() {
+    let index = this.selectindex - 1;
     this.findList = this.menu[index].children;
   }
-  subData(){
-    let params =JSON.parse(JSON.stringify(this.formModel.value));
+  subData() {
+    let params = JSON.parse(JSON.stringify(this.formModel.value));
     console.log(params);
-    
-    if (this.formData.datePickerList){
-    this.formData.datePickerList.map(res => {
-      params[res.fieldName] = this.format.transform(params[res.fieldName], 'yyyy-MM-dd');
-    })
+
+    if (this.formData.datePickerList) {
+      this.formData.datePickerList.map(res => {
+        params[res.fieldName] = this.format.transform(params[res.fieldName], 'yyyy-MM-dd');
+      })
     }
-  
-    params.reportId =  this.pageId;
-    for (let i in params){
-        if(params[i]==null||params[i]==''){
-          delete params[i];
-        }
+
+    params.reportId = this.pageId;
+    for (let i in params) {
+      if (params[i] == null || params[i] == '') {
+        delete params[i];
+      }
     }
     this.http.post('/report/query', { paramJson: JSON.stringify(params) }, false).then(res => {
       this.ListHeader = res.result.header;
       this.ListContent = res.result.content;
     });
   }
-  elder(index){
-    let reportId = index=='0'?'14':(index=='1'?'2':(index=='2'?'3':(index=='3'?'8':'42')));
+  elder(index) {
+    let reportId = index == '0' ? '14' : (index == '1' ? '2' : (index == '2' ? '3' : (index == '3' ? '8' : '42')));
     this.pageId = reportId;
     this.getform(reportId);
   }
-  getform(reportId){
-    this.http.post('/report/buildQueryPage', { paramJson: JSON.stringify({ reportId : reportId}) }, false).then(res => {
-      this.formData = res.result;  
-  
-      if (this.formData.selectList){
+  getform(reportId) {
+    this.http.post('/report/buildQueryPage', { paramJson: JSON.stringify({ reportId: reportId }) }, false).then(res => {
+      this.formData = res.result;
+
+      if (this.formData.selectList) {
+
         this.formData.selectList.map((item, index) => {
-          if (item.inputKeyValue){
-            item.inputKeyValue = item.inputKeyValue.split(';');
-            item.inputKeyValue.map((items, indexs) => {
+          if (item.dataSource) {
+            let dataSource = JSON.stringify(item.dataSource);
+            dataSource = dataSource.substring(1, dataSource.length - 1);
+            item.dataSource = dataSource.split(',');
+            item.dataSource.map((items, indexs) => {
               let str = items.split(':')[0];
-              this.formData.selectList[index].inputKeyValue[indexs] = str;
+              let str1 = items.split(':')[1];
+              str = str.substring(1, str.length - 1);
+              str1 = str1.substring(1, str1.length - 1);
+              let jsons:any = {};
+              jsons.key = str;
+              jsons.name = str1;
+              this.formData.selectList[index].dataSource[indexs] = jsons;
             })
           }
         })
       }
-       
-      if (this.formData.datePickerList){
+      console.log(this.formData);
+
+      if (this.formData.datePickerList) {
         this.formData.datePickerList.map(res => {
           this.formModel.addControl(res.fieldName, new FormControl())
         })
       }
-    
-      if (this.formData.selectList){
+
+      if (this.formData.selectList) {
         this.formData.selectList.map(res => {
           this.formModel.addControl(res.fieldName, new FormControl())
         })
       }
-      if (this.formData.textFieldList){ 
+      if (this.formData.textFieldList) {
         this.formData.textFieldList.map(res => {
           this.formModel.addControl(res.fieldName, new FormControl())
-        }) 
+        })
       }
     });
   }
