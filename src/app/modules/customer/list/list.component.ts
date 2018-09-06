@@ -139,7 +139,11 @@ export class ListComponent implements OnInit {
         }
       });
     } else if (type === 'consumptionLog') {
-      this.router.navigateByUrl(`/home/consumption/list`);
+      this.router.navigate(['/home/consumption/list'], {
+        queryParams: {
+          memberId: this.checkedItems[0]
+        }
+      });
     } else if (type === 'resetPassword') {
       this.modal.confirm({
         nzTitle: '<i>您确定要重置密吗?</i>',

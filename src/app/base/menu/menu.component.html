@@ -22,7 +22,7 @@
             </span>
             <ul>
               <ng-container *ngFor="let cdItem of item.children">
-                <li *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath == cdItem.key">
+                <li *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == cdItem.key">
                   <span>{{ cdItem.title }}</span>
                 </li>
               </ng-container>

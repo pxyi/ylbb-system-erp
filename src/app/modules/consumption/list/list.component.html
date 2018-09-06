@@ -1,7 +1,7 @@
 <div class="container">
   <ea-list-page 
     #listPage
-    url="/consume/consumeRecordList"
+    url="/customer/consumeRecordList"
     [allowSpace]="false"
     [queryNode]="queryNode"
     [paramsDefault]="paramsDefault"
@@ -11,7 +11,7 @@
     [checkedItems]="checkedItems"
     [EaTableTbodyTr]="EaTableTbodyTr"
     [EaBtns]="EaBtns"
-  >
+    (requestReady)="requestReady($event)">
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.cardCode }}</td>
       <td>{{ data.cardTypeName }}</td>

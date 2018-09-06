@@ -9,7 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { HttpService } from './../../../ng-relax/services/http.service';
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -32,6 +32,11 @@ export class ListComponent implements OnInit {
     {
       label       : '会员姓名',
       key         : 'memberName',
+      type        : 'input'
+    },
+    {
+      label       : '会员ID',
+      key         : 'memberId',
       type        : 'input'
     },
     {
@@ -124,7 +129,8 @@ export class ListComponent implements OnInit {
     private message: NzMessageService,
     private resolver: ComponentFactoryResolver,
     private router: Router,
-    private format: DatePipe
+    private format: DatePipe,
+    private reoute: ActivatedRoute
   ) { 
     this.paramsDefault = {
       startDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
@@ -132,7 +138,20 @@ export class ListComponent implements OnInit {
     }
   }
 
+  private getQueryParams;
   ngOnInit() {
+    this.reoute.queryParamMap.subscribe((res: any) => {
+      if (res.params.memberId) {
+        this.getQueryParams = res.params;
+        setTimeout(() => {
+          this.listPage.eaQuery._queryForm.patchValue(this.getQueryParams);
+        });
+      }
+    })
+  }
+
+  requestReady(e) {
+    this.getQueryParams && this.listPage.eaTable.request(this.getQueryParams);
   }
 
   operation(type) {
