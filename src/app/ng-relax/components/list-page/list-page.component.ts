@@ -34,8 +34,6 @@ export class ListPageComponent implements OnInit {
 
   @Input() allowSpace: boolean = true;
 
-  @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
-
   @Input() EaTableTbodyTr: TemplateRef<void>;
 
   @Input() EaTableTbodyExpand: TemplateRef<void>;
@@ -51,6 +49,12 @@ export class ListPageComponent implements OnInit {
     return this._EaBtns;
   }
 
+  @Output('requestReady') requestComplate: EventEmitter<any> = new EventEmitter();
+  requestReady(e) {
+    this.requestComplate.emit(e);
+  }
+
+  @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
   checkedChange(e) {
     this.checkedItemsChange.emit(e);
   }

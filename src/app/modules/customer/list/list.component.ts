@@ -133,7 +133,11 @@ export class ListComponent implements OnInit {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
     } else if (type === 'queryCard') {
-      this.router.navigateByUrl(`/home/membercard/list`);
+      this.router.navigate(['/home/membercard/list'], {
+        queryParams: {
+          memberId: this.checkedItems[0]
+        }
+      });
     } else if (type === 'consumptionLog') {
       this.router.navigateByUrl(`/home/consumption/list`);
     } else if (type === 'resetPassword') {

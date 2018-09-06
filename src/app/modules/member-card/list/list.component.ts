@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { SupplementComponent } from './supplement/supplement.component';
 import { StopComponent } from './stop/stop.component';
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
@@ -55,6 +56,11 @@ export class ListComponent implements OnInit {
       type        : 'input'
     },
     {
+      label       : '会员ID',
+      key         : 'memberId',
+      type        : 'input'
+    }, 
+    {
       label       : '会员姓名',
       key         : 'memberName',
       type        : 'input'
@@ -93,17 +99,32 @@ export class ListComponent implements OnInit {
     }, 
   ]
   
+  paramsDefault = {};
   checkedItems: any[] = [];
 
   showDrawer: boolean;
   drawerTitle: string;
 
   constructor(
+    private reoute: ActivatedRoute,
     private message: NzMessageService,
     private resolver: ComponentFactoryResolver
   ) { }
 
+  private getQueryParams;
   ngOnInit() {
+    this.reoute.queryParamMap.subscribe((res: any) => {
+      if (res.params.memberId) {
+        this.getQueryParams = res.params;
+        setTimeout(() => {
+          this.listPage.eaQuery._queryForm.patchValue({ memberId: res.params.memberId });
+        });
+      }
+    })
+  }
+
+  requestReady(e) {
+    this.getQueryParams && this.listPage.eaTable.request(this.getQueryParams);
   }
 
   operation(type) {

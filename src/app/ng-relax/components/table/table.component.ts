@@ -86,6 +86,7 @@ export class TableComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'),
       withCredentials: true
     }).subscribe(res => {
+      this._pageInfo.loading = false;
       if (res.code == 1000) {
         this.dataSet = res.result.list;
         this._pageInfo.pageNum = res.result.pageNum;
@@ -105,7 +106,6 @@ export class TableComponent implements OnInit {
       } else {
         this.message.warning(res.info);
       }
-      this._pageInfo.loading = false;
     }, err => {
       this._pageInfo.loading = false;
     });

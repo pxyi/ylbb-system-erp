@@ -1,14 +1,21 @@
-<ng-container *ngIf="type === 'default'">
-  <ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns"></ea-query>
-</ng-container>
-<ng-container *ngIf="type === 'simpify'">
-  <ea-query-simp #EaQuery [node]="queryNode" [title]="title" (onSubmit)="EaTable.request($event)"></ea-query-simp>
-</ng-container>
+<ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns"></ea-query>
 
 <div class="ea-btns">
   <ng-container *ngTemplateOutlet="EaBtns"></ng-container>
 </div>
 
-<ea-table #EaTable [thead]="tableThead" [paramsDefault]="paramsDefault" [EaTableTbodyTr]="EaTableTbodyTr" [EaTableTbodyExpand]="EaTableTbodyExpand" [checked]="checked" [isRadio]="isRadio" [checkedItems]="checkedItems" [checkedKey]="checkedKey" (checkedItems)="checkedChange($event)"
-  [allowSpace]="allowSpace" [url]="url">
+<ea-table 
+  #EaTable
+  [url]="url"
+  [thead]="tableThead" 
+  [allowSpace]="allowSpace"
+  [paramsDefault]="paramsDefault" 
+  [EaTableTbodyTr]="EaTableTbodyTr" 
+  [EaTableTbodyExpand]="EaTableTbodyExpand" 
+  [checked]="checked" 
+  [isRadio]="isRadio" 
+  [checkedItems]="checkedItems" 
+  [checkedKey]="checkedKey" 
+  (ready)="requestReady($event)"
+  (checkedItems)="checkedChange($event)">
 </ea-table>
