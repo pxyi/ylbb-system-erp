@@ -1,3 +1,20 @@
-<p>
-  welfare works!
-</p>
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/customer/consumeRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '会员姓名', '订单号', '会员小名', '联系电话', '商品名称', '兑换时间', '已使用卡次', '消耗卡次' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.orderNumber }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.productName }}</td>
+      <td>{{ data.reserveTime }}</td>
+      <td>{{ data.cardTime }}</td>
+      <td>{{ data.cardCount }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

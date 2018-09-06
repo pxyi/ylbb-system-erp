@@ -1,3 +1,20 @@
-<p>
-  curriculum works!
-</p>
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/customer/consumeRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '会员卡号', '会员姓名', '会员小名', '服务老师', '记录时间', '课程类型', '课程说明', '操作' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.memberNick }}</td>
+      <td>{{ data.consumeRecord.swimTeacherName }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.type }}</td>
+      <td>{{ data.remarks }}</td>
+      <td><a>编辑</a></td>
+    </ng-template>
+  </ea-list-page>
+</div>

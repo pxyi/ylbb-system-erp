@@ -1,3 +1,25 @@
-<p>
-  satisfaction works!
-</p>
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/customer/consumeRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '消费ID', '会员卡号', '会员姓名', '消费金额', '消费时间', '消费商品', '服务泳师', '操作人', '第几次', '修改时间', '改前', '改后', '修改原因' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.consumeRecordId }}</td>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.consumption }}</td>
+      <td>{{ data.consumeDate }}</td>
+      <td>{{ data.commodityName }}</td>
+      <td>{{ data.swimTeacherName }}</td>
+      <td>{{ data.operatorName }}</td>
+      <td>{{ data.times }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.originalSatisfaction }}</td>
+      <td>{{ data.satisfaction }}</td>
+      <td>{{ data.remarks }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

@@ -42,7 +42,8 @@ export class ListComponent implements OnInit {
     {
       label       : '会员小名',
       key         : 'nick',
-      type        : 'input'
+      type        : 'input',
+      isHide      : true
     },
     {
       label       : '服务泳师',

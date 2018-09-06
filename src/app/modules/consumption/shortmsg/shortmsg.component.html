@@ -1,3 +1,19 @@
-<p>
-  shortmsg works!
-</p>
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/customer/consumeRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '卡号','姓名','发送人','发送时间','手机号','发送内容','备注' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.consumeRecordName }}</td>
+      <td>{{ data.operatorName }}</td>
+      <td>{{ data.sendTime }}</td>
+      <td>{{ data.mobile }}</td>
+      <td>{{ data.content }}</td>
+      <td>{{ data.comment }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>
