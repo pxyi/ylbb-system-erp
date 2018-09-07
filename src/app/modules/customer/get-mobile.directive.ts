@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Directive, Input, HostListener, ElementRef } from '@angular/core';
 
@@ -13,7 +13,7 @@ export class GetMobileDirective {
 
   constructor(
     private el: ElementRef,
-    private http: HttpClient,
+    private http: HttpService,
     private message: NzMessageService
   ) { }
 
@@ -22,7 +22,7 @@ export class GetMobileDirective {
     if (!this.phoneNumber && !this._requestLoading) {
       this._requestLoading = true;
       this.el.nativeElement.innerHTML = `<i class="anticon anticon-loading anticon-spin" ></i>`;
-      this.http.post<any>('/common/lookParentTelphone', { paramJson: JSON.stringify({ id: this._id.toString() }) }).subscribe(res => {
+      this.http.post('/common/lookParentTelphone', { paramJson: JSON.stringify({ id: this._id.toString() }) }, false).then(res => {
         if (res.code == 1000) {
           this.phoneNumber = res.result.mobilePhone;
           this.el.nativeElement.innerText = res.result.mobilePhone;

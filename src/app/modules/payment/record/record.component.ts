@@ -57,7 +57,12 @@ export class RecordComponent implements OnInit {
       this.sign = res;
       this.request();
       this.http.post<YlbbResponse>(`${this.domain}/product/name/all/${JSON.stringify(this.sign)}`, {}).subscribe(category => {
-        category.code == 1000 && this.eaQuery.patchValue('productId', { options: category.result });
+        this.eaQuery._node.map(res => {
+          if (res.key === 'productId') {
+            res.options = category.result;
+          }
+          return res;
+        })
       })
     });
   }
