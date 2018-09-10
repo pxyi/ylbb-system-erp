@@ -4,7 +4,7 @@
       <nz-form-item>
         <nz-form-label>姓名</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="name">
+          <input nz-input formControlName="memberName">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -12,7 +12,7 @@
       <nz-form-item>
         <nz-form-label>小名</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="nick">
+          <input nz-input formControlName="memberNick">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -40,7 +40,7 @@
       <nz-form-item>
         <nz-form-label>消费卡</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请选消费卡" formControlName="cardCode">
+          <input nz-input formControlName="cardCode">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -66,7 +66,7 @@
       <nz-form-item>
         <nz-form-label>服务泳师</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="swimTeacherName">
+          <input nz-input formControlName="swimTeacher">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -76,18 +76,61 @@
       <nz-form-item>
         <nz-form-label>消费时间</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="birthday">
+          <input nz-input formControlName="consumeDate">
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>新满意度</nz-form-label>
+        <nz-form-label>月龄</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="newSatisfaction" nzPlaceHolder="请选择新满意度">
-            <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
-            <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
-          </nz-select>
+          <input nz-input formControlName="monthAge">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>游泳时长</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="swimDuration">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>泳圈型号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="swimName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>身高</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="swimDuration">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>体重</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="weight">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>体温</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="swimDuration">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -95,7 +138,7 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">
       <nz-form-item>
-        <nz-form-label>备注</nz-form-label>
+        <nz-form-label nzRequired>撤销原因</nz-form-label>
         <nz-form-control>
           <textarea nz-input placeholder="请输入备注" formControlName="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
         </nz-form-control>

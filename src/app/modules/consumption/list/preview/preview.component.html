@@ -2,18 +2,17 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="name">姓名</nz-form-label>
+        <nz-form-label>姓名</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入宝宝姓名" formControlName="name" id="name">
-          <nz-form-explain *ngIf="baseFormGroup.get('name').dirty && baseFormGroup.get('name').hasError('required')">请输入宝宝姓名！</nz-form-explain>
+          <input nz-input placeholder="请输入宝宝姓名" formControlName="memberName">
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzFor="nick">小名</nz-form-label>
+        <nz-form-label>小名</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入宝宝小名" formControlName="nick" id="nick">
+          <input nz-input placeholder="请输入宝宝小名" formControlName="memberNick">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -21,22 +20,20 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>性别</nz-form-label>
+        <nz-form-label>性别</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="sex" nzPlaceHolder="请选择宝宝性别">
             <nz-option nzLabel="男" nzValue="男"></nz-option>
             <nz-option nzLabel="女" nzValue="女"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="baseFormGroup.get('sex').dirty && baseFormGroup.get('sex').hasError('required')">请选择宝宝性别！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="monthAge">宝贝月龄</nz-form-label>
+        <nz-form-label>宝贝月龄</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入宝贝月龄" formControlName="monthAge" id="monthAge">
-          <nz-form-explain *ngIf="baseFormGroup.get('monthAge').dirty && baseFormGroup.get('monthAge').hasError('required')">请输入宝贝月龄！</nz-form-explain>
+          <input nz-input placeholder="请输入宝贝月龄" formControlName="monthAge">
         </nz-form-control>
       </nz-form-item>
     </div>

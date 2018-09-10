@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-preview',
@@ -9,6 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreviewComponent implements OnInit {
 
+  @Input() id;
+
+  @Input() recordInfo;
+
   baseFormGroup: FormGroup;
   timesCountGroup: FormGroup;
   singleTimeGroup: FormGroup;
@@ -16,12 +20,14 @@ export class PreviewComponent implements OnInit {
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder()
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.baseFormGroup = this.fb.group({
-      name: [{ value: null, disabled: true }, [Validators.required]],
-      nick: [{ value: null, disabled: true }],
-      sex: [{ value: null, disabled: true }],
-      monthAge: [{ value: null, disabled: true }],
+      memberName: [{ value: this.recordInfo.memberName, disabled: true }],
+      memberNick: [{ value: this.recordInfo.memberNick, disabled: true }],
+      sex: [{ value: this.recordInfo.sex, disabled: true }],
+      monthAge: [{ value: this.recordInfo.monthAge, disabled: true }],
       comment: []
     });
     this.timesCountGroup = this.fb.group({
@@ -43,9 +49,6 @@ export class PreviewComponent implements OnInit {
       satisfaction: [{ value: null, disabled: true }],
       consumeDate: [{ value: null, disabled: true }]
     })
-  }
-
-  ngOnInit() {
   }
 
 }

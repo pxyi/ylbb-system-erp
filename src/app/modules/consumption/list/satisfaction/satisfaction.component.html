@@ -4,7 +4,7 @@
       <nz-form-item>
         <nz-form-label>姓名</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="name">
+          <input nz-input formControlName="memberName">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -12,7 +12,7 @@
       <nz-form-item>
         <nz-form-label>小名</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="nick">
+          <input nz-input formControlName="memberNick">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -58,7 +58,7 @@
       <nz-form-item>
         <nz-form-label>顾客满意度</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="satisfaction">
+          <input nz-input formControlName="oldSatisfaction">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -66,7 +66,7 @@
       <nz-form-item>
         <nz-form-label>服务泳师</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="swimTeacherName">
+          <input nz-input formControlName="swimTeacher">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -76,7 +76,7 @@
       <nz-form-item>
         <nz-form-label>消费时间</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="birthday">
+          <input nz-input formControlName="consumeDate">
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -84,9 +84,11 @@
       <nz-form-item>
         <nz-form-label nzRequired>新满意度</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="newSatisfaction" nzPlaceHolder="请选择新满意度">
-            <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
-            <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
+          <nz-select formControlName="satisfaction" nzPlaceHolder="请选择新满意度">
+            <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+            <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+            <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+            <nz-option nzLabel="不好" nzValue="不好"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>

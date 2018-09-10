@@ -49,7 +49,7 @@ export class ListComponent implements OnInit {
       label       : '服务泳师',
       key         : 'teacherId',
       type        : 'select',
-      optionsUrl  : '/tongka/teacherList'
+      optionsUrl  : '/member/getStoreTeachers'
     },
     {
       label       : '婴儿类型',
@@ -62,14 +62,14 @@ export class ListComponent implements OnInit {
       label       : '消费商品',
       key         : 'commodityId',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
+      optionsUrl  : '/commodity/getStoreCommodities',
       isHide      : true 
     },
     {
       label       : '业务类型',
       key         : 'categoryId',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
+      optionsUrl  : '/cardBusinessManagement/getStoreCardTypeCategores',
       isHide      : true
     },
     {
@@ -83,7 +83,7 @@ export class ListComponent implements OnInit {
       label       : '满意度',
       key         : 'satisfaction',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
+      options     : [ { name: '满意', id: '满意' }, { name: '表扬', id: '表扬' }, { name: '一般', id: '一般' }, { name: '不好', id: '不好' } ],
       isHide      : true
     },
     {
@@ -134,7 +134,7 @@ export class ListComponent implements OnInit {
     private reoute: ActivatedRoute
   ) { 
     this.paramsDefault = {
-      startDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
+      startDate: this.format.transform(new Date('2017-08-08'), 'yyyy-MM-dd'),
       endDate: this.format.transform(new Date(), 'yyyy-MM-dd')
     }
   }
@@ -167,13 +167,20 @@ export class ListComponent implements OnInit {
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(component);
       this.componentRef = this.container.createComponent(factory);
       this.componentRef.instance.id = this.checkedItems[0];
-      // this.componentRef.instance.complate.subscribe(event => console.log(event));
+      this.listPage.eaTable.dataSet.map(res => res.id === this.checkedItems[0] && (this.componentRef.instance.recordInfo = res) );
     }
   }
 
-
+  saveLoading: boolean;
   saveDrawer() {
-    this.componentRef.instance.save()
+    this.saveLoading = true;
+    this.componentRef.instance.save().then(res => {
+      this.saveLoading = false;
+      if (res) {
+        this.showDrawer = false;
+        this.listPage.eaTable._request();
+      }
+    });
   }
 
 
