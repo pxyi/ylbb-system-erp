@@ -83,8 +83,7 @@ export class TableComponent implements OnInit {
     this._pageInfo.loading = true;
     let params = Object.assign({ paramJson: JSON.stringify(Object.assign(JSON.parse(JSON.stringify(this.paramsDefault)), this._params)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
     this.http.post<any>(this.url, serialize(params), {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'),
-      withCredentials: true
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
       this._pageInfo.loading = false;
       if (res.code == 1000) {

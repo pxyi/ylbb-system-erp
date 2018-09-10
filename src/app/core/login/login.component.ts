@@ -93,8 +93,7 @@ export class LoginComponent implements OnInit {
       params.password = this._encrypt(params.password);
     }
     this.http.post<any>('/auth/login', serialize(params), {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'),
-      withCredentials: true
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
       this.loginLoading = false;
       if (res.code == 1000) {
