@@ -3,7 +3,7 @@
     #listPage
     url="/memberCard/list"
     [queryNode]="queryNode"
-    [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '通卡次数(剩余)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期', '备注']"
+    [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '通卡次数总(剩余)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期', '备注']"
     [checked]="true"
     [isRadio]="true"
     [(checkedItems)]="checkedItems"
@@ -41,7 +41,7 @@
     <td>{{ data.babyType }}</td>
     <td>{{ data.allTimes }}（{{ data.times }}/{{ data.freeTimes }}）</td>
     <td>{{ data.remainTimes + data.remainFreeTimes }}（{{ data.remainTimes }}/{{ data.remainFreeTimes }}）</td>
-    <td>{{ data.tongTimes }}</td>
+    <td>{{ data.tongTimes }}（{{ data.tongTimes - data.usedTongTimes }}）</td>
     <td>{{ data.balance | currency: '￥' }}</td>
     <td>{{ data.effectDate }}</td>
     <td>{{ data.expireDate }}</td>

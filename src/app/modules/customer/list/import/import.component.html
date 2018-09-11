@@ -11,3 +11,25 @@
   <p class="ant-upload-text">点击或拖动文件到这个区域上传</p>
   <p class="ant-upload-hint">支持单个或批量上传，严禁上传垃圾数据或其他文件</p>
 </nz-upload>
+
+<nz-table 
+  *ngIf="uploadResult.length"
+  #smallTable 
+  [nzTitle]="uploadInfo"
+  nzSize="small" 
+  [nzData]='uploadResult'>
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>手机号</th>
+      <th>失败原因</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of smallTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.mobile }}</td>
+      <td>{{ data.reason }}</td>
+    </tr>
+  </tbody>
+</nz-table>

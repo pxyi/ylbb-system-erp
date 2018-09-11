@@ -13,14 +13,14 @@
       <td>{{ data.orgExpireDate }}</td>
       <td>{{ data.newExpireDate }}</td>
       <td>{{ data.reopenDate }}</td>
-      <td>{{ data.orgTimesCount }}</td>
-      <td>{{ data.newTimesCount }}</td>
-      <td>{{ data.orgBalance }}</td>
-      <td>{{ data.newBalance }}</td>
+      <td>{{ data.orgTimes }}</td>
+      <td>{{ data.newTimes }}</td>
+      <td>{{ data.orgBalance | currency: '￥' }}</td>
+      <td>{{ data.newBalance | currency: '￥' }}</td>
       <td>{{ data.orgCardTypeName }}</td>
       <td>{{ data.newCardTypeName }}</td>
-      <td>{{ data.orgTurnCard }}</td>
-      <td>{{ data.newTurnCard }}</td>
+      <td>{{ data.orgTurnCard ? '有限制' : '无限制' }}</td>
+      <td>{{ data.newTurnCard ? '有限制' : '无限制' }}</td>
       <td>{{ data.orgTongTimes }}</td>
       <td>{{ data.newTongTimes }}</td>
       <td>{{ data.admin }}</td>

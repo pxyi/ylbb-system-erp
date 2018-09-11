@@ -18,7 +18,7 @@
       <td>{{ data.freeTimes }}</td>
       <td>{{ data.balance }}</td>
       <td>{{ data.openPoints }}</td>
-      <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '停卡' : '正常' }}</nz-tag></td>
+      <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '禁用' : '启用' }}</nz-tag></td>
       <td>{{ data.tong ? '是' : '否' }}</td>
       <td>
         <a (click)="updateCardType(data)">编辑</a>

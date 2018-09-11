@@ -33,6 +33,7 @@
           <input nz-input formControlName="changeTimes" id="changeTimes" placeholder="例如：增加5，减少-5">
           <nz-form-explain *ngIf="formGroup.get('changeTimes').dirty">
             <ng-container *ngIf="formGroup.get('changeTimes').hasError('pattern')">请输入正确的变更正价卡次！</ng-container>
+            <ng-container *ngIf="formGroup.get('changeTimes').hasError('minValue')">超出最小值限制（变更后正价卡次为负数）！</ng-container>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
@@ -54,6 +55,7 @@
           <input nz-input formControlName="changeFreeTimes" id="changeFreeTimes" placeholder="例如：增加5，减少-5">
           <nz-form-explain *ngIf="formGroup.get('changeFreeTimes').dirty">
             <ng-container *ngIf="formGroup.get('changeFreeTimes').hasError('pattern')">请输入正确的变更赠送卡次！</ng-container>
+            <ng-container *ngIf="formGroup.get('changeFreeTimes').hasError('minValue')">超出最小值限制（变更后赠送卡次为负数）！</ng-container>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
@@ -76,6 +78,7 @@
           <input nz-input formControlName="changeBalance" id="changeBalance" placeholder="例如：增加5，减少-5">
           <nz-form-explain *ngIf="formGroup.get('changeBalance').dirty">
             <ng-container *ngIf="formGroup.get('changeBalance').hasError('pattern')">请输入正确的变更金额！</ng-container>
+            <ng-container *ngIf="formGroup.get('changeBalance').hasError('minValue')">超出最小值限制（变更后金额为负数）！</ng-container>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
@@ -113,8 +116,7 @@
         <nz-form-label>变更卡类型</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="changeCardType" nzPlaceHolder="请选择变更卡类型">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
-            <nz-option nzLabel="女" nzValue="女"></nz-option>
+            <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
