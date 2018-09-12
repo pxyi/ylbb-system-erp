@@ -17,7 +17,7 @@
       <td>{{ data.cardName }}</td>
       <td>{{ data.memberName }}</td>
       <td>{{ data.memberNick }}</td>
-      <td>{{ data.isCrossed }}</td>
+      <td>{{ data.isCrossed == 1 ? '是' : '否' }}</td>
       <td>{{ data.consumption | currency: '￥' }}</td>
       <td>{{ data.consumeDate }}</td>
       <td>{{ data.usedTimes }}</td>

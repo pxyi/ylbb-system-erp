@@ -140,7 +140,8 @@
       <nz-form-item>
         <nz-form-label nzRequired>撤销原因</nz-form-label>
         <nz-form-control>
-          <textarea nz-input placeholder="请输入备注" formControlName="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+          <textarea nz-input placeholder="请输入撤销原因" formControlName="reason" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+          <nz-form-explain *ngIf="formGroup.get('reason').dirty && formGroup.get('reason').hasError('required')">请输入撤销原因！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

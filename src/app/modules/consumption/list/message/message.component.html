@@ -1,3 +1,75 @@
-<p>
-  message works!
-</p>
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="mobile">手机号码</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="mobile" placeholder="请输入手机号码" id="mobile"></textarea>
+          <nz-form-explain *ngIf="formGroup.get('mobile').dirty && formGroup.get('mobile').hasError('required')">请输入手机号码！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>发送类型</nz-form-label>
+        <nz-form-control>
+          <nz-checkbox-group formControlName="typeOptions" (ngModelChange)="changeCheckbox(checkOptions)"></nz-checkbox-group>
+          <nz-form-explain style="color: #f5222d;" *ngIf="formGroup.get('typeOptions').dirty && formGroup.get('type').hasError('required')">请选择发送类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>消息模板</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="template" nzPlaceHolder="请选择消息模板">
+            <nz-option nzLabel="国学" [nzValue]="1"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('template').dirty && formGroup.get('template').hasError('required')">请选择消息模板！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="memberName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员小名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="memberNick">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>标题</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="title" placeholder="请输入标题">
+          <nz-form-explain style="color: #f5222d;">* 标题发送给手机app，短信无标题内容！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="content">消息内容</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="content" placeholder="请输入消息内容" id="content" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+          <nz-form-explain *ngIf="formGroup.get('content').dirty && formGroup.get('content').hasError('required')">请输入消息内容！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

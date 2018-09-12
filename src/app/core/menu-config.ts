@@ -49,7 +49,7 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
-        title : '卡片变更日志',
+        title : '卡变更日志',
         key   : '/home/membercard/changelog',
         isLeaf: true
       },
