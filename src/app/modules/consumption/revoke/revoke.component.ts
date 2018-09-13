@@ -29,7 +29,7 @@ export class RevokeComponent implements OnInit {
       label       : '消费商品',
       key         : 'commodityId',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ]
+      optionsUrl  : '/commodity/getStoreCommodities'
     },
     {
       label       : '服务泳师',
