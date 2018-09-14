@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'changelog',
-    data: { title: '卡片变更日志' },
+    data: { title: '卡变更日志' },
     component: ChangeLogComponent,
     canActivate: [ AuthGuardService ]
   },

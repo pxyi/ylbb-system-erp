@@ -6,6 +6,7 @@
         <nz-form-control>
           <input nz-input formControlName="cardCode" id="cardCode" placeholder="请输入卡号">
           <nz-form-explain *ngIf="formGroup.get('cardCode').dirty && formGroup.get('cardCode').hasError('required')">请输入卡号！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('cardCode').dirty && formGroup.get('cardCode').hasError('required')">请输入30位一下数字！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

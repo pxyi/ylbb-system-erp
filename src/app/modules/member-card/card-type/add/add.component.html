@@ -38,7 +38,7 @@
         <nz-form-label nzRequired>计费方式</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="feeType" nzPlaceHolder="请选择计费方式">
-            <nz-option nzLabel="按此" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="按次" [nzValue]="0"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('feeType').dirty && formGroup.get('feeType').hasError('required')">请选择计费方式！</nz-form-explain>
         </nz-form-control>

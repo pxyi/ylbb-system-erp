@@ -6,6 +6,7 @@
   [ngClass]="[ allowSpace ? 'break' : 'nowrap' ]"
   [nzData]="dataSet"
   [nzSize]="size"
+  [nzShowTotal]="tableTotalInfo"
   [nzShowPagination]="showPage"
   [nzLoading]="_pageInfo.loading"
   [nzTotal]="_pageInfo.totalPage"
@@ -52,3 +53,6 @@
     </ng-template>
   </tbody>
 </nz-table>
+<ng-template #tableTotalInfo let-range="range" let-total>
+  从 {{ range[0] }} 到 {{ range[1]}} 条记录 / 共 {{ total }} 条记录
+</ng-template>

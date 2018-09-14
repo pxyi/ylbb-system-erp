@@ -1,7 +1,7 @@
 <div class="container">
   <ea-list-page 
     #listPage
-    url="/customer/consumeRecordList"
+    url="/memberLesson/getMemberLessonList"
     [allowSpace]="false"
     [queryNode]="queryNode"
     [tableThead]="[ '会员卡号', '会员姓名', '会员小名', '服务老师', '记录时间', '课程类型', '课程说明', '操作' ]"
@@ -10,11 +10,91 @@
       <td>{{ data.cardCode }}</td>
       <td>{{ data.memberName }}</td>
       <td>{{ data.memberNick }}</td>
-      <td>{{ data.consumeRecord.swimTeacherName }}</td>
+      <td>{{ data.swimTeacher }}</td>
       <td>{{ data.createTime }}</td>
       <td>{{ data.type }}</td>
       <td>{{ data.remarks }}</td>
-      <td><a>编辑</a></td>
+      <td>
+        <a (click)="formGroup.patchValue(data); showDrawer = true;">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确认要删除吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
     </ng-template>
   </ea-list-page>
 </div>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }" [nzWidth]="720" [nzVisible]="showDrawer" nzTitle="会员课程信息" (nzOnClose)="showDrawer = false">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>会员卡号</nz-form-label>
+          <nz-form-control>
+            <input nz-input readonly formControlName="cardCode">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>会员姓名</nz-form-label>
+          <nz-form-control>
+            <input nz-input readonly formControlName="memberName">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>会员小名</nz-form-label>
+          <nz-form-control>
+            <input nz-input readonly formControlName="memberNick">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>服务老师</nz-form-label>
+          <nz-form-control>
+            <input nz-input readonly formControlName="swimTeacher">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>课程类型</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="type">
+              <nz-option [nzValue]="1" nzLabel="国学"></nz-option>
+              <nz-option [nzValue]="2" nzLabel="双语"></nz-option>
+              <nz-option [nzValue]="3" nzLabel="数学"></nz-option>
+              <nz-option [nzValue]="4" nzLabel="儿歌"></nz-option>
+              <nz-option [nzValue]="5" nzLabel="颜色"></nz-option>
+              <nz-option [nzValue]="6" nzLabel="认识"></nz-option>
+              <nz-option [nzValue]="7" nzLabel="英语对话"></nz-option>
+              <nz-option [nzValue]="8" nzLabel="智力开发游戏"></nz-option>
+              <nz-option [nzValue]="9" nzLabel="其他"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label>课程说明</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input placeholder="请输入课程说明" formControlName="remarks" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button type="button" (click)="showDrawer = false" class="ant-btn" style="margin-right: 8px;"><span>取消</span></button>
+    <button nz-button [nzLoading]="updateLoading" (click)="enterUpdate()" class="ant-btn ant-btn-primary"><span>确定</span></button>
+  </div>
+</nz-drawer>

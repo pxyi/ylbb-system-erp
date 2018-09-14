@@ -36,9 +36,9 @@ export class UpdateSatisfactionComponent implements OnInit {
       consumeDate: [{ value: this.recordInfo.consumeDate, disabled: true }],
       comment: [{ value: this.recordInfo.comment, disabled: true }],
       satisfaction: [this.recordInfo.satisfaction]
-    })
+    });
   }
 
-  @DrawerSave('/customer/consumeRecordList') save: () => Promise<boolean>;
+  @DrawerSave('/customer/modifySat') save: () => Promise<boolean>;
 
 }

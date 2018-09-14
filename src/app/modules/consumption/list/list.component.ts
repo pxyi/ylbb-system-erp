@@ -90,8 +90,7 @@ export class ListComponent implements OnInit {
       label       : '消费日期',
       key         : 'date',
       valueKey    : ['startDate', 'endDate'],
-      type        : 'rangepicker',
-      default     : [new Date(), new Date()]
+      type        : 'rangepicker'
     }
   ]
 
@@ -123,20 +122,12 @@ export class ListComponent implements OnInit {
   showDrawer: boolean;
   drawerTitle: string;
 
-  paramsDefault;
-
   constructor(
     private http: HttpService,
     private message: NzMessageService,
     private resolver: ComponentFactoryResolver,
-    private router: Router,
-    private format: DatePipe,
     private reoute: ActivatedRoute
   ) { 
-    this.paramsDefault = {
-      startDate: this.format.transform(new Date('2017-08-08'), 'yyyy-MM-dd'),
-      endDate: this.format.transform(new Date(), 'yyyy-MM-dd')
-    }
   }
 
   private getQueryParams;

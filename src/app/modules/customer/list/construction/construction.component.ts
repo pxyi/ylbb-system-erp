@@ -29,7 +29,7 @@ export class ConstructionComponent implements OnInit {
   ngOnInit() {
     let formControls: any = {
       memberId: [this.id],
-      cardCode: [, [Validators.required]],
+      cardCode: [, [Validators.required, Validators.maxLength(30)]],
       cardTypeId: [, [Validators.required]],
       memberName: [this.userInfo.name],
       times: [],
