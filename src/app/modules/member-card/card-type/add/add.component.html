@@ -48,10 +48,10 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="name">正价次数</nz-form-label>
+        <nz-form-label nzRequired nzFor="times">正价次数</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="name" id="name" placeholder="请输入正价次数">
-          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入正价次数！</nz-form-explain>
+          <input nz-input formControlName="times" id="times" placeholder="请输入正价次数">
+          <nz-form-explain *ngIf="formGroup.get('times').dirty && formGroup.get('times').hasError('required')">请输入正价次数！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
