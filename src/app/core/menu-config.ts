@@ -198,11 +198,6 @@ export const MenuConfig = [
         title : '社区管理',
         key   : '/home/configuration/community',
         isLeaf: true
-      },
-      {
-        title: '知识汇总',
-        key: '/home/configuration/knowledge',
-        isLeaf: true
       }
     ]
   },

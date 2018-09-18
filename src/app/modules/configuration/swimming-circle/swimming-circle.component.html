@@ -1,3 +1,23 @@
-<p>
-  swimming-circle works!
-</p>
+<div class="container">
+  <ea-query-simp [node]="[{label: '泳圈型号名称', key: 'name', type: 'input'}]" title="泳圈型号管理" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="addSwimming()"><i class="anticon anticon-plus"></i>新增泳圈型号</button>
+
+  <ea-table 
+    #table 
+    url="/cardTypeManagement/list" 
+    [allowSpace]="false" 
+    [thead]="['序号','泳圈型号名称','状态','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.categoryName }}</td>
+      <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '禁用' : '启用' }}</nz-tag></td>
+      <td>
+        <a (click)="updateSwimming(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="deleteSwimming(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>

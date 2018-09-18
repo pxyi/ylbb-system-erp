@@ -1,4 +1,3 @@
-import { KnowledgeComponent } from './knowledge/knowledge.component';
 import { CommunityComponent } from './community/community.component';
 import { SwimmingCircleComponent } from './swimming-circle/swimming-circle.component';
 import { NgModule } from '@angular/core';
@@ -23,12 +22,6 @@ const routes: Routes = [
     path: 'community',
     data: { title: '社区管理' },
     component: CommunityComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'knowledge',
-    data: { title: '知识汇总' },
-    component: KnowledgeComponent,
     canActivate: [ AuthGuardService ]
   }
 ];

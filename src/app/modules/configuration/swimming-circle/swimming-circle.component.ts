@@ -12,4 +12,16 @@ export class SwimmingCircleComponent implements OnInit {
   ngOnInit() {
   }
 
+  addSwimming() {
+    
+  }
+
+  updateSwimming(data) {
+
+  }
+
+  deleteSwimming(id) {
+    
+  }
+
 }

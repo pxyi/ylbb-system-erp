@@ -12,4 +12,16 @@ export class CommunityComponent implements OnInit {
   ngOnInit() {
   }
 
+  addCommunity() {
+
+  }
+
+  updateCommunity (data) {
+
+  }
+
+  deleteCommunity(id) {
+
+  }
+
 }
