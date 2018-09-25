@@ -80,6 +80,12 @@ const routes: Routes = [
         loadChildren: 'src/app/modules/member-card/member-card.module#MemberCardModule'
       },
       {
+        path: 'appointment',
+        data: { title: '预约管理' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/appointment/appointment.module#AppointmentModule'
+      },
+      {
         path: 'consumption',
         data: { title: '消费管理' },
         canLoad: [ AuthGuardService ],

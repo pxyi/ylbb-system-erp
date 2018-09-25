@@ -1,0 +1,139 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" placeholder="未记录姓名">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>小名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="nick" placeholder="未记录小名">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>性别</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="sex" placeholder="未记录性别">
+            <nz-option nzValue="男" nzLabel="男"></nz-option>
+            <nz-option nzValue="女" nzLabel="女"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>月龄</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="monthAge" name="monthAge" placeholder="未记录月龄">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>婴儿类型</nz-form-label>
+        <nz-form-control>
+          <nz-select  formControlName="babyType" placeholder="未记录婴儿类型">
+            <nz-option nzValue="婴儿" nzLabel="婴儿"></nz-option>
+            <nz-option nzValue="幼儿" nzLabel="幼儿"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>所属社区</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="communityId" placeholder="未记录所属社区">
+            <nz-option *ngFor="let option of communityList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员卡</nz-form-label>
+        <nz-form-control>
+          <input nz-input disabled placeholder="该会员无会员卡" *ngIf="!memberCardList.length">
+          <nz-select formControlName="cardId" *ngIf="memberCardList.length">
+            <nz-option *ngFor="let option of memberCardList" [nzValue]="option.id" [nzLabel]="option.ctName"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!-- <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>特殊标记</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="asssss" name="asssss" placeholder="未记录特殊标记">
+        </nz-form-control>
+      </nz-form-item>
+    </div> -->
+  </div>
+  <!-- <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker [nzDisabled]="appointmentInfo.reserveStatus != 0" nzFormat="yyyy-MM-dd" formControlName="reserveDate" name="reserveDate"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约时间</nz-form-label>
+        <nz-form-control>
+          <nz-time-picker [nzDisabled]="appointmentInfo.reserveStatus != 0" [nzDisabledHours]="disabledHours" [nzMinuteStep]="15" nzFormat="HH:mm" formControlName="reserveHM" name="reserveHM" (ngModelChange)="reserveChange($event)"></nz-time-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div> -->
+  <!-- <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约泳师</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="teacherId" placeholder="未记录预约泳师">
+            <nz-option *ngFor="let option of teacherList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>泳圈型号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="ringId" placeholder="未记录泳圈型号">
+          <nz-select formControlName="teacherId" placeholder="未记录预约泳师">
+            <nz-option *ngFor="let option of swimRingList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div> -->
+  <!-- <div nz-row nzGutter="12">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="comment" name="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }" placeholder="未记录备注"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div> -->
+</form>

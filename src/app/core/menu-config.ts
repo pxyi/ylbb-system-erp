@@ -71,6 +71,18 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '预约管理',
+    key   : '/home/appointment',
+    icon  : 'anticon-red-envelope',
+    children : [
+      {
+        title : '预约列表',
+        key   : '/home/appointment/list',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '消费管理',
     key   : '/home/consumption',
     icon  : 'anticon-red-envelope',
