@@ -4,6 +4,9 @@
   nz-date-picker {
     width: 100%;
   }
+  .ant-tabs-nav .ant-tabs-tab-disabled .anticon-question-circle {
+    color: rgba(0,0,0,.65);
+  }
 }
 .footer {
   position: absolute;

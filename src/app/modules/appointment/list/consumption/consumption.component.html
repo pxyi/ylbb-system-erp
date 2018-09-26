@@ -1,0 +1,255 @@
+<form nz-form [formGroup]="baseFormGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="name">姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入宝宝姓名" formControlName="name" id="name">
+          <nz-form-explain *ngIf="baseFormGroup.get('name').dirty && baseFormGroup.get('name').hasError('required')">请输入宝宝姓名！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="nick">小名</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入宝宝小名" formControlName="nick" id="nick">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>性别</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="sex" nzPlaceHolder="请选择宝宝性别">
+            <nz-option nzLabel="男" nzValue="男"></nz-option>
+            <nz-option nzLabel="女" nzValue="女"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="baseFormGroup.get('sex').dirty && baseFormGroup.get('sex').hasError('required')">请选择宝宝性别！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="monthAge">宝贝月龄</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入宝贝月龄" formControlName="monthAge" id="monthAge">
+          <nz-form-explain *ngIf="baseFormGroup.get('monthAge').dirty && baseFormGroup.get('monthAge').hasError('required')">请输入宝贝月龄！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<nz-tabset [(nzSelectedIndex)]="consumptionType">
+  <nz-tab nzTitle="计次服务" [nzDisabled]="!appointmentInfo.cardCode">
+    <form nz-form [formGroup]="timesCountGroup">
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费卡</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="cardId" nzPlaceHolder="请选择消费卡">
+                <nz-option *ngFor="let option of memberCardList" [nzLabel]="option.ctName" [nzValue]="option.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('cardId').dirty && timesCountGroup.get('cardId').hasError('required')">请选择消费卡！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>服务泳师</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
+                <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('swimTeacherId').dirty && timesCountGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费服务</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费服务">
+                <nz-option *ngFor="let option of commoditieList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('commodityId').dirty && timesCountGroup.get('commodityId').hasError('required')">请选择消费服务！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费金额</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="consumption" placeholder="请选择消费服务">
+              <nz-form-explain *ngIf="timesCountGroup.get('consumption').dirty && timesCountGroup.get('consumption').hasError('required')">请输入消费金额！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>泳圈型号</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="ringId" nzPlaceHolder="请选择泳圈型号">
+                <nz-option *ngFor="let option of swimRingList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>游泳时长</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="分钟">
+                <input nz-input formControlName="swimDuration" placeholder="请输入游泳时长">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>身高</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="厘米">
+                <input nz-input formControlName="temperaturePost" placeholder="请输入身高">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>体重</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="公斤">
+                <input nz-input formControlName="weight" placeholder="请输入体重">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>体温</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="°C">
+                <input nz-input formControlName="temperature" placeholder="请输入体温">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>顾客满意度</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
+                <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+                <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+                <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+                <nz-option nzLabel="不好" nzValue="不好"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="consumeDate" readonly placeholder="请输入消费时间">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </nz-tab>
+  <nz-tab nzTitle="单次消费">
+    <form nz-form [formGroup]="singleTimeGroup">
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费商品</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费商品">
+                <nz-option *ngFor="let option of commodityList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="singleTimeGroup.get('commodityId').dirty && singleTimeGroup.get('commodityId').hasError('required')">请选择消费商品！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费金额</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="consumption" placeholder="请输入消费金额">
+              <nz-form-explain *ngIf="singleTimeGroup.get('consumption').dirty && singleTimeGroup.get('consumption').hasError('required')">请输入消费金额！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>服务泳师</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
+                <nz-option *ngFor="let option of teacherList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="singleTimeGroup.get('swimTeacherId').dirty && singleTimeGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>顾客满意度</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
+                <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+                <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+                <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+                <nz-option nzLabel="不好" nzValue="不好"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="consumeDate" readonly placeholder="请输入消费时间">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </nz-tab>
+</nz-tabset>
+<form nz-form [formGroup]="baseFormGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="comment" placeholder="请输入备注" id="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="footer" *ngIf="appointmentInfo.reserveStatus == 0">
+  <button nz-button (click)="closeDrawer()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
+</div>

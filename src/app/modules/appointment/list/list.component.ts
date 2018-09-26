@@ -1,6 +1,8 @@
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { PreviewComponent } from './preview/preview.component';
 import { HttpService } from './../../../ng-relax/services/http.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { NzDrawerService } from 'ng-zorro-antd';
 
@@ -10,6 +12,8 @@ import { NzDrawerService } from 'ng-zorro-antd';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+
+  @ViewChild('listPage') listPage: ListPageComponent;
 
   queryNode: QueryNode[] = [
     {
@@ -85,7 +89,6 @@ export class ListComponent implements OnInit {
     },
   ]
 
-
   constructor(
     private http: HttpService,
     private drawer: NzDrawerService
@@ -94,15 +97,43 @@ export class ListComponent implements OnInit {
   ngOnInit() {
   }
 
+  /* ------------------- 查看预约 ------------------- */
   preview(appointmentInfo) {
     const drawerRef = this.drawer.create({
       nzTitle: '预约记录',
       nzContent: PreviewComponent,
       nzWidth: 720,
+      nzBodyStyle: {
+        'padding-bottom': '53px'
+      },
       nzContentParams: {
         appointmentInfo
       }
     });
+
+    drawerRef.afterClose.subscribe(res => res && this.listPage.eaTable._request());
+  }
+
+  /* ------------------- 结算预约 ------------------- */
+  consumption(appointmentInfo) {
+    const drawerRef = this.drawer.create({
+      nzTitle: '添加消费',
+      nzContent: ConsumptionComponent,
+      nzWidth: 720,
+      nzBodyStyle: {
+        'padding-bottom': '53px'
+      },
+      nzContentParams: {
+        appointmentInfo
+      }
+    });
+
+    drawerRef.afterClose.subscribe(res => res && this.listPage.eaTable._request());
+  }
+
+  /* ------------------- 撤销预约 ------------------- */
+  reserveCancel(id) {
+    this.http.post('/reserve/cancel', { id }).then(res => this.listPage.eaTable._request());
   }
 
 }

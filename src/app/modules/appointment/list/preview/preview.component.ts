@@ -2,6 +2,7 @@ import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
+import { NzDrawerRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-preview',
@@ -21,6 +22,7 @@ export class PreviewComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
+    private drawerRef: NzDrawerRef<boolean>,
     private http: HttpService,
     private format: DatePipe
   ) { }
@@ -35,7 +37,7 @@ export class PreviewComponent implements OnInit {
     this.appointmentInfo.reserveHM = new Date(`${this.appointmentInfo.reserveDate} ${this.appointmentInfo.rHour}:${this.appointmentInfo.rMinute}`);
     if (this.appointmentInfo.reserveStatus == 0) {
       Object.keys(this.appointmentInfo).map(key => {
-        if (key == 'name' || key == 'monthAge' || key == 'communityId' || key == 'reserveDate' || key == 'rHour' || key == 'rMinute' || key == 'teacherId') {
+        if (key == 'name' || key == 'monthAge' || key == 'communityId' || key == 'reserveDate' || key == 'rHour' || key == 'rMinute' || key == 'swimTeacherId') {
           groups[key] = [this.appointmentInfo[key], [Validators.required]];
         } else {
           groups[key] = [this.appointmentInfo[key]];
@@ -46,8 +48,26 @@ export class PreviewComponent implements OnInit {
         groups[key] = [{ value: this.appointmentInfo[key], disabled: true}];
       })
     }
-    console.log(groups);
     this.formGroup = this.fb.group(groups);
+  }
+
+
+  saveLoading: boolean;
+  saveDrawer() {
+    if (this.formGroup.invalid) {
+      for (let i in this.formGroup.controls) {
+        this.formGroup.controls[i].markAsDirty();
+        this.formGroup.controls[i].updateValueAndValidity();
+      }
+    } else {
+      this.saveLoading = true;
+      this.http.post('/reserve/modity', { paramJson: JSON.stringify(this.formGroup.value) }).then(res => {
+        this.drawerRef.close(true);
+      })
+    }
+  }
+  closeDrawer() {
+    this.drawerRef.close(false);
   }
 
   reserveChange(e) {
