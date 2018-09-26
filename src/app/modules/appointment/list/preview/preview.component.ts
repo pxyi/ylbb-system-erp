@@ -51,9 +51,11 @@ export class PreviewComponent implements OnInit {
   }
 
   reserveChange(e) {
-    let newHour = this.format.transform(e, 'yyyy-MM-dd HH:mm').split(' ')[1];
-    this.appointmentInfo.rHour = newHour.split(':')[0];
-    this.appointmentInfo.rMinute = newHour.split(':')[1];
+    if (e) {
+      let newHour = this.format.transform(e, 'yyyy-MM-dd HH:mm').split(' ')[1];
+      this.appointmentInfo.rHour = newHour.split(':')[0];
+      this.appointmentInfo.rMinute = newHour.split(':')[1];
+    }
   }
 
   disabledHours(): number[] {

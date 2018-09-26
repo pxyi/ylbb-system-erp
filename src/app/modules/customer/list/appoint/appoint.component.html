@@ -121,11 +121,7 @@
         <nz-form-label>泳圈型号</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="ringId" nzPlaceHolder="请选择泳圈型号">
-            <nz-option nzLabel="1" [nzValue]="1"></nz-option>
-            <nz-option nzLabel="2" [nzValue]="2"></nz-option>
-            <nz-option nzLabel="3" [nzValue]="3"></nz-option>
-            <nz-option nzLabel="4" [nzValue]="4"></nz-option>
-            <nz-option nzLabel="5" [nzValue]="5"></nz-option>
+            <nz-option *ngFor="let option of swimRingList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
