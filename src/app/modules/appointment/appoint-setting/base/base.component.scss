@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .ant-btn-group {
+    width: 100%;
+  }
+  nz-table { 
+    white-space:nowrap;
+    .ant-table-body {
+      overflow-x: auto;
+    }
+  }
+}
+input {
+  width: 60px;
+}

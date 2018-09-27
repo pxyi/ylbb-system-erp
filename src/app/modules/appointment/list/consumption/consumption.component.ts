@@ -54,14 +54,14 @@ export class ConsumptionComponent implements OnInit {
       temperaturePost: [],
       weight: [],
       temperature: [],
-      satisfaction: [],
+      satisfaction: ['一般'],
       consumeDate: []
     });
     this.singleTimeGroup = this.fb.group({
       commodityId: [, [Validators.required]],
       consumption: [],
       swimTeacherId: [],
-      satisfaction: [],
+      satisfaction: ['一般'],
       consumeDate: []
     });
 

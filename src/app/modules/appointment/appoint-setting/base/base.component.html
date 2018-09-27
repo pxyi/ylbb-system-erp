@@ -1,0 +1,111 @@
+<ea-query-simp title="预约设置" [node]="[{ label: '时段', type: 'between', key: 'time', valueKey: ['startHour', 'endHour'], placeholder: ['请输入最小时段', '请输入最大时段'] }]"></ea-query-simp>
+
+<nz-button-group>
+  <button nz-button nzType="dashed" nzBlock [style.width]="'50%'" (click)="init()"><i class="anticon anticon-sync"></i>初始化日班表</button>
+  <button nz-button nzType="dashed" nzBlock [style.width]="'50%'" (click)="config()"><i class="anticon anticon-setting"></i>配置方案</button>
+</nz-button-group>
+
+<div style="margin: 24px 0; color: #f5222d;">*修改完下表的配置后,预约按日配置并不会立即生效,如果要立即生效,请按初始化日班表按钮!</div>
+
+<nz-table #basicTable nzBordered [nzShowPagination]="false" [nzPageSize]="999" [nzData]="dataSet" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th rowspan="2">时间</th>
+      <th colspan="2">星期一</th>
+      <th colspan="2">星期二</th>
+      <th colspan="2">星期三</th>
+      <th colspan="2">星期四</th>
+      <th colspan="2">星期五</th>
+      <th colspan="2">星期六</th>
+      <th colspan="2">星期日</th>
+      <th rowspan="2">操作</th>
+    </tr>
+    <tr>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.key }}</td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week2 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week2" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week2 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week2" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week3 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week3" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week3 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week3" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week4 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week4" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week4 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week4" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week5 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week5" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week5 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week5" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week6 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week6" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week6 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week6" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week7 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week7" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week7 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week7" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week1 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week1" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.chlid.week1 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.chlid.week1" nzSize="small">
+      </td>
+      <td>
+        <a (click)="update(data)">
+          <i class="anticon anticon-spin anticon-loading" *ngIf="data.loading"></i>
+          <ng-container *ngIf="!data.loading">
+            {{ data.edit ? '保存' : '编辑' }}
+          </ng-container>
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定删除此时段吗?" (nzOnConfirm)="delete(data.key)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

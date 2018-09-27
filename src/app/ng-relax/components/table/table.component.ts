@@ -14,6 +14,8 @@ export class TableComponent implements OnInit {
 
   @Input() url          : string;
 
+  @Input() title        : TemplateRef<any>;
+
   @Input() paramsDefault: any = {};
 
   @Input() checked      : boolean;

@@ -79,6 +79,16 @@ export const MenuConfig = [
         title : '预约列表',
         key   : '/home/appointment/list',
         isLeaf: true
+      },
+      {
+        title : '预约设置',
+        key   : '/home/appointment/setting',
+        isLeaf: true
+      },
+      {
+        title : '泳师设置',
+        key   : '/home/appointment/swimmer',
+        isLeaf: true
       }
     ]
   },
