@@ -27,9 +27,9 @@
       
       <ng-container *ngIf="control.type === 'between'">
         <nz-input-group class="between-content">
-          <input type="text" class="between-one" [formControlName]="control.valueKey[0]" nz-input [placeholder]="control.placeholder ? control.placeholder[0] : '最小值'">
+          <input type="text" class="between-one" (keyup.enter)="_submit()" [formControlName]="control.valueKey[0]" nz-input [placeholder]="control.placeholder ? control.placeholder[0] : '最小值'">
           <input type="text" class="between-two" disabled nz-input placeholder="~">
-          <input type="text" class="between-three" [formControlName]="control.valueKey[1]" nz-input [placeholder]="control.placeholder ? control.placeholder[1] : '最大值'">
+          <input type="text" class="between-three" (keyup.enter)="_submit()" [formControlName]="control.valueKey[1]" nz-input [placeholder]="control.placeholder ? control.placeholder[1] : '最大值'">
         </nz-input-group>
       </ng-container>
       

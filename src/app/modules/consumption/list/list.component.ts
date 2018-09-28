@@ -108,7 +108,7 @@ export class ListComponent implements OnInit {
       component: UpdateRevokeComponent
     },
     message: {
-      title: '发短息',
+      title: '发短信',
       component: MessageComponent
     },
     curriculum: {

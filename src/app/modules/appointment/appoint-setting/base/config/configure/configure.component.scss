@@ -1,0 +1,8 @@
+:host ::ng-deep {
+  nz-table { 
+    white-space:nowrap;
+    .ant-table-body {
+      overflow-x: auto;
+    }
+  }
+}

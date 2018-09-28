@@ -29,7 +29,12 @@
       </div>
     </td>
     <td>
-      <a (click)="data.edit = !data.edit">{{ data.edit ? '保存' : '编辑' }}</a>
+      <a (click)="update(data)">
+        <i class="anticon anticon-spin anticon-loading" *ngIf="data.loading"></i>
+        <ng-container *ngIf="!data.loading">
+          {{ data.edit ? '保存' : '编辑' }}
+        </ng-container>
+      </a>
       <nz-divider nzType="vertical"></nz-divider>
       <a (click)="configure(data.id)">配置</a>
     </td>

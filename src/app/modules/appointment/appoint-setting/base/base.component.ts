@@ -24,9 +24,9 @@ export class BaseComponent implements OnInit {
     this.getData();
   }
 
-  getData() {
+  getData(data = {}) {
     this.loading = true;
-    this.http.post('/reserveCommonConfig/configList', {}, false).then(res => {
+    this.http.post('/reserveCommonConfig/configList', { paramJson: JSON.stringify(data) }, false).then(res => {
       this.loading = false;
       res.code == 1000 && (this.dataSet = res.result);
     }).catch(err => this.loading = false);
@@ -52,31 +52,5 @@ export class BaseComponent implements OnInit {
       }
     });
   }
-
-  delete(key) {
-    this.http.post('/reserveCommonConfig/delConfigByTime', { paramJson: JSON.stringify({ 
-      hourPeriod: key.split(':')[0],
-      minutePeriod: key.split(':')[1]
-    }) }).then(res => this.getData());
-  }
-
-  update(data) {
-    if (data.edit) {
-      data.loading = true;
-      this.http.post('/reserveCommonConfig/savePlanDetailEdit', {
-        paramJson: JSON.stringify({
-          
-        })
-      })
-      setTimeout(() => {
-        data.edit = false;
-        data.loading = false;
-      }, 1000);
-    } else {
-      data.edit = true;
-    }
-  }
-
-
 
 }
