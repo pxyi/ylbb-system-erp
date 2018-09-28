@@ -33,8 +33,11 @@ export class AccountComponent implements OnInit {
 
   tableThead: TheadNode[] | string[] = ['登录名', '中文名', '邮箱', '创建日期', '状态', '操作'];
 
+  /* --------- 账户信息表单模型 --------- */
   createAccountForm: FormGroup;
+  /* ------ 是否展示编辑用户信息窗口 ------ */
   showCreateAccount: boolean;
+  /* ------- 编辑用户信息Loading ------- */
   createLoading: boolean;
 
   createAccountId: number;
@@ -47,9 +50,10 @@ export class AccountComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    /* ----------------- 初始化账户信息表单模型 ----------------- */
     this.createAccountForm = this.fb.group({
       code: [, [Validators.required]],
-      name: [, [Validators.required]],
+      name: [, [Validators.required, Validators.pattern(/^[\u4e00-\u9fa5]+$/)]],
       password : [, [Validators.required]],
       email: [],
       status: [],
@@ -57,14 +61,32 @@ export class AccountComponent implements OnInit {
     })
   }
 
-
+  /* ----------------- 点击新增账号按钮 ----------------- */
   openCreate() {
     this.createAccountId = null;
     this.showCreateAccount = true;
     this.createAccountForm.reset();
     this.createAccountForm.patchValue({ status: 0 });
   }
+  /* ----------------- 点击编辑账号按钮 ----------------- */
+  editAccount(data) {
+    this.createAccountId = data.id;
+    this.showCreateAccount = true;
+    this.createAccountForm.reset();
+    this.createAccountForm.patchValue(data);
+  }
+  /* ----------------- 点击删除账号按钮 ----------------- */
+  deleteAccount(id) {
+    this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id }) }).then(res => {
+      this.EaListPage.eaTable._request();
+    })
+  }
+  /* ----------------- 点击重置密码按钮 ----------------- */
+  resetPassword(id) {
+    this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id, password: 123456 }) });
+  }
 
+  /* ----------------- 保存用户信息按钮 ----------------- */
   crateAccount() {
     if (this.createAccountForm.valid) {
       let params = this.createAccountForm.value;
@@ -85,19 +107,8 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  editAccount(data) {
-    this.createAccountId = data.id;
-    this.showCreateAccount = true;
-    this.createAccountForm.reset();
-    this.createAccountForm.patchValue(data);
-  }
 
-  deleteAccount(id) {
-    this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id }) }).then(res => {
-      this.EaListPage.eaTable._request();
-    })
-  }
-
+  /* ----------------- 点击分配角色按钮 ----------------- */
   allocationRole(id) {
     const modal = this.modal.create({
       nzTitle: '分配角色',
@@ -126,8 +137,5 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  resetPassword(id) {
-    this.http.post('/accountManagement/deleteAndReset', { paramJson: JSON.stringify({ id, password: 123456 }) });
-  }
 
 }

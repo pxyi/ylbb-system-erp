@@ -30,6 +30,7 @@ export class ModifyPasswordComponent implements OnInit {
     })
   }
 
+  /* ---------------------- 修改密码 ---------------------- */
   modifyPassword() {
     if (this.passwordForm.valid) {
       this.modifyLoading = true;
@@ -49,6 +50,7 @@ export class ModifyPasswordComponent implements OnInit {
     }
   }
 
+  /* --------------- Validator 确认密码校验 --------------- */
   confirmPasswordValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };

@@ -1,3 +1,8 @@
+/**
+ * @method 记录用户信息
+ * 
+ * @author phuhoang
+ */
 import { Action } from '@ngrx/store';
 
 export function userInfoReducer (state: UserInfoState, action: Action) {

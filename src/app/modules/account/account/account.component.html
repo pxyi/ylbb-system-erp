@@ -40,7 +40,7 @@
 </div>
 
 
-<nz-modal [(nzVisible)]="showCreateAccount" nzTitle="新增角色" [nzFooter]="modalFooter" (nzOnCancel)="showCreateAccount = false">
+<nz-modal [(nzVisible)]="showCreateAccount" nzTitle="用户信息" [nzFooter]="modalFooter" (nzOnCancel)="showCreateAccount = false">
 
   <form nz-form [formGroup]="createAccountForm">
     <nz-form-item>
@@ -54,7 +54,8 @@
       <nz-form-label [nzSpan]="6" nzFor="name" [nzRequired]="true">中文名</nz-form-label>
       <nz-form-control [nzSpan]="16">
         <input nz-input type="text" id="name" formControlName="name" placeholder="请输入中文名">
-        <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').errors">请输入中文名!</nz-form-explain>
+        <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').hasError('required')">请输入中文名!</nz-form-explain>
+        <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').hasError('pattern')">只能输入中文!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="!createAccountId">

@@ -19,7 +19,7 @@
       <td>{{ data.balance }}</td>
       <td>{{ data.openPoints }}</td>
       <td>{{ data.status }}</td>
-      <td>{{ data.tong }}</td>
+      <td>{{ data.tong ? '是' : '否' }}</td>
       <td>
         <a (click)="updateCardType(data.id)">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>

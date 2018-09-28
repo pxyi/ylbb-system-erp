@@ -1,3 +1,16 @@
+/**
+ * @method 记录路由跳转信息
+ * 
+ * @param loginSource 记录 登录来源页（登录成功后再跳转回去）
+ * 
+ * @param goPath 记录当前前往的页面
+ * 
+ * @param currentPath 当前所在页面
+ * 
+ * @desc Store.dispatch({ type: ActionType, payload: Value });
+ * 
+ * @author phuhoang
+ */
 import { Action } from "@ngrx/store";
 
 const routerStateDefalut =  {

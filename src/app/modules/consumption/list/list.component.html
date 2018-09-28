@@ -21,7 +21,7 @@
       <td>{{ data.consumeDate }}</td>
       <td>{{ data.usedTimes }}</td>
       <td>{{ data.deductionTimes }}</td>
-      <td>{{ data.type }}</td>
+      <td>{{ data.type == 0 ? '正价' : data.type == 1 ? '赠送' : '--' }}</td>
       <td>{{ data.commodityName }}</td>
       <td>{{ data.swimTeacher }}</td>
       <td>{{ data.satisfaction }}</td>

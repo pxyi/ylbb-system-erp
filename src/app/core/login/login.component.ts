@@ -35,10 +35,11 @@ export class LoginComponent implements OnInit {
     private store      : Store<AppState>,
     private modal      : NzModalService
   ) {
-    store.select('routerState').subscribe( res => this.baseRouter = res);
+    this.store.select('routerState').subscribe( res => this.baseRouter = res);
   }
 
   ngOnInit() {
+    /* -------- 更改浏览器 Title 及关闭页面 Modal/Drawer 等弹出层 -------- */
     window.document.title = '鱼乐贝贝ERP-登录';
     this.modal.closeAll();
 
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
       this._loginFormInit();
     }
 
+    /* ----------- 根据地址栏参数，自动请求登录接口，实现免密登录 ----------- */
     this.activated.queryParamMap.subscribe((query: any) => {
       if (query.params.authCode) {
         this._login(query.params.authCode);
@@ -97,8 +99,8 @@ export class LoginComponent implements OnInit {
     }).subscribe(res => {
       this.loginLoading = false;
       if (res.code == 1000) {
+        /* ------------------ 存储用户名密码及用户信息 ------------------ */
         window.localStorage.setItem('userInfo', JSON.stringify(res.result));
-        /* ------------------ 存储用户名密码 ------------------ */
         if (params.remember && !authCode) {
           window.localStorage.setItem('username', JSON.stringify(this.loginForm.value));
         }
@@ -112,7 +114,7 @@ export class LoginComponent implements OnInit {
   }
 
   /* ------------------------ AES加密 ------------------------ */
-  private key = 'yulebaby88888888'
+  private key = 'yulebaby88888888'             // 秘钥
   _encrypt(str: string): string {
     var key = CryptoJS.enc.Utf8.parse(this.key);
     var srcs = CryptoJS.enc.Utf8.parse(str);

@@ -31,7 +31,7 @@ export class ConstructionComponent implements OnInit {
       memberId: [this.id],
       cardCode: [, [Validators.required, Validators.maxLength(30)]],
       cardTypeId: [, [Validators.required]],
-      memberName: [this.userInfo.name],
+      memberName: [this.userInfo.name, [Validators.required]],
       times: [],
       freeTimes: [],
       usedTimes: [0],

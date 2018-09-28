@@ -76,8 +76,7 @@
             <nz-form-label nzRequired>消费服务</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费服务">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option *ngFor="let option of commoditieList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="timesCountGroup.get('commodityId').dirty && timesCountGroup.get('commodityId').hasError('required')">请选择消费服务！</nz-form-explain>
             </nz-form-control>
@@ -88,6 +87,7 @@
             <nz-form-label nzRequired>消费金额</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="consumption" placeholder="请输入消费金额">
+              <nz-form-explain *ngIf="timesCountGroup.get('consumption').dirty && timesCountGroup.get('consumption').hasError('required')">请输入消费金额！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -97,9 +97,8 @@
           <nz-form-item>
             <nz-form-label>泳圈型号</nz-form-label>
             <nz-form-control>
-              <nz-select formControlName="ringId" nzPlaceHolder="请选择泳圈型号">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+              <nz-select formControlName="ringId" nzPlaceHolder="请选择泳圈型号"> 
+                <nz-option *ngFor="let option of swimRingList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -150,12 +149,15 @@
         </div>
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label>顾客满意度</nz-form-label>
+            <nz-form-label nzRequired>顾客满意度</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+                <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+                <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+                <nz-option nzLabel="不好" nzValue="不好"></nz-option>
               </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('satisfaction').dirty && timesCountGroup.get('satisfaction').hasError('required')">请选择顾客满意度！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -180,8 +182,7 @@
             <nz-form-label nzRequired>消费商品</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费商品">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option *ngFor="let option of commodityList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="singleTimeGroup.get('commodityId').dirty && singleTimeGroup.get('commodityId').hasError('required')">请选择消费商品！</nz-form-explain>
             </nz-form-control>
@@ -192,8 +193,7 @@
             <nz-form-label nzRequired>服务泳师</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option *ngFor="let option of teacherList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="singleTimeGroup.get('swimTeacherId').dirty && singleTimeGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
             </nz-form-control>
@@ -206,17 +206,21 @@
             <nz-form-label nzRequired>消费金额</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="consumption" placeholder="请输入消费金额">
+              <nz-form-explain *ngIf="singleTimeGroup.get('consumption').dirty && singleTimeGroup.get('consumption').hasError('required')">请输入消费金额！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label>顾客满意度</nz-form-label>
+            <nz-form-label nzRequired>顾客满意度</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
-                <nz-option nzLabel="男" nzValue="男"></nz-option>
-                <nz-option nzLabel="女" nzValue="女"></nz-option>
+                <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+                <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+                <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+                <nz-option nzLabel="不好" nzValue="不好"></nz-option>
               </nz-select>
+              <nz-form-explain *ngIf="singleTimeGroup.get('satisfaction').dirty && singleTimeGroup.get('satisfaction').hasError('required')">请选择顾客满意度！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>

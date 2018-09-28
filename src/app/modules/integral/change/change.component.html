@@ -11,7 +11,7 @@
       <td>{{ data.memberName }}</td>
       <td>{{ data.mobile }}</td>
       <td>{{ data.createDate }}</td>
-      <td>{{ data.type }}</td>
+      <td>{{ data.type == 0 ? '消费自动增加' : data.type == 1 ? '手动增加' : '积分兑换扣减' }}</td>
       <td>{{ data.point }}</td>
       <td>{{ data.reason }}</td>
     </ng-template>

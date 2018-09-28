@@ -34,9 +34,10 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-label nzRequired>会员名称</nz-form-label>
         <nz-form-control>
           <input nz-input formControlName="memberName" readonly placeholder="请输入会员名称">
+          <nz-form-explain *ngIf="formGroup.get('memberName').dirty && formGroup.get('memberName').hasError('required')">请输入会员名称！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
