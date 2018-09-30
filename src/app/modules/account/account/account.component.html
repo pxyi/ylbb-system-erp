@@ -1,6 +1,6 @@
 <div class="container">
-  <ng-template #EaQueryBtns>
-    <button [style.margin-left]="'8px'" nz-button nzType="primary" nzGhost (click)="openCreate()">新增账号</button>
+  <ng-template #EaBtns>
+    <button nz-button nzType="dashed" nzBlock (click)="openCreate()"><i class="anticon anticon-plus"></i>新增账号</button>
   </ng-template>
   <ea-list-page 
     #EaListPage
@@ -8,7 +8,7 @@
     [queryNode]="queryNode" 
     [tableThead]="tableThead" 
     [EaTableTbodyTr]="EaTableTbodyTr"
-    [EaQueryBtns]="EaQueryBtns">
+    [EaBtns]="EaBtns">
     <ng-template #EaTableTbodyTr let-data>
       <td>{{ data.code }}</td>
       <td>{{ data.name }}</td>
@@ -40,7 +40,7 @@
 </div>
 
 
-<nz-modal [(nzVisible)]="showCreateAccount" nzTitle="用户信息" [nzFooter]="modalFooter" (nzOnCancel)="showCreateAccount = false">
+<nz-modal [(nzVisible)]="showCreateAccount" nzTitle="用户信息" [nzStyle]="{'margin-right': '128px'}" [nzFooter]="modalFooter" (nzOnCancel)="showCreateAccount = false">
 
   <form nz-form [formGroup]="createAccountForm">
     <nz-form-item>

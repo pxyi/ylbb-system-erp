@@ -112,6 +112,7 @@ export class AccountComponent implements OnInit {
   allocationRole(id) {
     const modal = this.modal.create({
       nzTitle: '分配角色',
+      nzStyle: {'margin-right': '128px'},
       nzContent: DistributionComponent,
       nzComponentParams: { id },
       nzFooter: [

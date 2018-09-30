@@ -13,7 +13,9 @@ import { QueryNode } from '../../../ng-relax/components/query/query.component';
   styleUrls: ['./role.component.scss']
 })
 export class RoleComponent implements OnInit {
+
   @ViewChild('EaListPage') EaListPage: ListPageComponent;
+  
   queryNode: QueryNode[] = [
     {
       label: '角色代码',
@@ -40,6 +42,7 @@ export class RoleComponent implements OnInit {
 
   ngOnInit() {
     this.createRoleForm = this.fb.group({
+      id: [],
       name: [, [Validators.required]],
       code: [, [Validators.required]],
       status: [0],
@@ -48,15 +51,8 @@ export class RoleComponent implements OnInit {
   }
 
   editRole(data) {
-    if (data.edit) {
-      data.loading = true;
-      this.http.post('/roleManagement/modify', { paramJson: JSON.stringify(data) }).then(res => {
-        data.loading = false;
-        data.edit = false;
-      });
-    } else {
-      data.edit = true;
-    }
+    this.showCreateRole = true;
+    this.createRoleForm.patchValue(data);
   }
 
   deleteRole(id) {
@@ -76,6 +72,7 @@ export class RoleComponent implements OnInit {
   }
 
   crateRole() {
+    if (this.createRoleForm.get('name').value === '门店管理员') { return; }
     if (this.createRoleForm.valid) {
       this.createLoading = true;
       this.http.post('/roleManagement/modify', { paramJson: JSON.stringify(this.createRoleForm.value) }).then(res => {
@@ -95,6 +92,7 @@ export class RoleComponent implements OnInit {
     let { message, http } = this;
     const modal = this.modal.create({
       nzTitle: '分配菜单',
+      nzStyle: { 'margin-right': '138px' },
       nzContent: MenuComponent,
       nzComponentParams: {
         roleId,
