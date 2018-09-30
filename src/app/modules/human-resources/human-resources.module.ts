@@ -14,6 +14,7 @@ import { UpdateComponent } from './staff/update/update.component';
     HumanResourcesRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent]
+  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent],
+  entryComponents: [UpdateComponent]
 })
 export class HumanResourcesModule { }

@@ -1,6 +1,9 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { NzModalService, NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
+import { UpdateComponent } from './update/update.component';
 
 @Component({
   selector: 'app-staff',
@@ -31,18 +34,17 @@ export class StaffComponent implements OnInit {
       key         : 'serviceArea',
       type        : 'select',
       options     : [ { name: '婴儿区', id: 1 }, { name: '幼儿区', id: 2 }, { name: '兼顾', id: 3 } ]
-    },
-    // {
-    //   label       : '部门',
-    //   key         : 'department',
-    //   type        : 'select',
-    //   optionsUrl  : 'xx'
-    // }
+    }
   ]
   
   checkedItems: number[] = [];
 
-  constructor() { }
+  constructor(
+    private http: HttpService,
+    private modal: NzModalService,
+    private drawer: NzDrawerService,
+    private message: NzMessageService
+  ) { }
 
   ngOnInit() {
   }
@@ -54,6 +56,56 @@ export class StaffComponent implements OnInit {
 
   saveDrawer() {
 
+  }
+
+
+  showUpdate() {
+    let staffInfo = null;
+    if (this.checkedItems.length) {
+      this.listPage.eaTable.dataSet.map(res => res.id == this.checkedItems[0] && (staffInfo = res));
+    }
+    const drawerRef = this.drawer.create({
+      nzTitle: '员工信息',
+      nzWidth: 720,
+      nzContent: UpdateComponent,
+      nzBodyStyle: {
+        'padding-bottom': '53px'
+      },
+      nzContentParams: { staffInfo }
+    });
+    drawerRef.afterClose.subscribe(res => {
+
+    })
+  }
+  
+  update() {
+    if (this.checkedItems.length) {
+      this.showUpdate();
+    } else {
+      this.message.warning('请选择一条数据');
+    }
+  }
+
+  reset () {
+    if (this.checkedItems.length) {
+      this.modal.confirm({
+        nzTitle: '<i>确定要重置该员工密码吗?</i>',
+        nzContent: '<b>确定要重置该员工密码吗</b>',
+        nzOnOk: () => {
+          this.http.post('/employee/resetPassword', { id: this.checkedItems[0] }).then(res => {}).catch(err => {})
+        }
+      });
+    } else {
+      this.message.warning('请选择一条数据');
+    }
+  }
+
+  upload() {
+    if (this.checkedItems.length) {
+      
+    } else {
+      this.message.warning('请选择一条数据');
+    }
   }
 
 }
