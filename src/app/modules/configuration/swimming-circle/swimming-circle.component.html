@@ -1,23 +1,48 @@
 <div class="container">
   <ea-query-simp [node]="[{label: '泳圈型号名称', key: 'name', type: 'input'}]" title="泳圈型号管理" (onSubmit)="table.request($event)"></ea-query-simp>
 
-  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="addSwimming()"><i class="anticon anticon-plus"></i>新增泳圈型号</button>
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="updateSwimming()"><i class="anticon anticon-plus"></i>新增泳圈型号</button>
 
   <ea-table 
     #table 
-    url="/cardTypeManagement/list" 
+    url="/swimRing/getStoreSwimRingList" 
     [allowSpace]="false" 
-    [thead]="['序号','泳圈型号名称','状态','操 作']"
+    [thead]="['泳圈型号名称','状态','操 作']"
     [EaTableTbodyTr]="EaTableTbodyTr">
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.name }}</td>
-      <td>{{ data.categoryName }}</td>
       <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '禁用' : '启用' }}</nz-tag></td>
       <td>
         <a (click)="updateSwimming(data)">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="deleteSwimming(data.id)">删除</a>
+        <a nz-popconfirm nzTitle="确定要删除吗?" (nzOnConfirm)="deleteSwimming(data.id)">删除</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="deleteSwimming(data.id)">{{ data.status == 0 ? '禁用' : '启用' }}</a>
       </td>
     </ng-template>
   </ea-table>
 </div>
+
+
+<ng-template #drawerTemplate let-data let-drawerRef="drawerRef">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="name">泳圈型号名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入泳圈型号名称" formControlName="name" id="name">
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入泳圈型号名称！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('duplicated')">该泳圈型号名称已存在</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').pending">
+              <i class="anticon anticon-spin anticon-loading"></i>正在校验泳圈型号名称是否存在...</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button nz-button (click)="drawerRef.close()">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save(drawerRef)">保存</button>
+  </div>
+</ng-template>

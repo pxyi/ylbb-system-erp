@@ -29,7 +29,8 @@
             <ng-container *ngIf="formGroup.get('mobile').hasError('required')">请输入手机号码！</ng-container>
             <ng-container *ngIf="formGroup.get('mobile').hasError('pattern')">请输入正确的手机号码！</ng-container>
             <ng-container *ngIf="formGroup.get('mobile').hasError('duplicated')">该手机号码已存在！</ng-container>
-            <ng-container *ngIf="formGroup.get('mobile').pending">正在校验手机号码是否存在...</ng-container>
+            <ng-container *ngIf="formGroup.get('mobile').pending">
+              <i class="anticon anticon-spin anticon-loading"></i>正在校验手机号码是否存在...</ng-container>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>

@@ -38,7 +38,8 @@
             <input nz-input placeholder="请输入职位名称" formControlName="position" id="position">
             <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').hasError('required')">请输入职位名称！</nz-form-explain>
             <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').hasError('duplicated')">该职位名称已存在</nz-form-explain>
-            <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').pending">正在校验职位名称是否存在...</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').pending">
+              <i class="anticon anticon-spin anticon-loading"></i>正在校验职位名称是否存在...</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>

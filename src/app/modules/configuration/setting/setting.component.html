@@ -1,6 +1,6 @@
-<nz-card [nzBordered]="false" nzTitle="营业时间配置" [nzExtra]="extraTemplate">
+<nz-card [nzBordered]="false" nzTitle="营业时间配置" [nzExtra]="extraTemplate" [nzLoading]="businessLoading">
   <ng-template #extraTemplate>
-    <a>保存</a>
+    <a (click)="saveBusiness()">保存</a>
   </ng-template>
   <form nz-form [formGroup]="businessHoursForm">
     <div nz-row nzGutter="8">
@@ -70,18 +70,18 @@
   </form>
 </nz-card>
 
-<nz-card [nzBordered]="false" nzTitle="消息发送配置" [nzExtra]="extraTemplate" [style.margin-top]="'24px'">
-  <ng-template #extraTemplate>
-    <a>保存</a>
+<nz-card [nzBordered]="false" nzTitle="消息发送配置" [nzExtra]="extraTemplate1" [style.margin-top]="'24px'" [nzLoading]="messageLoading">
+  <ng-template #extraTemplate1>
+    <a (click)="saveMessage()">保存</a>
   </ng-template>
-  <form nz-form [formGroup]="businessHoursForm">
+  <form nz-form [formGroup]="messageSendForm">
     <div nz-row nzGutter="8">
       <div nz-col nzSpan="12" [nzXXl]="6" [nzXl]="8">
         <nz-form-item>
           <nz-form-label>消费后</nz-form-label>
           <nz-form-control>
-            <label nz-checkbox>发短信</label>
-            <label nz-checkbox>发APP消息</label>
+            <label nz-checkbox formControlName="consumeSms">发短信</label>
+            <label nz-checkbox formControlName="consumeMsg">发APP消息</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -89,8 +89,8 @@
         <nz-form-item>
           <nz-form-label>预约提醒</nz-form-label>
           <nz-form-control>
-            <label nz-checkbox>发短信</label>
-            <label nz-checkbox>发APP消息</label>
+            <label nz-checkbox formControlName="reserveSms">发短信</label>
+            <label nz-checkbox formControlName="reserveMsg">发APP消息</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -98,8 +98,8 @@
         <nz-form-item>
           <nz-form-label>生日提醒</nz-form-label>
           <nz-form-control>
-            <label nz-checkbox>发短信</label>
-            <label nz-checkbox>发APP消息</label>
+            <label nz-checkbox formControlName="birthdaySms">发短信</label>
+            <label nz-checkbox formControlName="birthdayMsg">发APP消息</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -107,8 +107,8 @@
         <nz-form-item>
           <nz-form-label>开卡短信</nz-form-label>
           <nz-form-control>
-            <label nz-checkbox>发短信</label>
-            <label nz-checkbox>发APP消息</label>
+            <label nz-checkbox formControlName="openCardSms">发短信</label>
+            <label nz-checkbox formControlName="openCardMsg">发APP消息</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -116,8 +116,8 @@
         <nz-form-item>
           <nz-form-label>卡过期提醒</nz-form-label>
           <nz-form-control>
-            <label nz-checkbox>发短信</label>
-            <label nz-checkbox>发APP消息</label>
+            <label nz-checkbox formControlName="expireCardSms">发短信</label>
+            <label nz-checkbox formControlName="expireCardMsg">发APP消息</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -125,8 +125,8 @@
         <nz-form-item>
           <nz-form-label>30天未到店</nz-form-label>
           <nz-form-control>
-            <label nz-checkbox>发短信</label>
-            <label nz-checkbox>发APP消息</label>
+            <label nz-checkbox formControlName="monthReachSms">发短信</label>
+            <label nz-checkbox formControlName="monthReachMsg">发APP消息</label>
           </nz-form-control>
         </nz-form-item>
       </div>
