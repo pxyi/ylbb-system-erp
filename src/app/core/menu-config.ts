@@ -73,7 +73,7 @@ export const MenuConfig = [
   {
     title : '预约管理',
     key   : '/home/appointment',
-    icon  : 'anticon-red-envelope',
+    icon  : 'anticon-calendar',
     children : [
       {
         title : '预约列表',

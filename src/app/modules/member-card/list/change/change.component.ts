@@ -40,7 +40,7 @@ export class ChangeComponent implements OnInit {
       cardTypeName: [{ value: this.memberCardInfo.ctName, disabled: true }],
       cardType: [ this.memberCardInfo.cardTypeId ],
       changeCardType: [],
-      turnCard: [],
+      turnCard: [ this.memberCardInfo.turnCard ],
       comment: []
     })
   }

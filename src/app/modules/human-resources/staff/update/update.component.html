@@ -64,8 +64,8 @@
         <nz-form-label nzRequired>性别</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="sex" nzPlaceHolder="请选择性别">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
-            <nz-option nzLabel="女" nzValue="女"></nz-option>
+            <nz-option nzLabel="男" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="女" [nzValue]="1"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('sex').dirty && formGroup.get('sex').hasError('required')">请选择性别！</nz-form-explain>
         </nz-form-control>
@@ -134,7 +134,7 @@
         <nz-form-label nzRequired>员工职位</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="bandId" nzPlaceHolder="请选择员工职位">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
+            <nz-option *ngFor="let option of bandList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('bandId').dirty && formGroup.get('bandId').hasError('required')">请选择员工职位！</nz-form-explain>
         </nz-form-control>
@@ -145,7 +145,7 @@
         <nz-form-label nzRequired>所属部门</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="departmentId" nzPlaceHolder="请选择所属部门">
-            <nz-option nzLabel="男" nzValue="男"></nz-option>
+            <nz-option *ngFor="let option of departmentList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('departmentId').dirty && formGroup.get('departmentId').hasError('required')">请选择所属部门！</nz-form-explain>
         </nz-form-control>
@@ -235,10 +235,9 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>离职时间</nz-form-label>
+        <nz-form-label>离职时间</nz-form-label>
         <nz-form-control>
           <nz-date-picker formControlName="leaveDate" nzPlaceHolder="请选择离职时间"></nz-date-picker>
-          <nz-form-explain *ngIf="formGroup.get('leaveDate').dirty && formGroup.get('leaveDate').hasError('required')">请选择离职时间！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -260,6 +259,6 @@
   </div>
 </form>
 <div class="footer">
-  <button nz-button (click)="showDrawer = false">取消</button>
+  <button nz-button (click)="close()">取消</button>
   <button nz-button nzType="primary" [nzLoading]="loading" (click)="save()">保存</button>
 </div>

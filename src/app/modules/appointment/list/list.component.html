@@ -23,7 +23,7 @@
       <td>{{ data.reserveDate }}&nbsp;{{ data.rHour }}:{{ data.rMinute }}</td>
       <td>{{ data.consumeDate }}</td>
       <td><nz-tag [nzColor]="data.reserveStatus == 0 ? '#87d068' : data.reserveStatus == 1 ? '#f50' : '#2db7f5'">{{ data.reserveStatus == 0 ? '预约中' : data.reserveStatus == 1 ? '已撤销' : '已完成' }}</nz-tag></td>
-      <td>{{ data.swimTeacherName }}</td>
+      <td>{{ data.teacherName }}</td>
       <td>{{ data.ringName }}</td>
       <td>{{ data.createDate }}</td>
       <td>{{ data.cancelSource }}</td>

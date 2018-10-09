@@ -1,3 +1,4 @@
+import { UploadComponent } from './upload/upload.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { NzModalService, NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -60,7 +61,7 @@ export class StaffComponent implements OnInit {
 
 
   showUpdate() {
-    let staffInfo = null;
+    let staffInfo = {};
     if (this.checkedItems.length) {
       this.listPage.eaTable.dataSet.map(res => res.id == this.checkedItems[0] && (staffInfo = res));
     }
@@ -101,11 +102,49 @@ export class StaffComponent implements OnInit {
   }
 
   upload() {
+    let { http, checkedItems, listPage } = this;
     if (this.checkedItems.length) {
-      
+      const uploadModal = this.modal.create({
+        nzTitle: '上传头像',
+        nzStyle: { 'margin-right': '138px' },
+        nzContent: UploadComponent,
+        nzFooter: [{
+          label: '取消',
+          onClick() {
+            uploadModal.close();
+          }
+        },{
+          label: '确定',
+          type: 'primary',
+          loading: false,
+          onClick(componentInstance) {
+            if (componentInstance.avatarUrl) {
+              this.loading = true;
+              http.post('/employee/uploadPhotoUrl', {
+                id: checkedItems[0],
+                photoUrl: componentInstance.avatarUrl
+              }).then(res => {
+                this.loading = false;
+                uploadModal.close();
+                listPage.eaTable._request();
+              })
+            } else {
+              uploadModal.close();
+            }
+          }
+        }]
+      })
     } else {
       this.message.warning('请选择一条数据');
     }
+  }
+
+  disable(id) {
+    this.http.post('/employee/disableEmployee', { id }).then(res => this.listPage.eaTable._request())
+  }
+
+  enable(id) {
+    this.http.post('/employee/enableEmployee', { id }).then(res => this.listPage.eaTable._request())
   }
 
 }

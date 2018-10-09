@@ -7,6 +7,7 @@ import { DepartmentComponent } from './department/department.component';
 import { StaffComponent } from './staff/staff.component';
 import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
 import { UpdateComponent } from './staff/update/update.component';
+import { UploadComponent } from './staff/upload/upload.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { UpdateComponent } from './staff/update/update.component';
     HumanResourcesRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent],
-  entryComponents: [UpdateComponent]
+  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent, UploadComponent],
+  entryComponents: [UpdateComponent, UploadComponent]
 })
 export class HumanResourcesModule { }
