@@ -52,14 +52,6 @@ export class StaffComponent implements OnInit {
 
   @ViewChild('listPage') listPage: ListPageComponent;
 
-  showDrawer: boolean;
-  saveLoading: boolean;
-
-  saveDrawer() {
-
-  }
-
-
   showUpdate() {
     let staffInfo = {};
     if (this.checkedItems.length) {

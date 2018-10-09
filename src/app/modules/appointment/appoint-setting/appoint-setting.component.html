@@ -2,10 +2,12 @@
   <nz-tabset [(nzSelectedIndex)]="tabIndex">
     <nz-tab nzTitle="预约基础设置"></nz-tab>
     <nz-tab nzTitle="预约按日设置"></nz-tab>
+    <nz-tab nzTitle="预约规则设置"></nz-tab>
   </nz-tabset>
 </ng-template>
 
-<div class="container">
+<div class="container" [style.padding]="tabIndex == 2 ? 0 : '24px 32px'">
   <app-base *ngIf="tabIndex == 0"></app-base>
   <app-byday *ngIf="tabIndex == 1"></app-byday>
+  <app-rule *ngIf="tabIndex == 2"></app-rule>
 </div>

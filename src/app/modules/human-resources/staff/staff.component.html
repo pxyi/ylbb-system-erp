@@ -49,16 +49,3 @@
     </td>
   </ng-template>
 </div>
-
-<nz-drawer 
-  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
-  [nzWidth]="720" 
-  [nzVisible]="showDrawer" 
-   nzTitle="编辑员工" 
-  (nzOnClose)="showDrawer = false">
-  <ng-template #drawerContainer></ng-template>
-  <div class="footer">
-    <button nz-button (click)="showDrawer = false">取消</button>
-    <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
-  </div>
-</nz-drawer>

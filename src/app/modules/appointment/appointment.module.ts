@@ -12,6 +12,7 @@ import { BaseComponent } from './appoint-setting/base/base.component';
 import { BydayComponent } from './appoint-setting/byday/byday.component';
 import { ConfigComponent } from './appoint-setting/base/config/config.component';
 import { ConfigureComponent } from './appoint-setting/base/config/configure/configure.component';
+import { RuleComponent } from './appoint-setting/rule/rule.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ConfigureComponent } from './appoint-setting/base/config/configure/conf
     AppointmentRoutingModule,
     NgRelaxModule
   ],
-  declarations: [ListComponent, PreviewComponent, ConsumptionComponent, AppointSettingComponent, SwimmerSettingComponent, BaseComponent, BydayComponent, ConfigComponent, ConfigureComponent],
+  declarations: [ListComponent, PreviewComponent, ConsumptionComponent, AppointSettingComponent, SwimmerSettingComponent, BaseComponent, BydayComponent, ConfigComponent, ConfigureComponent, RuleComponent],
   entryComponents: [PreviewComponent, ConsumptionComponent, ConfigComponent, ConfigureComponent]
 })
 export class AppointmentModule { }
