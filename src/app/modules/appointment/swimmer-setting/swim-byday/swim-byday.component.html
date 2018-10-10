@@ -1,0 +1,45 @@
+<nz-card [nzBordered]="false" nzTitle="泳师日排班表" [nzExtra]="extraTemplate1" [nzLoading]="dayLoading">
+  <ng-template #extraTemplate1>
+    <a (click)="save()" *ngIf="scheduleStatus != 0">保存排班数据</a>
+  </ng-template>
+
+  <nz-table [nzData]="dayList['list']">
+    <thead>
+      <tr>
+        <th>游泳老师</th>
+        <th *ngFor="let th of dayList['date']">
+          {{ th.date }}<br>{{ th.week }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of dayList['list']">
+        <td>{{ data.key }}</td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][0].date)" [(ngModel)]="data.value.day0"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][1].date)" [(ngModel)]="data.value.day1"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][2].date)" [(ngModel)]="data.value.day2"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][3].date)" [(ngModel)]="data.value.day3"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][4].date)" [(ngModel)]="data.value.day4"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][5].date)" [(ngModel)]="data.value.day5"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][6].date)" [(ngModel)]="data.value.day6"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][7].date)" [(ngModel)]="data.value.day7"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][8].date)" [(ngModel)]="data.value.day8"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][9].date)" [(ngModel)]="data.value.day9"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][10].date)" [(ngModel)]="data.value.day10"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, dayList['date'][11].date)" [(ngModel)]="data.value.day11"></label></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #tplContent>
+  <nz-spin [nzSpinning]="getHourLoading">
+    <label nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()" [nzIndeterminate]="indeterminate">全选</label>
+    <nz-divider></nz-divider>
+    <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="teacherHourChecked()">
+      <div *ngFor="let label of teacherHourList" [style.margin-bottom]="'8px'">
+        <label nz-checkbox [nzValue]="label.value" [(ngModel)]="label.checked">{{ label.value }}</label>
+      </div>
+    </nz-checkbox-wrapper>
+  </nz-spin>
+</ng-template>

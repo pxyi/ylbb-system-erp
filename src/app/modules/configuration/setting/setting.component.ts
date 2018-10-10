@@ -55,7 +55,9 @@ export class SettingComponent implements OnInit {
   }
 
   saveBusiness() {
-    this.http.post('/storeHoursConfig/saveStoreHours', { paramJson: JSON.stringify(this.businessHoursForm.value) }).then(res => {})
+    let params = this.businessHoursForm.value;
+    params.teacherSchedule = this.businessHoursForm.value.teacherSchedule ? 0 : 1;
+    this.http.post('/storeHoursConfig/saveStoreHours', { paramJson: JSON.stringify(params) }).then(res => {})
   }
 
   saveMessage() {

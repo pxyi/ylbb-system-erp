@@ -1,3 +1,11 @@
-<p>
-  swimmer-setting works!
-</p>
+<ng-template #breadcrumb>
+  <nz-tabset [(nzSelectedIndex)]="tabIndex">
+    <nz-tab nzTitle="泳师基础排班表"></nz-tab>
+    <nz-tab nzTitle="泳师日排班表"></nz-tab>
+  </nz-tabset>
+</ng-template>
+
+<div>
+  <app-swim-base *ngIf="tabIndex == 0"></app-swim-base>
+  <app-swim-byday *ngIf="tabIndex == 1"></app-swim-byday>
+</div>

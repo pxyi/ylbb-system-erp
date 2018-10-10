@@ -1,0 +1,48 @@
+<nz-card [nzBordered]="false" nzTitle="泳师基础排班表" [nzExtra]="extraTemplate" [style.margin-bottom]="'24px'" [nzLoading]="baseLoading">
+  <ng-template #extraTemplate>
+    <a (click)="save()" *ngIf="scheduleStatus != 0">保存排班数据</a>
+    <nz-divider nzType="vertical" *ngIf="scheduleStatus != 0"></nz-divider>
+    <a (click)="init()">初始化日班表</a>
+  </ng-template>
+
+  <nz-table #basicTable nzBordered [nzShowPagination]="false" [nzPageSize]="999" [nzData]="baseList">
+    <thead>
+      <tr>
+        <th>游泳老师</th>
+        <th>星期一</th>
+        <th>星期二</th>
+        <th>星期三</th>
+        <th>星期四</th>
+        <th>星期五</th>
+        <th>星期六</th>
+        <th>星期日</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.key }}</td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 1)" [(ngModel)]="data.value.week1"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 2)" [(ngModel)]="data.value.week2"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 3)" [(ngModel)]="data.value.week3"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 4)" [(ngModel)]="data.value.week4"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 5)" [(ngModel)]="data.value.week5"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 6)" [(ngModel)]="data.value.week6"></label></td>
+        <td><label nz-checkbox (ngModelChange)="change(data, 0)" [(ngModel)]="data.value.week0"></label></td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+</nz-card>
+
+
+<ng-template #tplContent>
+  <nz-spin [nzSpinning]="getHourLoading">
+    <label nz-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()" [nzIndeterminate]="indeterminate">全选</label>
+    <nz-divider></nz-divider>
+    <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="teacherHourChecked()">
+      <div *ngFor="let label of teacherHourList" [style.margin-bottom]="'8px'">
+        <label nz-checkbox [nzValue]="label.value" [(ngModel)]="label.checked">{{ label.value }}</label>
+      </div>
+    </nz-checkbox-wrapper>
+  </nz-spin>
+</ng-template>
