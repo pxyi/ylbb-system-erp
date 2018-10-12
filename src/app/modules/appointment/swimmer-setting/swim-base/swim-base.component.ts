@@ -50,7 +50,7 @@ export class SwimBaseComponent implements OnInit {
   teacherHourList: any[] = [];
   change(data, weekDay) {
     if (this.scheduleStatus == 0) {
-      let _this = this;
+      let _this_ = this;
       const modal = this.modal.create({
         nzTitle: '时刻信息',
         nzContent: this.tplContent,
@@ -68,8 +68,8 @@ export class SwimBaseComponent implements OnInit {
             onClick() {
               this.loading = true;
               let teacherCommonHours = [];
-              _this.teacherHourList.map(res => res.checked && teacherCommonHours.push(res.value));
-              _this.http.post('/teacherCommonHour/saveHour', {
+              _this_.teacherHourList.map(res => res.checked && teacherCommonHours.push(res.value));
+              _this_.http.post('/teacherCommonHour/saveHour', {
                 paramJson: JSON.stringify({
                   teacherId: data.value.teacherId,
                   weekDay,
@@ -77,7 +77,7 @@ export class SwimBaseComponent implements OnInit {
                 })
               }).then(res => {
                 modal.close();
-                _this.getData();
+                _this_.getData();
               }).catch(err => this.loading = false);
             }
           }
