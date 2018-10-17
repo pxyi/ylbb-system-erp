@@ -47,7 +47,7 @@ export class UpdateComponent implements OnInit {
     });
     /* -------------------------- 用户信息回显 -------------------------- */
     if (this.id) {
-      this.http.post('/member/queryMemberById', { id: this.id }).then(res => {
+      this.http.post('/member/queryMemberById', { id: this.id }, false).then(res => {
         this.formGroup.patchValue(res.result);
       })
     }

@@ -11,7 +11,7 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
 
   @Input() id;
 
-  @Input() userInfo;
+  @Input() memberCardInfo;
 
   baseFormGroup: FormGroup;
   timesCountGroup: FormGroup;
@@ -34,15 +34,13 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /* -------------------- 根据有无会员卡选择消费方式 -------------------- */
-    this.consumptionType = this.userInfo.memberCard ? 0 : 1;
     
     this.baseFormGroup = this.fb.group({
-      memberId: [this.id],
-      name: [{ value: this.userInfo.name, disabled: true }],
-      nick: [{ value: this.userInfo.nick, disabled: true }],
-      sex: [{ value: this.userInfo.sex, disabled: true }],
-      monthAge: [{ value: this.userInfo.monthAge, disabled: true }],
+      memberId: [this.memberCardInfo.memberId],
+      name: [{ value: this.memberCardInfo.name, disabled: true }],
+      nick: [{ value: this.memberCardInfo.nick, disabled: true }],
+      sex: [{ value: this.memberCardInfo.sex, disabled: true }],
+      monthAge: [{ value: this.memberCardInfo.monthAge, disabled: true }],
       comment: []
     });
 
@@ -89,7 +87,7 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
       this.timesCountGroup.patchValue({ consumeDate: res.result });
       this.singleTimeGroup.patchValue({ consumeDate: res.result });
     });
-    
+
     /* -------------------- 获取下拉列表数据 -------------------- */
     this.http.post('/member/getStoreTeachers', {}, false).then(res => {
       this.teacherList = res.result;
@@ -98,13 +96,12 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
     });
     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
-    this.http.post('/memberCard/getMemberCards', { memberId: this.id }, false).then(res => {
+    this.http.post('/memberCard/getMemberCards', { memberId: this.memberCardInfo.memberId }, false).then(res => {
       this.memberCardList = res.result;
       res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
     });
-    
+
     this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieListdc = res.result);
-  
     this.http.post('/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
   }
 

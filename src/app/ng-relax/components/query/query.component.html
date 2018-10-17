@@ -33,7 +33,7 @@
           </ng-container>
 
           <ng-container *ngIf="control.type === 'rangepicker'">
-            <nz-range-picker [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd" [nzPlaceHolder]="[control.placeholder ? control.placeholder[0] : '开始日期', control.placeholder ? control.placeholder[1] :'结束日期']"></nz-range-picker>
+            <nz-range-picker [nzRanges]="control.ranges" [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd" [nzPlaceHolder]="[control.placeholder ? control.placeholder[0] : '开始日期', control.placeholder ? control.placeholder[1] :'结束日期']"></nz-range-picker>
           </ng-container>
         </nz-form-control>
       </nz-form-item>

@@ -44,7 +44,7 @@
 </form>
 
 <nz-tabset [(nzSelectedIndex)]="consumptionType">
-  <nz-tab nzTitle="计次服务" [nzDisabled]="!userInfo.memberCard">
+  <nz-tab nzTitle="计次服务">
     <form nz-form [formGroup]="timesCountGroup">
       <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">
@@ -157,6 +157,7 @@
                 <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
                 <nz-option nzLabel="不好" nzValue="不好"></nz-option>
               </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('satisfaction').dirty && timesCountGroup.get('satisfaction').hasError('required')">请选择顾客满意度！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -219,6 +220,7 @@
                 <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
                 <nz-option nzLabel="不好" nzValue="不好"></nz-option>
               </nz-select>
+              <nz-form-explain *ngIf="singleTimeGroup.get('satisfaction').dirty && singleTimeGroup.get('satisfaction').hasError('required')">请选择顾客满意度！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>

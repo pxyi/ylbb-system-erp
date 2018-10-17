@@ -10,6 +10,8 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, Component
 import { NzMessageService } from 'ng-zorro-antd';
 import { OpenComponent } from './open/open.component';
 import { NumberComponent } from './number/number.component';
+import { AppointComponent } from './appoint/appoint.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
 
 @Component({
   selector: 'app-list',
@@ -30,6 +32,16 @@ export class ListComponent implements OnInit {
     continued: {
       title: '续卡',
       component: ContinuedComponent
+    },
+    appoint: {
+      title     : '预约',
+      component : AppointComponent,
+      userInfo  : true
+    },
+    consumption: {
+      title     : '消费',
+      component : ConsumptionComponent,
+      userInfo  : true
     },
     stop: {
       title: '停卡',

@@ -19,14 +19,14 @@ export class RuleComponent implements OnInit {
   constructor(
     private http: HttpService
   ) { 
-    this.http.post('')
+    this.http.post('/reserve/getReserveSetting', {}, false).then(res => res.code == 1000 && (this.ruleSetting = res.result));
   }
 
   ngOnInit() {
   }
 
   save() {
-    this.http.post('/reserve/reserveSetting', this.ruleSetting);
+    this.http.post('/reserve/modifyReserveSetting', { paramJson: JSON.stringify(this.ruleSetting) });
   }
 
 }

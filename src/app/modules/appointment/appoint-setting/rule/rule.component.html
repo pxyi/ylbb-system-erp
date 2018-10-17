@@ -32,10 +32,10 @@
         <nz-form-label nzRequired>预约列表默认排序设置</nz-form-label>
         <nz-form-control>
           <nz-radio-group [(ngModel)]="ruleSetting.timeLimitType">
-            <label nz-radio nzValue="0">关闭</label>
-            <label nz-radio nzValue="1">提前1小时</label>
-            <label nz-radio nzValue="2">提前2小时</label>
-            <label nz-radio nzValue="3">提前3小时</label>
+            <label nz-radio [nzValue]="0">关闭</label>
+            <label nz-radio [nzValue]="1">提前1小时</label>
+            <label nz-radio [nzValue]="2">提前2小时</label>
+            <label nz-radio [nzValue]="3">提前3小时</label>
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>

@@ -116,6 +116,7 @@ export interface QueryNode {
   options?    : any[];
   optionsUrl? : string;
   optionKey?  : OptionsKey;
+  ranges?     : Object;
   placeholder?: string | string[];
   isHide?     : boolean;
 }

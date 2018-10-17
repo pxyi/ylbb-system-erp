@@ -56,15 +56,22 @@ export class ListComponent implements OnInit {
       label       : '预约状态',
       key         : 'reserveStatus',
       type        : 'select',
-      options     : [ { name: '预约中', id: 0 }, { name: '已撤销', id: 1 }, { name: '已完成', id: 2 } ],
-      isHide      : true
+      options     : [ { name: '预约中', id: 0 }, { name: '已撤销', id: 1 }, { name: '已完成', id: 2 } ]
     },
     {
       label       : '预约日期',
       key         : 'appointmentDate',
       valueKey    : ['startDate', 'endDate'],
       type        : 'rangepicker',
-      isHide      : true
+      ranges      : { 
+                      '今天': [new Date(), new Date()], 
+                      '明天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000), new Date(new Date().getTime() + 60 * 60 * 24 * 1000)],
+                      '第三天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 2), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 2)],
+                      '第四天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 3), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 3)],
+                      '第五天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 4), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 4)],
+                      '第六天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 5), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 5)],
+                      '第七天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 6), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 6)],
+                    }
     },
     {
       label       : '预约时段',
