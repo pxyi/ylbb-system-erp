@@ -1,0 +1,154 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>商品类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="type" nzPlaceHolder="请选择商品类型">
+            <nz-option nzLabel="服务" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="商品" [nzValue]="1"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="name">{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称" formControlName="name" id="name">
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('duplicated')">该{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称已存在</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').pending">
+            <i class="anticon anticon-spin anticon-loading"></i>正在校验{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称是否存在...</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <!-- 服务项 -->
+  <ng-container *ngIf="formGroup.get('type').value == 0">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>业务类型</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="chargeType" nzPlaceHolder="请选择业务类型">
+              <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('chargeType').dirty && formGroup.get('chargeType').hasError('required')">请选择业务类型！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>扣卡次</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="cardNum" nzPlaceHolder="请选择扣卡次">
+              <nz-option *ngFor="let option of [0,1,2,3,4,5,6,7,8,9,10]" [nzLabel]="option" [nzValue]="option"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- 商品项 -->
+  <ng-container *ngIf="formGroup.get('type').value == 1">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="stockPrice">进货价</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入进货价" formControlName="stockPrice" id="stockPrice">
+            <nz-form-explain *ngIf="formGroup.get('stockPrice').dirty && formGroup.get('stockPrice').hasError('required')">请输入进货价！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="price">销售价</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入销售价" formControlName="price" id="price">
+            <nz-form-explain *ngIf="formGroup.get('price').dirty && formGroup.get('price').hasError('required')">请输入销售价！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>是否支持库存</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="inventory" nzPlaceHolder="请选择是否支持库存">
+              <nz-option nzLabel="支持" [nzValue]="true"></nz-option>
+              <nz-option nzLabel="不支持" [nzValue]="false"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>是否支持提成</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="commission" nzPlaceHolder="请选择是否支持提成">
+              <nz-option nzLabel="支持" [nzValue]="true"></nz-option>
+              <nz-option nzLabel="不支持" [nzValue]="false"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>是否设为默认</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="defaultTag" nzPlaceHolder="请选择是否设为默认">
+            <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>商品状态</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="status" nzPlaceHolder="请选择商品状态">
+            <nz-option nzLabel="启用" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="禁用" [nzValue]="-1"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>是否计积分</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="integral" nzPlaceHolder="请选择是否计积分">
+            <nz-option nzLabel="计积分" [nzValue]="1"></nz-option>
+            <nz-option nzLabel="不计积分" [nzValue]="0"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="introduction">商品说明</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入商品说明" formControlName="introduction" id="introduction" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

@@ -1,6 +1,7 @@
 import { HttpService } from './../../../ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { TableComponent } from 'src/app/ng-relax/components/table/table.component';
 
 @Component({
   selector: 'app-template',
@@ -8,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
+
+  @ViewChild('table') table: TableComponent
+
   queryNode = [
     {
       label       : '标题',
@@ -29,7 +33,7 @@ export class TemplateComponent implements OnInit {
     this.formGroup = this.fb.group({
       id: [],
       title: [, [Validators.required]],
-      content: [, [Validators.required]],
+      memo: [, [Validators.required]],
     });
   }
 
@@ -43,7 +47,7 @@ export class TemplateComponent implements OnInit {
   }
 
   deleteTemplate(id) {
-    
+    this.http.post('/smsTemplate/delete', { paramJson: JSON.stringify({ id }) }).then(_ => this.table._request());
   }
   saveTemplate() {
     if (this.formGroup.invalid) {
@@ -53,9 +57,13 @@ export class TemplateComponent implements OnInit {
       }
     } else {
       this.saveLoading = true;
-      this.http.post('param', {
+      this.http.post('/smsTemplate/modify', {
         paramJson: JSON.stringify(this.formGroup.value)
-      }).then(res => {}).catch(err => {});
+      }).then(res => {
+        this.table._request();
+        this.saveLoading = false;
+        this.showDrawer = false;
+      }).catch(err => this.saveLoading = false);
     }
   }
 

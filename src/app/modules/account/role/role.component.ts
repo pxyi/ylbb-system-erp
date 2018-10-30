@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListPageComponent } from '../../../ng-relax/components/list-page/list-page.component';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TheadNode } from '../../../ng-relax/components/table/table.component';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
 
 @Component({
@@ -20,18 +19,14 @@ export class RoleComponent implements OnInit {
     {
       label: '角色代码',
       type: 'input',
-      key: 'code',
-      placeholder: '请输入角色代码'
+      key: 'code'
     },
     {
       label: '角色名称',
       type: 'input',
-      key: 'name',
-      placeholder: '请输入角色名称'
+      key: 'name'
     }
   ]
-
-  tableThead: TheadNode[] | string[] = ['角色名称', '角色代码', '创建日期', '备注', '状态', '操作'];
 
   constructor(
     private http : HttpService,

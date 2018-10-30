@@ -1,0 +1,61 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/commodity/getStoreCommoditielist"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '图标', '名称', '进货价', '销售价', '计费方式', '提成', '库存', '当前库存', '累计销量', '累计进货', '累计自用', '计积分', '是否默认', '业务类型', '状态', '卡次', { right: 0, name: '操作'} ]"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaBtns>
+      <!-- <div class="ea-button-group" style="margin-bottom: 16px;">
+        <button nz-button [nzType]="'primary'" (click)="add()">新增</button>
+        <button nz-button (click)="warehousing()">入库</button>
+        <button nz-button (click)="selfuse()">自用</button>
+        <button nz-button (click)="update()">修改</button>
+        <button nz-button nz-popconfirm nzTitle="确定要删除此商品吗？" (nzOnConfirm)="delete()">删除</button>
+        <button nz-button (click)="default()">设为/取消默认</button>
+        <button nz-button (click)="status()">启用/禁用</button>
+      </div> -->
+      <button nz-button nzType="dashed" style="width: 100%" (click)="update()"><i class="anticon anticon-plus"></i>新增商品</button>
+    </ng-template>
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.img }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.stockPrice | currency: '￥' }}</td>
+      <td>{{ data.price | currency: '￥' }}</td>
+      <td>{{ data.chargeType == 0 ? '计次' : '计金额' }}</td>
+      <td>{{ data.commission ? '支持' : '不支持' }}</td>
+      <td>{{ data.inventory ? '支持' : '不支持' }}</td>
+      <td>{{ data.stock }}</td>
+      <td>{{ data.totalSale }}</td>
+      <td>{{ data.totalStock }}</td>
+      <td>{{ data.selfUse }}</td>
+      <td>{{ data.integral == 0 ? '不计积分' : '记积分' }}</td>
+      <td>{{ data.defaulttag == 0 ? '否' : '是' }}</td>
+      <td>{{ data.categoryName }}</td>
+      <td><nz-tag [nzColor]="data.status == -1 ? '#f50' : '#2db7f5'">{{ data.status == -1 ? '禁用' : '启用' }}</nz-tag></td>
+      <td>{{ data.cardNum }}</td>
+      <td [nzRight]="0">
+        <a href="javascript:;" (click)="update(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-dropdown>
+          <a nz-dropdown>更多
+            <i class="anticon anticon-down"></i>
+          </a>
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <a nz-popconfirm nzTitle="确认删除此商品吗？" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="delete(data.id)">删除</a>
+            </li>
+            <li nz-menu-item *ngIf="data.type == 1">
+              <a (click)="warehousing(data)">入库</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="selfuse(data)">自用</a>
+            </li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

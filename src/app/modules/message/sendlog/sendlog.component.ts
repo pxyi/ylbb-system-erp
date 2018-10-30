@@ -1,6 +1,6 @@
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { AppState } from './../../../core/reducers/reducers-config';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -10,23 +10,19 @@ import { Store } from '@ngrx/store';
 })
 export class SendlogComponent implements OnInit {
 
-  @ViewChild('breadcrumbTmpt') breadcrumbTmpt: TemplateRef<any>;
-
-  selectIndex: number = 0;
-
   constructor(
     private store: Store<AppState>
   ) { }
 
   ngOnInit() {
-    this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
+    
   }
 
   indexChange() {
-    console.log(this.selectIndex)
+    
   }
 
-  shortQueryNode: QueryNode[] = [
+  queryNode: QueryNode[] = [
     {
       label : '接收手机号',
       key   : 'mobile',

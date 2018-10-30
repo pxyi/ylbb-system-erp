@@ -179,17 +179,17 @@ export const MenuConfig = [
     icon  : 'anticon-message',
     children : [
       {
-        title : '消息发送',
+        title : '短信发送',
         key   : '/home/message/sendout',
         isLeaf: true
       },
       {
-        title : '消息模板配置',
+        title : '短信模板配置',
         key   : '/home/message/template',
         isLeaf: true
       },
       {
-        title : '消息发送日志',
+        title : '短信发送日志',
         key   : '/home/message/sendlog',
         isLeaf: true
       }
@@ -219,6 +219,23 @@ export const MenuConfig = [
       {
         title : '社区管理',
         key   : '/home/configuration/community',
+        isLeaf: true
+      }
+    ]
+  },
+  {
+    title : '商品管理',
+    key   : '/home/commodity',
+    icon  : 'anticon-tool',
+    children: [
+      {
+        title : '商品列表',
+        key   : '/home/commodity/list',
+        isLeaf: true
+      },
+      {
+        title: '库存管理',
+        key: '/home/commodity/stock',
         isLeaf: true
       }
     ]

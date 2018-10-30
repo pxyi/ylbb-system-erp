@@ -45,7 +45,7 @@
     <td>{{ data.online == 1 ? '可以' : '不可以' }}</td>
     <td>
       <button (click)="enable(data.id)" nz-button nzSize="small" nzType="primary" *ngIf="data.status == -1">启用</button>
-      <button nz-popconfirm nzTitle="确认禁用该泳师吗?" (nzOnConfirm)="disable(data.id)" nz-button nzSize="small" nzType="danger" *ngIf="data.status != -1">禁用</button>
+      <button nz-popconfirm nzTitle="确认禁用该泳师吗?" (nzOnConfirm)="disable(data.id)" nz-button nzSize="small" nzType="danger" *ngIf="data.status != -1  && data.name != '到店安排'">禁用</button>
     </td>
   </ng-template>
 </div>

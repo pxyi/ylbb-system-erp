@@ -26,7 +26,8 @@ export class CurriculumComponent implements OnInit {
     {
       label       : '服务老师',
       key         : 'teacherName',
-      type        : 'input'
+      type        : 'select',
+      optionsUrl  : '/member/getStoreTeachers',
     },
     {
       label       : '课程类型',

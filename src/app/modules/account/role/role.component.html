@@ -2,7 +2,13 @@
   <ng-template #EaBtns>
     <button nz-button nzType="dashed" nzBlock (click)="openCreate()"><i class="anticon anticon-plus"></i>新增角色</button>
   </ng-template>
-  <ea-list-page #EaListPage url="/roleManagement/list" [queryNode]="queryNode" [tableThead]="tableThead" [allowSpace]="false" [EaTableTbodyTr]="EaTableTbodyTr"
+  <ea-list-page 
+    #EaListPage 
+    url="/roleManagement/list" 
+    [queryNode]="queryNode" 
+    [tableThead]="['角色名称', '角色代码', '创建日期', '备注', '状态', '操作']" 
+    [allowSpace]="false" 
+    [EaTableTbodyTr]="EaTableTbodyTr"
     [EaBtns]="EaBtns">
     <ng-template #EaTableTbodyTr let-data>
       <td>{{ data.name }}</td>

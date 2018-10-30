@@ -1,3 +1,30 @@
-<p>
-  sendout works!
-</p>
+<ng-template #breadcrumbTmpt>
+  <div style="position: absolute; top: 50px; line-height: 30px; right: 24px;">
+  目前短信剩余条数：
+  <span style="font-size: 24px;margin-right: 12px;">{{ smsBalance }}</span>
+  <a routerLink="/home/payment">去购买</a>
+  </div>
+</ng-template>
+
+<div class="container">
+  <ea-query [node]="queryNode" (onSubmit)="query($event)"></ea-query>
+</div>
+
+<nz-card [style.margin-top]="'24px'" [nzLoading]="queryLoading" nzTitle="短信发送" [nzExtra]="extraTemplate">
+  <ng-template #extraTemplate>
+    <a (click)="sendout()">确认发送</a>
+  </ng-template>
+  <nz-transfer
+      [nzDataSource]="transferList"
+      nzShowSearch
+      [nzTitles]="['客户列表', '待发送短信列表']"
+      [nzListStyle]="{'width.px': 500, 'height.px': 500}"
+      (nzChange)="change($event)"
+      [nzRender]="render">
+      <ng-template #render let-item>
+        {{ item.name || '暂无' }}
+        <nz-divider nzType="vertical"></nz-divider>
+        {{ item.mobilePhone }}
+      </ng-template>
+    </nz-transfer>
+</nz-card>

@@ -120,6 +120,12 @@ const routes: Routes = [
         data: { title: '人力资源' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/human-resources/human-resources.module#HumanResourcesModule'
+      },
+      {
+        path: 'commodity',
+        data: { title: '商品管理' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/commodity/commodity.module#CommodityModule'
       }
     ]
   },

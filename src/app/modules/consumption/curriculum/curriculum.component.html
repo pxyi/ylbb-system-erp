@@ -10,9 +10,10 @@
       <td>{{ data.cardCode }}</td>
       <td>{{ data.memberName }}</td>
       <td>{{ data.memberNick }}</td>
-      <td>{{ data.swimTeacher }}</td>
+      <td>{{ data.teacherName }}</td>
       <td>{{ data.createTime }}</td>
-      <td>{{ data.type }}</td>
+      <td>{{ data.type == 1 ? '国学' : data.type == 2 ? '双语' : data.type == 3 ? '数学' : data.type == 4 ? '儿歌' : data.type == 5 ? '颜色' :
+      data.type == 6 ? '认识' : data.type == 7 ? '英语对话' : data.type == 8 ? '智力开发游戏' : '其他' }}</td>
       <td>{{ data.remarks }}</td>
       <td>
         <a (click)="formGroup.patchValue(data); showDrawer = true;">编辑</a>

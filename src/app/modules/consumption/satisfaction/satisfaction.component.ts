@@ -23,7 +23,7 @@ export class SatisfactionComponent implements OnInit {
       label       : '操作员',
       key         : 'accountId',
       type        : 'select',
-      optionsUrl  : '/tongka/teacherList'
+      optionsUrl  : '/common/getAccountList '
     },
     {
       label       : '操作日期',

@@ -1,0 +1,11 @@
+:host ::ng-deep {
+  nz-transfer {
+    display: flex;
+    nz-transfer-list {
+      flex: 1;
+    }
+    .ant-transfer-operation {
+      margin-top: 220px;
+    }
+  }
+}
