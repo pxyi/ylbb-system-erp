@@ -6,6 +6,7 @@ import { MessageRoutingModule } from './message-routing.module';
 import { SendoutComponent } from './sendout/sendout.component';
 import { TemplateComponent } from './template/template.component';
 import { SendlogComponent } from './sendlog/sendlog.component';
+import { FormComponent } from './sendout/form/form.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { SendlogComponent } from './sendlog/sendlog.component';
     MessageRoutingModule,
     NgRelaxModule
   ],
-  declarations: [SendoutComponent, TemplateComponent, SendlogComponent]
+  declarations: [SendoutComponent, TemplateComponent, SendlogComponent, FormComponent],
+  entryComponents: [FormComponent]
 })
 export class MessageModule { }

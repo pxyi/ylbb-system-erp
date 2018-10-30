@@ -1,3 +1,5 @@
+import { FormComponent } from './form/form.component';
+import { NzDrawerService, NzMessageService } from 'ng-zorro-antd';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { HttpService } from './../../../ng-relax/services/http.service';
 import { AppState } from './../../../core/reducers/reducers-config';
@@ -92,7 +94,9 @@ export class SendoutComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private http: HttpService
+    private http: HttpService,
+    private drawer: NzDrawerService,
+    private message: NzMessageService
   ) { 
     this.http.post('/smsBalance/balance', {}, false).then(res => this.smsBalance = res.result)
   }
@@ -124,7 +128,16 @@ export class SendoutComponent implements OnInit {
 
 
   sendout() {
-    
+    if (!this.selectList.length) {
+      this.message.warning('请选择需要发送的手机号码')
+    } else {
+      this.drawer.create({
+        nzWidth: 720,
+        nzTitle: '发送短信',
+        nzContent: FormComponent,
+        nzContentParams: { phoneList: this.selectList }
+      });
+    }
   }
 
 
