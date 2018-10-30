@@ -87,20 +87,12 @@ export class ListComponent implements OnInit {
     this.http.post('/commodity/removeCommodity', { id }).then(res => this.listPage.eaTable._request());
   }
 
-  default() {
-    if (!this.checkedItems[0]) {
-      this.message.warning('请选择设置默认状态的商品');
-    } else {
-
-    }
+  changeStatus(id, status) {
+    this.http.post('/commodity/setStatus', { id, status }).then(res => this.listPage.eaTable._request())
   }
 
-  status() {
-    if (!this.checkedItems[0]) {
-      this.message.warning('请选择修改状态的商品');
-    } else {
-
-    }
+  changeDafulat(id, defaultTag) {
+    this.http.post('/commodity/setDefaultTag', { id, defaultTag }).then(res => this.listPage.eaTable._request())
   }
  
 }

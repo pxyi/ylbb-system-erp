@@ -50,8 +50,20 @@
             <li nz-menu-item *ngIf="data.type == 1">
               <a (click)="warehousing(data)">入库</a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item *ngIf="data.type == 1">
               <a (click)="selfuse(data)">自用</a>
+            </li>
+            <li nz-menu-item *ngIf="data.status == -1">
+              <a (click)="changeStatus(data.id, 0)">启用</a>
+            </li>
+            <li nz-menu-item *ngIf="data.status != -1">
+              <a (click)="changeStatus(data.id, 1)">禁用</a>
+            </li>
+            <li nz-menu-item *ngIf="data.defaulttag == 0">
+              <a (click)="changeDafulat(data.id, 1)">设为默认</a>
+            </li>
+            <li nz-menu-item *ngIf="data.defaulttag != 0">
+              <a (click)="changeDafulat(data.id, 0)">取消默认</a>
             </li>
           </ul>
         </nz-dropdown>

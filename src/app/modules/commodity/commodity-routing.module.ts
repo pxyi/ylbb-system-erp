@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'stock',
-    data: { title: '客户列表' },
+    data: { title: '库存管理' },
     component: StockComponent,
     canActivate: [ AuthGuardService ]
   }

@@ -33,7 +33,7 @@ export class SelfuseComponent implements OnInit {
       stockPrice: [{ value: this.commodityInfo.stockPrice, disabled: true }],
       price: [{ value: this.commodityInfo.price, disabled: true }],
       dqstock: [{ value: this.commodityInfo.stock, disabled: true }],
-      totalStock: [{ value: this.commodityInfo.totalStock, disabled: true }],
+      selfUse: [{ value: this.commodityInfo.selfUse, disabled: true }],
       introduction: [{ value: this.commodityInfo.introduction, disabled: true }],
 
       stock: [, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],

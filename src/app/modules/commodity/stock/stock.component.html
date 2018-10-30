@@ -1,3 +1,11 @@
-<p>
-  stock works!
-</p>
+<ng-template #breadcrumb>
+  <nz-tabset [(nzSelectedIndex)]="tabIndex">
+    <nz-tab nzTitle="商品库存台账"></nz-tab>
+    <nz-tab nzTitle="商品库存日报"></nz-tab>
+  </nz-tabset>
+</ng-template>
+
+<div class="container">
+  <app-ledger *ngIf="tabIndex == 0"></app-ledger>
+  <app-daily *ngIf="tabIndex == 1"></app-daily>
+</div>
