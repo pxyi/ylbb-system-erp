@@ -294,6 +294,17 @@ export const MenuConfig = [
         title : '员工管理',
         key   : '/home/humanresources/staff',
         isLeaf: true
+      },
+      {
+        title : '绩效管理',
+        key   : '/home/humanresources/achievements',
+        children: [
+          {
+            title : '考勤情况',
+            key   : '/home/humanresources/achievements/checkwork',
+            isLeaf: true
+          }
+        ]
       }
     ]
   },

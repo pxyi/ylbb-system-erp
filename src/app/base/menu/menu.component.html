@@ -22,9 +22,21 @@
             </span>
             <ul>
               <ng-container *ngFor="let cdItem of item.children">
-                <li *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == cdItem.key">
-                  <span>{{ cdItem.title }}</span>
-                </li>
+                <ng-container *ngIf="cdItem.isLeaf">
+                  <li *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == cdItem.key">
+                    <span>{{ cdItem.title }}</span>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="!cdItem.isLeaf && cdItem.children">
+                  <li nz-submenu *ngIf="roleAllowPath.indexOf(cdItem.key) > -1">
+                    <span title>{{ cdItem.title }}</span>
+                    <ul>
+                      <ng-container *ngFor="let twoItem of cdItem.children">
+                        <li nz-menu-item [routerLink]="[twoItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == twoItem.key">{{ twoItem.title }}</li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                </ng-container>
               </ng-container>
             </ul>
           </li>
