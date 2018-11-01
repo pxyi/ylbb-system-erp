@@ -7,6 +7,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { PositionSalaryComponent } from './position-salary/position-salary.component';
 import { CheckworkComponent } from './achievements/checkwork/checkwork.component';
 import { ExtractComponent } from './achievements/extract/extract.component';
+import { StatisticsComponent } from './achievements/statistics/statistics.component';
+import { CommissionComponent } from './achievements/commission/commission.component';
+import { SatisfactionComponent } from './achievements/satisfaction/satisfaction.component';
 
 const routes: Routes = [
   {
@@ -49,7 +52,25 @@ const routes: Routes = [
         data: { title: '提成明细' },
         component: ExtractComponent,
         canActivate: [ AuthGuardService ],
-      }
+      },
+      {
+        path: 'statistics',
+        data: { title: '提成统计' },
+        component: StatisticsComponent,
+        canActivate: [ AuthGuardService ],
+      },
+      {
+        path: 'satisfaction',
+        data: { title: '满意度管理' },
+        component: SatisfactionComponent,
+        canActivate: [ AuthGuardService ],
+      },
+      {
+        path: 'commission',
+        data: { title: '提成阶梯管理' },
+        component: CommissionComponent,
+        canActivate: [ AuthGuardService ],
+      },
     ]
   }
 ];

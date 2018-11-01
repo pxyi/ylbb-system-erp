@@ -7,7 +7,7 @@
       { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
       { label: '扣减/增加', key: 'type', type: 'select', options: [ {name: '扣减', id: 0}, { name: '增加', id: 1 } ] },
       { label: '考勤类型', key: 'category', type: 'select', optionsUrl: '/member/getStoreTeachers' },
-      { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
+      { label: '起始日期', key: 'date', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
     ]"
     [tableThead]="['标示','员工姓名','考勤类型','记录时间','扣减分值','操作']"
     [EaTableTbodyTr]="EaTableTbodyTr"

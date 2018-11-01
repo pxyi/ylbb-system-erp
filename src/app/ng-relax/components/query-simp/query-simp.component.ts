@@ -40,7 +40,7 @@ export class QuerySimpComponent implements OnInit {
         this._queryForm.addControl(res.valueKey[0], new FormControl(res.default ? res.default[0] : ''));
         this._queryForm.addControl(res.valueKey[1], new FormControl(res.default ? res.default[1] : ''));
       } else {
-        this._queryForm.addControl(res.key, new FormControl(res.default || null));
+        this._queryForm.addControl(res.key, new FormControl(typeof res.default !== 'undefined' ? res.default : null));
       }
       if (res.type === 'select' || res.type === 'radio') {
         res.optionKey = res.optionKey || { label: 'name', value: 'id' };

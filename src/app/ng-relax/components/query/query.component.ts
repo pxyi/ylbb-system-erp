@@ -46,7 +46,7 @@ export class QueryComponent implements OnInit {
         this._queryForm.addControl(res.valueKey[0], new FormControl(res.default ? res.default[0] : null));
         this._queryForm.addControl(res.valueKey[1], new FormControl(res.default ? res.default[1] : null));
       } else {
-        this._queryForm.addControl(res.key, new FormControl(res.default || null));
+        this._queryForm.addControl(res.key, new FormControl(typeof res.default !== 'undefined' ? res.default : null));
       }
       if (res.type === 'select') {
         res.optionKey = res.optionKey || { label: 'name', value: 'id' };

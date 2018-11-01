@@ -314,6 +314,21 @@ export const MenuConfig = [
             key   : '/home/humanresources/achievements/extract',
             isLeaf: true
           },
+          {
+            title : '提成统计',
+            key   : '/home/humanresources/achievements/statistics',
+            isLeaf: true
+          },
+          {
+            title : '满意度管理',
+            key   : '/home/humanresources/achievements/satisfaction',
+            isLeaf: true
+          },
+          {
+            title : '提成阶梯管理',
+            key   : '/home/humanresources/achievements/commission',
+            isLeaf: true
+          },
         ]
       }
     ]

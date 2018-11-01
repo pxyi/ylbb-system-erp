@@ -14,6 +14,8 @@ import { DeductionComponent } from './achievements/deduction/deduction.component
 import { DeductionUpdateComponent } from './achievements/deduction/deduction-update/deduction-update.component';
 import { ExtractComponent } from './achievements/extract/extract.component';
 import { StatisticsComponent } from './achievements/statistics/statistics.component';
+import { SatisfactionComponent } from './achievements/satisfaction/satisfaction.component';
+import { CommissionComponent } from './achievements/commission/commission.component';
 
 @NgModule({
   imports: [
@@ -21,7 +23,7 @@ import { StatisticsComponent } from './achievements/statistics/statistics.compon
     HumanResourcesRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent, UploadComponent, CheckworkComponent, CheckworkUpdateComponent, DeductionComponent, DeductionUpdateComponent, ExtractComponent, StatisticsComponent],
+  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent, UploadComponent, CheckworkComponent, CheckworkUpdateComponent, DeductionComponent, DeductionUpdateComponent, ExtractComponent, StatisticsComponent, SatisfactionComponent, CommissionComponent],
   entryComponents: [UpdateComponent, UploadComponent, CheckworkUpdateComponent, DeductionUpdateComponent]
 })
 export class HumanResourcesModule { }

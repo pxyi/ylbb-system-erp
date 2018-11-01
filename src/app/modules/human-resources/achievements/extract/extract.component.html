@@ -1,3 +1,13 @@
+<ng-template #breadcrumbTmpt>
+  <button class="reset-extract" nz-button nzType="primary" nz-popover nzTrigger="click" [(nzVisible)]="showPopover" nzTitle="请选择起止日期" [nzContent]="contentTemplate" nzPlacement="bottomRight">刷新提成明细</button>
+  <ng-template #contentTemplate>
+    <div>
+      <nz-range-picker [(ngModel)]="resetTime" nzFormat="yyyy-MM-dd" style="width: 300px;"></nz-range-picker>
+      <button nz-button nzType="primary" nzGhost style="display: block; width: 300px; margin-top: 16px;" [disabled]="!resetTime || !resetTime[0]" [nzLoading]="resetLoading" (click)="resetExtract()">确定执行</button>
+    </div>
+  </ng-template>
+</ng-template>
+
 <div class="container">
   <ea-list-page 
     #listPage
@@ -5,7 +15,7 @@
     [allowSpace]="false"
     [queryNode]="[
       { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
-      { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
+      { label: '起始日期', key: 'date', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
     ]"
     [tableThead]="['员工姓名','宝宝姓名','满意度','满意度提成基数','级别提成比例','服务次数提成比例','提成','服务时间','操作']"
     [EaTableTbodyTr]="EaTableTbodyTr">

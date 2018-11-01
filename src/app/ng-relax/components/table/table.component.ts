@@ -89,7 +89,8 @@ export class TableComponent implements OnInit {
     }).subscribe(res => {
       this._pageInfo.loading = false;
       if (res.code == 1000) {
-        this.dataSet = res.result.list;
+        this.dataSet = res.result.list || res.result;
+        !res.result.list && (this.showPage = false);
         this._pageInfo.pageNum = res.result.pageNum;
         this._pageInfo.totalPage = res.result.totalPage;
 

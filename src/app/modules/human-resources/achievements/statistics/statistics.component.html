@@ -1,7 +1,44 @@
 <div class="container">
-  <ea-query [node]="[
-    { label: '统计方式', key: 'statictype', type: 'select', options: [{name: '总计', id: 0}, {name: '按日', id: 1}] },
-    { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
-    { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
-  ]"></ea-query>
+  <ea-query #eaQuery [node]="queryNode" (onSubmit)="log($event)"></ea-query>
 </div>
+
+
+<nz-table #basicTable [nzData]="dataSet">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>员工姓名</th>
+      <th>服务次数</th>
+      <th>原提成金额</th>
+      <th>提成总额</th>
+      <th>增长金额</th>
+      <th>增长比例</th>
+      <th>表扬次数</th>
+      <th>表扬率</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+      <td>{{ data.xxxx }}</td>
+    </tr>
+    <tr>
+      <td>总计</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</nz-table>
