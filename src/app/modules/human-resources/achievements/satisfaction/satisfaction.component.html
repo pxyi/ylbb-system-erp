@@ -1,19 +1,29 @@
 <div class="container">
   <ea-list-page #listPage url="/bonusSatisfaction/getBonusSatisfactionList" [allowSpace]="false"
-    [tableThead]="['门店满意度','满意度提成系数','满意度职级','修改时间','修改人','操作']" 
+    [tableThead]="['门店满意度','满意度提成系数','满意度职级','修改时间','修改人']" 
     [EaTableTbodyTr]="EaTableTbodyTr" [EaBtns]="EaBtns">
     <ng-template #EaBtns>
-      <button nz-button nzType="dashed" style="width: 100%;" (click)="update()"><i class="anticon anticon-plus"></i>新增考勤</button>
+      <button nz-button nzType="dashed" style="width: 100%;" (click)="update()"><i class="anticon anticon-plus"></i>新增满意度职级</button>
     </ng-template>
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.satisfaction }}</td>
-      <td>{{ data.ratio }}</td>
+      <td style="position: relative">
+        <ng-container *ngIf="!data.edit">
+          {{data.ratio}}
+          <i nz-icon type="edit" class="editable-cell-icon" (click)="data.edit = true"></i>
+        </ng-container>
+        <ng-container *ngIf="data.edit">
+          <nz-input-group [nzSuffix]="suffixIconButton">
+            <input type="text" nz-input [(ngModel)]="data.ratio" placeholder="请输入满意度提成系数">
+            <ng-template #suffixIconButton>
+              <i nz-icon [type]="data.loading ? 'loading' : 'save'" (click)="saveRatio(data)"></i>
+            </ng-template>
+          </nz-input-group>
+        </ng-container>
+      </td>
       <td>{{ data.rankShortName }}</td>
       <td>{{ data.modifyTime }}</td>
       <td>{{ data.modifyUser }}</td>
-      <td>
-        <a (click)="update(data)">编辑</a>
-      </td>
     </ng-template>
   </ea-list-page>
 </div>

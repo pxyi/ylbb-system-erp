@@ -3,12 +3,12 @@
  * @author phuhoang
  */
 
-export function CreateDrawer(title, component) {
+export function CreateDrawer(title, component, width?) {
   return function (target, propertyKey) {
     target[propertyKey] = function (dataInfo = {}) {
       const drawer = this.drawer.create({
         nzTitle: title,
-        nzWidth: 720,
+        nzWidth: width || 720,
         nzContent: component,
         nzContentParams: { dataInfo }
       });

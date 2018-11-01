@@ -1,3 +1,6 @@
+import { DetailComponent } from './wage/detail/detail.component';
+import { InquireComponent } from './wage/inquire/inquire.component';
+import { AdjustmentComponent } from './wage/adjustment/adjustment.component';
 import { DeductionComponent } from './achievements/deduction/deduction.component';
 import { StaffComponent } from './staff/staff.component';
 import { DepartmentComponent } from './department/department.component';
@@ -10,6 +13,7 @@ import { ExtractComponent } from './achievements/extract/extract.component';
 import { StatisticsComponent } from './achievements/statistics/statistics.component';
 import { CommissionComponent } from './achievements/commission/commission.component';
 import { SatisfactionComponent } from './achievements/satisfaction/satisfaction.component';
+import { AssessmentComponent } from './wage/assessment/assessment.component';
 
 const routes: Routes = [
   {
@@ -69,6 +73,37 @@ const routes: Routes = [
         path: 'commission',
         data: { title: '提成阶梯管理' },
         component: CommissionComponent,
+        canActivate: [ AuthGuardService ],
+      },
+    ]
+  },
+  {
+    path: 'wage',
+    data: { title: '工资管理' },
+    canActivate: [ AuthGuardService ],
+    children: [
+      {
+        path: 'assessment',
+        data: { title: '考核项目配置' },
+        component: AssessmentComponent,
+        canActivate: [ AuthGuardService ],
+      },
+      {
+        path: 'adjustment',
+        data: { title: '单月手动调整' },
+        component: AdjustmentComponent,
+        canActivate: [ AuthGuardService ],
+      },
+      {
+        path: 'inquire',
+        data: { title: '单月工资查询' },
+        component: InquireComponent,
+        canActivate: [ AuthGuardService ],
+      },
+      {
+        path: 'detail',
+        data: { title: '单月工资明细查询' },
+        component: DetailComponent,
         canActivate: [ AuthGuardService ],
       },
     ]

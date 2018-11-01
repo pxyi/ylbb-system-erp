@@ -1,10 +1,10 @@
 /**
  * @method 动态添加抽屉组件，点击保存回调方法
- * @param param 请求地址
+ * @param requestPath 请求地址
  * @author phuhoang
  */
 
-export function DrawerRefSave(param) {
+export function DrawerRefSave(requestPath) {
   return function (target, propertyKey) {
     target[propertyKey] = function () {
         if (this.formGroup.invalid) {
@@ -13,14 +13,15 @@ export function DrawerRefSave(param) {
             this.formGroup.controls[i].updateValueAndValidity();
           }
         } else {
-          let params = this.formGroup.value;
+          this.saveLoading = true;
+          let params = JSON.parse(JSON.stringify(this.formGroup.value));
           Object.keys(params).map(res => {
             if (params[res] instanceof Date) {
               params[res] = formatTime(params[res]);
             }
           });
-          this.http.post(param, {
-            paramJson: JSON.stringify(this.formGroup.value)
+          this.http.post(requestPath, {
+            paramJson: JSON.stringify(params)
           }).then(res => {
             this.saveLoading = false;
             this.drawerRef.close(true);

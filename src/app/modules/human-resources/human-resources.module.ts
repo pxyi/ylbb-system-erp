@@ -16,6 +16,11 @@ import { ExtractComponent } from './achievements/extract/extract.component';
 import { StatisticsComponent } from './achievements/statistics/statistics.component';
 import { SatisfactionComponent } from './achievements/satisfaction/satisfaction.component';
 import { CommissionComponent } from './achievements/commission/commission.component';
+import { SatisfactionUpdateComponent } from './achievements/satisfaction/satisfaction-update/satisfaction-update.component';
+import { AssessmentComponent } from './wage/assessment/assessment.component';
+import { AdjustmentComponent } from './wage/adjustment/adjustment.component';
+import { InquireComponent } from './wage/inquire/inquire.component';
+import { DetailComponent } from './wage/detail/detail.component';
 
 @NgModule({
   imports: [
@@ -23,7 +28,7 @@ import { CommissionComponent } from './achievements/commission/commission.compon
     HumanResourcesRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent, UploadComponent, CheckworkComponent, CheckworkUpdateComponent, DeductionComponent, DeductionUpdateComponent, ExtractComponent, StatisticsComponent, SatisfactionComponent, CommissionComponent],
-  entryComponents: [UpdateComponent, UploadComponent, CheckworkUpdateComponent, DeductionUpdateComponent]
+  declarations: [PositionSalaryComponent, DepartmentComponent, StaffComponent, UpdateComponent, UploadComponent, CheckworkComponent, CheckworkUpdateComponent, DeductionComponent, DeductionUpdateComponent, ExtractComponent, StatisticsComponent, SatisfactionComponent, CommissionComponent, SatisfactionUpdateComponent, AssessmentComponent, AdjustmentComponent, InquireComponent, DetailComponent],
+  entryComponents: [UpdateComponent, UploadComponent, CheckworkUpdateComponent, DeductionUpdateComponent, SatisfactionUpdateComponent]
 })
 export class HumanResourcesModule { }

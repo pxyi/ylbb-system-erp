@@ -329,6 +329,32 @@ export const MenuConfig = [
             key   : '/home/humanresources/achievements/commission',
             isLeaf: true
           },
+        ],
+      },
+      {
+        title : '工资管理',
+        key   : '/home/humanresources/wage',
+        children: [
+          {
+            title : '考核项目配置',
+            key   : '/home/humanresources/wage/assessment',
+            isLeaf: true
+          },
+          {
+            title : '单月手动调整',
+            key   : '/home/humanresources/wage/adjustment',
+            isLeaf: true
+          },
+          {
+            title : '单月工资查询',
+            key   : '/home/humanresources/wage/inquire',
+            isLeaf: true
+          },
+          {
+            title : '单月工资明细查询',
+            key   : '/home/humanresources/wage/detail',
+            isLeaf: true
+          }
         ]
       }
     ]

@@ -1,3 +1,22 @@
-<p>
-  commission works!
-</p>
+<nz-card nzTitle="提成阶梯" [nzBordered]="false" [nzExtra]="extraTemplate">
+  <form nz-form nzLayout="vertical">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="8" [nzLg]="12" [nzXl]="8" [nzXXl]="6" *ngFor="let item of bonusRateList">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'rate' + item.name">第{{ item.name }}次提成比例</nz-form-label>
+          <nz-form-control>
+            <input nz-input [name]="'rate' + item.name" type="text" id="'rate' + item.name" [(ngModel)]="item.rate" placeholder="请输入第{{ item.name }}次提成比例">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>
+<ng-template #extraTemplate>
+  <a (click)="add()">新增</a>
+  <nz-divider nzType="vertical"></nz-divider>
+  <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete()">删除</a>
+  <nz-divider nzType="vertical"></nz-divider>
+  <a (click)="save()" *ngIf="!saveLoading">保存</a>
+  <i nz-icon type="loading" theme="outline" *ngIf="saveLoading" style="color: #1890ff;"></i>
+</ng-template>
