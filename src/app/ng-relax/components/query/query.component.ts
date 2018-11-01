@@ -86,6 +86,11 @@ export class QueryComponent implements OnInit {
           queryForm[res.key] = this.datePipe.transform(queryForm[res.key].getTime(), 'yyyy-MM-dd');
         }
       }
+      if (res.type === 'monthpicker') {
+        if (queryForm[res.key]) {
+          queryForm[res.key] = this.datePipe.transform(queryForm[res.key], 'yyyy-MM');
+        }
+      }
       if (res.valueKey) {
         if (res.type === 'rangepicker') {
           if (queryForm[res.key] && queryForm[res.key][0]) {
@@ -110,7 +115,7 @@ export class QueryComponent implements OnInit {
 export interface QueryNode {
   label       : string;
   key         : string;
-  type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker' | 'radio';
+  type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker' | 'radio' | 'monthpicker';
   default?    : any;
   valueKey?   : string[];
   options?    : any[];

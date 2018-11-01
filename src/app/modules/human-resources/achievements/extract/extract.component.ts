@@ -31,9 +31,9 @@ export class ExtractComponent implements OnInit {
   resetLoading: boolean;
 
   resetExtract() {
-    console.log(this.resetTime)
+    this.resetLoading = true;
     let [startDate, endDate] = [this.format.transform(this.resetTime[0], 'yyyy-MM-dd'), this.format.transform(this.resetTime[1], 'yyyy-MM-dd') ];
-    this.http.post('/bonusDetail/refreshBonusDetail', { startDate, endDate }).then(res => {});
+    this.http.post('/bonusDetail/refreshBonusDetail', { startDate, endDate }).then(res => this.resetLoading = false).catch(err => this.resetLoading = false);
   }
 
 }

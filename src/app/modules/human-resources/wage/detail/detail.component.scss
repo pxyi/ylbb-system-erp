@@ -1,0 +1,17 @@
+:host ::ng-deep {
+  .ant-table-wrapper {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 4px;
+  }
+  .ant-table-small>.ant-table-content>.ant-table-body {
+    margin: 0;
+  }
+  .ant-table-title {
+    color: #fff;
+    background-color: #0090ff;
+  }
+}
+th,td {
+  text-align: center !important;
+}

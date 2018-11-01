@@ -10,6 +10,8 @@ export class StatisticsComponent implements OnInit {
 
   nowDate: Date = new Date();
 
+  dataSet: any[] = [];
+
   queryNode: QueryNode[] = [
     { label: '统计方式', key: 'statictype', type: 'select', options: [{ name: '总计', id: 0 }, { name: '按日', id: 1 }], default: 0 },
     { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },

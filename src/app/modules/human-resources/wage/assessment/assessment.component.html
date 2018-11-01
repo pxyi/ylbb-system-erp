@@ -1,3 +1,24 @@
-<p>
-  assessment works!
-</p>
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/payrollCompConfig/getPayrollCompConfigs"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '分类', key: 'type', type: 'select', options: [ {name: '调增配置', id: '调增配置'}, {name: '调减配置', id: '调减配置'}, {name: '保险配置', id: '保险配置'} ] }
+    ]"
+    [tableThead]="['分类','名称','值','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaBtns>
+      <button nz-button nzType="dashed" style="width: 100%;" (click)="update()"><i class="anticon anticon-plus"></i>新增配置</button>
+    </ng-template>
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.type }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.duty }}</td>
+      <td>
+        <a (click)="update(data)">编辑</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

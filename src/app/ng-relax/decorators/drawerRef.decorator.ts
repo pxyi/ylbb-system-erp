@@ -16,7 +16,9 @@ export function DrawerRefSave(requestPath) {
           this.saveLoading = true;
           let params = JSON.parse(JSON.stringify(this.formGroup.value));
           Object.keys(params).map(res => {
-            if (params[res] instanceof Date) {
+            if (res.indexOf('month') > -1) {
+              params[res] = params[res].substr(0, 7);
+            } else if (params[res] instanceof Date) {
               params[res] = formatTime(params[res]);
             }
           });

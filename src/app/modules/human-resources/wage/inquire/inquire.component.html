@@ -1,3 +1,37 @@
-<p>
-  inquire works!
-</p>
+<ng-template #breadcrumbTmpt>
+  <button class="reset-extract" nz-button nzType="primary" nz-popover nzTrigger="click" [(nzVisible)]="showPopover"
+    nzTitle="请选择月份" [nzContent]="contentTemplate" nzPlacement="bottomRight">工资生成</button>
+  <ng-template #contentTemplate>
+    <div>
+      <nz-month-picker [(ngModel)]="generateMonth" nzFormat="yyyy-MM" style="width: 300px;"></nz-month-picker>
+      <button nz-button nzType="primary" nzGhost style="display: block; width: 300px; margin-top: 16px;" [disabled]="!generateMonth"
+        [nzLoading]="generateLoading" (click)="generate()">确定执行</button>
+    </div>
+  </ng-template>
+</ng-template>
+
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/payrollRecord/getPayrollRecords"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '月份', key: 'month', type: 'monthpicker' }
+    ]"
+    [tableThead]="['员工姓名','月份','级别','基本工资','提成','调整','合计','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.month }}</td>
+      <td>{{ data.level }}</td>
+      <td>{{ data.basicWage }}</td>
+      <td>{{ data.commission }}</td>
+      <td>{{ data.other }}</td>
+      <td>{{ data.total }}</td>
+      <td>
+        <a routerLink="/home/humanresources/wage/detail" [queryParams]="{employeeId: data.employeeId, month: data.month}">查看详情</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>
