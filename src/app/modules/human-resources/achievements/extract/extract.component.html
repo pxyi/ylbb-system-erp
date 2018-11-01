@@ -1,0 +1,26 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/bonusDetail/getBonusDetailList"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
+    ]"
+    [tableThead]="['员工姓名','宝宝姓名','满意度','满意度提成基数','级别提成比例','服务次数提成比例','提成','服务时间','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.babyName }}</td>
+      <td>{{ data.satisfaction }}</td>
+      <td>{{ data.satisfactionBonus }}</td>
+      <td>{{ data.bandRate }}</td>
+      <td>{{ data.ladderRate }}</td>
+      <td>{{ data.bonus }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>
+        <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

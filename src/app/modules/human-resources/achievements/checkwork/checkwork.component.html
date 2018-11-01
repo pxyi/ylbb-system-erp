@@ -1,0 +1,29 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/attendance/getAttendanceList"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
+    ]"
+    [tableThead]="['员工姓名','考勤类型','考勤日期','当月工资变更','备注','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaBtns>
+      <button nz-button nzType="dashed" style="width: 100%;" (click)="update()"><i class="anticon anticon-plus"></i>新增考勤</button>
+    </ng-template>
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.compConfigName }}</td>
+      <td>{{ data.workDate }}</td>
+      <td>{{ data.wages }}</td>
+      <td>{{ data.comment }}</td>
+      <td>
+        <a (click)="update(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

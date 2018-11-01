@@ -1,0 +1,7 @@
+<div class="container">
+  <ea-query [node]="[
+    { label: '统计方式', key: 'statictype', type: 'select', options: [{name: '总计', id: 0}, {name: '按日', id: 1}] },
+    { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+    { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
+  ]"></ea-query>
+</div>

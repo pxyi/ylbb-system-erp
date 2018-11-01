@@ -24,9 +24,14 @@ export class MenuComponent implements OnInit {
   checkBoxChange() {
     this.checkedNodes = [];
     this.nzTree.getCheckedNodeList().map(res => {
-      if (res.children.length) {
+      if (res.children && res.children.length) {
         res.children.map(cdRes => {
           this.checkedNodes.push(cdRes.key);
+          if (cdRes.children && cdRes.children.length) {
+            cdRes.children.map(twoRes => {
+              this.checkedNodes.push(twoRes.key);
+            })
+          }
         })
       } else {
         this.checkedNodes.push(res.key);

@@ -303,7 +303,17 @@ export const MenuConfig = [
             title : '考勤情况',
             key   : '/home/humanresources/achievements/checkwork',
             isLeaf: true
-          }
+          },
+          {
+            title : '扣分管理',
+            key   : '/home/humanresources/achievements/deduction',
+            isLeaf: true
+          },
+          {
+            title : '提成明细',
+            key   : '/home/humanresources/achievements/extract',
+            isLeaf: true
+          },
         ]
       }
     ]

@@ -1,0 +1,62 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>员工</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="employeeId" [nzShowSearch]="true" nzPlaceHolder="请选择员工">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择员工！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>考勤日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker formControlName="workDate" nzPlaceHolder="请选择考勤日期"></nz-date-picker>
+          <nz-form-explain *ngIf="formGroup.get('workDate').dirty && formGroup.get('workDate').hasError('required')">请选择考勤日期！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>考勤类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="reason" nzPlaceHolder="请选择考勤类型">
+            <nz-option *ngFor="let option of payrollList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('reason').dirty && formGroup.get('reason').hasError('required')">请选择考勤类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="wages">当月工资变更</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="扣减请填写负值,如-100表示扣减100元" formControlName="wages" id="wages">
+          <nz-form-explain *ngIf="formGroup.get('wages').dirty && formGroup.get('wages').hasError('required')">请输入当月工资变更！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('wages').dirty && formGroup.get('wages').hasError('pattern')">请输入正确的金额！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

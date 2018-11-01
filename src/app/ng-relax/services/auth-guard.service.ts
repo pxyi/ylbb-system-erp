@@ -10,6 +10,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return new Observable(observer => {
       this.store.select('userInfoState').subscribe(res => {
+        if (res.roleAllowPath.indexOf('**') === -1) {
+          observer.next(true);
+          observer.complete();
+        }
         let stateUrl = state.url.indexOf('/(') > -1 ? state.url.split('/(')[0]
                        : state.url.indexOf('?') > -1 ? state.url.split('?')[0]
                        : state.url;
@@ -25,6 +29,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canLoad(route: Route): Observable<boolean> | boolean {
     return new Observable(observer => {
       this.store.select('userInfoState').subscribe(res => {
+        if (res.roleAllowPath.indexOf('**') === -1) {
+          observer.next(true);
+          observer.complete();
+        }
         if (res.roleAllowPath.indexOf(`/home/${route.path}`) === -1) {
           this.router.navigateByUrl('/system/error/403');
         }

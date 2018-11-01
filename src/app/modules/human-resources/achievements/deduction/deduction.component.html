@@ -1,0 +1,31 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/employeePointsLog/getEmployeePointsLogList"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '扣减/增加', key: 'type', type: 'select', options: [ {name: '扣减', id: 0}, { name: '增加', id: 1 } ] },
+      { label: '考勤类型', key: 'category', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '起始日期', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
+    ]"
+    [tableThead]="['标示','员工姓名','考勤类型','记录时间','扣减分值','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaBtns>
+      <button nz-button nzType="dashed" style="width: 100%;" (click)="update()"><i class="anticon anticon-plus"></i>新增</button>
+    </ng-template>
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.id }}</td>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.compConfigName }}</td>
+      <td>{{ data.recordTime }}</td>
+      <td>{{ data.deductPoints }}</td>
+      <td>
+        <a (click)="update(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

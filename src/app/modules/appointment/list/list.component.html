@@ -26,7 +26,7 @@
       <td>{{ data.teacherName }}</td>
       <td>{{ data.ringName }}</td>
       <td>{{ data.createDate }}</td>
-      <td>{{ data.cancelSource }}</td>
+      <td>{{ data.type == 0 ? '门店' : data.type == 2 ? '会员APP' : data.type == 5 ? '小程序' : '总部活动' }}</td>
       <td>{{ data.isCrossed == 1 ? '是' : '否' }}</td>
       <td>{{ data.reserveCancel/data.reserveTotal | percent }}</td>
       <td>{{ data.cardTypeCategoryName }}</td>

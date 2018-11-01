@@ -5,7 +5,7 @@
   </div>
   <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" nzTheme='dark'>
     <ng-container *ngFor="let item of menuConfig">
-      <ng-container *ngIf="roleAllowPath.indexOf(item.key) > -1">
+      <ng-container *ngIf="roleAllowPath.indexOf(item.key) > -1 || roleAllowPath.indexOf('**') > -1">
         <ng-container *ngIf="item.isLeaf">
           <li nz-menu-item [routerLink]="[item.key]" [nzSelected]="routerState.currentPath == item.key">
             <span title>
@@ -23,16 +23,16 @@
             <ul>
               <ng-container *ngFor="let cdItem of item.children">
                 <ng-container *ngIf="cdItem.isLeaf">
-                  <li *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == cdItem.key">
+                  <li *ngIf="roleAllowPath.indexOf(cdItem.key) > -1 || roleAllowPath.indexOf('**') > -1" nz-menu-item [routerLink]="[cdItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == cdItem.key">
                     <span>{{ cdItem.title }}</span>
                   </li>
                 </ng-container>
                 <ng-container *ngIf="!cdItem.isLeaf && cdItem.children">
-                  <li nz-submenu *ngIf="roleAllowPath.indexOf(cdItem.key) > -1">
+                  <li nz-submenu *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" [nzOpen]="routerState.currentPath.indexOf(cdItem.key) > -1">
                     <span title>{{ cdItem.title }}</span>
                     <ul>
                       <ng-container *ngFor="let twoItem of cdItem.children">
-                        <li nz-menu-item [routerLink]="[twoItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == twoItem.key">{{ twoItem.title }}</li>
+                        <li nz-menu-item *ngIf="roleAllowPath.indexOf(twoItem.key) > -1" [routerLink]="[twoItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == twoItem.key">{{ twoItem.title }}</li>
                       </ng-container>
                     </ul>
                   </li>

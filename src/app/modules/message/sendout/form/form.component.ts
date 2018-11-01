@@ -32,7 +32,7 @@ export class FormComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.fb.group({
       mobilePhones: [this.phoneList.join(',')],
-      type: [0],
+      type: [1],
       template: [],
       content: [, [Validators.required]]
     });
