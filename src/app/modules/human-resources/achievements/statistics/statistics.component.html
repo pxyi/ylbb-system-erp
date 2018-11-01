@@ -1,44 +1,16 @@
 <div class="container">
-  <ea-query #eaQuery [node]="queryNode" (onSubmit)="log($event)"></ea-query>
+  <ea-query #eaQuery [node]="queryNode" (onSubmit)="getData($event)"></ea-query>
+
+  <nz-table #basicTable [nzShowPagination]="false" [nzLoading]="loading" [nzData]="dataSet.content">
+    <thead>
+      <tr>
+        <th *ngFor="let th of dataSet.header">{{ th }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td *ngFor="let item of data">{{ item }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>
-
-
-<nz-table #basicTable [nzData]="dataSet">
-  <thead>
-    <tr>
-      <th>日期</th>
-      <th>员工姓名</th>
-      <th>服务次数</th>
-      <th>原提成金额</th>
-      <th>提成总额</th>
-      <th>增长金额</th>
-      <th>增长比例</th>
-      <th>表扬次数</th>
-      <th>表扬率</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-      <td>{{ data.xxxx }}</td>
-    </tr>
-    <tr>
-      <td>总计</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</nz-table>
