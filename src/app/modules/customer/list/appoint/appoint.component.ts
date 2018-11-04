@@ -72,7 +72,7 @@ export class AppointComponent implements OnInit {
 
 
   _disabledDate(current: Date): boolean {
-    return current && current.getTime() < Date.now();
+    return current && current.getTime() <= Date.now() - 24 * 60 * 60 * 1000;
   }
   _disabledHours(): number[] {
     return [0, 1, 2, 3, 4, 5, 6, 7]

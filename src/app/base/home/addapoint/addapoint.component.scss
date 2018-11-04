@@ -1,0 +1,11 @@
+:host ::ng-deep {
+  nz-date-picker {
+    width: 60% !important;
+  }
+  nz-time-picker {
+    width: 40%;
+  }
+  .ant-calendar-picker {
+    width: 100%;
+  }
+}

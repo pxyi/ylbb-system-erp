@@ -17,6 +17,9 @@ import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.compon
 import { UserInfoResolver } from './core/userInfo-resolver.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HomeComponent } from './base/home/home.component';
+import { AddapointComponent } from './base/home/addapoint/addapoint.component';
+import { AppointDetailComponent } from './base/home/appoint-detail/appoint-detail.component';
+import { ConsumptionComponent } from './base/home/appoint-detail/consumption/consumption.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +31,12 @@ import { HomeComponent } from './base/home/home.component';
     ContentComponent,
     FooterComponent,
     BreadcrumbComponent,
-    HomeComponent
+    HomeComponent,
+    AddapointComponent,
+    AppointDetailComponent,
+    ConsumptionComponent
   ],
+  entryComponents: [AddapointComponent, AppointDetailComponent, ConsumptionComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
