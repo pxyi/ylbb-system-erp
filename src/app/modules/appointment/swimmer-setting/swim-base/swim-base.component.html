@@ -1,8 +1,8 @@
 <nz-card [nzBordered]="false" nzTitle="泳师基础排班表" [nzExtra]="extraTemplate" [style.margin-bottom]="'24px'" [nzLoading]="baseLoading">
   <ng-template #extraTemplate>
-    <a (click)="save()" *ngIf="scheduleStatus != 0">保存排班数据</a>
+    <button nz-button nzSize="small" nzType="primary" (click)="save()" *ngIf="scheduleStatus != 0">保存排班数据</button>
     <nz-divider nzType="vertical" *ngIf="scheduleStatus != 0"></nz-divider>
-    <a (click)="init()">初始化日班表</a>
+    <button nz-button nzSize="small" nzType="primary" (click)="init()">初始化日班表</button>
   </ng-template>
 
   <nz-table #basicTable nzBordered [nzShowPagination]="false" [nzPageSize]="999" [nzData]="baseList">

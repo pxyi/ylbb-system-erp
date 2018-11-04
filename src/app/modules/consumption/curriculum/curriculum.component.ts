@@ -50,7 +50,7 @@ export class CurriculumComponent implements OnInit {
       cardCode: [],
       memberName: [],
       memberNick: [],
-      swimTeacher: [],
+      teacherName: [],
       type: [, [Validators.required]],
       remarks: []
     })

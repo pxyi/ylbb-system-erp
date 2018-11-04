@@ -1,6 +1,6 @@
 <nz-card [nzBordered]="false" nzTitle="泳师日排班表" [nzExtra]="extraTemplate1" [nzLoading]="dayLoading">
   <ng-template #extraTemplate1>
-    <a (click)="save()" *ngIf="scheduleStatus != 0">保存排班数据</a>
+    <button nz-button nzSize="small" nzType="primary" (click)="save()" *ngIf="scheduleStatus != 0">保存排班数据</button>
   </ng-template>
 
   <nz-table [nzData]="dayList['list']">

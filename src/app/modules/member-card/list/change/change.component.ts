@@ -39,7 +39,7 @@ export class ChangeComponent implements OnInit {
       changeExpireDate: [this.memberCardInfo.expireDate],
       cardTypeName: [{ value: this.memberCardInfo.ctName, disabled: true }],
       cardType: [ this.memberCardInfo.cardTypeId ],
-      changeCardType: [],
+      changeCardType: [, [Validators.required]],
       turnCard: [ this.memberCardInfo.turnCard ],
       comment: []
     })

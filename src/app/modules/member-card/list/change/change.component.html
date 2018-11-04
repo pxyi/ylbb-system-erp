@@ -113,11 +113,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>变更卡类型</nz-form-label>
+        <nz-form-label nzRequired>变更卡类型</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="changeCardType" nzPlaceHolder="请选择变更卡类型">
             <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('changeCardType').dirty && formGroup.get('changeCardType').hasError('required')">请选择变更卡类型！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

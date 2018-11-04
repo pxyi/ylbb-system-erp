@@ -1,6 +1,6 @@
 <nz-card [nzBordered]="false" nzTitle="营业时间配置" [nzExtra]="extraTemplate" [nzLoading]="loading">
   <ng-template #extraTemplate>
-    <a (click)="save()">保存</a>
+    <button nz-button nzSize="small" nzType="primary" (click)="save()">保存</button>
   </ng-template>
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12" [nzXXl]="6" [nzXl]="8">

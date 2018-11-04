@@ -31,7 +31,7 @@ export class BydayComponent implements OnInit {
 
   /* ------------------------ 门店休息 ------------------------ */
   rest(day) {
-    this.http.post('/reserveDayConfig/remove', { day }).then(res => {});
+    this.http.post('/reserveDayConfig/remove', { day }).then(res => this.getData());
   }
  
 }

@@ -1,9 +1,10 @@
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { PreviewComponent } from './../preview/preview.component';
-import { NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from '../../../ng-relax/components/query/query.component';
+import { CreateDrawer } from 'src/app/ng-relax/decorators/createDrawer.decorator';
 
 @Component({
   selector: 'app-proposal',
@@ -12,7 +13,7 @@ import { QueryNode } from '../../../ng-relax/components/query/query.component';
 })
 export class ProposalComponent implements OnInit {
 
-  @ViewChild('EaListPage') EaListPage: ListPageComponent;
+  @ViewChild('EaListPage') listPage: ListPageComponent;
 
   queryNode: QueryNode[] = [
     {
@@ -40,44 +41,14 @@ export class ProposalComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private modal: NzModalService,
-    private message: NzMessageService
+    private drawer: NzDrawerService
   ) { }
 
   ngOnInit() {
   }
 
-  showModal(id, source?: boolean) {
-    let { message, http, EaListPage } =  this;
-    const modal = this.modal.create({
-      nzTitle: '用户建议',
-      nzContent: PreviewComponent,
-      nzComponentParams: {
-        id, source
-      },
-      nzFooter: source ? [
-        {
-          label: '取消',
-          onClick: () => {
-            modal.close();
-          }
-        },
-        {
-          label: '确定',
-          type: 'primary',
-          loading: false,
-          onClick(componentInstance) {
-            this.loading = true;
-            http.post('/userAdvice/save', { paramJson: JSON.stringify(componentInstance.result) }).then(res => {
-              EaListPage.eaTable._request();
-              modal.close();
-            }, err => {
-              this.loading = false;
-            })
-          }
-        }
-      ] : null
-    });
-  }
+  @CreateDrawer('用户建议', PreviewComponent) showModal: (dataInfo) => void;
+
+
 
 }
