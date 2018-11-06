@@ -1,0 +1,70 @@
+<div class="header">
+  <div nz-row class="head-cell" nzGutter="8">
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">姓名：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.name }}</div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">昵称：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.nick || '--' }}</div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">性别：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.sex }}</div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">月龄：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.monthAge }}</div>
+    </div>
+  </div>
+</div>
+
+
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>拍摄时间</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker formControlName="createTime" nzPlaceHolder="请选择拍摄时间" [style.width]="'100%'" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+          <nz-form-explain *ngIf="formGroup.get('createTime').dirty && formGroup.get('createTime').hasError('required')">请选择拍摄时间！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <nz-form-item nzRequired>
+      <nz-form-label>照片</nz-form-label>
+      <nz-form-control>
+        <ea-upload-picture formControlName="photoList" [maxLength]="99"></ea-upload-picture>
+        <nz-form-explain *ngIf="formGroup.get('photoList').dirty && formGroup.get('photoList').hasError('required')">请上传照片！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+
+<ea-table #table url="/babyGrowthAlbum/list" 
+  [thead]="['照片', '月龄', '照片日期', '操作']" size="small" 
+  [EaTableTbodyTr]="EaTableTbodyTr" 
+  [paramsDefault]="{babyId: id}" 
+  (_dataChange)="photoList = $event"
+  [title]="title">
+  <ng-template #EaTableTbodyTr let-data>
+    <td><nz-avatar nzSize="large" nzIcon="anticon anticon-user" [nzSrc]="data.photoSmall"></nz-avatar></td>
+    <td>{{ data.monthAge }}</td>
+    <td>{{ data.createTime }}</td>
+    <td><a (click)="delete(data.id)">删除</a></td>
+  </ng-template>
+  <ng-template #title>
+    <div class="table-head">
+      <span>用户相片</span>
+      <nz-month-picker nzPlaceHolder="请选择月份" [(ngModel)]="selectedMonth" (ngModelChange)="monthChange($event)"></nz-month-picker>
+    </div>
+  </ng-template>
+</ea-table>
+
+<nz-carousel nzEffect="scrollx" [nzAutoPlay]="true">
+  <div nz-carousel-content *ngFor="let item of photoList">
+    <img class="activityImg" [src]="item.photo">
+  </div>
+</nz-carousel>

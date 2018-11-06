@@ -11,6 +11,7 @@ import { UpdateComponent } from './update/update.component';
 import { ConstructionComponent } from './construction/construction.component';
 import { Router } from '@angular/router';
 import { AddIntegralComponent } from './add-integral/add-integral.component';
+import { AlbumComponent } from './album/album.component';
 
 @Component({
   selector: 'app-list',
@@ -109,6 +110,11 @@ export class ListComponent implements OnInit {
       title     : '积分兑换',
       component : ExchangeComponent,
       userInfo  : true
+    },
+    album: {
+      title     : '成长相册',
+      component : AlbumComponent,
+      userInfo  : true
     }
   }
 
@@ -161,6 +167,18 @@ export class ListComponent implements OnInit {
           this.showDrawer = true;
           this.drawerTitle = '建卡';
           this.createComponent(this.operationComponents[type]);
+        }
+      })
+    } else if (type === 'album') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id === this.checkedItems[0]) {
+          if (res.havaCard) {
+            this.showDrawer = true;
+            this.drawerTitle = this.operationComponents[type].title;
+            this.createComponent(this.operationComponents[type]);
+          } else {
+            this.message.warning('请办卡！');
+          }
         }
       })
     } else if (this.operationComponents[type].component) {

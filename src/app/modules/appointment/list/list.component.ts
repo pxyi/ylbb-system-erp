@@ -5,6 +5,7 @@ import { HttpService } from './../../../ng-relax/services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { NzDrawerService } from 'ng-zorro-antd';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -29,7 +30,8 @@ export class ListComponent implements OnInit {
     {
       label       : '会员小名',
       key         : 'nick',
-      type        : 'input'
+      type        : 'input',
+      isHide      : true
     },
     {
       label       : '预约泳师',
@@ -94,6 +96,20 @@ export class ListComponent implements OnInit {
       options     : [ { name: '是', id: 1 }, { name: '否', id: 0 } ],
       isHide      : true
     },
+    {
+      label       : '未来几天',
+      type        : 'select',
+      key         : 'weilai',
+      options     : [ 
+                      { name: '今天', id: 0},
+                      { name: '明天', id: 1},
+                      { name: '第三天', id: 2},
+                      { name: '第四天', id: 3},
+                      { name: '第五天', id: 4},
+                      { name: '第六天', id: 5},
+                      { name: '第七天', id: 6},
+                    ]
+    }
   ]
 
   constructor(
@@ -102,6 +118,14 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.listPage.eaQuery._queryForm.get('weilai').valueChanges.subscribe(res => {
+        if (typeof res === 'number') {
+          this.listPage.eaQuery._queryForm.patchValue({ appointmentDate: [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * res), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * res) ] });
+          this.listPage.eaQuery._submit();
+        }
+      })
+    });
   }
 
   /* ------------------- 查看预约 ------------------- */

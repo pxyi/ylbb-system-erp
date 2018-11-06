@@ -53,7 +53,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   delete(id) {
-    this.http.post('/department/removeBandRecord', { id }).then(res => this.table._request())
+    this.http.post('/department/removeDeptRecord', { id }).then(res => this.table._request())
   }
 
   update(data = { id: null, position: null, bandName: null, salary: null, bandRate: null, comment: null }) {

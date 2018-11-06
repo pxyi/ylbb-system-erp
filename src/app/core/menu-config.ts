@@ -30,11 +30,6 @@ export const MenuConfig = [
         title : '无意向客户',
         key   : '/home/customer/nointention',
         isLeaf: true
-      },
-      {
-        title : '成长相册',
-        key   : '/home/customer/album',
-        isLeaf: true
       }
     ]
   },

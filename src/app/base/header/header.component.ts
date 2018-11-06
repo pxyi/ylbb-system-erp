@@ -1,7 +1,9 @@
+import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { MenuConfig } from './../../core/menu-config';
 import { Router } from '@angular/router';
 import { UserInfoState } from '../../core/reducers/userInfo-reducer';
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { WebsocketService } from './websocket.service';
 
 @Component({
   selector: 'ea-header',
@@ -17,7 +19,9 @@ export class HeaderComponent implements OnInit {
 
   @Input() userInfo: UserInfoState;
   constructor(
-    private router: Router
+    private router: Router,
+    private wsService: WebsocketService,
+    private http: HttpService
   ) {  }
   
 
@@ -29,7 +33,33 @@ export class HeaderComponent implements OnInit {
     })
   }
   ngOnInit() {
+    // this.wsService.createObservableSocket("ws://192.168.1.173:8888/socketServer")
+    //   .subscribe(
+    //     data => console.log(data),
+    //     err => console.log(err),
+    //     () => console.log("流已经结束")
+    //   );
+
+      // var ws = new WebSocket("ws://192.168.1.173:8888/socketServer");
+
+      // ws.onopen = function (evt) {
+      //   console.log("Connection open ...");
+      //   ws.send("Hello WebSockets!");
+      // };
+
+      // ws.onmessage = function (evt) {
+      //   console.log("Received Message: " + evt.data);
+      //   // ws.close();
+      // };
+
+      // ws.onclose = function (evt) {
+      //   console.log("Connection closed.");
+      // }
   }
+  sendMessageToServer() {
+    this.wsService.sendMessage("hello from client");
+  }
+
   autoComplateOptions: any[] = [];
   complateOptions = MenuConfig;
 
@@ -50,5 +80,8 @@ export class HeaderComponent implements OnInit {
     window.localStorage.removeItem('userInfo');
     this.router.navigateByUrl('/login');
   }
+
+
+
 
 }

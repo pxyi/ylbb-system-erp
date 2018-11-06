@@ -40,24 +40,12 @@ export class HomeComponent implements OnInit {
     this.birthdayChange();
   }
 
-  clueNum: number = 0;
-  nocardNum: number = 0;
-  memberNum: number = 0;
+  todayTask;
 
   ngOnInit() {
     this.store.dispatch({ type: 'setBreadcrumb', payload: this.BreadcrumbTmpt });
 
-    // this.http.post('/customer/noCardReturnVisitList', 
-    //   { paramJson: JSON.stringify({ "traceType": 0, "followStageId": 2 }), pageNum: 1, pageSize: 1 }, false)
-    //   .then(res => res.code == 1000 && (this.clueNum = res.result.totalPage));
-
-    // this.http.post('/customer/noCardReturnVisitList',
-    //   { paramJson: JSON.stringify({ "traceType": 5, "followStageId": 3 }), pageNum: 1, pageSize: 1 }, false)
-    //   .then(res => res.code == 1000 && (this.nocardNum = res.result.totalPage));
-
-    // this.http.post('/customer/memberReturnVisitList',
-    //   { paramJson: JSON.stringify({ "traceType": 6, "followStageId": 4 }), pageNum: 1, pageSize: 1 }, false)
-    //   .then(res => res.code == 1000 && (this.memberNum = res.result.totalPage));
+    this.http.post('/homePage/showHomePage', {}, false).then(res => this.todayTask = res.result);
   }
 
   /* ------------------ 日期改变 => 获取生日 ------------------ */

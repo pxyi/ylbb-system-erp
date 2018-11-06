@@ -10,6 +10,7 @@ export class BydayComponent implements OnInit {
 
   dataSet: any[] = [];
   thead: any[] = [];
+  theadType: any[] = [];
   loading: boolean;
 
   constructor(
@@ -25,6 +26,7 @@ export class BydayComponent implements OnInit {
     this.http.post('/reserveDayConfig/list', { paramJson: JSON.stringify(params) }, false).then(res => {
       this.dataSet = res.result.list;
       this.thead = res.result.date;
+      this.theadType = new Array(res.result.date.length * 2);
       this.loading = false;
     });
   }

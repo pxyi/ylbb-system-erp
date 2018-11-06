@@ -1,4 +1,3 @@
-import { AlbumComponent } from './album/album.component';
 import { PaycardComponent } from './paycard/paycard.component';
 import { AuthGuardService } from './../../ng-relax/services/auth-guard.service';
 import { NgModule } from '@angular/core';
@@ -21,12 +20,6 @@ const routes: Routes = [
     path: 'paycard',
     data: { title: '刷卡消费' },
     component: PaycardComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'album',
-    data: { title: '成长相册' },
-    component: AlbumComponent,
     canActivate: [ AuthGuardService ]
   },
   {

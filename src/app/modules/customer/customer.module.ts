@@ -11,7 +11,6 @@ import { GetMobileDirective } from './get-mobile.directive';
 import { NewinformationCanDeactivate } from './newinformation/newinfomation.guard';
 import { ListComponent } from './list/list.component';
 import { PaycardComponent } from './paycard/paycard.component';
-import { AlbumComponent } from './album/album.component';
 import { UpdateComponent } from './list/update/update.component';
 import { AppointComponent } from './list/appoint/appoint.component';
 import { ConsumptionComponent } from './list/consumption/consumption.component';
@@ -19,6 +18,7 @@ import { ConstructionComponent } from './list/construction/construction.componen
 import { AddIntegralComponent } from './list/add-integral/add-integral.component';
 import { ExchangeComponent } from './list/exchange/exchange.component';
 import { ImportComponent } from './list/import/import.component';
+import { AlbumComponent } from './list/album/album.component';
 
 @NgModule({
   imports: [
@@ -26,9 +26,9 @@ import { ImportComponent } from './list/import/import.component';
     CustomerRoutingModule,
     NgRelaxModule
   ],
-  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, AlbumComponent, UpdateComponent, AppointComponent, ConsumptionComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent],
+  declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, UpdateComponent, AppointComponent, ConsumptionComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent],
   providers: [NewinformationCanDeactivate],
   exports: [ PreviewCustomerComponent, GetMobileDirective ],
-  entryComponents: [AppointComponent, ConstructionComponent, ConsumptionComponent, UpdateComponent, AddIntegralComponent, ExchangeComponent, ImportComponent]
+  entryComponents: [AppointComponent, ConstructionComponent, ConsumptionComponent, UpdateComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent]
 })
 export class CustomerModule { }

@@ -7,7 +7,7 @@
   [nzData]="dataSet" [nzLoading]="loading">
   <thead>
     <tr>
-      <th rowspan="2">时间段</th>
+      <th rowspan="3">时间段</th>
       <th colspan="2" *ngFor="let head of thead">
         {{ head.date }}<br/>
         <button nz-button nzSize="small" nzType="primary" nz-popconfirm nzTitle="确定此日休息吗?" (nzOnConfirm)="rest(head.date)">休息</button>
@@ -16,12 +16,15 @@
     <tr>
       <th colspan="2" *ngFor="let head of thead">{{ head.week }}</th>
     </tr>
+    <tr>
+      <th *ngFor="let head of theadType; let idx = index">{{ idx % 2 === 0 ? '婴儿' : '幼儿' }}</th>
+    </tr>
   </thead>
   <tbody>
     <tr *ngFor="let data of basicTable.data">
       <td>{{ data.key }}</td>
       <ng-container *ngFor="let td of thead; let idx = index">
-        <td>{{ data.value.baby['day' + idx] }}</td>
+        <td (click)="showBydayInfo()">{{ data.value.baby['day' + idx] }}</td>
         <td>{{ data.value.child['day' + idx] }}</td>
       </ng-container>
     </tr>

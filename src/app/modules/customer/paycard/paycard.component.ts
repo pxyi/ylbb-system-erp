@@ -38,8 +38,8 @@ export class PaycardComponent implements OnInit {
     }, err => this.loading = false);
   }
 
-  consumption(id) {
-    
+  consumption(dataInfo) {
+    console.log(dataInfo)
   }
 
 }

@@ -1,3 +1,4 @@
+import { UploadPictureComponent } from './components/upload-picture/upload-picture.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { RouterModule } from '@angular/router';
 import { CacheService } from './services/cache.service';
@@ -32,7 +33,7 @@ registerLocaleData(zh);
     HttpClientModule,
     NgZorroAntdModule
   ],
-  declarations: [QueryComponent, TableComponent, SlideComponent, TipComponent, MonthdiffPipe, QuoteComponent, ListPageComponent, QuerySimpComponent, MathPipe],
+  declarations: [QueryComponent, TableComponent, SlideComponent, TipComponent, MonthdiffPipe, QuoteComponent, ListPageComponent, QuerySimpComponent, MathPipe, UploadPictureComponent],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     {
@@ -53,6 +54,7 @@ registerLocaleData(zh);
     QuoteComponent,
     ListPageComponent,
     QuerySimpComponent,
+    UploadPictureComponent,
 
     MonthdiffPipe,
     MathPipe,
