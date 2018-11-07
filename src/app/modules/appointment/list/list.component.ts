@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { PreviewComponent } from './preview/preview.component';
@@ -65,6 +66,7 @@ export class ListComponent implements OnInit {
       key         : 'appointmentDate',
       valueKey    : ['startDate', 'endDate'],
       type        : 'rangepicker',
+      default     : [new Date(), new Date()],
       ranges      : { 
                       '今天': [new Date(), new Date()], 
                       '明天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000), new Date(new Date().getTime() + 60 * 60 * 24 * 1000)],
@@ -110,12 +112,20 @@ export class ListComponent implements OnInit {
                       { name: '第七天', id: 6},
                     ]
     }
-  ]
+  ];
+
+  paramsDefault;
 
   constructor(
     private http: HttpService,
-    private drawer: NzDrawerService
-  ) { }
+    private drawer: NzDrawerService,
+    private format: DatePipe
+  ) { 
+    this.paramsDefault = {
+      startDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
+      endDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
+    }
+  }
 
   ngOnInit() {
     setTimeout(() => {

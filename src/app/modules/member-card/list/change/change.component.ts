@@ -28,7 +28,7 @@ export class ChangeComponent implements OnInit {
     this.formGroup = this.fb.group({
       id: [this.id],
       cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
-      memberName: [{ value: this.memberCardInfo.memberName, disabled: true }],
+      memberName: [{ value: this.memberCardInfo.name, disabled: true }],
       times: [{ value: this.memberCardInfo.times, disabled: true }],
       changeTimes: [, [Validators.pattern(/^-?[1-9]\d*$/), this.minimumValueValidator('times')]],
       freeTimes: [{ value: this.memberCardInfo.freeTimes, disabled: true }],

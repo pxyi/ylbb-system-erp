@@ -20,8 +20,8 @@ export class ConsumptionComponent implements OnInit {
   communityList: any[] = [];
   swimRingList: any[] = [];
   memberCardList: any[] = [];
-  commoditieList: any[] = [];
-  commodityList: any[] = [];
+  commoditieListdc: any[] = [];
+  commoditieListjc: any[] = [];
 
   consumptionType: number;
 
@@ -65,13 +65,25 @@ export class ConsumptionComponent implements OnInit {
       consumeDate: []
     });
 
+    /* ------------------------- 消费服务、商品改变自动填写消费金额 ------------------------- */
     this.timesCountGroup.get('commodityId').valueChanges.subscribe(id => {
       this.http.post('/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
         this.timesCountGroup.patchValue({ consumption: res.result.price });
       })
     });
     this.singleTimeGroup.get('commodityId').valueChanges.subscribe(id => {
-      this.commodityList.map(res => res.id === id && this.singleTimeGroup.patchValue({ consumption: res.price }));
+      this.commoditieListdc.map(res => res.id === id && this.singleTimeGroup.patchValue({ consumption: res.price }));
+    });
+
+
+    /* ------------------------- 消费卡改变触发消费服务列表刷新 ------------------------- */
+    this.timesCountGroup.get('cardId').valueChanges.subscribe(cardId => {
+      this.timesCountGroup.patchValue({ commodityId: null, consumption: null });
+      this.http.post('/customer/changeCommodity', { cardId }, false).then(res => {
+        this.commoditieListjc = res.result;
+        /* ------------------------- 判断是否有默认服务 ------------------------- */
+        res.result.map(item => item.defaulttag && this.timesCountGroup.patchValue({ commodityId: item.id }))
+      });
     });
 
     /* ------------------------- 获取服务器时间 ------------------------- */
@@ -80,15 +92,24 @@ export class ConsumptionComponent implements OnInit {
       this.singleTimeGroup.patchValue({ consumeDate: res.result });
     });
 
-    this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+    /* -------------------- 获取下拉列表数据 -------------------- */
+    this.http.post('/member/getStoreTeachers', {}, false).then(res => {
+      this.teacherList = res.result;
+      this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
+      this.singleTimeGroup.patchValue({ swimTeacherId: res.result[0].id });
+    });
     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
     this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
       this.memberCardList = res.result;
       res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
     });
-    this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieList = res.result);
-    this.http.post('/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
+
+    this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
+      this.commoditieListdc = res.result;
+      /* ------------------------- 判断是否有默认商品 ------------------------- */
+      res.result.map(item => item.defaulttag && this.singleTimeGroup.patchValue({ commodityId: item.id }))
+    });
   }
 
 

@@ -54,9 +54,15 @@ export class AppointComponent implements OnInit {
       this.cardList = res.result;
       res.result.length && this.formGroup.patchValue({ cardId: res.result[0].id });
     });
-    this.http.post('/tongka/teacherList', {}, false).then(res => this.teacherList = res.result);
+
+    /* ------------------ 获取泳师列表 并默认选择第一条数据：到店安排 ------------------ */
+    this.http.post('/tongka/teacherList', {}, false).then(res => {
+      this.teacherList = res.result;
+      this.formGroup.patchValue({ swimTeacherId: res.result[0].id });
+    });
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
 
+    /* ------------------ 监听预约时间段变化 ------------------ */
     this.formGroup.get('reserveHour').valueChanges.subscribe(e => {
       if (e) {
         let newHour = this.format.transform(e, 'yyyy-MM-dd HH:mm').split(' ')[1];
@@ -66,6 +72,11 @@ export class AppointComponent implements OnInit {
         })
       }
     })
+    /* ------------------ 获取当前系统的预约时间 ------------------ */
+    this.http.post('/reserve/getResetveDate', {}, false).then(res => this.formGroup.patchValue({ 
+      reserveHour: new Date(res.result),
+      reserveDate: new Date(res.result)
+    }));
   }
 
   @DrawerSave('/reserve/createReserve') save: () => Promise<boolean>;

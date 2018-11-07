@@ -25,7 +25,6 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
   memberCardList: any[] = [];
   commoditieListdc: any[] = [];
   commoditieListjc: any[] = [];
-  commodityList: any[] = [];
 
   constructor(
     private http: HttpService,
@@ -74,13 +73,17 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
       })
     });
     this.singleTimeGroup.get('commodityId').valueChanges.subscribe(id => {
-      this.commodityList.map(res => res.id === id && this.singleTimeGroup.patchValue({ consumption: res.price }));
+      this.commoditieListdc.map(res => res.id === id && this.singleTimeGroup.patchValue({ consumption: res.price }));
     });
 
     /* ------------------------- 消费卡改变触发消费服务列表刷新 ------------------------- */
     this.timesCountGroup.get('cardId').valueChanges.subscribe(cardId => {
       this.timesCountGroup.patchValue({ commodityId: null, consumption: null });
-      this.http.post('/customer/changeCommodity', { cardId }, false).then(res => this.commoditieListjc = res.result);
+      this.http.post('/customer/changeCommodity', { cardId }, false).then(res => {
+        this.commoditieListjc = res.result;
+        /* ------------------------- 判断是否有默认服务 ------------------------- */
+        res.result.map(item => item.defaulttag && this.timesCountGroup.patchValue({ commodityId: item.id }))
+      });
     });
 
 
@@ -103,9 +106,11 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
       res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
     });
     
-    this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieListdc = res.result);
-  
-    this.http.post('/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
+    this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
+      this.commoditieListdc = res.result;
+      /* ------------------------- 判断是否有默认商品 ------------------------- */
+      res.result.map(item => item.defaulttag && this.singleTimeGroup.patchValue({ commodityId: item.id }))
+    });
   }
 
   ngOnDestroy() {

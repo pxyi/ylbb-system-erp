@@ -1,6 +1,9 @@
 <form nz-form [formGroup]="_queryForm">
   <div class="eq-query-simp-box">
     <div class="query-title">{{ title }}</div>
+    <div class="query-cell">
+      <button nz-button nzType="primary" (click)="_submit()">查询</button>
+    </div>
     <div class="query-cell" *ngFor="let control of _node">
 
       <ng-container *ngIf="control.type === 'input'">
