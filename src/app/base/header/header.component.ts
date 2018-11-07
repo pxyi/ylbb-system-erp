@@ -1,9 +1,11 @@
+import { environment } from './../../../environments/environment';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { MenuConfig } from './../../core/menu-config';
 import { Router } from '@angular/router';
 import { UserInfoState } from '../../core/reducers/userInfo-reducer';
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { WebsocketService } from './websocket.service';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'ea-header',
@@ -18,11 +20,27 @@ export class HeaderComponent implements OnInit {
   @Input() isCollapsed: boolean = false;
 
   @Input() userInfo: UserInfoState;
+
+  @ViewChild('notificationTmpt') notificationTmpt: TemplateRef<any>
+
+  @ViewChild('audio') audio;
+
   constructor(
     private router: Router,
     private wsService: WebsocketService,
-    private http: HttpService
-  ) {  }
+    private http: HttpService,
+    private websocket: WebsocketService,
+    private notification: NzNotificationService
+  ) {  
+    this.websocket.createObservableSocket(`${environment.domainWs}/socketServer`).subscribe(res => {
+      if (res.flag == 1) {
+        this.notification.info('您有新的预约，请及时处理', `用户：<b>${res.memberName}</b> 预约了老师<b>${res.employeeName}</b>于<i>${res.reserveDate}</i>`)
+      } else if (res.flag == 2) {
+        this.notification.success('您有新的线索，请及时跟进', '');
+      }
+      this.audio.nativeElement.play();
+    })
+  }
   
 
   searchValue: string;
@@ -33,31 +51,6 @@ export class HeaderComponent implements OnInit {
     })
   }
   ngOnInit() {
-    // this.wsService.createObservableSocket("ws://192.168.1.173:8888/socketServer")
-    //   .subscribe(
-    //     data => console.log(data),
-    //     err => console.log(err),
-    //     () => console.log("流已经结束")
-    //   );
-
-      // var ws = new WebSocket("ws://192.168.1.173:8888/socketServer");
-
-      // ws.onopen = function (evt) {
-      //   console.log("Connection open ...");
-      //   ws.send("Hello WebSockets!");
-      // };
-
-      // ws.onmessage = function (evt) {
-      //   console.log("Received Message: " + evt.data);
-      //   // ws.close();
-      // };
-
-      // ws.onclose = function (evt) {
-      //   console.log("Connection closed.");
-      // }
-  }
-  sendMessageToServer() {
-    this.wsService.sendMessage("hello from client");
   }
 
   autoComplateOptions: any[] = [];
