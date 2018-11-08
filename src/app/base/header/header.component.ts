@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
         this.notification.success('您有新的线索，请及时跟进', '');
       }
       this.audio.nativeElement.play();
-    })
+    });
   }
   
 

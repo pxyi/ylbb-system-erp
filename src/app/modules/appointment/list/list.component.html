@@ -5,7 +5,7 @@
     [allowSpace]="false"
     [queryNode]="queryNode"
     [paramsDefault]="paramsDefault"
-    [tableThead]="[ '照片', '卡号', '卡类型', '婴儿类型', '姓名', '小名', '月龄'  ,'预约时间', '消费时间', '预约状态', '预约泳师', '泳圈型号', '创建时间', '预约方式', '全国通卡跨店'
+    [tableThead]="[ '照片', '卡号', '卡类型', '婴儿类型', '姓名', '小名', '月龄'  ,'预约时间', '消费时间', '预约状态', '预约泳师', '泳圈型号', '操作时间', '预约方式', '全国通卡跨店'
     ,'爽约率(撤销/预约)', '业务类型', '备注', '取消人' , { name: '操作', right: 0} ]"
     [EaTableTbodyTr]="EaTableTbodyTr">
     <ng-template let-data #EaTableTbodyTr>
@@ -26,7 +26,7 @@
       <td><nz-tag [nzColor]="data.reserveStatus == 0 ? '#87d068' : data.reserveStatus == 1 ? '#f50' : '#2db7f5'">{{ data.reserveStatus == 0 ? '预约中' : data.reserveStatus == 1 ? '已撤销' : '已完成' }}</nz-tag></td>
       <td>{{ data.teacherName }}</td>
       <td>{{ data.ringName }}</td>
-      <td>{{ data.createDate }}</td>
+      <td>{{ data.updateTime }}</td>
       <td>{{ data.type == 0 ? '门店' : data.type == 2 ? '会员APP' : data.type == 5 ? '小程序' : '总部活动' }}</td>
       <td>{{ data.isCrossed == 1 ? '是' : '否' }}</td>
       <td>{{ data.reserveCancel/data.reserveTotal | percent }}</td>

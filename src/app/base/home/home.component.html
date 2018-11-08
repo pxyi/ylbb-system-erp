@@ -35,7 +35,7 @@
     </nz-card>
   </div>
   <div nz-col [nzSpan]="12" [nzXXl]="8">
-    <nz-card [nzBordered]="false" nzTitle="生日提醒" [nzBodyStyle]="{padding: '12px'}" [nzExtra]="extraTemplate" [nzLoading]="birthdayLoading">
+    <nz-card [nzBordered]="false" nzTitle="生日提醒" [nzBodyStyle]="{padding: '12px', height: '324px'}" [nzExtra]="extraTemplate" [nzLoading]="birthdayLoading">
       <ng-template #extraTemplate>
         <div style="position: absolute;top: 6px; right: 0;">
           <nz-tabset nzSize="small" (nzSelectChange)="birthdayChange($event)">
@@ -45,8 +45,16 @@
           </nz-tabset>
         </div>
       </ng-template>
-      <nz-table #basicTable [nzData]="birthdayList" nzSize="small">
-        <thead><tr><th>照片</th><th>姓名</th><th>性别</th><th>月龄</th><th>电话</th></tr></thead>
+      <nz-table #basicTable [nzData]="birthdayList" nzSize="small" [nzScroll]="{ y: '220px' }">
+        <thead>
+          <tr>
+            <th nzWidth="60px">照片</th>
+            <th nzWidth="80px">姓名</th>
+            <th nzWidth="40px">性别</th>
+            <th nzWidth="40px">月龄</th>
+            <th nzWidth="120px">电话</th>
+          </tr>
+        </thead>
         <tbody>
           <tr *ngFor="let data of basicTable.data">
             <td><nz-avatar nzIcon="anticon anticon-user" [nzSrc]="data.albumUrl"></nz-avatar></td>
