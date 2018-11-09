@@ -22,6 +22,7 @@ import { ListPageComponent } from './components/list-page/list-page.component';
 import { HttpService } from './services/http.service';
 import { QuerySimpComponent } from './components/query-simp/query-simp.component';
 import { MathPipe } from './pipes/math.pipe';
+import { ListPageSimpComponent } from './components/list-page-simp/list-page.component';
 registerLocaleData(zh);
 
 @NgModule({
@@ -33,7 +34,7 @@ registerLocaleData(zh);
     HttpClientModule,
     NgZorroAntdModule
   ],
-  declarations: [QueryComponent, TableComponent, SlideComponent, TipComponent, MonthdiffPipe, QuoteComponent, ListPageComponent, QuerySimpComponent, MathPipe, UploadPictureComponent],
+  declarations: [QueryComponent, TableComponent, SlideComponent, TipComponent, MonthdiffPipe, QuoteComponent, ListPageComponent, ListPageSimpComponent, QuerySimpComponent, MathPipe, UploadPictureComponent],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     {
@@ -53,6 +54,7 @@ registerLocaleData(zh);
     TipComponent,
     QuoteComponent,
     ListPageComponent,
+    ListPageSimpComponent,
     QuerySimpComponent,
     UploadPictureComponent,
 

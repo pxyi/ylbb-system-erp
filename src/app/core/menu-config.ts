@@ -207,8 +207,8 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
-        title: '泳圈管理',
-        key: '/home/configuration/swimming',
+        title : '泳圈管理',
+        key   : '/home/configuration/swimming',
         isLeaf: true
       },
       {
@@ -229,8 +229,8 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
-        title: '库存管理',
-        key: '/home/commodity/stock',
+        title : '库存管理',
+        key   : '/home/commodity/stock',
         isLeaf: true
       }
     ]
@@ -264,8 +264,8 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
-        title: '充值记录',
-        key: '/home/payment/record',
+        title : '充值记录',
+        key   : '/home/payment/record',
         isLeaf: true
       }
     ]
@@ -355,31 +355,37 @@ export const MenuConfig = [
     ]
   },
   {
-    title: '账户管理',
-    key: '/home/account',
-    icon: 'anticon-usergroup-add',
+    title : '账户管理',
+    key   : '/home/account',
+    icon  : 'anticon-usergroup-add',
     children: [
       {
-        title: '账号管理',
-        key: '/home/account/account',
+        title : '账号管理',
+        key   : '/home/account/account',
         isLeaf: true
       },
       {
-        title: '角色管理',
-        key: '/home/account/role',
+        title : '角色管理',
+        key   : '/home/account/role',
         isLeaf: true
       },
       {
-        title: '登录日志',
-        key: '/home/account/loginlog',
+        title : '登录日志',
+        key   : '/home/account/loginlog',
         isLeaf: true
       }
     ]
   },
   {
-    title: '用户互动',
-    key: '/home/interaction',
-    icon: 'anticon-profile',
+    title : '用户互动',
+    key   : '/home/interaction',
+    icon  : 'anticon-profile',
+    isLeaf: true
+  },
+  {
+    title : '核销管理',
+    key   : '/home/writeoff',
+    icon  : 'anticon-scissor',
     isLeaf: true
   },
 ];

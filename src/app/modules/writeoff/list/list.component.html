@@ -1,0 +1,242 @@
+<ng-template #breadcrumbTmpt>
+  <div style="width: 80%; max-width: 600px; margin: 0 auto 30px;">
+    <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
+      <input type="text" nz-input #couponCode placeholder="请输入劵号" (keyup.enter)="search(couponCode.value)">
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button nz-button nzType="primary" nzSize="large" [nzLoading]="searchLoading" (click)="search(couponCode.value)" nzSearch>验劵</button>
+    </ng-template>
+  </div>
+</ng-template>
+
+<div class="container profit" nz-row>
+  <div nz-col [nzSpan]="8">
+    <span>累计收益(元)</span>
+    <p>{{ amountSum.totalAmount }}</p>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <span>可提取金额(元)</span>
+    <p>{{ amountSum.totalBalance }}</p>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <button nz-button nzType="primary" nzGhost (click)="putForward()">提现申请</button>
+  </div>
+</div>
+
+<div class="container">
+  <ea-list-page-simp 
+    url="/verification/list" 
+    [queryNode]="queryNode"
+    [queryTitle]="'核销列表'"
+    [tableThead]="[ '姓名','小名','性别','生日','家长姓名','手机号','类型','来源','到店收费','核销时间','收益(元)','提现状态',{ name: '操作', right: 0 } ]"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [allowSpace]="false">
+
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.sex }}</td>
+      <td>{{ data.birthday }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.babyType }}</td>
+      <td>{{ data.activeName }}</td>
+      <td>{{ data.offlinecharge }}</td>
+      <td>{{ data.verificationDate }}</td>
+      <td>{{ data.earnings }}</td>
+      <td>{{ data.withdrawalStatus == 0 ? '未提现' : data.withdrawalStatus == 1 ? '提现中' : '提现完成' }}</td>
+      <td nzRight="0">
+        <a>预约</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a>消费</a>
+      </td>
+    </ng-template>
+  </ea-list-page-simp>
+</div>
+
+
+<nz-drawer [(nzVisible)]="showDrawer" nzTitle="会员验证" [nzWidth]="720" [nzMaskClosable]="true" (nzOnClose)="showDrawer = false; queryForm.reset();">
+  <nz-alert nzType="info" [nzMessage]="nzMessage">
+    <ng-template #nzMessage>
+      {{ writeInfo?.name }}，已支付<b>{{ writeInfo?.onlineCharge }}</b>元，门店需再收取<b>{{ writeInfo?.offlineCharge }}</b>元。
+    </ng-template>
+  </nz-alert>
+  <form nz-form [formGroup]="queryForm">
+    <nz-form-item style="margin-top: 12px;">
+      <nz-form-label nzRequired nzFor="mobilePhone">家长手机号</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="mobilePhone" id="mobilePhone" maxlength="11" placeholder="请输入家长手机号">
+        <nz-form-explain *ngIf="queryForm.get('mobilePhone').dirty && queryForm.get('mobilePhone').hasError('required')">请输入家长手机号！</nz-form-explain>
+        <nz-form-explain *ngIf="queryForm.get('mobilePhone').dirty && queryForm.get('mobilePhone').hasError('pattern')">请输入正确的手机号！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" style="width: 100%" nzGhost [disabled]="queryForm.invalid" [nzLoading]="validatorLoading" (click)="validator()">查询</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+
+  <form nz-form [formGroup]="formGroup" *ngIf="formGroup.get('mobilePhone').value">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="name">姓名</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入宝宝姓名" formControlName="name" id="name">
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入宝宝姓名！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="nick">小名</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入宝宝小名" formControlName="nick" id="nick">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>性别</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="sex" nzPlaceHolder="请选择宝宝性别">
+              <nz-option nzLabel="男" nzValue="男"></nz-option>
+              <nz-option nzLabel="女" nzValue="女"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('sex').dirty && formGroup.get('sex').hasError('required')">请选择宝宝性别！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>宝宝生日</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker formControlName="birthday" nzPlaceHolder="请选择宝宝生日" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+            <nz-form-explain *ngIf="formGroup.get('birthday').dirty && formGroup.get('birthday').hasError('required')">请选择宝宝生日！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="parentName">家长姓名</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入家长姓名" formControlName="parentName" id="parentName">
+            <nz-form-explain *ngIf="formGroup.get('parentName').dirty && formGroup.get('parentName').hasError('required')">请输入家长姓名！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="fixPhone">手机号</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入手机号" formControlName="fixPhone" id="fixPhone">
+            <nz-form-explain *ngIf="formGroup.get('fixPhone').dirty && formGroup.get('fixPhone').hasError('pattern')">请输入正确的手机号！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>所属社区</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="communityId" [nzShowSearch]="true" nzPlaceHolder="请选择所属社区">
+              <nz-option *ngFor="let option of communityList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('communityId').dirty && formGroup.get('communityId').hasError('required')">请选择所属社区！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>婴儿类型</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="babyType" nzPlaceHolder="请选择婴儿类型">
+              <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
+              <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('babyType').dirty && formGroup.get('babyType').hasError('required')">请输入婴儿类型！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>过敏史</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="allergieHistory" nzPlaceHolder="请选择有过敏史">
+              <nz-option nzLabel="有" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="无" [nzValue]="0"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('allergieHistory').dirty && formGroup.get('allergieHistory').hasError('required')">请选择有过敏史！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>病史</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="illHistory" nzPlaceHolder="请选择有无病史">
+              <nz-option nzLabel="有" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="无" [nzValue]="0"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('illHistory').dirty && formGroup.get('illHistory').hasError('required')">请选择有无病史！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>多胞胎</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="babyNumber" nzPlaceHolder="请选择多胞胎数目">
+              <nz-option nzLabel="1" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="2" [nzValue]="2"></nz-option>
+              <nz-option nzLabel="3" [nzValue]="3"></nz-option>
+              <nz-option nzLabel="4" [nzValue]="4"></nz-option>
+              <nz-option nzLabel="5" [nzValue]="5"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>客户来源</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="source" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
+              <nz-option nzLabel="灯箱路牌" nzValue="灯箱路牌"></nz-option>
+              <nz-option nzLabel="朋友推荐" nzValue="朋友推荐"></nz-option>
+              <nz-option nzLabel="网络推广" nzValue="网络推广"></nz-option>
+              <nz-option nzLabel="社区宣传" nzValue="社区宣传"></nz-option>
+              <nz-option nzLabel="合作机构" nzValue="合作机构"></nz-option>
+              <nz-option nzLabel="其他" nzValue="其他"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzFor="comment">备注</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div class="footer">
+      <button nz-button (click)="showDrawer = false;">取消</button>
+      <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">确认核销</button>
+    </div>
+  </form>
+
+</nz-drawer>

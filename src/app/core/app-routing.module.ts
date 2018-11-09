@@ -1,5 +1,5 @@
+import { AuthGuardService } from './../ng-relax/services/auth-guard.service';
 import { HomeComponent } from './../base/home/home.component';
-import { AuthGuardService } from '../ng-relax/services/auth-guard.service';
 import { UserInfoResolver } from './userInfo-resolver.service';
 import { BaseComponent } from '../base/base.component';
 import { NgModule } from '@angular/core';
@@ -126,6 +126,12 @@ const routes: Routes = [
         data: { title: '商品管理' },
         canLoad: [ AuthGuardService ],
         loadChildren: 'src/app/modules/commodity/commodity.module#CommodityModule'
+      },
+      {
+        path: 'writeoff',
+        data: { title: '核销管理' },
+        canLoad: [ AuthGuardService ],
+        loadChildren: 'src/app/modules/writeoff/writeoff.module#WriteoffModule'
       }
     ]
   },

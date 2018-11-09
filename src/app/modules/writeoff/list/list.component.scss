@@ -1,0 +1,31 @@
+.profit {
+  margin-bottom: 24px;
+}
+.profit > div {
+  text-align: center;
+  span {
+    display: inline-block;
+    color: rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 4px;
+  }
+  p {
+    color: rgba(0,0,0,.85);
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0;
+  }
+  button {
+    margin-top: 12px;
+  }
+  &:not(:last-child) {
+    border-right: solid 1px #e8e8e8;
+  }
+}
+.footer {
+  text-align: right;
+  button {
+    margin-left: 8px;
+  }
+}
