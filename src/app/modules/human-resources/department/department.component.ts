@@ -44,7 +44,7 @@ export class DepartmentComponent implements OnInit {
       }
     } else {
       this.saveLoading = true;
-      this.http.post('/department/saveBandRecord', { paramJson: JSON.stringify(this.formGroup.value) }).then(res => {
+      this.http.post('/department/saveDeptRecord', { paramJson: JSON.stringify(this.formGroup.value) }).then(res => {
         this.table._request();
         this.showDrawer = false;
         this.saveLoading = false;

@@ -59,7 +59,7 @@
             <li nz-menu-item *ngIf="data.status != -1">
               <a (click)="changeStatus(data.id, 1)">禁用</a>
             </li>
-            <li nz-menu-item *ngIf="data.defaulttag == 0">
+            <li nz-menu-item *ngIf="data.defaulttag == 0 && data.type == 1">
               <a (click)="changeDafulat(data.id, 1)">设为默认</a>
             </li>
             <li nz-menu-item *ngIf="data.defaulttag != 0">

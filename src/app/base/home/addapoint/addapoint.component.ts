@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { DrawerRefClose } from 'src/app/ng-relax/decorators/drawerRefClose.decorator';
-import { DrawerSave } from 'src/app/ng-relax/decorators/drawer.decorator';
 
 @Component({
   selector: 'app-addapoint',
@@ -70,7 +69,7 @@ export class AddapointComponent implements OnInit {
 
   queryMember() {
     if (this.queryForm.valid) {
-      this.http.post('/homePage/getMemberDetail', this.queryForm.value, false).then(res => {
+      this.http.post('/homePage/getMemberDetail', this.queryForm.value).then(res => {
         this.formGroup.patchValue(res.result);
         if (res.result.havacard) {
           this.http.post('/memberCard/getMemberCards', { memberId: res.result.memberId }, false).then(res => {
@@ -78,7 +77,7 @@ export class AddapointComponent implements OnInit {
             res.result.length && this.formGroup.patchValue({ cardId: res.result[0].id });
           });
         }
-      })
+      }).catch(err => this.formGroup.reset());
     }
   }
 

@@ -79,8 +79,7 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
       this.timesCountGroup.patchValue({ commodityId: null, consumption: null });
       this.http.post('/customer/changeCommodity', { cardId }, false).then(res => {
         this.commoditieListjc = res.result;
-        /* ------------------------- 判断是否有默认服务 ------------------------- */
-        res.result.map(item => item.defaulttag && this.timesCountGroup.patchValue({ commodityId: item.id }))
+        this.timesCountGroup.patchValue({ commodityId: res.result[0].id });
       });
     });
 

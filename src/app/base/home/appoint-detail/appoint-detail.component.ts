@@ -123,7 +123,7 @@ export class AppointDetailComponent implements OnInit {
       }
     });
     drawerRef.afterClose.subscribe(res => {
-      this.drawerRef.close(true);
+      res && this.drawerRef.close(true);
     })
   }
  

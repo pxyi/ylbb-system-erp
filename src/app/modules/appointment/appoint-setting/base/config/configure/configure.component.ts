@@ -58,31 +58,31 @@ export class ConfigureComponent implements OnInit {
       params.timeValue = params.key;
       params.weeks = {
         week1: {
-          boby: params.value.baby.week1,
+          baby: params.value.baby.week1,
           child: params.value.child.week1
         },
         week2: {
-          boby: params.value.baby.week2,
+          baby: params.value.baby.week2,
           child: params.value.child.week2
         },
         week3: {
-          boby: params.value.baby.week3,
+          baby: params.value.baby.week3,
           child: params.value.child.week3
         },
         week4: {
-          boby: params.value.baby.week4,
+          baby: params.value.baby.week4,
           child: params.value.child.week4
         },
         week5: {
-          boby: params.value.baby.week5,
+          baby: params.value.baby.week5,
           child: params.value.child.week5
         },
         week6: {
-          boby: params.value.baby.week6,
+          baby: params.value.baby.week6,
           child: params.value.child.week6
         },
         week7: {
-          boby: params.value.baby.week7,
+          baby: params.value.baby.week7,
           child: params.value.child.week7
         },
       };

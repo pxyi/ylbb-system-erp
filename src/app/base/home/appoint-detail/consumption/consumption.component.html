@@ -76,7 +76,7 @@
             <nz-form-label nzRequired>消费服务</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费服务">
-                <nz-option *ngFor="let option of commoditieList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+                <nz-option *ngFor="let option of commoditieListjc" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="timesCountGroup.get('commodityId').dirty && timesCountGroup.get('commodityId').hasError('required')">请选择消费服务！</nz-form-explain>
             </nz-form-control>
@@ -181,7 +181,7 @@
             <nz-form-label nzRequired>消费商品</nz-form-label>
             <nz-form-control>
               <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费商品">
-                <nz-option *ngFor="let option of commodityList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+                <nz-option *ngFor="let option of commoditieListdc" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
               <nz-form-explain *ngIf="singleTimeGroup.get('commodityId').dirty && singleTimeGroup.get('commodityId').hasError('required')">请选择消费商品！</nz-form-explain>
             </nz-form-control>

@@ -47,7 +47,7 @@ export class CommunityComponent implements OnInit {
   update(data = { id: null, name: null }) {
     this.formGroup.patchValue(data);
     this.drawer.create({
-      nzTitle: '泳圈型号信息',
+      nzTitle: '社区信息',
       nzWidth: 720,
       nzContent: this.drawerTemplate
     });
@@ -64,7 +64,7 @@ export class CommunityComponent implements OnInit {
         name: control.value
       };
       this.http.post('/community/checkCommunity', { paramJson: JSON.stringify(params) }, false).then(res => {
-        observer.next(!res.result.flag ? null : { error: true, duplicated: true });
+        observer.next(res.result.flag ? null : { error: true, duplicated: true });
         observer.complete();
       }, err => {
         observer.next(null);

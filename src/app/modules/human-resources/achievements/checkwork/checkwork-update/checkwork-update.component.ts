@@ -38,6 +38,9 @@ export class CheckworkUpdateComponent implements OnInit {
       wages: [, [Validators.required, Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/)]],
       comment: []
     });
+    this.formGroup.get('reason').valueChanges.subscribe(res => {
+      this.payrollList.map(item => item.id === res && this.formGroup.patchValue({ wages: item.duty }));
+    });
     this.dataInfo.id && this.formGroup.patchValue(this.dataInfo);
   }
 
