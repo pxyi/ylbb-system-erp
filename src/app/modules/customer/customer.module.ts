@@ -19,12 +19,14 @@ import { AddIntegralComponent } from './list/add-integral/add-integral.component
 import { ExchangeComponent } from './list/exchange/exchange.component';
 import { ImportComponent } from './list/import/import.component';
 import { AlbumComponent } from './list/album/album.component';
+import { ViserModule } from 'viser-ng';
 
 @NgModule({
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    NgRelaxModule
+    NgRelaxModule,
+    ViserModule
   ],
   declarations: [PotentialComponent, NewinformationComponent, NointentionComponent, PreviewCustomerComponent, GetMobileDirective, ListComponent, PaycardComponent, UpdateComponent, AppointComponent, ConsumptionComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent],
   providers: [NewinformationCanDeactivate],

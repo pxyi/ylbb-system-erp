@@ -13,6 +13,16 @@ import { Router } from '@angular/router';
 import { AddIntegralComponent } from './add-integral/add-integral.component';
 import { AlbumComponent } from './album/album.component';
 
+declare const require: any;
+const DataSet = require('@antv/data-set');
+const scale = [{
+  dataKey: 'percent',
+  min: 0,
+  formatter: '.0%',
+}];
+
+
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -242,5 +252,37 @@ export class ListComponent implements OnInit {
     }
   }
 
+
+
+  /* ------------------------ 查看社区办卡信息 ------------------------ */
+  showModal: boolean;
+  data;
+  labelConfig = ['percent', {
+    offset: -40,
+    textStyle: {
+      rotate: 0,
+      textAlign: 'center',
+      shadowBlur: 2,
+      shadowColor: 'rgba(0, 0, 0, .45)'
+    }
+  }];
+  scale = scale;
+  previewCommunity(communityId) {
+    this.http.post('/member/findCardFromCommunity', { communityId }, false).then(res => {
+      if (res.result) {
+        this.showModal = true;
+        const dv = new DataSet.View().source(res.result);
+        dv.transform({
+          type: 'percent',
+          field: 'cardNum',
+          dimension: 'communityName',
+          as: 'percent'
+        });
+        this.data = dv.rows;
+      } else {
+        this.message.warning('暂无社区信息');
+      }
+    })
+  }
 
 }

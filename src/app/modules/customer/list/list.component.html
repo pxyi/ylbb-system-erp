@@ -20,7 +20,9 @@
       <td>{{ data.monthAge }}</td>
       <td>{{ data.parentName }}</td>
       <td>{{ data.mobilePhone }}</td>
-      <td>{{ data.communityName }}</td>
+      <td>
+        <a (click)="previewCommunity(data.communityId)">{{ data.communityName }}</a>
+      </td>
       <td>{{ data.babyType }}</td>
       <td>{{ data.memberPoint }}</td>
       <td><nz-tag *ngIf="data.expireDays || data.expireDays == 0" [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
@@ -66,3 +68,19 @@
     <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
   </div>
 </nz-drawer>
+
+
+<nz-modal [(nzVisible)]="showModal" [nzStyle]="{left: '126px'}" nzTitle="社区信息" (nzOnCancel)="showModal = false"  [nzFooter]="null" [nzContent]="chart">
+  
+</nz-modal>
+<ng-template #chart>
+  <div>
+    <v-chart [forceFit]="true" [height]="400" [width]="400" [data]="data" [scale]="scale">
+      <v-tooltip></v-tooltip>
+      <v-axis></v-axis>
+      <v-coord type="theta"></v-coord>
+      <v-pie position="percent" color="item" [style]="{ stroke: '#fff', lineWidth: 1 }" [label]="labelConfig"></v-pie>
+      <!-- <v-legend dataKey="item"></v-legend> -->
+    </v-chart>
+  </div>
+</ng-template>
