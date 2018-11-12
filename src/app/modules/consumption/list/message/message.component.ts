@@ -25,7 +25,7 @@ export class MessageComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      mobile: [, [Validators.required]],
+      mobile: [this.recordInfo.mobilePhone, [Validators.required]],
       typeOptions: [this.checkOptions],
       type: [, [Validators.required]],
       template: [, [Validators.required]],
