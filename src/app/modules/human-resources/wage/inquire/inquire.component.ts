@@ -35,4 +35,8 @@ export class InquireComponent implements OnInit {
     }).then(res => this.generateLoading = false).catch(err => this.generateLoading = false);
   }
 
+  _disabledDate(current: Date): boolean {
+    return current && current.getTime() > Date.now();
+  }
+
 }

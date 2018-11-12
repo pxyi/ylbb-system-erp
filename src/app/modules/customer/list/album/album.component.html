@@ -36,8 +36,8 @@
     <nz-form-item nzRequired>
       <nz-form-label>照片</nz-form-label>
       <nz-form-control>
-        <ea-upload-picture formControlName="photoList" [maxLength]="99"></ea-upload-picture>
-        <nz-form-explain *ngIf="formGroup.get('photoList').dirty && formGroup.get('photoList').hasError('required')">请上传照片！</nz-form-explain>
+        <ea-upload-picture formControlName="photoListStr" [maxLength]="99"></ea-upload-picture>
+        <nz-form-explain *ngIf="formGroup.get('photoListStr').dirty && formGroup.get('photoListStr').hasError('required')">请上传照片！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
   </div>

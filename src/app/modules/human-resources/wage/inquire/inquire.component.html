@@ -3,7 +3,7 @@
     nzTitle="请选择月份" [nzContent]="contentTemplate" nzPlacement="bottomRight">工资生成</button>
   <ng-template #contentTemplate>
     <div>
-      <nz-month-picker [(ngModel)]="generateMonth" nzFormat="yyyy-MM" style="width: 300px;"></nz-month-picker>
+      <nz-month-picker [(ngModel)]="generateMonth" nzFormat="yyyy-MM" style="width: 300px;" [nzDisabledDate]="_disabledDate"></nz-month-picker>
       <button nz-button nzType="primary" nzGhost style="display: block; width: 300px; margin-top: 16px;" [disabled]="!generateMonth"
         [nzLoading]="generateLoading" (click)="generate()">确定执行</button>
     </div>

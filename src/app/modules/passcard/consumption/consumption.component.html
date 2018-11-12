@@ -38,7 +38,7 @@
 </ng-template>
 
 <div class="container">
-  <ea-list-page url="/tongka/list" [paramsDefault]="paramsDefault" [allowSpace]="false" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
+  <ea-list-page url="/tongka/list" [paramsDefault]="paramsDefault" [paramsInit]="paramsInit" [allowSpace]="false" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
     <ng-template #EaTableTbodyTr let-data>
       <td>{{ data.cardCode }}</td>
       <td>{{ data.cardTypeName }}</td>

@@ -27,7 +27,7 @@ export class DepartmentComponent implements OnInit {
     this.formGroup = this.fb.group({
       id: [],
       name: [, [Validators.required], [this.positionAsyncValidator]],
-      employeeName: [],
+      employeeId: [, [Validators.required]],
       comment: []
     });
     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);

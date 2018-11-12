@@ -102,7 +102,6 @@ export class SendoutComponent implements OnInit {
   }
   ngOnInit() {
     this.store.dispatch({ type: 'setBreadcrumb', payload: this.breadcrumbTmpt });
-    this.query();
   }
 
   query(params = {}) {

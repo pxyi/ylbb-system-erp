@@ -35,7 +35,7 @@ export class AlbumComponent implements OnInit {
       monthAge: [this.userInfo.monthAge],
       cardCode: [this.userInfo.memberCard],
       createTime: [, [Validators.required]],
-      photoList: [, [Validators.required]]
+      photoListStr: [, [Validators.required]]
     })
   }
 

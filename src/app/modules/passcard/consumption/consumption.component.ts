@@ -102,6 +102,7 @@ export class ConsumptionComponent implements OnInit {
   tableThead: string[] = ['卡号', '卡类型', '姓名', '小名', '是否跨店消费', '消费金额', '消费时间', '已使用卡次', '单次扣除卡次', '类型', '消费商品', '消费类型', '消费门店', '办卡门店', '服务泳师', '满意度', '体重', '泳圈型号', '游泳时长', '测量', '拍照', '备注']
 
   paramsDefault;
+  paramsInit;
 
   amountDetails;
 
@@ -114,7 +115,8 @@ export class ConsumptionComponent implements OnInit {
   ) {
     let nowDate = new Date();
     let noewDateString = this.datePipe.transform(nowDate, 'yyyy-MM-dd');
-    this.paramsDefault = { startDate: noewDateString, endDate: noewDateString, consumeType: 1 };
+    this.paramsDefault = { consumeType: 1 };
+    this.paramsInit = { startDate: noewDateString, endDate: noewDateString };
     this.queryNode[3].default = [nowDate, nowDate];
   }
 
