@@ -24,6 +24,8 @@ export class ListPageSimpComponent implements OnInit {
 
   @Input() paramsDefault: any = {};
 
+  @Input() paramsInit: any = {};
+
   @Input() checkedItems: any[];
 
   @Input() checkedKey: string = 'id';

@@ -97,45 +97,43 @@ export class ListComponent implements OnInit {
       type        : 'select',
       options     : [ { name: '是', id: 1 }, { name: '否', id: 0 } ],
       isHide      : true
-    },
-    {
-      label       : '未来几天',
-      type        : 'select',
-      key         : 'weilai',
-      options     : [ 
-                      { name: '今天', id: 0},
-                      { name: '明天', id: 1},
-                      { name: '第三天', id: 2},
-                      { name: '第四天', id: 3},
-                      { name: '第五天', id: 4},
-                      { name: '第六天', id: 5},
-                      { name: '第七天', id: 6},
-                    ]
     }
   ];
 
-  paramsDefault;
+  paramsInit;
 
   constructor(
     private http: HttpService,
     private drawer: NzDrawerService,
     private format: DatePipe
   ) { 
-    this.paramsDefault = {
+    this.paramsInit = {
       startDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
       endDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
-    }
-  }
+    };
+    this.http.post('/homePage/getWeeks', {}, false).then(res => {
+      this.listPage.eaQuery._queryForm.addControl('weilai', new FormControl(null));
+      let queryNode: QueryNode = {
+        label: '未来几天',
+        type: 'select',
+        key: 'weilai',
+        options: [],
+        optionKey: { label: 'name', value: 'id' }
+      }
+      res.result.map(item => queryNode.options.push({ name: item.week, id: new Date(item.date)}))
+      this.listPage.eaQuery._node.push(queryNode);
 
-  ngOnInit() {
-    setTimeout(() => {
       this.listPage.eaQuery._queryForm.get('weilai').valueChanges.subscribe(res => {
-        if (typeof res === 'number') {
-          this.listPage.eaQuery._queryForm.patchValue({ appointmentDate: [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * res), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * res) ] });
+        if (res) {
+          this.listPage.eaQuery._queryForm.patchValue({ appointmentDate: [res, res] });
           this.listPage.eaQuery._submit();
         }
       })
     });
+  }
+
+  ngOnInit() {
+    
   }
 
   /* ------------------- 查看预约 ------------------- */

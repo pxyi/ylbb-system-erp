@@ -18,6 +18,8 @@ export class TableComponent implements OnInit {
 
   @Input() paramsDefault: any = {};
 
+  @Input() paramsInit   : any = {};
+
   @Input() checked      : boolean;
 
   @Input() checkedItems : any[];
@@ -83,7 +85,8 @@ export class TableComponent implements OnInit {
   _request(isReset?: boolean): void {
     if (this._pageInfo.loading) { return; }
     this._pageInfo.loading = true;
-    let params = Object.assign({ paramJson: JSON.stringify(Object.assign(JSON.parse(JSON.stringify(this.paramsDefault)), this._params)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
+    let params = Object.assign({ paramJson: JSON.stringify(Object.assign(JSON.parse(JSON.stringify(this.paramsDefault)), this._params, this.paramsInit)) }, { pageNum: isReset ? 1 : this._pageInfo.pageNum, pageSize: this._pageInfo.pageSize });
+    this.paramsInit = {};
     this.http.post<any>(this.url, serialize(params), {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
