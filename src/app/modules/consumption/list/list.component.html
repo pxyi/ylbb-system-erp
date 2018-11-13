@@ -28,8 +28,8 @@
       <td>{{ data.weight }}</td>
       <td>{{ data.swimName }}</td>
       <td>{{ data.swimDuration }}</td>
-      <td>{{ data.weighRemind ? '需要' : '不需要' }}</td>
-      <td>{{ data.photoRemind ? '需要' : '不需要' }}</td>
+      <td [style.color]="data.weighRemind ? '#f5222d' : '' ">{{ data.weighRemind ? '需要' : '不需要' }}</td>
+      <td [style.color]="data.photoRemind ? '#f5222d' : '' ">{{ data.photoRemind ? '需要' : '不需要' }}</td>
       <td>{{ data.comment }}</td>
     </ng-template>
 
