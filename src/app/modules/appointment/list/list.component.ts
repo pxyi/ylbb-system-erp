@@ -66,16 +66,7 @@ export class ListComponent implements OnInit {
       key         : 'appointmentDate',
       valueKey    : ['startDate', 'endDate'],
       type        : 'rangepicker',
-      default     : [new Date(), new Date()],
-      ranges      : { 
-                      '今天': [new Date(), new Date()], 
-                      '明天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000), new Date(new Date().getTime() + 60 * 60 * 24 * 1000)],
-                      '第三天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 2), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 2)],
-                      '第四天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 3), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 3)],
-                      '第五天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 4), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 4)],
-                      '第六天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 5), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 5)],
-                      '第七天': [new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 6), new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 6)],
-                    }
+      default     : [new Date(), new Date()]
     },
     {
       label       : '预约时段',

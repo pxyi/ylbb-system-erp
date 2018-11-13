@@ -44,6 +44,7 @@ export class BaseComponent implements OnInit {
   showDrawer: boolean;
   ngOnInit() {
     this.route.data.subscribe((res: { userInfo: UserInfoState }) => {
+      console.log(res)
       this.userInfo = res.userInfo;
       window.document.title = `${this.userInfo.store['shopName']}-鱼乐贝贝ERP管理系统`;
     })
