@@ -9,7 +9,7 @@ import { QueryNode } from './../../../ng-relax/components/query/query.component'
 import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, ComponentRef, ComponentFactory } from '@angular/core';
 import { UpdateComponent } from './update/update.component';
 import { ConstructionComponent } from './construction/construction.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AddIntegralComponent } from './add-integral/add-integral.component';
 import { AlbumComponent } from './album/album.component';
 
@@ -132,18 +132,36 @@ export class ListComponent implements OnInit {
 
   showDrawer: boolean;
   drawerTitle: string;
-
   constructor(
     private http: HttpService,
     private message: NzMessageService,
     private resolver: ComponentFactoryResolver,
     private router: Router,
-    private modal: NzModalService
-  ) { 
+    private modal: NzModalService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParamMap.subscribe((res: any) => {
+      this.type = res.params.type;
+      this.paramsInit.mobilePhone = res.params.phone;
+      setTimeout(() => {
+        this.listPage.eaQuery._queryForm.patchValue({ mobilePhone: res.params.phone })
+      });
+    });
   }
 
   ngOnInit() {
   }
+
+  type: string;
+  mobilePhone: number;
+  paramsInit: any = {};
+  dataChange(dataset) {
+    if (this.type) {
+      this.checkedItems.push(dataset[0].id);
+      dataset[0].checked = true;
+      this.operation(this.type);
+    }
+  } 
 
   operation(type) {
     if (!this.checkedItems.length) {

@@ -55,6 +55,10 @@ export class ListPageComponent implements OnInit {
   requestReady(e) {
     this.requestComplate.emit(e);
   }
+  @Output('requestDataChange') requestDataChange: EventEmitter<any> = new EventEmitter();
+  dataChange(e) {
+    this.requestDataChange.emit(e);
+  }
 
   @Output() checkedItemsChange: EventEmitter<any[]> = new EventEmitter();
   checkedChange(e) {

@@ -79,3 +79,14 @@ body {
 .ant-calendar-picker {
   width: 100%;
 }
+
+nz-button-group.flex {
+    width: 100%;
+    .ant-btn-group {
+      width: 100%;
+      display: flex;
+      button {
+        flex: 1;
+      }
+    }
+  }

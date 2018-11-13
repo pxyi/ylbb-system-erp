@@ -3,6 +3,7 @@
     #listPage
     url="/memberCard/list"
     [queryNode]="queryNode"
+    [paramsInit]="paramsInit"
     [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '通卡次数总(剩余)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期', '备注']"
     [checked]="true"
     [isRadio]="true"
@@ -10,7 +11,7 @@
     [allowSpace]="false"
     [EaBtns]="EaBtns"
     [EaTableTbodyTr]="EaTableTbodyTr"
-    (requestReady)="requestReady($event)">
+    (requestDataChange)="dataChange($event)">
 
   </ea-list-page>
   <ng-template #EaBtns>

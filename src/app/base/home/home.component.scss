@@ -61,6 +61,10 @@ nz-divider {
 .activityImg {
   min-width: 100%;
   min-height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0,0);
 }
 :host ::ng-deep {
   .ant-carousel .slick-slider .slick-list, .ant-carousel .slick-slider .slick-track {

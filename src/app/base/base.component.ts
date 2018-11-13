@@ -24,10 +24,24 @@ export class BaseComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder()
   ) { 
     this.queryForm = this.fb.group({ mobilePhone: [, [Validators.required, Validators.pattern(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/)]] });
+    this.formGroup = this.fb.group({
+      id: [],
+      name: [],
+      nick: [],
+      sex: [],
+      monthAge: [],
+      babyType: [],
+      mobilePhone: [],
+      cardCode: [],
+      cardTypeName: [],
+      surplusTimes: [],
+      tongTimes: [],
+      expireDays: [],
+      expireDate: []
+    });
   }
 
   showDrawer: boolean;
-
   ngOnInit() {
     this.route.data.subscribe((res: { userInfo: UserInfoState }) => {
       this.userInfo = res.userInfo;
@@ -35,18 +49,14 @@ export class BaseComponent implements OnInit {
     })
   }
 
-  cardList: any[] = [];
+  queryLoading: boolean;
   queryMember() {
     if (this.queryForm.valid) {
+      this.queryLoading = true;
       this.http.post('/homePage/getMemberDetail', this.queryForm.value).then(res => {
         this.formGroup.patchValue(res.result);
-        if (res.result.havacard) {
-          this.http.post('/memberCard/getMemberCards', { memberId: res.result.memberId }, false).then(res => {
-            this.cardList = res.result;
-            res.result.length && this.formGroup.patchValue({ cardId: res.result[0].id });
-          });
-        }
-      }).catch(err => this.formGroup.reset());
+        this.queryLoading = false;
+      }).catch(err => {this.formGroup.reset(); this.queryLoading = false;});
     }
   }
 

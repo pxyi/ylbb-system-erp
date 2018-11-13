@@ -120,24 +120,38 @@ export class ListComponent implements OnInit {
   constructor(
     private reoute: ActivatedRoute,
     private message: NzMessageService,
-    private resolver: ComponentFactoryResolver
-  ) { }
-
-  private getQueryParams;
-  ngOnInit() {
-    this.reoute.queryParamMap.subscribe((res: any) => {
-      if (res.params.memberId) {
-        this.getQueryParams = res.params;
+    private resolver: ComponentFactoryResolver,
+    private activatedRoute: ActivatedRoute
+  ) { 
+    this.activatedRoute.queryParamMap.subscribe((res: any) => {
+      if (res.params.type) {
+        this.type = res.params.type;
+        this.paramsInit.cardCode = res.params.code;
+        setTimeout(() => {
+          this.listPage.eaQuery._queryForm.patchValue({ cardCode: res.params.code })
+        });
+      } else if (res.params.memberId) {
+        this.paramsInit = { memberId: res.params.memberId };
         setTimeout(() => {
           this.listPage.eaQuery._queryForm.patchValue({ memberId: res.params.memberId });
         });
       }
-    })
+    });
   }
 
-  requestReady(e) {
-    this.getQueryParams && this.listPage.eaTable.request(this.getQueryParams);
+  ngOnInit() {
   }
+
+  type: string;
+  cardCode: number;
+  paramsInit: any = {};
+  dataChange(dataset) {
+    if (this.type) {
+      this.checkedItems.push(dataset[0].id);
+      dataset[0].checked = true;
+      this.operation(this.type);
+    }
+  } 
 
   operation(type) {
     if (!this.checkedItems.length) {

@@ -4,13 +4,14 @@
     url="/member/list"
     [allowSpace]="false"
     [queryNode]="queryNode"
+    [paramsInit]="paramsInit"
     [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '婴儿类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注']"
     [checked]="true"
     [isRadio]="true"
     [checkedItems]="checkedItems"
     [EaTableTbodyTr]="EaTableTbodyTr"
-    [EaBtns]="EaBtns"
-  >
+    (requestDataChange)="dataChange($event)"
+    [EaBtns]="EaBtns">
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.memberCard }}</td>
       <td>{{ data.name }}</td>
