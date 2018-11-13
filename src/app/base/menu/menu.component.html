@@ -32,7 +32,7 @@
                     <span title>{{ cdItem.title }}</span>
                     <ul>
                       <ng-container *ngFor="let twoItem of cdItem.children">
-                        <li nz-menu-item *ngIf="roleAllowPath.indexOf(twoItem.key) > -1" [routerLink]="[twoItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == twoItem.key">{{ twoItem.title }}</li>
+                        <li nz-menu-item *ngIf="roleAllowPath.indexOf(twoItem.key) > -1 || roleAllowPath.indexOf('**') > -1" [routerLink]="[twoItem.key]" [nzSelected]="routerState.currentPath.split('?')[0] == twoItem.key">{{ twoItem.title }}</li>
                       </ng-container>
                     </ul>
                   </li>

@@ -19,7 +19,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: BaseComponent,
-    resolve: { userInfo: UserInfoResolver },
     children: [
       {
         path: '',

@@ -110,7 +110,7 @@
           </div>
         </td>
 
-        <td *ngFor="let item of reserveDetail.teachers; let idx = index">
+        <!-- <td *ngFor="let item of reserveDetail.teachers; let idx = index">
           <div class="appoint-box" [ngClass]="{'rest': !data.value[item.id].status}">
             <ng-container *ngIf="data.value[item.id].status">
               <div class="no-reserve" *ngIf="data.value[item.id].reserveRecord.length == 0" (click)="addAppoint(item.id, data.key)">
@@ -147,7 +147,7 @@
               休息
             </ng-container>
           </div>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </nz-table>
