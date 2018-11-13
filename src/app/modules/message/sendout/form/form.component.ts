@@ -66,7 +66,7 @@ export class FormComponent implements OnInit {
   _sendSms() {
     this.saveLoading = true;
     this.http.post('/smsSend/sendSmsToConsume', {
-      paramsJson: JSON.stringify(this.formGroup.value)
+      paramJson: JSON.stringify(this.formGroup.value)
     }).then(res => {
       this.drawerRef.close(true);
       this.saveLoading = false;
