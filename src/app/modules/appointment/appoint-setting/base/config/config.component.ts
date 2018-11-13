@@ -55,13 +55,12 @@ export class ConfigComponent implements OnInit {
 
 
   configure(id) {
-    const drawerRef = this.drawer.create({
+    this.drawer.create({
       nzTitle: '方案详情',
       nzWidth: 700,
       nzContent: ConfigureComponent,
       nzContentParams: { id }
     });
-
   }
 
 }

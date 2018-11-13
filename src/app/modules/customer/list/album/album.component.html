@@ -52,7 +52,7 @@
   <ng-template #EaTableTbodyTr let-data>
     <td><nz-avatar nzSize="large" nzIcon="anticon anticon-user" [nzSrc]="data.photoSmall"></nz-avatar></td>
     <td>{{ data.monthAge }}</td>
-    <td>{{ data.createTime }}</td>
+    <td>{{ data.createDate }}</td>
     <td><a (click)="delete(data.id)">删除</a></td>
   </ng-template>
   <ng-template #title>

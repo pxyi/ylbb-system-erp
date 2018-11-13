@@ -27,3 +27,30 @@
   padding: 0;
   background: none;
 }
+
+.quick-switch-true,
+.quick-switch-false {
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  background: #1890ff;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+  i {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+  }
+}
+.quick-switch-true {
+  position: fixed;
+  top: 300px;
+  right: 0;
+  z-index: 9;
+}
+.quick-switch-false {
+  position: absolute;
+  top: 300px;
+  left: 0;
+  margin-left: -48px;
+}

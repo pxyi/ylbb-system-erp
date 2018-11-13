@@ -6,3 +6,36 @@
     <nz-footer><ea-footer></ea-footer></nz-footer>
   </nz-layout>
 </nz-layout>
+
+<div class="quick-switch-true" (click)="showDrawer = true">
+  <i nz-icon type="enter" theme="outline"></i>
+</div>
+<nz-drawer [nzVisible]="showDrawer" nzTitle="快捷操作" [nzWidth]="720" (nzOnClose)="showDrawer = false">
+  <div class="quick-switch-false" (click)="showDrawer = false" [hidden]="!showDrawer">
+    <i nz-icon type="close" theme="outline"></i>
+  </div>
+  
+  <form nz-form [formGroup]="queryForm">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="mobilePhone">客户电话</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入客户电话" formControlName="mobilePhone" id="mobilePhone">
+            <nz-form-explain *ngIf="queryForm.get('mobilePhone').dirty && queryForm.get('mobilePhone').hasError('required')">请输入客户电话！</nz-form-explain>
+            <nz-form-explain *ngIf="queryForm.get('mobilePhone').dirty && queryForm.get('mobilePhone').hasError('pattern')">请输入正确的客户电话！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <button nz-button nzType="primary" style="width: 100%" nzGhost [disabled]="queryForm.invalid" (click)="queryMember()">查询</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-drawer>

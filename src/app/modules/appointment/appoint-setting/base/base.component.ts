@@ -43,7 +43,7 @@ export class BaseComponent implements OnInit {
   
   
   config() {
-    this.drawer.create({
+    const drawer = this.drawer.create({
       nzTitle: '方案配置',
       nzContent: ConfigComponent,
       nzWidth: 820,
@@ -51,6 +51,7 @@ export class BaseComponent implements OnInit {
         'padding-bottom': '53px'
       }
     });
+    drawer.afterClose.subscribe(_ => this.getData());
   }
 
 }
