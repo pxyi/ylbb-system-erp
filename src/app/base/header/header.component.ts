@@ -31,17 +31,23 @@ export class HeaderComponent implements OnInit {
     private http: HttpService,
     private websocket: WebsocketService,
     private notification: NzNotificationService
-  ) {  
-    this.websocket.createObservableSocket(`${environment.domainWs}/socketServer`).subscribe(res => {
-      if (res.flag == 1) {
-        this.notification.info('您有新的预约，请及时处理', `用户：<b>${res.memberName}</b> 预约了老师<b>${res.employeeName}</b>于<i>${res.reserveDate}</i>`)
-      } else if (res.flag == 2) {
-        this.notification.success('您有新的线索，请及时跟进', '');
-      }
-      this.audio.nativeElement.play();
-    });
+  ) { 
+    this.openWs();
   }
   
+  openWs() {
+    this.websocket.createObservableSocket(`${environment.domainWs}/socketServer`).subscribe(res => {
+      if (res === 'close') {
+        this.openWs();
+      } else if (res.flag == 1) {
+        this.notification.info('您有新的预约，请及时处理', `用户：<b>${res.memberName}</b> 预约了老师<b>${res.employeeName}</b>于<i>${res.reserveDate}</i>`);
+        this.audio.nativeElement.play();
+      } else if (res.flag == 2) {
+        this.notification.success('您有新的线索，请及时跟进', '');
+        this.audio.nativeElement.play();
+      }
+    });
+  }
 
   searchValue: string;
   onChange(value: any): void {

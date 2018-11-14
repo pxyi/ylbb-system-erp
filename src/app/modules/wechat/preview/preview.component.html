@@ -1,10 +1,12 @@
 <div class="wechat-store-effect">
   <div class="store-effect">
-    <nz-carousel [nzAutoPlay]="true">
-      <div nz-carousel-content *ngFor="let item of shopImagItems">
-        <img *ngIf="item.url" [src]="item.url + '?x-oss-process=image/resize,m_fill,h_180,w_375'" alt="门店图片">
-      </div>
-    </nz-carousel>
+    <div>
+      <nz-carousel nzEffect="fade" [nzAutoPlay]="true">
+        <div nz-carousel-content *ngFor="let item of shopImagItems">
+          <img *ngIf="item.url" [src]="item.url + '?x-oss-process=image/resize,m_fill,h_180,w_375'" alt="门店图片">
+        </div>
+      </nz-carousel>
+    </div>
 
     <div class="store-info-header">
       <h2>
