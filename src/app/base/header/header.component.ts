@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private wsService: WebsocketService,
     private http: HttpService,
     private websocket: WebsocketService,
     private notification: NzNotificationService
@@ -36,7 +35,7 @@ export class HeaderComponent implements OnInit {
   }
   
   openWs() {
-    this.websocket.createObservableSocket(`${environment.domainWs}/socketServer`).subscribe(res => {
+    this.websocket.createObservableSocket(`${environment.domainWs}/sockjs/socketServer`).subscribe(res => {
       if (res === 'close') {
         this.openWs();
       } else if (res.flag == 1) {
@@ -79,8 +78,5 @@ export class HeaderComponent implements OnInit {
     window.localStorage.removeItem('userInfo');
     this.router.navigateByUrl('/login');
   }
-
-
-
 
 }
