@@ -44,7 +44,7 @@
 </form>
 
 <nz-tabset [(nzSelectedIndex)]="consumptionType">
-  <nz-tab nzTitle="计次服务" [nzDisabled]="!appointmentInfo.cardCode">
+  <nz-tab nzTitle="计次服务" [nzDisabled]="!appointmentInfo.haveCard || (appointmentInfo.haveCard && !memberCardList.length)">
     <form nz-form [formGroup]="timesCountGroup">
       <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">

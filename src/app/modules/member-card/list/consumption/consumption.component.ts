@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
@@ -29,6 +30,7 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
+    private message: NzMessageService
   ) { 
   }
 
@@ -100,7 +102,12 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
     this.http.post('/memberCard/getMemberCards', { memberId: this.memberCardInfo.memberId }, false).then(res => {
       this.memberCardList = res.result;
-      res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
+      if (res.result.length) {
+        this.timesCountGroup.patchValue({ cardId: res.result[0].id });
+      } else {
+        this.consumptionType = 1;
+        this.message.error('该客户会员卡(停卡，或过期，或卡次用尽)无法使用，请使用单次消费', { nzDuration: 5000 });
+      }
     });
 
     this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
