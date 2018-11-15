@@ -29,7 +29,6 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.staffInfo);
     this.formGroup = this.fb.group({
       name: [this.staffInfo.name, [Validators.required]],                 //	是	string	员工姓名
       nameEn: [this.staffInfo.nameEn, [Validators.pattern(/^[a-zA-Z]+$/)]],             //	否	string	英文名

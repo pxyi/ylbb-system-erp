@@ -38,28 +38,30 @@ export class UpdateComponent implements OnInit {
       defaultTag: [0, [Validators.required]],                  // 是否设置为默认 是否默认 0:’否’,1:’是’
       introduction: [],                                        //	商品说明
     });
-
-    this.formGroup.get('type').valueChanges.subscribe(val => {
-      if (val == 0) {
-        this.formGroup.addControl('chargeType', new FormControl(this.commodityInfo.id ? this.commodityInfo.chargeType : null, [Validators.required]));
-        this.formGroup.addControl('cardNum', new FormControl(this.commodityInfo.id ? this.commodityInfo.cardNum : 0));
-
-        this.formGroup.removeControl('stockPrice');
-        this.formGroup.removeControl('price');
-        this.formGroup.removeControl('inventory');
-        this.formGroup.removeControl('commission');
-      } else {
-        this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo.id ? this.commodityInfo.stockPrice : null, [Validators.required]));
-        this.formGroup.addControl('price', new FormControl(this.commodityInfo.id ? this.commodityInfo.price : null, [Validators.required]));
-        this.formGroup.addControl('inventory', new FormControl(this.commodityInfo.id ? this.commodityInfo.inventory : true, [Validators.required]));
-        this.formGroup.addControl('commission', new FormControl(this.commodityInfo.id ? this.commodityInfo.commission : true, [Validators.required]));
-
-        this.formGroup.removeControl('chargeType');
-        this.formGroup.removeControl('cardNum');
-      }
-    });
+    this.formTypeChange(this.formGroup.get('type').value);
+    this.formGroup.get('type').valueChanges.subscribe(val => this.formTypeChange(val) );
     
     this.commodityInfo.id && this.formGroup.patchValue(this.commodityInfo);
+  }
+
+  formTypeChange(val) {
+    if (val == 0) {
+      this.formGroup.addControl('chargeType', new FormControl(this.commodityInfo.id ? this.commodityInfo.chargeType : null, [Validators.required]));
+      this.formGroup.addControl('cardNum', new FormControl(this.commodityInfo.id ? this.commodityInfo.cardNum : 0));
+
+      this.formGroup.removeControl('stockPrice');
+      this.formGroup.removeControl('price');
+      this.formGroup.removeControl('inventory');
+      this.formGroup.removeControl('commission');
+    } else {
+      this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo.id ? this.commodityInfo.stockPrice : null, [Validators.required]));
+      this.formGroup.addControl('price', new FormControl(this.commodityInfo.id ? this.commodityInfo.price : null, [Validators.required]));
+      this.formGroup.addControl('inventory', new FormControl(this.commodityInfo.id ? this.commodityInfo.inventory : true, [Validators.required]));
+      this.formGroup.addControl('commission', new FormControl(this.commodityInfo.id ? this.commodityInfo.commission : true, [Validators.required]));
+
+      this.formGroup.removeControl('chargeType');
+      this.formGroup.removeControl('cardNum');
+    }
   }
 
   save() {

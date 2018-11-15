@@ -52,9 +52,9 @@ export class StaffComponent implements OnInit {
 
   @ViewChild('listPage') listPage: ListPageComponent;
 
-  showUpdate() {
+  showUpdate(isUpdate?: boolean) {
     let staffInfo = {};
-    if (this.checkedItems.length) {
+    if (isUpdate) {
       this.listPage.eaTable.dataSet.map(res => res.id == this.checkedItems[0] && (staffInfo = res));
     }
     const drawerRef = this.drawer.create({
@@ -66,14 +66,11 @@ export class StaffComponent implements OnInit {
       },
       nzContentParams: { staffInfo }
     });
-    drawerRef.afterClose.subscribe(res => {
-
-    })
   }
   
   update() {
     if (this.checkedItems.length) {
-      this.showUpdate();
+      this.showUpdate(true);
     } else {
       this.message.warning('请选择一条数据');
     }

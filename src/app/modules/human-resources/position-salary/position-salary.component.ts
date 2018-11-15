@@ -57,6 +57,7 @@ export class PositionSalaryComponent implements OnInit {
   }
 
   update(data = { id: null, position: null, bandName: null, salary: null, bandRate: null, comment: null }) {
+    this.formGroup.reset();
     this.showDrawer = true;
     this.formGroup.patchValue(data);
   }
