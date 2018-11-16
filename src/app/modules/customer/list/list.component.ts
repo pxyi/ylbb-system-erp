@@ -200,7 +200,7 @@ export class ListComponent implements OnInit {
     } else if (type === 'album') {
       this.listPage.eaTable.dataSet.map(res => {
         if (res.id === this.checkedItems[0]) {
-          if (res.havaCard) {
+          if (res.haveCard) {
             this.showDrawer = true;
             this.drawerTitle = this.operationComponents[type].title;
             this.createComponent(this.operationComponents[type]);

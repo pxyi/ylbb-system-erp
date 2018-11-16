@@ -103,7 +103,7 @@ export class ConsumptionComponent implements OnInit, OnDestroy {
     
     /* -------------------- 如果有会员卡则去请求 会员卡列表和泳圈型号 -------------------- */
     if (this.userInfo.haveCard) {
-      this.http.post('/memberCard/getMemberCards', { memberId: this.userInfo.memberId }, false).then(res => {
+      this.http.post('/memberCard/getMemberCards', { memberId: this.id }, false).then(res => {
         this.memberCardList = res.result;
         if (res.result.length) {
           this.timesCountGroup.patchValue({ cardId: res.result[0].id });
