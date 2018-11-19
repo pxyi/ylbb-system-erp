@@ -1,7 +1,9 @@
+import { DrawerRefSave } from 'src/app/ng-relax/decorators/drawerRef.decorator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from './../../../../ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { NzDrawerRef } from 'ng-zorro-antd';
+import { DrawerRefClose } from 'src/app/ng-relax/decorators/drawerRefClose.decorator';
 
 @Component({
   selector: 'app-update',
@@ -30,6 +32,7 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
+      id: [this.staffInfo.id],
       name: [this.staffInfo.name, [Validators.required]],                 //	是	string	员工姓名
       nameEn: [this.staffInfo.nameEn, [Validators.pattern(/^[a-zA-Z]+$/)]],             //	否	string	英文名
       mobile: [this.staffInfo.mobile, [Validators.required, Validators.pattern(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/)]],                 //	是	string	手机号码
@@ -42,37 +45,34 @@ export class UpdateComponent implements OnInit {
       qq: [this.staffInfo.qq],             //	否	string	qq
       bandId: [this.staffInfo.bandId, [Validators.required]],                 //	是	Long	职位id
       departmentId: [this.staffInfo.departmentId, [Validators.required]],                 //	是	Long	部门id
-      insured: [this.staffInfo.insured],                 //	是	int	是否上保险 0: ’否’, 1: ’是’
+      insured: [typeof this.staffInfo.insured === 'number' ? this.staffInfo.insured : 1],                 //	是	int	是否上保险 0: ’否’, 1: ’是’
       birthday: [this.staffInfo.birthday, [Validators.required]],                 //	是	string	员工生日
       joinDate: [this.staffInfo.joinDate, [Validators.required]],                 //	是	string	入职时间
       leaveDate: [this.staffInfo.leaveDate],              //	否	string	离职时间
-      sex: [this.staffInfo.sex],                 //	是	int	性别 ‘1’: ’女’, ’0’: ’男’
-      state: [this.staffInfo.state],                 //	是	string	员工状态 ‘全职’: ’全职’, ’临时’: ’临时’, ’兼职’: ’兼职’, ’离职’: ’离职’
-      notStatistics: [this.staffInfo.notStatistics],                 //	是	boolean	是否提成 false: ’是’, true: ’否’
-      teacher: [this.staffInfo.teacher],                 //	是	boolean	是否泳师 true: ’是’, false: ’否’
-      online: [this.staffInfo.online, [Validators.required]],                 //	是	int	是否网上预约 0: ’不可以’, 1: ’可以’
-      serviceArea: [this.staffInfo.serviceArea],                 //	是	int	服务区域 1: ’婴儿区’, 2: ’幼儿区’, 3: ’兼顾’
-      serviceNum: [this.staffInfo.serviceNum, [Validators.required]],                 //	是	int	接待能力
+      sex: [this.staffInfo.sex || 1],                 //	是	int	性别 ‘1’: ’女’, ’0’: ’男’
+      state: [this.staffInfo.state || '全职'],                 //	是	string	员工状态 ‘全职’: ’全职’, ’临时’: ’临时’, ’兼职’: ’兼职’, ’离职’: ’离职’
+      notStatistics: [typeof this.staffInfo.notStatistics === 'boolean' ? this.staffInfo.notStatistics : true],                 //	是	boolean	是否提成 false: ’是’, true: ’否’
+      teacher: [typeof this.staffInfo.teacher === 'boolean' ? this.staffInfo.teacher : true],                 //	是	boolean	是否泳师 true: ’是’, false: ’否’
+      online: [typeof this.staffInfo.online === 'number' ? this.staffInfo.online : 1, [Validators.required]],                 //	是	int	是否网上预约 0: ’不可以’, 1: ’可以’
+      serviceArea: [this.staffInfo.serviceArea || 3],                 //	是	int	服务区域 1: ’婴儿区’, 2: ’幼儿区’, 3: ’兼顾’
+      serviceNum: [this.staffInfo.serviceNum, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],                 //	是	int	接待能力
     });
 
     this.formGroup.get('idCardNo').valueChanges.subscribe(res => {
-      if (res.length == 18) {
+      if (res && res.length == 18) {
         var birthday = res.substr(6, 8).split('');
         birthday.splice(4, 0, '-');
         birthday.splice(7, 0, '-');
-        birthday = birthday.join('');
+        birthday = new Date(birthday.join(''));
         this.formGroup.patchValue({ birthday });
       }
     })
   }
 
-  save() {
+  saveLoading: boolean;
+  @DrawerRefSave('/employee/saveEmployee') save: () => void;
 
-  }
-
-  close() {
-    this.drawerRef.close();
-  }
+  @DrawerRefClose() close: () => void;
 
   /* ------------ 禁止选择今天以后的日期 ------------ */
   _disabledDate(current: Date): boolean {

@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   }
   
   openWs() {
-    this.websocket.createObservableSocket(`${environment.domainWs}/sockjs/socketServer`).subscribe(res => {
+    this.websocket.createObservableSocket(`${environment.domainWs}/socketServer`).subscribe(res => {
       if (res === 'close') {
         this.openWs();
       } else if (res.flag == 1) {

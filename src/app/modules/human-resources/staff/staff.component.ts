@@ -66,6 +66,7 @@ export class StaffComponent implements OnInit {
       },
       nzContentParams: { staffInfo }
     });
+    drawerRef.afterClose.subscribe(res => res && this.listPage.eaTable._request());
   }
   
   update() {
