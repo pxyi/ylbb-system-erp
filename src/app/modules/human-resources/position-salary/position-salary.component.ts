@@ -26,8 +26,8 @@ export class PositionSalaryComponent implements OnInit {
       id: [],
       position: [, [Validators.required], [this.positionAsyncValidator]],
       bandName: [, [Validators.required]],
-      salary: [, [Validators.required]],
-      bandRate: [, [Validators.required]],
+      salary: [, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      bandRate: [, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       comment: []
     })
   }

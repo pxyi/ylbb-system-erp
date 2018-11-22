@@ -60,6 +60,7 @@
           <nz-form-control>
             <input nz-input placeholder="请输入底薪" formControlName="salary" id="salary">
             <nz-form-explain *ngIf="formGroup.get('salary').dirty && formGroup.get('salary').hasError('required')">请输入底薪！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('salary').dirty && formGroup.get('salary').hasError('pattern')">请输入正确的底薪！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -69,6 +70,7 @@
           <nz-form-control>
             <input nz-input placeholder="请输入提成倍数" formControlName="bandRate" id="bandRate">
             <nz-form-explain *ngIf="formGroup.get('bandRate').dirty && formGroup.get('bandRate').hasError('required')">请输入提成倍数！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('bandRate').dirty && formGroup.get('bandRate').hasError('pattern')">请输入正确的提成倍数！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
