@@ -45,9 +45,9 @@ export class UpdateComponent implements OnInit {
   }
 
   formTypeChange(val) {
+    this.formGroup.patchValue({ chargeType: val });
     if (val == 0) {
-      this.formGroup.patchValue({ chargeType: 1 });
-      this.formGroup.addControl('cardTypeCategory', new FormControl(this.commodityInfo.id ? this.commodityInfo.cardTypeCategory : null, [Validators.required]));
+      this.formGroup.addControl('categoryId', new FormControl(this.commodityInfo.id ? this.commodityInfo.categoryId : null, [Validators.required]));
       this.formGroup.addControl('cardNum', new FormControl(this.commodityInfo.id ? this.commodityInfo.cardNum : 0));
 
       this.formGroup.removeControl('stockPrice');
@@ -55,13 +55,12 @@ export class UpdateComponent implements OnInit {
       this.formGroup.removeControl('inventory');
       this.formGroup.removeControl('commission');
     } else {
-      this.formGroup.patchValue({ chargeType: 0 });
       this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo.id ? this.commodityInfo.stockPrice : null, [Validators.required]));
       this.formGroup.addControl('price', new FormControl(this.commodityInfo.id ? this.commodityInfo.price : null, [Validators.required]));
       this.formGroup.addControl('inventory', new FormControl(this.commodityInfo.id ? this.commodityInfo.inventory : true, [Validators.required]));
       this.formGroup.addControl('commission', new FormControl(this.commodityInfo.id ? this.commodityInfo.commission : true, [Validators.required]));
 
-      this.formGroup.removeControl('cardTypeCategory');
+      this.formGroup.removeControl('categoryId');
       this.formGroup.removeControl('cardNum');
     }
   }

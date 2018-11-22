@@ -32,10 +32,10 @@
         <nz-form-item>
           <nz-form-label nzRequired>业务类型</nz-form-label>
           <nz-form-control>
-            <nz-select formControlName="cardTypeCategory" nzPlaceHolder="请选择业务类型">
+            <nz-select formControlName="categoryId" nzPlaceHolder="请选择业务类型">
               <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
             </nz-select>
-            <nz-form-explain *ngIf="formGroup.get('cardTypeCategory').dirty && formGroup.get('cardTypeCategory').hasError('required')">请选择业务类型！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('categoryId').dirty && formGroup.get('categoryId').hasError('required')">请选择业务类型！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>

@@ -7,8 +7,14 @@
         overflow-x: auto;
       }
     }
+    tbody tr:nth-child(4n - 1) {
+      background: #f9f9f9;
+    }
     tr.ea-checked {
       background: #e6f7ff;
     }
+  }
+  .ant-table-tbody>tr>td, .ant-table-thead>tr>th {
+    padding: 14px 16px
   }
 }
