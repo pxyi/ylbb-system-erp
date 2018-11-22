@@ -4,7 +4,7 @@
       <nz-form-item>
         <nz-form-label nzRequired>商品类型</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="chargeType" nzPlaceHolder="请选择商品类型">
+          <nz-select formControlName="type" nzPlaceHolder="请选择商品类型">
             <nz-option nzLabel="服务" [nzValue]="0"></nz-option>
             <nz-option nzLabel="商品" [nzValue]="1"></nz-option>
           </nz-select>
@@ -13,29 +13,29 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="name">{{ formGroup.get('chargeType').value == 0 ? '服务' : '商品' }}名称</nz-form-label>
+        <nz-form-label nzRequired nzFor="name">{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入{{ formGroup.get('chargeType').value == 0 ? '服务' : '商品' }}名称" formControlName="name" id="name">
-          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入{{ formGroup.get('chargeType').value == 0 ? '服务' : '商品' }}名称！</nz-form-explain>
-          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('duplicated')">该{{ formGroup.get('chargeType').value == 0 ? '服务' : '商品' }}名称已存在</nz-form-explain>
+          <input nz-input placeholder="请输入{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称" formControlName="name" id="name">
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('duplicated')">该{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称已存在</nz-form-explain>
           <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').pending">
-            <i class="anticon anticon-spin anticon-loading"></i>正在校验{{ formGroup.get('chargeType').value == 0 ? '服务' : '商品' }}名称是否存在...</nz-form-explain>
+            <i class="anticon anticon-spin anticon-loading"></i>正在校验{{ formGroup.get('type').value == 0 ? '服务' : '商品' }}名称是否存在...</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
 
   <!-- 服务项 -->
-  <ng-container *ngIf="formGroup.get('chargeType').value == 0">
+  <ng-container *ngIf="formGroup.get('type').value == 0">
     <div nz-row nzGutter="8">
       <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label nzRequired>业务类型</nz-form-label>
           <nz-form-control>
-            <nz-select formControlName="type" nzPlaceHolder="请选择业务类型">
+            <nz-select formControlName="cardTypeCategory" nzPlaceHolder="请选择业务类型">
               <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
             </nz-select>
-            <nz-form-explain *ngIf="formGroup.get('type').dirty && formGroup.get('type').hasError('required')">请选择业务类型！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('cardTypeCategory').dirty && formGroup.get('cardTypeCategory').hasError('required')">请选择业务类型！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -53,7 +53,7 @@
   </ng-container>
 
   <!-- 商品项 -->
-  <ng-container *ngIf="formGroup.get('chargeType').value == 1">
+  <ng-container *ngIf="formGroup.get('type').value == 1">
     <div nz-row nzGutter="8">
       <div nz-col nzSpan="12">
         <nz-form-item>
