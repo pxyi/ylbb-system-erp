@@ -64,7 +64,7 @@ export class UpdateComponent implements OnInit {
         birthday.splice(4, 0, '-');
         birthday.splice(7, 0, '-');
         birthday = new Date(birthday.join(''));
-        this.formGroup.patchValue({ birthday });
+        birthday != 'Invalid Date' && this.formGroup.patchValue({ birthday });
       }
     })
   }
