@@ -1,7 +1,10 @@
 :host ::ng-deep {
+  .ant-table {
+    font-size: 13px;
+  }
   nz-table { 
     &.nowrap {
-      white-space:nowrap;
+      white-space: nowrap;
 
       .ant-table-body {
         overflow-x: auto;
@@ -15,6 +18,6 @@
     }
   }
   .ant-table-tbody>tr>td, .ant-table-thead>tr>th {
-    padding: 14px 16px
+    padding: 12px 14px
   }
 }

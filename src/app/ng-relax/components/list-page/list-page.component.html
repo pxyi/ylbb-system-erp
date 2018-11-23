@@ -1,6 +1,6 @@
 <ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns"></ea-query>
 
-<div class="ea-btns">
+<div class="ea-btns" *ngIf="EaBtns">
   <ng-container *ngTemplateOutlet="EaBtns"></ng-container>
 </div>
 

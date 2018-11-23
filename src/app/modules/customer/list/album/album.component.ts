@@ -20,8 +20,6 @@ export class AlbumComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  photoList: any[] = [];
-
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
@@ -54,4 +52,6 @@ export class AlbumComponent implements OnInit {
     return current && current.getTime() > Date.now();
   }
 
+  previewVisible: boolean;
+  previewImage: string;
 }

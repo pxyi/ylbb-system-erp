@@ -50,7 +50,7 @@
   (_dataChange)="photoList = $event"
   [title]="title">
   <ng-template #EaTableTbodyTr let-data>
-    <td><nz-avatar nzSize="large" nzIcon="anticon anticon-user" [nzSrc]="data.photoSmall"></nz-avatar></td>
+    <td><nz-avatar style="cursor: pointer" nzSize="large" nzIcon="anticon anticon-user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>
     <td>{{ data.monthAge }}</td>
     <td>{{ data.createDate }}</td>
     <td><a (click)="delete(data.id)">删除</a></td>
@@ -63,8 +63,8 @@
   </ng-template>
 </ea-table>
 
-<nz-carousel nzEffect="scrollx" [nzAutoPlay]="true">
-  <div nz-carousel-content *ngFor="let item of photoList">
-    <img class="activityImg" [src]="item.photo">
-  </div>
-</nz-carousel>
+<nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+  </ng-template>
+</nz-modal>
