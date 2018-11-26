@@ -28,7 +28,7 @@
                   </li>
                 </ng-container>
                 <ng-container *ngIf="!cdItem.isLeaf && cdItem.children">
-                  <li nz-submenu *ngIf="roleAllowPath.indexOf(cdItem.key) > -1" [nzOpen]="routerState.currentPath.indexOf(cdItem.key) > -1">
+                  <li nz-submenu *ngIf="roleAllowPath.indexOf(cdItem.key) > -1 || roleAllowPath.indexOf('**') > -1" [nzOpen]="routerState.currentPath.indexOf(cdItem.key) > -1">
                     <span title>{{ cdItem.title }}</span>
                     <ul>
                       <ng-container *ngFor="let twoItem of cdItem.children">
