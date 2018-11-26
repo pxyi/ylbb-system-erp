@@ -39,7 +39,7 @@ export class UpdateComponent implements OnInit {
       idCardNo: [this.staffInfo.idCardNo, [Validators.required, Validators.pattern(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/)]],                 //	是	string	身份证号
       idCardAddress: [this.staffInfo.idCardAddress],              //	否	string	身份证地址
       parentName: [this.staffInfo.parentName],             //	否	string	亲属姓名
-      homePhone: [this.staffInfo.homePhone, [Validators.pattern(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/)]],              //	否	string	家庭电话
+      homePhone: [this.staffInfo.homePhone, [Validators.pattern(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/)]],              //	否	string	家庭电话
       address: [this.staffInfo.address],              //	否	string	家庭住址
       email: [this.staffInfo.email, [Validators.pattern(/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/)]],              //	否	string	email
       qq: [this.staffInfo.qq],             //	否	string	qq
