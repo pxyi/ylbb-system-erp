@@ -48,7 +48,7 @@ export class QueryComponent implements OnInit {
       } else {
         this._queryForm.addControl(res.key, new FormControl(typeof res.default !== 'undefined' ? res.default : null));
       }
-      if (res.type === 'select') {
+      if (res.type === 'select' || res.type === 'radio') {
         res.optionKey = res.optionKey || { label: 'name', value: 'id' };
         if (res.optionsUrl && res.noCache) {
           this.http.post<any>(res.optionsUrl, {}).subscribe(result => {
@@ -115,7 +115,7 @@ export class QueryComponent implements OnInit {
 export interface QueryNode {
   label       : string;
   key         : string;
-  type        : 'input' | 'select' | 'between' | 'datepicker' | 'rangepicker' | 'radio' | 'monthpicker';
+  type        : 'input' | 'select' | 'radio' | 'between' | 'datepicker' | 'rangepicker' | 'radio' | 'monthpicker';
   default?    : any;
   valueKey?   : string[];
   options?    : any[];
@@ -124,6 +124,8 @@ export interface QueryNode {
   ranges?     : Object;
   placeholder?: string | string[];
   isHide?     : boolean;
+  isRemove?   : boolean;
+  multiple?   : number;
 }
 export interface OptionsKey {
   label: string;

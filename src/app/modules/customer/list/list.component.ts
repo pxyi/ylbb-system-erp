@@ -62,8 +62,7 @@ export class ListComponent implements OnInit {
       label       : '婴儿类型',
       key         : 'babyType',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
-      isHide      : true
+      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ]
     },
     {
       label       : '宝宝月龄',

@@ -21,6 +21,8 @@ export class ListPageComponent implements OnInit {
   @Input() tableThead: any[] = [];
 
   @Input() url: string;
+  
+  @Input() showPage: boolean = true;
 
   @Input() paramsDefault: any = {};
 

@@ -1,7 +1,4 @@
 :host ::ng-deep {
-  .ant-table {
-    font-size: 13px;
-  }
   nz-table { 
     &.nowrap {
       white-space: nowrap;
@@ -16,8 +13,5 @@
     tr.ea-checked {
       background: #e6f7ff;
     }
-  }
-  .ant-table-tbody>tr>td, .ant-table-thead>tr>th {
-    padding: 12px 14px
   }
 }

@@ -47,7 +47,6 @@
   [thead]="['照片', '月龄', '照片日期', '操作']" size="small" 
   [EaTableTbodyTr]="EaTableTbodyTr" 
   [paramsDefault]="{babyId: id}" 
-  (_dataChange)="photoList = $event"
   [title]="title">
   <ng-template #EaTableTbodyTr let-data>
     <td><nz-avatar style="cursor: pointer" nzSize="large" nzIcon="anticon anticon-user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>

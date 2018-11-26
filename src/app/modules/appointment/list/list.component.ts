@@ -106,9 +106,10 @@ export class ListComponent implements OnInit {
       this.listPage.eaQuery._queryForm.addControl('weilai', new FormControl(null));
       let queryNode: QueryNode = {
         label: '未来几天',
-        type: 'select',
+        type: 'radio',
         key: 'weilai',
         options: [],
+        multiple: 2,
         optionKey: { label: 'name', value: 'id' }
       }
       res.result.map(item => queryNode.options.push({ name: item.week, id: new Date(item.date)}))

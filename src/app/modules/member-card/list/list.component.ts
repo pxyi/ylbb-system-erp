@@ -70,7 +70,8 @@ export class ListComponent implements OnInit {
     {
       label       : '会员ID',
       key         : 'memberId',
-      type        : 'input'
+      type        : 'input',
+      isRemove    : true
     }, 
     {
       label       : '会员姓名',
@@ -93,8 +94,7 @@ export class ListComponent implements OnInit {
       label       : '婴儿类型',
       key         : 'babyType',
       type        : 'select',
-      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ],
-      isHide      : true
+      options     : [ { name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' } ]
     },
     {
       label       : '剩余卡次',

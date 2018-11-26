@@ -15,11 +15,17 @@ import { StoreModule } from '@ngrx/store';
 import { reducersConfig } from './core/reducers/reducers-config';
 import { BreadcrumbComponent } from './base/content/breadcrumb/breadcrumb.component';
 import { UserInfoResolver } from './core/userInfo-resolver.service';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { HomeComponent } from './base/home/home.component';
 import { AddapointComponent } from './base/home/addapoint/addapoint.component';
 import { AppointDetailComponent } from './base/home/appoint-detail/appoint-detail.component';
 import { ConsumptionComponent } from './base/home/appoint-detail/consumption/consumption.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import zh from '@angular/common/locales/zh';
+
+registerLocaleData(zh);
 
 @NgModule({
   declarations: [
@@ -42,11 +48,15 @@ import { ConsumptionComponent } from './base/home/appoint-detail/consumption/con
     BrowserAnimationsModule,
     AppRoutingModule,
     NgRelaxModule,
-    StoreModule.forRoot(reducersConfig)
+    StoreModule.forRoot(reducersConfig),
+    FormsModule,
+    HttpClientModule,
+    NgZorroAntdModule
   ],
   providers: [
     UserInfoResolver,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: NZ_I18N, useValue: zh_CN },
   ],
   bootstrap: [AppComponent]
 })

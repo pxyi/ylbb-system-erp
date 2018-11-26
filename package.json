@@ -29,7 +29,9 @@
     "rxjs": "^6.0.0",
     "ts-md5": "^1.2.4",
     "viser-ng": "^2.4.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "less-loader": "^4.1.0",
+    "less": "^2.7.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",

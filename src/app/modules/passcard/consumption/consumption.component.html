@@ -45,22 +45,22 @@
       <td>{{ data.member.name }}</td>
       <td>{{ data.member.nick }}</td>
       <td>{{ data.isCrossed == 1 ? '是' : '否' }}</td>
-      <td>{{ data.consumption }}</td>
+      <td>{{ data.consumeType == 1 ? '-' : '' }}{{ data.consumption }}</td>
       <td>{{ data.consumeDate }}</td>
       <td>{{ data.usedTimes }}</td>
       <td>{{ data.deductionTimes }}</td>
       <td>{{ data.type == 1 ? '赠送' : '正价' }}</td>
       <td>{{ data.commodity.name }}</td>
       <td>{{ data.consumeType }}</td>
-      <td>{{ data.shop.shopName }}</td>
       <td>{{ data.mermberStore.shopName }}</td>
+      <td>{{ data.shop.shopName }}</td>
       <td>{{ data.teacherName }}</td>
       <td>{{ data.satisfaction }}</td>
       <td>{{ data.weight }}</td>
       <td>{{ data.swimRing ? data.swimRing['name'] : '--' }}</td>
       <td>{{ data.swimDuration }}</td>
-      <td>{{ data.weighRemind ? '需要' : '不需要' }}</td>
-      <td>{{ data.member.photoRemind ? '需要' : '不需要' }}</td>
+      <td [style.color]="data.weighRemind ? '#f5222d' : '' ">{{ data.weighRemind ? '需要' : '不需要' }}</td>
+      <td [style.color]="data.member.photoRemind ? '#f5222d' : '' ">{{ data.member.photoRemind ? '需要' : '不需要' }}</td>
       <td>{{ data.comment }}</td>
     </ng-template>
   </ea-list-page>
