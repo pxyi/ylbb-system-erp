@@ -78,14 +78,14 @@ export class ListComponent implements OnInit {
     {
       label       : '只看跨店',
       key         : 'babyType',
-      type        : 'select',
+      type        : 'radio',
       options     : [ { name: '是', id: 1 }, { name: '否', id: 0 } ],
       isHide      : true
     },
     {
       label       : '当天预约',
       key         : 'overdue',
-      type        : 'select',
+      type        : 'radio',
       options     : [ { name: '是', id: 1 }, { name: '否', id: 0 } ],
       isHide      : true
     }

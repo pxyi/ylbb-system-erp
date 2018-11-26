@@ -150,6 +150,7 @@ export class ListComponent implements OnInit {
       this.checkedItems.push(dataset[0].id);
       dataset[0].checked = true;
       this.operation(this.type);
+      this.listPage.eaQuery._queryForm.patchValue({ memberId: null });
     }
   } 
 

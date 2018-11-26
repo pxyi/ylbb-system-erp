@@ -3,7 +3,6 @@
   nzShowSizeChanger
   [nzScroll]="{x:'100%'}"
   [nzFrontPagination]="false"
-  [ngClass]="[ allowSpace ? 'break' : 'nowrap' ]"
   [nzData]="dataSet"
   [nzSize]="size"
   [nzTitle]="title ? title : null"
@@ -15,6 +14,7 @@
   [(nzPageSize)]="_pageInfo.pageSize"
   (nzPageSizeChange)="_request(true)"
   (nzPageIndexChange)="_request()">
+  <!-- [ngClass]="[ allowSpace ? 'break' : 'nowrap' ]" -->
   <thead>
     <tr>
       <th nz-th nzCheckbox *ngIf="checked" [style.text-align]="'center'">

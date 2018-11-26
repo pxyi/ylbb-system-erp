@@ -47,6 +47,10 @@
       }
     }
   }
+  nz-radio-group > label {
+    padding: 0;
+    text-align: center;
+  }
   .ant-calendar-picker {
     width: 100%;
     .ant-calendar-range-picker-input {
