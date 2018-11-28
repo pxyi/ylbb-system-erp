@@ -8,11 +8,13 @@ export class WebsocketService {
 
   ws: WebSocket;
 
+  interval;
+
   constructor() { }
 
   createObservableSocket(url: string): Observable<any> {
     this.ws = new WebSocket(url);
-    setInterval(_ => {
+    this.interval = setInterval(_ => {
       this.ws.send('土豆土豆，我是地瓜，我是地瓜，收到请回答！收到请回答！！');
     }, 10 * 1000)
     return new Observable( observer => {
@@ -20,6 +22,7 @@ export class WebsocketService {
       this.ws.onerror = (event) => observer.error(event);
       this.ws.onclose = (event) => { 
         observer.next('close');
+        clearInterval(this.interval);
         observer.complete(); 
       };
     })

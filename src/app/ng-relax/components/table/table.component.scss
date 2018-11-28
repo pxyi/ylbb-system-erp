@@ -1,5 +1,11 @@
 :host ::ng-deep {
   nz-table { 
+    table {
+      border: 1px solid #e8e8e8 !important;
+      th, td {
+        text-align: center;
+      }
+    }
     &.nowrap {
       white-space: nowrap;
 

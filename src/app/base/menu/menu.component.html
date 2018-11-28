@@ -1,7 +1,7 @@
 <div class="ui-menu">
   <div class="ui-logo">
     <img src="./assets/images/logo-header.png" alt="logo" [ngStyle]="{'margin-left': '24px'}" [title]="userInfo.store['shopName']">
-    <span [style.font-size]="shopNameFontSize + 'px'" [ngClass]="{'active': isCollapsed}">{{ userInfo.store['shopName'] }}</span>
+    <!-- <span [style.font-size]="shopNameFontSize + 'px'" [ngClass]="{'active': isCollapsed}">{{ userInfo.store['shopName'] }}</span> -->
   </div>
   <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" nzTheme='dark'>
     <ng-container *ngFor="let item of menuConfig">
