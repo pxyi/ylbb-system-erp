@@ -9,7 +9,7 @@ import { ConsumptionComponent } from './consumption/consumption.component';
 @Component({
   selector: 'app-appoint-detail',
   templateUrl: './appoint-detail.component.html',
-  styleUrls: ['./appoint-detail.component.scss']
+  styleUrls: ['./appoint-detail.component.less']
 })
 export class AppointDetailComponent implements OnInit {
 

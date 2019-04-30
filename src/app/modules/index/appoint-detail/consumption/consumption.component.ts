@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-consumption',
   templateUrl: './consumption.component.html',
-  styleUrls: ['./consumption.component.scss']
+  styleUrls: ['./consumption.component.less']
 })
 export class ConsumptionComponent implements OnInit {
 

@@ -8,7 +8,7 @@ import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator'
 @Component({
   selector: 'app-addapoint',
   templateUrl: './addapoint.component.html',
-  styleUrls: ['./addapoint.component.scss']
+  styleUrls: ['./addapoint.component.less']
 })
 export class AddapointComponent implements OnInit {
 

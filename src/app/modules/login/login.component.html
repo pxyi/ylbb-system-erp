@@ -18,7 +18,7 @@
       <form nz-form [formGroup]="loginForm" class="content" (ngSubmit)="_submit()">
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-user" nzSize="large">
+            <nz-input-group nzPrefixIcon="user" nzSize="large">
               <input type="text" nz-input formControlName="username" placeholder="请输入用户名">
             </nz-input-group>
             <nz-form-explain *ngIf="loginForm.controls['username'].dirty && loginForm.controls['username'].hasError('required')">请输入用户名!</nz-form-explain>
@@ -26,7 +26,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-lock" nzSize="large">
+            <nz-input-group nzPrefixIcon="lock" nzSize="large">
               <input type="password" nz-input formControlName="password" placeholder="请输入密码">
             </nz-input-group>
             <nz-form-explain *ngIf="loginForm.controls['password'].dirty && loginForm.controls['password'].hasError('required')">请输入密码!</nz-form-explain>

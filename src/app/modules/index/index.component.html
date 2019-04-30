@@ -43,7 +43,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of basicTable.data">
-            <td><nz-avatar nzIcon="anticon anticon-user" nzShape="square" [nzSrc]="data.albumUrl"></nz-avatar></td>
+            <td><nz-avatar nzIcon="user" nzShape="square" [nzSrc]="data.albumUrl"></nz-avatar></td>
             <td>{{ data.name }}</td>
             <td>{{ data.sex }}</td>
             <td>{{ data.monthAge }}</td>
@@ -114,7 +114,7 @@
               </div>
               <div class="reserve-detail" *ngIf="data.value[item.id].reserveRecord.length == 1" (click)="previewAppoint(data.value[item.id].reserveRecord[0])">
                 <div class="detail-head">
-                  <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="data.value[item.id].reserveRecord[0].albumUrl"></nz-avatar>
+                  <nz-avatar nzIcon="user" [nzSrc]="data.value[item.id].reserveRecord[0].albumUrl"></nz-avatar>
                   <h4>
                     {{ data.value[item.id].reserveRecord[0].name }}
                     <span>{{ data.value[item.id].reserveRecord[0].babyType }}</span>

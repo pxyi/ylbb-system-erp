@@ -38,7 +38,7 @@
   [paramsDefault]="{babyId: id}" 
   [title]="title">
   <ng-template #EaTableTbodyTr let-data>
-    <td><nz-avatar style="cursor: pointer" nzShape="square" nzSize="large" nzIcon="anticon anticon-user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>
+    <td><nz-avatar style="cursor: pointer" nzShape="square" nzSize="large" nzIcon="user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>
     <td>{{ data.monthAge }}</td>
     <td>{{ data.createDate }}</td>
     <td><a (click)="delete(data.id)">删除</a></td>
