@@ -47,10 +47,6 @@ export class UploadPictureComponent implements OnInit {
         pictureString.push(res.url);
       }) 
     }
-
-    setTimeout(() => {
-      this.allowuploadNo = pictureString.length >= this.maxLength ? this.maxLength : pictureString.length + 1;
-    }, 500);
     this.picturesChange(pictureString.join(','));
   }
   get pictures() {
@@ -80,27 +76,16 @@ export class UploadPictureComponent implements OnInit {
   registerOnTouched(fn: any): void {
   }
 
-
-  allowuploadNo = 1;
   beforeUpload = (file: UploadFile): boolean => {
     this._validatorUploadFile(file).subscribe(res => {
       if (res) {
-        // setTimeout(() => {
-        //   this.allowuploadNo = this.pictures.length < this.maxLength ? this.pictures.length + 1 : this.maxLength;
-        // }, 500);
       }
     })
     return false;
   }
   deletePicture = () => {
-    setTimeout(_ => {
-      this.allowuploadNo = this.allowuploadNo == this.maxLength ? this.maxLength : this.allowuploadNo - 1;
-    }, 0)
     return true;
   }
-
-
-
 
   previewImage: string;
   previewVisible: boolean;

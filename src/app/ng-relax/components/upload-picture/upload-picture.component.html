@@ -3,7 +3,7 @@
   nzListType="picture-card" 
   [(nzFileList)]="pictures" 
   [nzRemove]="deletePicture" 
-  [nzShowButton]="pictures?.length < allowuploadNo"
+  [nzShowButton]="pictures?.length < maxLength"
   [nzPreview]="handlePreview">
   <i nz-icon nzType="plus"></i>
   <div class="ant-upload-text">选择图片</div>
