@@ -56,14 +56,14 @@ export class ChangeComponent implements OnInit {
   formGroupTypeChange(val) {
     this.formGroup.removeControl('changeBalance');
     if (val == 1) {
-      this.formGroup.addControl('changeBalance', this.fb.control(null, [Validators.required, Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/), this.minimumValueValidator('amount')]))
+      this.formGroup.addControl('changeBalance', this.fb.control(null, [Validators.required, Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/), this.minimumValueValidator('balance')]))
       this.formGroup.addControl('changeAmount', this.fb.control(null, [Validators.required, Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/), this.minimumValueValidator('amount')]))
       this.formGroup.addControl('changeFreeAmount', this.fb.control(null, [Validators.required, Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/), this.minimumValueValidator('freeAmount')]))
 
       this.formGroup.removeControl('changeTimes');
       this.formGroup.removeControl('changeFreeTimes');
     } else {
-      this.formGroup.addControl('changeBalance', this.fb.control(null, [Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/), this.minimumValueValidator('amount')]))
+      this.formGroup.addControl('changeBalance', this.fb.control(null, [Validators.pattern(/^\-?[0-9]+(\.\d{1,2})?$/), this.minimumValueValidator('balance')]))
       this.formGroup.addControl('changeTimes', this.fb.control(null, [Validators.pattern(/^-?[1-9]\d*$/), this.minimumValueValidator('times')]));
       this.formGroup.addControl('changeFreeTimes', this.fb.control(null, [Validators.pattern(/^-?[1-9]\d*$/), this.minimumValueValidator('freeTimes')]));
 
