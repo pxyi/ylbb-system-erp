@@ -1,0 +1,44 @@
+<nz-card [nzBordered]="false" nzTitle="营业时间配置" [nzExtra]="extraTemplate" [nzLoading]="loading">
+  <ng-template #extraTemplate>
+    <button nz-button nzType="primary" (click)="save()">保存</button>
+  </ng-template>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12" [nzXXl]="6" [nzXl]="8">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约列表默认排序设置</nz-form-label>
+        <nz-form-control>
+          <nz-radio-group [(ngModel)]="ruleSetting.sortType">
+            <label nz-radio [nzValue]="0">按婴幼儿分组排序</label>
+            <label nz-radio [nzValue]="1">按预约时间排序</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12" [nzXXl]="6" [nzXl]="8">
+      <nz-form-item>
+        <nz-form-label nzRequired>APP预约后禁止撤销</nz-form-label>
+        <nz-form-control>
+          <nz-radio-group [(ngModel)]="ruleSetting.cancelType">
+            <label nz-radio [nzValue]="0">关闭</label>
+            <label nz-radio [nzValue]="1">当天0点以后禁止撤销</label>
+            <label nz-radio [nzValue]="2">1小时之内禁止撤销</label>
+            <label nz-radio [nzValue]="3">30分钟内禁止撤销</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12" [nzXXl]="6" [nzXl]="8">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约列表默认排序设置</nz-form-label>
+        <nz-form-control>
+          <nz-radio-group [(ngModel)]="ruleSetting.timeLimitType">
+            <label nz-radio [nzValue]="0">关闭</label>
+            <label nz-radio [nzValue]="1">提前1小时</label>
+            <label nz-radio [nzValue]="2">提前2小时</label>
+            <label nz-radio [nzValue]="3">提前3小时</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</nz-card>

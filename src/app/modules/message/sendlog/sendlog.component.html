@@ -1,0 +1,34 @@
+<div class="container">
+  <ea-list-page 
+    url="/smsLog/list"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '手机号', '发送时间', '发送内容', '发送状态' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>
+        <ng-container *ngIf="data.mobile.length > 35; else elseTemplate">
+          {{ data.mobile.substr(0, 35) + '...' }} <a (click)="showMoreMobile = true; moreMobile =  data.mobile">查看更多</a>
+        </ng-container>
+        <ng-template #elseTemplate>
+          {{ data.mobile }}
+        </ng-template>
+      </td>
+      <td>{{ data.sendTime }}</td>
+      <td><span nz-tooltip [nzTitle]="data.content">{{ data.content.length > 30 ? data.content.substr(0, 30) + '...' : data.content }}</span></td>
+      <td>
+        <nz-tag [nzColor]="data.status == 'sent' ? '#2db7f5' : '#f50'">{{ data.status == 'sent' ? '成功' : '失败' }}</nz-tag>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>
+
+<nz-modal
+  [(nzVisible)]="showMoreMobile"
+  [nzTitle]="'更多手机号'"
+  [nzWidth]="520"
+  [nzBodyStyle]="{'max-height': '500px', 'overflow-y': 'auto'}"
+  [nzContent]="moreMobile"
+  [nzFooter]="null"
+  (nzOnCancel)="showMoreMobile = false">
+</nz-modal>

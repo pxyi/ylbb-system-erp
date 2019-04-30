@@ -1,0 +1,165 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzRequired>卡属性</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="attributeId" nzPlaceHolder="请选择卡属性">
+            <nz-option *ngFor="let option of cardAttribuiteList" [nzLabel]="option.attributeName" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('attributeId').dirty && formGroup.get('attributeId').hasError('required')">请选择卡属性！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="name">卡类型名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入卡类型名称" formControlName="name" id="name">
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入卡类型名称！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>卡业务类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="categoryId" nzPlaceHolder="请选择卡业务类型">
+            <nz-option *ngFor="let option of cardBusinessList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('categoryId').dirty && formGroup.get('categoryId').hasError('required')">请选择卡业务类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="effectMonth">有效时长</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzAddOnAfter="个月">
+            <input nz-input formControlName="effectMonth" id="effectMonth" placeholder="请输入有效时长">
+          </nz-input-group>
+          <nz-form-explain *ngIf="formGroup.get('effectMonth').dirty && formGroup.get('effectMonth').hasError('required')">请输入有效时长！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>计费方式</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="feeType" nzPlaceHolder="请选择计费方式">
+            <nz-option *ngIf="formGroup.controls['attributeId'].value == 1" nzLabel="按次" [nzValue]="0"></nz-option>
+            <nz-option *ngIf="formGroup.controls['attributeId'].value == 2" nzLabel="按金额" [nzValue]="1"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('feeType').dirty && formGroup.get('feeType').hasError('required')">请选择计费方式！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!-- 计次卡 -->
+    <ng-container *ngIf="formGroup.controls['attributeId'].value == 1">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="times">正价次数</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="times" id="times" placeholder="请输入正价次数">
+            <nz-form-explain *ngIf="formGroup.get('times').dirty && formGroup.get('times').hasError('required')">请输入正价次数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="freeTimes">赠送次数</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="freeTimes" id="freeTimes" placeholder="请输入赠送次数">
+            <nz-form-explain *ngIf="formGroup.get('freeTimes').dirty && formGroup.get('freeTimes').hasError('required')">请输入赠送次数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+    <!-- 储值卡 -->
+    <ng-container *ngIf="formGroup.controls['attributeId'].value == 2">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="amount">充值金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="amount" id="amount" placeholder="请输入充值金额">
+            <nz-form-explain *ngIf="formGroup.get('amount').dirty && formGroup.get('amount').hasError('required')">请输入充值金额！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="freeAmount">赠送金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="freeAmount" id="freeAmount" placeholder="请输入赠送金额">
+            <nz-form-explain *ngIf="formGroup.get('freeAmount').dirty && formGroup.get('freeAmount').hasError('required')">请输入赠送金额！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+
+   
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="balance">收入金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance" id="balance" placeholder="请输入收入金额">
+          <nz-form-explain *ngIf="formGroup.get('balance').dirty && formGroup.get('balance').hasError('required')">请输入收入金额！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="openPoints">开卡送积分</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="openPoints" id="openPoints" placeholder="请输入开卡送积分">
+          <nz-form-explain *ngIf="formGroup.get('openPoints').dirty && formGroup.get('openPoints').hasError('required')">请输入开卡送积分！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <ng-container *ngIf="formGroup.controls['attributeId'].value == 2">
+      <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>商品折扣</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="discount" nzPlaceHolder="请选择商品折扣">
+                <nz-option nzLabel="不打折" [nzValue]=1></nz-option>
+                <nz-option nzLabel="九五折" [nzValue]=0.95></nz-option>
+                <nz-option nzLabel="九折" [nzValue]=0.90></nz-option>
+                <nz-option nzLabel="八五折" [nzValue]=0.85></nz-option>
+                <nz-option nzLabel="八折" [nzValue]=0.80></nz-option>
+                <nz-option nzLabel="七五折" [nzValue]=0.75></nz-option>
+                <nz-option nzLabel="七折" [nzValue]=0.70></nz-option>
+                <nz-option nzLabel="六五折" [nzValue]=0.65></nz-option>
+                <nz-option nzLabel="六折" [nzValue]=0.60></nz-option>
+                <nz-option nzLabel="五五折" [nzValue]=0.55></nz-option>
+                <nz-option nzLabel="五折" [nzValue]=0.50></nz-option>
+                <nz-option nzLabel="四五折" [nzValue]=0.45></nz-option>
+                <nz-option nzLabel="四折" [nzValue]=0.40></nz-option>
+                <nz-option nzLabel="三五折" [nzValue]=0.35></nz-option>
+                <nz-option nzLabel="三折" [nzValue]=0.30></nz-option>
+                <nz-option nzLabel="二五折" [nzValue]=0.25></nz-option>
+                <nz-option nzLabel="二折" [nzValue]=0.20></nz-option>
+                <nz-option nzLabel="一五折" [nzValue]=0.15></nz-option>
+                <nz-option nzLabel="一折" [nzValue]=0.10></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="formGroup.get('discount').dirty && formGroup.get('discount').hasError('required')">请选择商品折扣！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+    </ng-container>
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

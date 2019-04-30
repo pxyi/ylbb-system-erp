@@ -1,0 +1,89 @@
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.box {
+  margin: 40px 0;
+}
+.price {
+  color: #f5222d;
+  font-size: 24px;
+  margin: 0 6px;
+  vertical-align: sub;
+}
+
+:host ::ng-deep {
+  .detail {
+    width: 500px;
+    margin: 0 auto;
+  }
+}
+.payment {
+  text-align: center;
+  p {
+    color: rgba(#000, .45);
+    span {
+      color: #f5222d;
+      font-size: 24px;
+      vertical-align: sub;
+    }
+  }
+  .paybox {
+    min-height: 235px;
+    margin-top: 20px;
+    text-align: center;
+    #paycode {
+      display: inline-block;
+      width: 200px !important;
+      height: 200px !important;
+    }
+    p {
+      margin-top: -20px;
+      margin-bottom: 5px;
+      color: rgba(0,0,0,.4);
+      font-size: 14px;
+      position: relative;
+    }
+    h4 {
+      color: rgba(0,0,0,.6);
+      span {
+        color: #f00;
+        margin-left: 3px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+.payment-reault {
+  padding-top: 24px;
+  text-align: center;
+  .anticon {
+    display: inline-block;
+    font-size: 72px;
+    line-height: 72px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 24px;
+    color: rgba(0,0,0,.85);
+    font-weight: 500;
+    line-height: 32px;
+    margin-bottom: 16px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(0,0,0,.45);
+    margin-bottom: 24px;
+  }
+  div {
+    padding-top: 20px;
+  }
+  button:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+nz-card:not(:last-child) {
+  margin-bottom: 24px;
+}

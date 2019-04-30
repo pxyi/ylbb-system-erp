@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="search-form">
+    <div class="form-item">
+      <div class="item-label">类型:</div>
+      <div class="item-content">
+        <nz-tag nzMode="checkable" *ngFor="let item of templateTypeList" [ngStyle]="{'pointer-events': queryForm.templateType !== item.templateType ? 'auto' : 'none'}" [nzChecked]="queryForm.templateType === item.templateType" (nzCheckedChange)="queryForm.templateType = item.templateType; searchSubmit();">{{ item.templateLabel }}</nz-tag>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="item-label">活动名称:</div>
+      <div class="item-content">
+        <nz-input-group nzSearch style="width: 320px;" [nzSuffix]="suffixButton">
+          <input type="text" nz-input [(ngModel)]="queryForm.templateHeadline" placeholder="请输入活动名称" (keyup.enter)="searchSubmit()">
+        </nz-input-group>
+        <ng-template #suffixButton>
+          <button nz-button nzType="primary" (click)="searchSubmit()" nzSearch>搜索</button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<nz-spin [nzSpinning]="loading">
+  <div class="content">
+    <div *ngIf="!templateList.length" class="activity-null">暂无可参加活动，如有需要请联系您的专属运营顾问</div>
+    <div class="activity-box" nz-row [nzGutter]="14">
+      <ng-container *ngFor="let item of templateList">
+        <div nz-col [nzSpan]="24" [nzLg]="8" [nzXl]="6" [nzXXl]="4" [style.margin-bottom]="'14px'">
+          <nz-card [nzCover]="coverTemplate" [nzActions]="[actionSetting]" [nzHoverable]="true">
+            <nz-card-meta [nzTitle]="item.templateHeadline"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <div class="card-img">
+              <img [src]="item.templateImg" />
+              <div class="qrcode"><qr-code [value]="item.templateUrl + '?preview=true&title=' + encodeURIComponent(item.templateHeadline)" [size]="150"></qr-code></div>
+            </div>
+          </ng-template>
+          <ng-template #actionSetting>
+            <button nz-button nzType="primary" (click)="join(item)">创建</button>
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nz-spin>

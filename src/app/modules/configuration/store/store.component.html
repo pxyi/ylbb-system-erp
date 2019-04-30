@@ -1,0 +1,233 @@
+<div class="wechat-small-program-breadcrum container">
+  <div class="head-flex">
+    <div class="breadcrum-content">
+      <h2>门店信息</h2>
+      <div class="breadcrum-tip">
+        <h4>温馨提示：</h4>
+        <p>*您设置的门店基础信息，将会在营销模板内展示，帮助您在营销活动时宣传您的门店及品牌</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form nz-form nzLayout="vertical" [formGroup]="formModel">
+  <nz-card nzTitle="基础信息" [nzLoading]="getInfoLoading">
+    <div class="form-group-content" nz-row [nzGutter]="20">
+      <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="shopName" nzRequired>门店名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="shopName" placeholder="请输入门店名称" id="shopName">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="shopTel" nzRequired>门店预约电话</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="shopTel" placeholder="请输入门店名称" id="shopTel">
+            <nz-form-explain *ngIf="formModel.get('shopTel').dirty && formModel.get('shopTel').errors">请输入正确的门店预约电话</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="operatorPhoneNum" nzRequired>经营者电话</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="operatorPhoneNum" placeholder="请输入门店经营者电话" id="operatorPhoneNum">
+            <nz-form-explain *ngIf="formModel.get('operatorPhoneNum').dirty && formModel.get('operatorPhoneNum').errors">请输入正确的经营者电话</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      
+      <div nz-col [nzSpan]="24" [nzXXl]="6" [nzXl]="8" [nzLg]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="brandName" nzRequired>品牌名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="brandName" placeholder="请输入品牌名称" id="brandName">
+            <nz-form-explain *ngIf="formModel.get('brandName').dirty && formModel.get('brandName').errors">请输入正确的品牌名称</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label nzFor="brandDesc">品牌介绍</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="brandDesc" placeholder="请输入品牌介绍" id="brandDesc" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+            <nz-form-explain *ngIf="formModel.get('brandDesc').dirty && formModel.get('brandDesc').errors">请输入品牌介绍</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label nzFor="teacherDesc">师资力量</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="teacherDesc" placeholder="请输入品牌介绍" id="teacherDesc" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+            <nz-form-explain *ngIf="formModel.get('teacherDesc').dirty && formModel.get('teacherDesc').errors">请输入师资力量</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label nzFor="shopIntroduction" >门店介绍</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="shopIntroduction" placeholder="这里主要可以介绍您的门店经营业务，服务特色，产品特色等，让您的客户可以更多了解您的门店哦！" id="shopIntroduction" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+            <nz-form-explain *ngIf="formModel.get('shopIntroduction').dirty && formModel.get('shopIntroduction').errors">请输入门店介绍</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card nzTitle="地理位置" [nzLoading]="getInfoLoading">
+    <nz-form-item>
+      <nz-form-label nzFor="shopAddress" nzRequired>门店位置</nz-form-label>
+      <nz-form-control>
+        <nz-input-group nzCompact>
+          <nz-cascader [nzOptions]="addressOptions" formControlName="cascaderAddress" nzPlaceHolder="请选择所在省市区" [nzLoadData]="addressLoadData"></nz-cascader>
+          <input nz-input (keyup.enter)="mapGeocoderSearch()" formControlName="shopAddress" placeholder="请输入详细位置" id="shopAddress">
+          <input nz-input [value]="(formModel.get('longitude').value || '') + '，' + (formModel.get('latitude').value || '')" readonly placeholder="请选择门店位置" style="width: 260px;">
+        </nz-input-group>
+        <nz-form-explain 
+          *ngIf="(formModel.get('cascaderAddress').dirty && formModel.get('cascaderAddress').errors) ||
+                (formModel.get('shopAddress').dirty && formModel.get('shopAddress').errors)"
+          >请选择门店所在省市区及输入详细地址</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-spin [nzSpinning]="mapReadLoading" nzTip='地图加载中...'>
+      <abm-map #map [options]="{}" (ready)="onReady($event)" style="height: 300px;"></abm-map>
+    </nz-spin>
+  </nz-card>
+  <nz-card nzTitle="门店图片" [nzLoading]="getInfoLoading">
+    <div class="form-group-content" nz-row [nzGutter]="20">
+      <div nz-col [nzSpan]="24" [nzXl]="24" [nzLg]="24">
+        <nz-form-item>
+          <nz-form-label>门店Logo</nz-form-label>
+          <nz-form-control>
+            <ea-upload-picture formControlName="shopLogo" [maxLength]="1"></ea-upload-picture>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="24" [nzXl]="24" [nzLg]="24">
+        <nz-form-item>
+          <nz-form-label>品牌Logo</nz-form-label>
+          <nz-form-control>
+            <ea-upload-picture formControlName="brandLogo" [maxLength]="1"></ea-upload-picture>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="24" [nzXl]="24" [nzLg]="24">
+        <nz-form-item>
+          <nz-form-label >
+            教师风采 <i nz-icon type="question-circle" theme="outline" nz-tooltip nzTitle="建议尺寸: 800*800像素, 最多上传20位老师信息"></i>
+          </nz-form-label>
+          <nz-form-control>
+            
+            <div formArrayName="teacherImg" class="teacherList" >
+              <div class="list"  *ngFor="let group of teacherImg.controls; let i = index" >
+                <div [formGroup]="group">
+                  <input nz-input  formControlName="teacherName" placeholder="老师姓名">
+                  <ea-upload-picture formControlName="teacherHeadImg" [maxLength]="1"></ea-upload-picture>
+                  <a (click)="removeTeacher(i)" class="removeTeacher">删除</a>
+                </div>
+              </div>
+              <div>
+              <a class="addTeacher" (click)="addTeacher()">新增老师</a>
+              
+              </div>
+              
+            </div>
+            
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="24" [nzXl]="24" [nzLg]="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>门店封面图</nz-form-label>
+          <nz-form-control>
+            <ea-upload-picture formControlName="shopCoverImag" [maxLength]="1"></ea-upload-picture>
+            <nz-form-explain *ngIf="formModel.get('shopCoverImag').dirty && formModel.get('shopCoverImag').errors">请上传门店封面图</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXl]="24" [nzLg]="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            门店图片<i nz-icon type="question-circle" theme="outline" nz-tooltip nzTitle="最多6张；支持png、jepg、gif格式的图片，宽高750px*400px展示更好；图片大小请小于2M"></i>
+          </nz-form-label>
+          <nz-form-control>
+            <ea-upload-picture formControlName="shopImag" [maxLength]="6"></ea-upload-picture>
+            <nz-form-explain *ngIf="formModel.get('shopImag').dirty && formModel.get('shopImag').errors">请上传门店图片</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card nzTitle="基础服务" [nzLoading]="getInfoLoading">
+    <div class="form-group-content" nz-row [nzGutter]="20">
+      <div nz-col [nzSpan]="24" [nzXl]="12" [nzXXl]="8">
+        <nz-form-item>
+          <nz-form-label>基础设施</nz-form-label>
+          <nz-form-control>
+            <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="formModel.patchValue({facilitie:$event.join(',')})">
+              <label nz-checkbox *ngFor="let item of facilitieItems" [nzValue]="item.value" [nzChecked]="item.checked">{{ item.label }}</label>
+            </nz-checkbox-wrapper>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXl]="12" [nzXXl]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="businessTime">营业时间</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="businessTime" placeholder="例如: 10:00:00-21:00:00 周一至周五" id="businessTime">
+            <nz-form-explain *ngIf="formModel.get('businessTime').dirty && formModel.get('businessTime').errors">请输入营业时间</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXXl]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="healthSafe">卫生安全</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="healthSafe" placeholder="请输入卫生安全" [nzAutosize]="{ minRows: 2, maxRows: 6 }" id="healthSafe"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXXl]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="warmPrompt">温馨提示</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="warmPrompt" placeholder="请输入温馨提示" [nzAutosize]="{ minRows: 2, maxRows: 6 }" id="warmPrompt"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXXl]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="trafficInformation">交通信息</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="trafficInformation" placeholder="请输入交通信息" [nzAutosize]="{ minRows: 2, maxRows: 6 }" id="trafficInformation"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24" [nzXXl]="12">
+        <nz-form-item>
+          <nz-form-label nzFor="parkingInformation">停车场信息</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input formControlName="parkingInformation" placeholder="请输入停车场信息" [nzAutosize]="{ minRows: 2, maxRows: 6 }" id="parkingInformation"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+</form>
+
+<div class="operation-btns">
+  <button nz-button nzType="primary" (click)="submit()">保存</button>
+  <button nz-button [style.margin-left]="'8px'" (click)="cancel()">取消</button>
+</div>

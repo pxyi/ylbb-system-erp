@@ -1,0 +1,28 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/customer/consumeRevocationRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '姓名','小名','卡号','消费金额','消费时间','撤销时间','卡次','类型','消费商品','服务泳师','满意度','体重','泳圈型号','游泳时长','备注','撤销原因' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.consumption }}</td>
+      <td>{{ data.consumeDate }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.usedTimes }}</td>
+      <td>{{ data.type == 1 ? '赠送消费' : '正价消费' }}</td>
+      <td>{{ data.commodityName }}</td>
+      <td>{{ data.swimTeacher }}</td>
+      <td>{{ data.satisfaction }}</td>
+      <td>{{ data.weight }}</td>
+      <td>{{ data.swimName }}</td>
+      <td>{{ data.swimDuration }}</td>
+      <td>{{ data.comment }}</td>
+      <td>{{ data.reason }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

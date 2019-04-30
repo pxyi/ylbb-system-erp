@@ -1,0 +1,15 @@
+<div class="container">
+  <!-- <ea-quote>本月业绩目标设置</ea-quote> -->
+
+  <nz-steps [nzCurrent]="current" nzSize="small">
+    <nz-step nzTitle="目标设置"></nz-step>
+    <nz-step nzTitle="绩效激励"></nz-step>
+    <nz-step nzTitle="SOP标准"></nz-step>
+  </nz-steps>
+
+  <ng-container>
+    <app-setting [isInit]="isInit" *ngIf="current == 0" (next)="current = $event;" (expectTotalIncome)="expectTotalIncome = $event;"></app-setting>
+    <app-excitation [expectTotalIncome]="expectTotalIncome" *ngIf="current == 1" (next)="current = $event;"></app-excitation>
+    <app-sop *ngIf="current == 2" (next)="current = $event;"></app-sop>
+  </ng-container>
+</div>

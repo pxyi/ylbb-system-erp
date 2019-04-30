@@ -1,0 +1,39 @@
+<div class="container">
+  <ea-query #eaQuery [node]="queryNode" (onSubmit)="query($event)"></ea-query>
+  
+  <nz-table 
+    [nzFrontPagination]="false" 
+    [nzData]="dataSet"
+    (nzPageIndexChange)="request($event)"
+
+    [nzLoading]="_pageInfo.loading"
+    [nzTotal]="_pageInfo.totalPage"
+    [(nzPageIndex)]="_pageInfo.pageNo"
+    [(nzPageSize)]="_pageInfo.pageSize"
+    >
+    <thead>
+      <tr>
+        <th>交易号</th>
+        <th>交易金额</th>
+        <th>业务类型</th>
+        <th>支付方式</th>
+        <th>交易时间</th>
+        <th>支付状态</th>
+        <th>处理结果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="dataSet">
+        <tr>
+          <td>{{ data.orderNo }}</td>
+          <td>{{ data.totalMoney | currency:'￥' }}</td>
+          <td>{{ data.productName }}</td>
+          <td>{{ data.payFrom }}</td>
+          <td>{{ data.orderCreate }}</td>
+          <td>{{ data.payStatus }}</td>
+          <td>{{ data.disposeStatus }}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>
+</div>

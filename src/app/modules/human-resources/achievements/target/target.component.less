@@ -1,0 +1,59 @@
+.not-target {
+  padding: 120px 0;
+  text-align: center;
+  h2 {
+    color: #999;
+    font-weight: 500;
+    margin-bottom: 40px;
+  }
+}
+.profit {
+  margin-bottom: 24px;
+  & > div {
+    text-align: center;
+    height: 58px;
+    span {
+      display: inline-block;
+      color: rgba(0,0,0,.45);
+      font-size: 14px;
+      line-height: 22px;
+      margin-bottom: 4px;
+    }
+    p {
+      color: rgba(0,0,0,.85);
+      font-size: 24px;
+      line-height: 32px;
+      margin: 0;
+    }
+    & > button {
+      margin-top: 12px;
+    }
+    &:not(:last-child) {
+      border-right: solid 1px #e8e8e8;
+    }
+  }
+}
+
+.target {
+  padding-left: 20px;
+  &:not(:last-child) {
+    border-right: solid 1px #e8e8e8;
+  }
+  nz-progress {
+    float: left;
+  }
+  p {
+    padding-left: 96px;
+    color: rgba(0,0,0,.45);
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  h2 {
+    padding-left: 96px;
+    font-size: 18px;
+    span {
+      color: rgba(0,0,0,.45);
+      font-size: 14px;
+    }
+  }
+}

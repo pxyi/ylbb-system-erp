@@ -1,0 +1,11 @@
+<div class="header">
+  <nz-tabset [(nzSelectedIndex)]="tabIndex">
+    <nz-tab nzTitle="泳师基础排班表"></nz-tab>
+    <nz-tab nzTitle="泳师按日排班"></nz-tab>
+  </nz-tabset>
+</div>
+
+<div>
+  <app-base *ngIf="tabIndex == 0"></app-base>
+  <app-byday *ngIf="tabIndex == 1"></app-byday>
+</div>

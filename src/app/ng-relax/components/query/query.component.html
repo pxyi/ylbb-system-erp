@@ -1,0 +1,70 @@
+<form nz-form [nzLayout]="'inline'" [formGroup]="_queryForm">
+  <div nz-row [nzGutter]="24">
+    <ng-container *ngFor="let control of node">
+      <div class="query-cell" [ngClass]="[ 'multiple' + (control.multiple || 1) ]" nz-col *ngIf="!control.isRemove" [nzSpan]="8 * (control.multiple || 1)" [nzXs]="24" [nzSm]="12 * (control.multiple || 1)" [nzLg]="8 * (control.multiple || 1)" [nzXXl]="6 * (control.multiple || 1)" [style.display]="isCollapse && control.isHide ? 'none' : 'block'">
+        <nz-form-item nzFlex nz-row>
+          <nz-form-label [nzSpan]="6 / (control.multiple || 1)">{{ control.label }}</nz-form-label>
+          <nz-form-control [nzSpan]="24 - 6 / (control.multiple || 1)">
+            <ng-container *ngIf="control.type === 'input'">
+              <nz-input-group [nzSuffix]="suffixIconButton">
+                <input [formControlName]="control.key" nz-input [placeholder]="control.placeholder || '请输入' + control.label">
+              </nz-input-group>
+              <ng-template #suffixIconButton>
+                <i nz-icon type="close-circle" (click)="_clearControlValue(control.key)"></i>
+              </ng-template>
+            </ng-container>
+
+            <ng-container *ngIf="control.type === 'select'">
+              <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder || '请选择' + control.label">
+                <nz-option *ngFor="let option of control.options" [nzLabel]="option[control.optionKey?.label]" [nzValue]="option[control.optionKey?.value]"
+                  [nzDisabled]="option?.disabled"></nz-option>
+              </nz-select>
+            </ng-container>
+
+            <ng-container *ngIf="control.type === 'between'">
+              <nz-input-group class="between-content">
+                <input type="text" class="between-one" [formControlName]="control.valueKey[0]" nz-input [placeholder]="control.placeholder ? control.placeholder[0] : '最小值'">
+                <input type="text" class="between-two" disabled nz-input placeholder="-">
+                <input type="text" class="between-three" [formControlName]="control.valueKey[1]" nz-input [placeholder]="control.placeholder ? control.placeholder[1] : '最大值'">
+              </nz-input-group>
+            </ng-container>
+
+            <ng-container *ngIf="control.type === 'datepicker'">
+              <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder || '请选择' + control.label"></nz-date-picker>
+            </ng-container>
+
+            <ng-container *ngIf="control.type === 'rangepicker'">
+              <nz-range-picker [nzRanges]="control.ranges" [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd" [nzPlaceHolder]="[control.placeholder ? control.placeholder[0] : '开始日期', control.placeholder ? control.placeholder[1] :'结束日期']"></nz-range-picker>
+            </ng-container>
+
+            <ng-container *ngIf="control.type === 'monthpicker'">
+              <nz-month-picker [formControlName]="control.key" nzFormat="yyyy-MM" [nzPlaceHolder]="control.placeholder || '请选择' + control.label"></nz-month-picker>
+            </ng-container>
+
+            <ng-container *ngIf="control.type === 'radio'">
+              <nz-radio-group [formControlName]="control.key" style="width: 100%; display: flex; margin-top: 4px;">
+                <label style="flex: 1" *ngFor="let option of control.options" nz-radio-button [nzValue]="option[control.optionKey?.value]">{{
+                  option[control.optionKey?.label] }}</label>
+              </nz-radio-group>
+            </ng-container>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+    <div nz-col [nzSpan]="8" [nzLg]="8" [nzSm]="12" [nzXs]="24" [nzXXl]="6" class="hp-query-btns" *ngIf="node.length">
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" (click)="_submit()">查询</button>
+          <button nz-button (click)="_reset()" style="margin-left: 8px;">重置</button>
+
+          <ng-container *ngTemplateOutlet="EaQueryBtns"></ng-container>
+          
+          <a style="margin-left:8px;font-size:12px;" (click)="isCollapse = !isCollapse" *ngIf="_showSlideBtn">
+            {{ isCollapse ? '展开' : '收起' }}
+            <i nz-icon [type]="isCollapse ? 'down' : 'up'"></i>
+          </a>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

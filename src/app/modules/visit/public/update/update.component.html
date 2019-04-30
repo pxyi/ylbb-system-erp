@@ -1,0 +1,205 @@
+<form nz-form [formGroup]="customerForm">
+  <ea-quote>宝宝信息</ea-quote>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="nick">宝宝昵称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="nick" placeholder="请输入宝宝爱称" id="nick">
+          <nz-form-explain 
+            *ngIf="getFormControl('nick').dirty && 
+            ( getFormControl('nick').hasError('required') || 
+              getFormControl('nick').hasError('minlength') || 
+              getFormControl('nick').hasError('maxlength') )">请输入2-20位字符</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="name">宝宝姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" placeholder="请输入宝宝姓名" id="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="name">宝宝姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" placeholder="请输入宝宝姓名" id="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>宝宝性别</nz-form-label>
+        <nz-form-control>
+          <nz-radio-group formControlName="sex">
+            <label nz-radio nzValue="男">
+              <span>男</span>
+            </label>
+            <label nz-radio nzValue="女">
+              <span>女</span>
+            </label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="ethnic">民族</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="ethnic" placeholder="请输入宝宝民族" id="ethnic">
+          <nz-form-explain *ngIf="getFormControl('ethnic').dirty && getFormControl('ethnic').hasError('required')">请输入正确的民族</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>宝宝生日</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker formControlName="birthday" nzPlaceHolder="请选择宝宝生日" [style.width]="'100%'" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+          <nz-form-explain *ngIf="getFormControl('birthday').dirty && getFormControl('birthday').hasError('required')">请选择宝宝生日</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>星座</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="constellation" placeholder="请先选择宝宝生日">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>宝宝类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="babyType" nzPlaceHolder="请先选择宝宝生日" nzDisabled>
+            <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
+            <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>所属小区</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="communityId" nzPlaceHolder="请选择所属小区" nzShowSearch nzAllowClear>
+            <nz-option *ngFor="let item of showCommunityList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="getFormControl('communityId').dirty && getFormControl('communityId').hasError('required')">请选择所属小区</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="visitRemarks">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="visitRemarks" placeholder="请输入备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            id="visitRemarks"></textarea>
+          <nz-form-explain
+            *ngIf="getFormControl('visitRemarks').dirty && getFormControl('visitRemarks').hasError('maxlength')">最多300个字符
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <ea-quote>家长信息</ea-quote>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="parentName">家长姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="parentName" placeholder="请输入家长姓名" id="parentName">
+          <nz-form-explain *ngIf="getFormControl('parentName').dirty && 
+                                  (getFormControl('parentName').hasError('required') || 
+                                  getFormControl('parentName').hasError('minlength') || 
+                                    getFormControl('parentName').hasError('maxlength'))">请输入2-20位字符</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="mobilePhone">家长电话</nz-form-label>
+        <nz-form-control>
+        <input nz-input formControlName="mobilePhone" placeholder="请输入家长电话" id="mobilePhone">
+          <nz-form-explain *ngIf="getFormControl('mobilePhone').dirty && (getFormControl('mobilePhone').hasError('required') || getFormControl('mobilePhone').hasError('pattern'))">请输入正确的家长电话</nz-form-explain>
+          <nz-form-explain *ngIf="getFormControl('mobilePhone').dirty && getFormControl('mobilePhone').hasError('duplicated')">该手机号码已存在</nz-form-explain>
+          <nz-form-explain *ngIf="getFormControl('mobilePhone').dirty && getFormControl('mobilePhone').pending">正在校验手机号码是否存在...</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>家长身份</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="parentRelationShipId" nzPlaceHolder="请选择家长身份" nzAllowClear>
+            <nz-option *ngFor="let item of parentIdentityList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="parentWeChat">微信|QQ</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="parentWeChat" placeholder="请输入家长微信或QQ" id="parentWeChat">
+          <nz-form-explain *ngIf="getFormControl('parentWeChat').dirty && getFormControl('parentWeChat').hasError('pattern')">请输入正确的微信或QQ</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <ea-quote>来源</ea-quote>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzRequired]="true">来源</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="source" nzPlaceHolder="请选择来源" nzShowSearch nzAllowClear>
+            <nz-option nzLabel="灯箱路牌" nzValue="灯箱路牌"></nz-option>
+            <nz-option nzLabel="朋友推荐" nzValue="朋友推荐"></nz-option>
+            <nz-option nzLabel="网络推广" nzValue="网络推广"></nz-option>
+            <nz-option nzLabel="社区宣传" nzValue="社区宣传"></nz-option>
+            <nz-option nzLabel="合作机构" nzValue="合作机构"></nz-option>
+            <nz-option nzLabel="自然到店" nzValue="自然到店"></nz-option>
+            <nz-option nzLabel="美团大众点评" nzValue="美团大众点评"></nz-option>
+            <nz-option nzLabel="体验卡" nzValue="体验卡"></nz-option>
+            <nz-option nzLabel="门店地推" nzValue="门店地推"></nz-option>
+            <nz-option nzLabel="总部线索" nzValue="总部线索"></nz-option>
+            <nz-option nzLabel="门店线上活动" nzValue="门店线上活动"></nz-option>
+            <nz-option nzLabel="其他" nzValue="其他"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="getFormControl('source').dirty && getFormControl('source').hasError('required')">请选择来源</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>推荐人</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="recommendedId" nzPlaceHolder="请选择推荐人" nzShowSearch nzAllowClear>
+            <nz-option *ngFor="let item of recommenderList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>收集人</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="collectorId" nzPlaceHolder="请选择收集人" nzShowSearch nzAllowClear>
+            <nz-option *ngFor="let item of collectorList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="_submitLoading" (click)="save()">保存</button>
+</div>

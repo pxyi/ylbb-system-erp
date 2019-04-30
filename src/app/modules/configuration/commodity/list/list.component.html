@@ -1,0 +1,64 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/commodity/getStoreCommoditielist"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '图标', '名称', '进货价', '销售价','消费价格', '是否参与折扣', '计费方式', '提成', '库存', '当前库存', '累计销量', '累计进货', '累计自用', '计积分', '是否默认', '业务类型', '状态', '卡次', '操作' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaBtns>
+      <button nz-button nzType="primary" (click)="update()">新增商品</button>
+    </ng-template>
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.img }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.stockPrice | currency: '￥' }}</td>
+      <td>{{ data.price | currency: '￥' }}</td>
+      <td>{{ data.cardAmount | currency: '￥' }}</td>
+      <td>{{ data.discountFlag == 1 ? '参加' : '不参加' }}</td>
+      <td>{{ data.chargeType == 0 ? '计次' : '计金额' }}</td>
+      <td>{{ data.commission ? '支持' : '不支持' }}</td>
+      <td>{{ data.inventory ? '支持' : '不支持' }}</td>
+      <td>{{ data.stock }}</td>
+      <td>{{ data.totalSale }}</td>
+      <td>{{ data.totalStock }}</td>
+      <td>{{ data.selfUse }}</td>
+      <td>{{ data.integral == 0 ? '不计积分' : '记积分' }}</td>
+      <td>{{ data.defaulttag == 0 ? '否' : '是' }}</td>
+      <td>{{ data.categoryName }}</td>
+      <td><nz-tag [nzColor]="data.status != 0 ? '#f50' : '#2db7f5'">{{ data.status != 0 ? '禁用' : '启用' }}</nz-tag></td>
+      <td>{{ data.cardNum }}</td>
+      <td>
+        <a href="javascript:;" (click)="update({commodityInfo: data})">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-dropdown>
+          <a nz-dropdown>更多<i nz-icon type="down"></i></a>
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <a nz-popconfirm nzTitle="确认删除此商品吗？" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="delete(data.id)">删除</a>
+            </li>
+            <li nz-menu-item *ngIf="data.type == 1">
+              <a (click)="warehousing({commodityInfo: data})">入库</a>
+            </li>
+            <li nz-menu-item *ngIf="data.type == 1">
+              <a (click)="selfuse({commodityInfo: data})">自用</a>
+            </li>
+            <li nz-menu-item *ngIf="data.status != 0">
+              <a (click)="changeStatus(data.id, 0)">启用</a>
+            </li>
+            <li nz-menu-item *ngIf="data.status == 0">
+              <a (click)="changeStatus(data.id, 1)">禁用</a>
+            </li>
+            <li nz-menu-item *ngIf="data.defaulttag == 0 && data.type == 1">
+              <a (click)="changeDafulat(data.id, 1)">设为默认</a>
+            </li>
+            <li nz-menu-item *ngIf="data.defaulttag != 0">
+              <a (click)="changeDafulat(data.id, 0)">取消默认</a>
+            </li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

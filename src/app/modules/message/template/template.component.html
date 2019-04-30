@@ -1,0 +1,20 @@
+<div class="container">
+  <ea-query-simp [node]="queryNode" title="短信模板配置" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="primary" style="margin-bottom: 24px;" (click)="update()">新增消息模板</button>
+
+  <ea-table #table url="/smsTemplate/list" [allowSpace]="false"
+    [thead]="[ '标题', '内容', '创建日期', { name: '操 作', width: '140px' } ]" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.title }}</td>
+      <td><span nz-tooltip [nzTitle]="data.memo">{{ data.memo.length > 30 ? data.memo.substr(0, 30) + '...' : data.memo }}</span></td>
+      <td>{{ data.createDate }}</td>
+      <td>
+        <a (click)="update({ templateInfo: data })">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定要删除此模板吗？" nzOkText="确定" nzCancelText="取消"
+          (nzOnConfirm)="deleteTemplate(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>

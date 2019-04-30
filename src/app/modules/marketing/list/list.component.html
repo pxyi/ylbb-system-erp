@@ -1,0 +1,62 @@
+<div class="container">
+  <ea-query-simp [hideQueryBtn]="true" [node]="[{ label: '状态', key: 'status', type: 'radio', options: [ { name: '全部', id: null }, { name: '已上架', id: 0 }, { name: '已下架', id: 1 } ] }]" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <ea-table
+    #table
+    url="/activity/getActivityList"
+    [thead]="['活动名称','活动类型','状态','数据详情','活动时间','创建时间','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template #EaTableTbodyTr let-item>
+      <td style="padding: 8px 50px; position: relative;">
+        <nz-avatar style="position: absolute; top: 18px; left: 8px;" nzShape="square" [nzSrc]="item.templateImg"></nz-avatar>
+        <a style="float: left; line-height: 32px; margin-left: 8px;" nz-tooltip [nzTitle]="item.activityHeadline">{{ item.activityHeadline.length > 16 ? item.activityHeadline.substr(0, 16) + '...' : item.activityHeadline }}</a>
+        <i nz-popover [nzContent]="qrcode" style="line-height: 32px;position: absolute; top: 20px; right: 8px;" nz-icon type="qrcode" theme="outline"></i>
+        <ng-template #qrcode><qr-code [value]="item.templateUrl + '?activityId=' + item.id + '&templateId='+ item.templateId + '&storeId=' + item.storeId" [size]="150"></qr-code></ng-template>
+      </td>
+      <td>{{ item.templateHeadline }}</td>
+      <td><nz-badge [nzStatus]="item.status == 0 ? 'processing' : 'default'" [nzText]="item.status == 0 ? '已上架' : '已下架'"></nz-badge></td>
+      <td>
+        <div>有效用户：{{ item.ruCount }}</div>
+        <div>浏览数：{{ item.glanceNum }}</div>
+        <a (click)="preview(item)">查看</a>
+      </td>
+      <td>{{ item.startTime ? item.startTime + ' ~ ' + item.endTime : '无限制'}}</td>
+      <td>{{ item.createTime }}</td>
+      <td>
+        <a *ngIf="item.status == 0" (click)="update(item.id)">编辑</a>
+
+        <!-- <nz-divider *ngIf="item.status == 0" nzType="vertical"></nz-divider>
+        <a *ngIf="item.status == 0" (click)="item.showShortUrlModal = true" nz-popover nzTitle="短连接" [(nzVisible)]="item.showShortUrlModal" nzTrigger="click"
+          [nzContent]="contentTemplate" nzPlacement="bottomRight">查看短连接</a>
+        <ng-template #contentTemplate>
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input [ngModel]="item.shortUrl" readonly #shortUrl />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i nz-icon type="copy" (click)="copyShortUrl(shortUrl)"></i>
+          </ng-template>
+        </ng-template> -->
+        
+        <nz-divider *ngIf="item.status == 0" nzType="vertical"></nz-divider>
+        <nz-dropdown *ngIf="item.status == 0" nzPlacement="bottomRight">
+          <a nz-dropdown>更多<i nz-icon type="down"></i></a>
+          <ul nz-menu>
+            <li nz-menu-item><a (click)="activityId = item.id; templateId = item.templateId; showCreateQrcode = true; templateUrl = item.templateUrl; storeId = item.storeId">生成老师推广码</a></li>
+            <li nz-menu-item><a nz-popconfirm nzTitle="下架后无法编辑和再次上架，是否确认下架操作？" (nzOnConfirm)="setSoldOut(item.id)">下架</a></li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
+
+<nz-modal [(nzVisible)]="showCreateQrcode" [nzWidth]="520" nzTitle="生成老师推广码" (nzOnCancel)="showCreateQrcode = false;" [nzCancelText]="null" [nzOkText]="null">
+  <div class="card-list">
+    <nz-card nzHoverable [nzCover]="coverTemplate" *ngFor="let teacher of teacherList" [nzBodyStyle]="{padding: '12px', 'text-align': 'center'}">
+      <nz-card-meta [nzTitle]="teacher.name"></nz-card-meta>
+      <ng-template #coverTemplate>
+        <qr-code [value]="templateUrl + '?activityId=' + activityId + '&templateId='+ templateId +'&teacherId=' + teacher.id + '&storeId=' + storeId" [size]="150"></qr-code>
+      </ng-template>
+    </nz-card>
+  </div>
+</nz-modal>

@@ -1,0 +1,59 @@
+<nz-table
+  #nzTable
+  nzShowSizeChanger
+  [nzScroll]="{x:'100%'}"
+  [nzFrontPagination]="false"
+  [nzData]="dataSet"
+  [nzSize]="size"
+  [nzTitle]="title ? title : null"
+  [nzShowTotal]="tableTotalInfo"
+  [nzShowPagination]="showPage"
+  [nzLoading]="_pageInfo.loading"
+  [nzTotal]="_pageInfo.totalPage"
+  [(nzPageIndex)]="_pageInfo.pageNum"
+  [(nzPageSize)]="_pageInfo.pageSize"
+  (nzPageSizeChange)="_request(true)"
+  (nzPageIndexChange)="_request()">
+  <!-- [ngClass]="[ allowSpace ? 'break' : 'nowrap' ]" -->
+  <thead>
+    <tr>
+      <th nz-th nzCheckbox *ngIf="checked" [style.text-align]="'center'">
+        <label nz-checkbox *ngIf="!isRadio" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)"></label>
+      </th>
+      <th nzShowExpand *ngIf="showExpand"></th>
+      <ng-container *ngFor="let head of thead">
+        <ng-container *ngIf="(head.left == undefined) && (head.right == undefined)">
+          <th nz-th [nzWidth]="head.width || ''">
+            <span>{{ head.name || head }}</span>
+          </th>
+        </ng-container>
+        <ng-container *ngIf="head.left > -1">
+          <th nz-th [nzWidth]="head.width || ''" [nzLeft]="head.left">
+            <span>{{ head.name || head }}</span>
+          </th>
+        </ng-container>
+        <ng-container *ngIf="head.right > -1">
+          <th nz-th [nzWidth]="head.width || ''" [nzRight]="head.right">
+            <span>{{ head.name || head }}</span>
+          </th>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </thead>
+
+  <tbody>
+    <ng-template ngFor let-data [ngForOf]="dataSet">
+      <tr (click)="isRadio && isChecked(!data.checked, data)" [ngClass]="{'ea-checked': data.checked}">
+        <td (click)="$event.stopPropagation()" nzShowCheckbox *ngIf="checked" [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="isChecked($event, data)"></td>
+        <td nzShowExpand [(nzExpand)]="data.expand" *ngIf="showExpand"></td>
+        <ng-container *ngTemplateOutlet="EaTableTbodyTr; context: { $implicit: data }"></ng-container>
+      </tr>
+      <tr [nzExpand]="data.expand">
+        <ng-container *ngTemplateOutlet="EaTableTbodyExpand; context: { $implicit: data }"></ng-container>
+      </tr>
+    </ng-template>
+  </tbody>
+</nz-table>
+<ng-template #tableTotalInfo let-range="range" let-total>
+  从 {{ range[0] }} 到 {{ range[1]}} 条记录 / 共 {{ total }} 条记录
+</ng-template>

@@ -1,0 +1,27 @@
+<div class="container">
+  <ea-list-page-simp 
+    #listPage
+    url="/commission/listCommissionStatistics"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/employee/listEmployee' },
+      { label: '月份', key: 'month', type: 'monthpicker' }
+    ]"
+    [tableThead]="['日期','姓名','职位','服务次数','满意度提成积分','满意度提成金额','线索数','线索提成金额','体验卡售卖数','体验卡提成金额','其他任务积分','其他任务提成金额']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.month }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.role == 1 ? '店长' : data.role == 2 ? '销售' : data.role == 3 ? '主管': data.role == 4 ? '水育师' : '--' }}</td>
+      <td>{{ data.serviceCount }}次</td>
+      <td>{{ data.servicePoint }}分</td>
+      <td>{{ data.serviceMoney }}元</td>
+      <td>{{ data.clueCount }}条</td>
+      <td>{{ data.clueMoney }}元</td>
+      <td>{{ data.experienceCount }}张</td>
+      <td>{{ data.experienceMoney }}元</td>
+      <td>{{ data.taskPoint }}分</td>
+      <td>{{ data.taskMoney }}元</td>
+    </ng-template>
+  </ea-list-page-simp>
+</div>

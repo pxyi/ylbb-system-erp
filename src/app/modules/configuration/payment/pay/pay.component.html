@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="content">
+    <nz-steps [nzCurrent]="currentPage">
+      <nz-step nzTitle="选择商品"></nz-step>
+      <nz-step nzTitle="确认订购单信息"></nz-step>
+      <nz-step nzTitle="确认付款"></nz-step>
+      <nz-step nzTitle="完成订购"></nz-step>
+    </nz-steps>
+
+    <div class="box">
+      <div *ngIf="currentPage == 0">
+        <nz-card [nzTitle]="commodity.productName" *ngFor="let commodity of commodityItems">
+          <div nz-card-grid 
+            [ngStyle]="{ width: '25%', textAlign: 'center' }" 
+            *ngFor="let item of commodity.children"
+            (click)="selectCommodity(item, commodity.id)">{{ item.productBody }}</div>
+        </nz-card>
+      </div>
+      <div *ngIf="currentPage == 1" class="detail">
+        <form nz-form [formGroup]="formGroup">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">商品</nz-form-label>
+            <nz-form-control [nzSpan]="18"><input nz-input formControlName="productName" readonly></nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">使用期限</nz-form-label>
+            <nz-form-control [nzSpan]="18"><input nz-input formControlName="productBody" readonly></nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">价格</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <nz-input-group [nzPrefix]="'￥'"><input style="color: #f00" nz-input formControlName="productMoney" readonly></nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired [nzSpan]="6">接收短信手机号码</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <input nz-input formControlName="orderPhone" maxlength="11" placeholder="请输入接受短信手机号码">
+              <nz-form-explain *ngIf="formGroup.get('orderPhone').dirty && formGroup.get('orderPhone').errors">请输入接受短信手机号码!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">备注</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <textarea nz-input id="remarks" formControlName="remarks" placeholder="请输入备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+        <div nz-row style="margin-top: 30px;">
+          <div nz-col nzOffset="8">
+            <button nz-button nzType="primary" style="width: 140px" [nzLoading]="confirmLoading" (click)="confirmPrice()">确定</button>
+            <button nz-button style="width: 140px; margin-left: 20px" (click)="currentPage = currentPage - 1">返回</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentPage == 2" class="payment">
+        <p>*待支付金额：<span>{{ orderDetail.totalMoney }}</span>元，请点击图片选择支付方式</p>
+        <nz-radio-group [(ngModel)]="payType" (ngModelChange)="payment()">
+          <label nz-radio nzValue="zfb">
+            <img style="width: 100px;" src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/zfb.png" alt="">
+          </label>
+        </nz-radio-group>
+        <nz-spin [nzSpinning]="showPaymentLoading">
+          <div class="paybox" [hidden]="!showPaymentQrcode">
+            <canvas id="paycode"></canvas>
+            <p>请用支付宝扫码完成支付</p>
+            <h4>订单创建成功，请尽快支付，支付剩余时间<span>0时{{ paymentTimeMM }}分{{ paymentTimeSS }}秒</span></h4>
+          </div>
+        </nz-spin>
+      </div>
+      <div *ngIf="currentPage == 3">
+        <div class="payment-reault">
+          <i nz-icon 
+            [style.color]="paymentResult > 0 ? '#52c41a' : '#f5222d'"
+            [type]="paymentResult > 0 ? 'check-circle' : 'close-circle'"></i>
+          <h2>支付{{ paymentResult > 0 ? '成功' : '失败' }}</h2>
+          <p [ngSwitch]="paymentResult">
+            <ng-container *ngSwitchCase="1">支付成功，可在我的支付记录页查看支付记录</ng-container>
+            <ng-container *ngSwitchCase="-1">支付超时，请返回订单首页重新支付</ng-container>
+            <ng-container *ngSwitchDefault>支付失败...</ng-container>
+          </p>
+          <div>
+            <button nz-button nzType="default" routerLink="/home">返回首页</button>
+            <ng-container *ngIf="paymentResult > 0">
+              <button nz-button nzType="primary" routerLink="/home/configuration/payment/record">查看支付记录</button>
+            </ng-container>
+            <ng-container *ngIf="paymentResult < 0">
+              <button nz-button nzType="primary" (click)="currentPage = 0; paymentResult = 0;">返回重新支付</button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

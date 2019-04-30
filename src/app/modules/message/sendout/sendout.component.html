@@ -1,0 +1,73 @@
+<div class="header">
+  <div style="line-height: 30px">
+  目前短信剩余条数：
+  <span style="font-size: 24px;margin-right: 12px;">{{ smsBalanceSurplus }}</span>
+  <button nz-button nzType="primary" nzSize="small" routerLink="/home/configuration/payment/pay">去购买</button>
+  </div>
+</div>
+
+<div class="container">
+  <ea-query [node]="queryNode" (onSubmit)="query($event)"></ea-query>
+</div>
+
+<nz-card [style.margin-top]="'24px'" [nzLoading]="queryLoading" nzTitle="短信发送" [nzExtra]="extraTemplate">
+  <ng-template #extraTemplate>
+    <button nz-button nzType="primary" nzSize="small" (click)="sendout()">确认发送</button>
+  </ng-template>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="16">
+      <nz-transfer
+        [nzDataSource]="transferList"
+        nzShowSearch
+        [nzTitles]="['客户列表', '待发送短信列表']"
+        [nzListStyle]="{'width.px': 500, 'height.px': 500}"
+        (nzChange)="change($event)"
+        [nzRender]="render">
+        <ng-template #render let-item>
+          {{ item.name || '暂无' }}
+          <nz-divider nzType="vertical"></nz-divider>
+          {{ item.mobilePhone }}
+        </ng-template>
+      </nz-transfer>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <form nz-form [formGroup]="formGroup">
+        <div nz-row nzGutter="8">
+          <nz-form-item>
+            <nz-form-label>短信模板</nz-form-label>
+            <nz-form-control>
+              <nz-select [nzShowSearch]="true" [nzAllowClear]="true" formControlName="template" nzPlaceHolder="请选择短信模板">
+                <nz-option *ngFor="let option of smsTemplateList" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row nzGutter="8">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="content">短信内容</nz-form-label>
+            <nz-form-control>
+              <nz-input-group [nzSuffix]="suffixTemplate">
+                <textarea nz-input placeholder="请输入短信内容" formControlName="content" id="content" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+              </nz-input-group>
+              <ng-template #suffixTemplate>
+                <span [style.color]="formGroup.get('content').value && formGroup.get('content').value.length > 60 ? '#f5222d' : ''">{{
+                  formGroup.get('content').value ? formGroup.get('content').value.length : 0 }}
+                </span>/60</ng-template>
+              <nz-form-explain *ngIf="formGroup.get('content').dirty && formGroup.get('content').hasError('required')">请输入短信内容！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row nzGutter="8">
+          <nz-form-item>
+            <nz-form-label>发送信息</nz-form-label>
+            <nz-form-control>
+              <nz-form-extra>发送号码：<span [style.color]="'#f5222d'">{{ selectList.length }}</span>条</nz-form-extra>
+              <nz-form-extra>本次发送条数：<span [style.color]="'#f5222d'">{{ sendNum }}</span>条</nz-form-extra>
+              <nz-form-extra>发送后短信剩余：<span [style.color]="'#f5222d'">{{ smsBalance - sendNum }}</span>条</nz-form-extra>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </form>
+    </div>
+  </div>
+</nz-card>

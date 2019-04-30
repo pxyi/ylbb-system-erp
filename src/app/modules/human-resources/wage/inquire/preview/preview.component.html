@@ -1,0 +1,85 @@
+
+<nz-table #table1 [nzShowPagination]="false" nzBordered nzSize="small" [nzData]="detail.payrollRecord"
+  nzTitle="基本情况">
+  <thead>
+    <tr>
+      <th>月份</th>
+      <th>级别</th>
+      <th>基本工资</th>
+      <th>实发工资</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table1.data">
+      <td>{{ data.month }}</td>
+      <td>{{ data.level }}</td>
+      <td>{{ data.basicWage }}</td>
+      <td>{{ data.total }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-table #table2 [nzShowPagination]="false" nzBordered nzSize="small" [nzData]="detail.payrollRecord"
+  nzTitle="提成情况">
+  <thead>
+    <tr>
+      <th>合计</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table2.data">
+      <td>{{ data.commission }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-table #table3 [nzShowPagination]="false" nzBordered nzSize="small" [nzData]="detail.addTypes" nzTitle="调增情况">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>调增类别</th>
+      <th>金额</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table3.data">
+      <td>{{ data.workDate }}</td>
+      <td>{{ data.compConfigName }}</td>
+      <td>{{ data.wages }}</td>
+      <td>{{ data.comment }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-table #table4 [nzShowPagination]="false" nzBordered nzSize="small" [nzData]="detail.subTypes" nzTitle="调减情况">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>调减类别</th>
+      <th>金额</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table4.data">
+      <td>{{ data.workDate }}</td>
+      <td>{{ data.compConfigName }}</td>
+      <td>{{ data.wages }}</td>
+      <td>{{ data.comment }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-table #table5 [nzShowPagination]="false" nzBordered nzSize="small" [nzData]="detail.others" nzTitle="其他">
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>金额</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table5.data">
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.adjustWages }}</td>
+      <td>{{ data.remark }}</td>
+    </tr>
+  </tbody>
+</nz-table>

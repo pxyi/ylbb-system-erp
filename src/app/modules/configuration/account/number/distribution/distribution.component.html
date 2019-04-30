@@ -1,0 +1,16 @@
+<nz-table [nzData]="dataSet" nzSize="small" [nzShowPagination]="false">
+  <thead>
+    <tr>
+      <th></th>
+      <th>角色名</th>
+      <th>角色代码</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of dataSet">
+      <td nzShowCheckbox [(nzChecked)]="data.checked"></td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.code }}</td>
+    </tr>
+  </tbody>
+</nz-table>

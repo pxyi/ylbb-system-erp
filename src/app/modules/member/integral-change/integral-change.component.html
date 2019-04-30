@@ -1,0 +1,19 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/changeLog/changeLogList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '标识', '会员姓名', '会员手机', '记录时间', '类型', '分值变化', '原因' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.id }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.mobile }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.type == 0 ? '消费自动增加' : data.type == 1 ? '手动增加' : '积分兑换扣减' }}</td>
+      <td>{{ data.point }}</td>
+      <td>{{ data.reason }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

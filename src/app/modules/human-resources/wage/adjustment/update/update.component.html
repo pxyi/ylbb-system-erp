@@ -1,0 +1,62 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>员工</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="employeeId" [nzShowSearch]="true" nzPlaceHolder="请选择员工">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择员工！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>月份</nz-form-label>
+        <nz-form-control>
+          <nz-month-picker formControlName="month" nzPlaceHolder="请选择月份"></nz-month-picker>
+          <nz-form-explain *ngIf="formGroup.get('month').dirty && formGroup.get('month').hasError('required')">请选择月份！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="adjustWages">调整值</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入调整值" formControlName="adjustWages" id="adjustWages">
+          <nz-form-explain *ngIf="formGroup.get('adjustWages').dirty && formGroup.get('adjustWages').hasError('required')">请输入调整值！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('adjustWages').dirty && formGroup.get('adjustWages').hasError('pattern')">请输入正确的调整值！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>原因</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="adjustReason" nzPlaceHolder="请选择原因">
+            <nz-option nzLabel="其它" nzValue="其它"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('adjustReason').dirty && formGroup.get('adjustReason').hasError('required')">请选择原因！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="remark">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入备注" formControlName="remark" id="remark" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

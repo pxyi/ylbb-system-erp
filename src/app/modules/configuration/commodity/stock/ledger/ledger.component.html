@@ -1,0 +1,20 @@
+<ea-query-simp 
+  [node]="[
+            { label: '操作日期', type: 'rangepicker', key: 'time', valueKey: ['startDate', 'endDate'] },
+            { label: '变更类型', type: 'select', key: 'type', options: [ {name: '消费', id: 0}, {name: '自用', id: 1}, {name: '入库', id: 2}, {name: '消费撤销', id: 3} ] },
+            { label: '操作人', type: 'input', key: 'user' },
+            { label: '商品名称', type: 'input', key: 'commodityName' }
+          ]"
+  (onSubmit)="table.request($event)"></ea-query-simp>
+
+<ea-table #table url="/commodityLog/getStoreCommoditieLogList"
+  [thead]="['商品名称', '变更类型', '变更数量', '变更前', '变更后', '操作人员']" [EaTableTbodyTr]="EaTableTbodyTr">
+  <ng-template #EaTableTbodyTr let-data>
+    <td>{{ data.name }}</td>
+    <td>{{ data.type }}</td>
+    <td>{{ data.changeNum }}</td>
+    <td>{{ data.beforeStock }}</td>
+    <td>{{ data.afterStock }}</td>
+    <td>{{ data.user }}</td>
+  </ng-template>
+</ea-table>

@@ -1,0 +1,176 @@
+<div class="formLeft">
+  <div class="select_left">
+    <p>
+      <input nz-input placeholder="请输入搜索内容" [(ngModel)]="mobilePhone" (ngModelChange)="modelChange()">
+    </p>
+    <div class="select_list">
+      <div class="select_tit">客户信息</div>
+      <nz-table #basicTable nzShowPagination="false" [nzData]="memberList_b" [nzLoading]="loading_b">
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>小名</th>
+            <th>家长姓名</th>
+            <th>手机号</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="shkem" *ngFor="let data of memberList_b" (click)="selectMemberList(data)">
+            <td>
+              <span *ngIf="data.name" [innerHTML]="data.name"></span>
+            </td>
+            <td>
+              <span *ngIf="data.mobile" [innerHTML]="data.nick"></span>
+            </td>
+            <td>
+              <span *ngIf="data.parentName" [innerHTML]="data.parentName"></span>
+            </td>
+            <td>
+              <span *ngIf="data.mobile" [innerHTML]="data.mobile"></span>
+            </td>
+            <td>
+              <span *ngIf="data.comment" nz-tooltip [nzTitle]="data.comment"
+                [innerHTML]="data.comment.length > 10 ? data.comment.substr(0, 10) + '...' : data.comment"></span>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <div style="text-align: right; margin-top: 20px">
+        <nz-pagination [(nzPageIndex)]="pageIndex_b" [nzTotal]="total_b" [nzShowTotal]="totalTemplate"
+          [nzSize]="'small'" nzShowQuickJumper [nzPageSize]="20" (nzPageIndexChange)="modelChange()"></nz-pagination>
+        <ng-template #totalTemplate let-total> 共 {{ total_b ? total_b : 0 }} 条 </ng-template>
+      </div>
+    </div>
+
+  </div>
+</div>
+<form style="width:520px; float: left;" nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>宝宝姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入宝宝姓名" formControlName="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>宝宝昵称</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入宝宝昵称" formControlName="nick">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>宝宝性别</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入宝宝性别" formControlName="sex">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="monthAge">月龄</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入月龄" formControlName="monthAge" id="monthAge">
+          <nz-form-explain *ngIf="formGroup.get('monthAge').dirty && formGroup.get('monthAge').hasError('required')">
+            请输入月龄！</nz-form-explain>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>婴儿类型</nz-form-label>
+        <nz-form-control>
+          <!-- <nz-select readonly formControlName="babyType" nzPlaceHolder="请选择婴儿类型">
+              <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
+              <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
+            </nz-select> -->
+          <input nz-input readonly formControlName="babyType" placeHolder="请选择婴儿类型">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>家长电话</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入家长电话" formControlName="mobilePhone">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入会员卡号" formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员卡类型</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入会员卡类型" formControlName="cardTypeName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>有效期</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入有效期" formControlName="expireDays">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>剩余卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入剩余卡次" formControlName="surplusTimes">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>失效时间</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly placeholder="请输入失效时间" formControlName="expireDate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-button-group class="flex">
+        <button nz-button nzType="primary" routerLink="/home/customer/list"
+          [queryParams]="{type: 'appoint', phone: clMobilePhone}" (click)="close()">预约</button>
+        <button nz-button nzType="primary" routerLink="/home/customer/list"
+          [queryParams]="{type: 'consumption', phone: clMobilePhone}" (click)="close()">消费</button>
+        <button nz-button nzType="primary" routerLink="/home/customer/list"
+          [queryParams]="{type: 'construction', phone: clMobilePhone}" (click)="close()">建卡</button>
+        <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          [queryParams]="{type: 'change', code: formGroup.get('cardCode').value}" (click)="close()">卡项变更</button>
+        <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          [queryParams]="{type: 'stop', code: formGroup.get('cardCode').value}" (click)="close()">停卡</button>
+        <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          [queryParams]="{type: 'open', code: formGroup.get('cardCode').value}" (click)="close()">重开卡</button>
+        <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          [queryParams]="{type: 'continued', code: formGroup.get('cardCode').value}" (click)="close()">续卡</button>
+      </nz-button-group>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,21 @@
+<nz-card nzTitle="提成阶梯" [nzBordered]="false" [nzExtra]="extraTemplate">
+  <form nz-form nzLayout="vertical">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="8" [nzLg]="12" [nzXl]="8" [nzXXl]="6" *ngFor="let item of bonusRateList">
+        <nz-form-item>
+          <nz-form-label [nzFor]="'rate' + item.name">第{{ item.name }}次提成比例</nz-form-label>
+          <nz-form-control>
+            <input nz-input [name]="'rate' + item.name" type="text" id="'rate' + item.name" [(ngModel)]="item.rate"
+              placeholder="请输入第{{ item.name }}次提成比例">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>
+<ng-template #extraTemplate>
+  <button nz-button nzType="primary" (click)="add()" style="margin-right: 8px;">新增</button>
+  <button nz-button nzType="primary" nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete()"
+    style="margin-right: 8px;">删除</button>
+  <button nz-button nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
+</ng-template>

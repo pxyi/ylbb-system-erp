@@ -1,0 +1,79 @@
+.search-form {
+  .form-item {
+    display: flex;
+    color: rgba(#000, .85);
+    font-size: 14px;
+    line-height: 32px;
+    &:not(:last-child) {
+      padding-bottom: 11px;
+      margin-bottom: 16px;
+      border-bottom: dashed 1px rgb(232, 232, 232);
+    }
+    .item-label {
+      margin-right: 24px;
+      flex: 0 0 auto;
+    }
+    .item-content {
+      flex: auto;
+    }
+  }
+}
+:host ::ng-deep {
+  nz-tag {
+    margin-right: 24px;
+    .ant-tag {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+  .ant-card-actions {
+    background: none;
+    li span {
+      width: 100%;
+    }
+  }
+  .ant-card-meta-title {
+    transition: color .2s;
+  }
+  nz-card:hover .ant-card-meta-title {
+    color: #1890ff;
+  }
+  .ant-input-affix-wrapper .ant-input-suffix {
+    right: 0;
+  }
+}
+.content {
+  margin-top: 14px;
+  .activity-null {
+    color: rgba(#000, .3);
+    font-size: 16px;
+    line-height: 200px;
+    text-align: center;
+  }
+}
+.card-img {
+  & > img {
+    width: 100%;
+  }
+  .qrcode {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 240px;
+    background: rgba(#000, .3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    qr-code {
+      display: inline-block;
+      height: 150px;
+      height: 150px;
+    }
+  }
+  &:hover .qrcode {
+    opacity: 1;
+    visibility: visible;
+  }
+}

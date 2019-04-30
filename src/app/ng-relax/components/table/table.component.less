@@ -1,0 +1,23 @@
+:host ::ng-deep {
+  nz-table { 
+    table {
+      border: 1px solid #e8e8e8 !important;
+      th, td {
+        text-align: center;
+      }
+    }
+    &.nowrap {
+      white-space: nowrap;
+
+      .ant-table-body {
+        overflow-x: auto;
+      }
+    }
+    tbody tr:nth-child(4n - 1) {
+      background: #f8f8f8;
+    }
+    tr.ea-checked {
+      background: #e6f7ff !important;
+    }
+  }
+}

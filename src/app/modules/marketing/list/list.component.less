@@ -1,0 +1,11 @@
+.card-list {
+  overflow: hidden;
+  & > nz-card {
+    width: 150px;
+    float: left;
+    margin-bottom: 12px;
+    &:not(:nth-child(3n)) {
+      margin-right: 11px;
+    }
+  }
+}

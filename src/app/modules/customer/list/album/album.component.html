@@ -1,0 +1,64 @@
+<div class="header">
+  <div nz-row class="head-cell" nzGutter="8">
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">姓名：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.name }}</div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">昵称：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.nick || '--' }}</div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">性别：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.sex }}</div>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <div nz-col [nzSpan]="8">月龄：</div>
+      <div nz-col [nzSpan]="16">{{ userInfo.monthAge }}</div>
+    </div>
+  </div>
+</div>
+
+
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <nz-form-item>
+      <nz-form-label nzRequired>照片</nz-form-label>
+      <nz-form-control>
+        <ea-upload-picture formControlName="photoListStr" [maxLength]="99"></ea-upload-picture>
+        <nz-form-explain *ngIf="formGroup.get('photoListStr').dirty && formGroup.get('photoListStr').hasError('required')">请上传照片！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+
+<ea-table #table url="/babyGrowthAlbum/list" 
+  [thead]="['照片', '月龄', '照片日期', '操作']" size="small" 
+  [EaTableTbodyTr]="EaTableTbodyTr" 
+  [paramsDefault]="{babyId: id}" 
+  [title]="title">
+  <ng-template #EaTableTbodyTr let-data>
+    <td><nz-avatar style="cursor: pointer" nzShape="square" nzSize="large" nzIcon="anticon anticon-user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>
+    <td>{{ data.monthAge }}</td>
+    <td>{{ data.createDate }}</td>
+    <td><a (click)="delete(data.id)">删除</a></td>
+  </ng-template>
+  <ng-template #title>
+    <div class="table-head">
+      <span>用户相片</span>
+      <nz-month-picker nzSize="small" style="width: 120px;" nzPlaceHolder="请选择月份" [(ngModel)]="selectedMonth" (ngModelChange)="monthChange($event)"></nz-month-picker>
+    </div>
+  </ng-template>
+</ea-table>
+
+<nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+  <ng-template #modalContent>
+    <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" *ngIf="previewImage" />
+  </ng-template>
+</nz-modal>
+
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

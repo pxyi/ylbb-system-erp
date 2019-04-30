@@ -1,0 +1,96 @@
+<div class="container">
+  <ng-template #EaBtns>
+    <button nz-button nzType="primary" (click)="openCreate()">新增账号</button>
+  </ng-template>
+  <ea-list-page 
+    #EaListPage
+    url="/accountManagement/list" 
+    [queryNode]="queryNode" 
+    [tableThead]="tableThead" 
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.code }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.email || '--' }}</td>
+      <td>{{ data.createTime }}</td>
+      <td><nz-tag [nzColor]="data.status == 0 ? '#2db7f5' : ''">{{ data.status == 0 ? '启用' : '停用' }}</nz-tag></td>
+      <td>
+        <ng-container *ngIf="data.code.substr(data.code.length - 6, 6) !== '_admin'">
+          <a href="javascript:;" (click)="editAccount(data)">编辑</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <nz-dropdown>
+            <a nz-dropdown>更多 <i nz-icon type="down"></i></a>
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>
+                <a nz-popconfirm nzTitle="确认删除此角色吗？" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="deleteAccount(data.id)">删除</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="allocationRole(data.id)">分配角色</a>
+              </li>
+              <li nz-menu-item>
+                <a nz-popconfirm nzTitle=" 确定重置密码？" nzOkText="确定" nzCancelText="取消" (nzOnConfirm)="resetPassword(data.id)">重置密码</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </ng-container>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>
+
+
+<nz-modal [(nzVisible)]="showCreateAccount" nzTitle="用户信息" [nzFooter]="modalFooter" (nzOnCancel)="showCreateAccount = false">
+
+  <form nz-form [formGroup]="createAccountForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">登录名</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" formControlName="code" placeholder="请输入登录名" [readonly]="!!createAccountId">
+        <nz-form-explain *ngIf="createAccountForm.get('code').dirty && createAccountForm.get('code').hasError('required')">请输入登录名!</nz-form-explain>
+        <nz-form-explain *ngIf="createAccountForm.get('code').dirty && createAccountForm.get('code').hasError('allowAdmin')">登录名禁止以”_admin“结尾!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">中文名</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" formControlName="name" placeholder="请输入中文名">
+        <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').hasError('required')">请输入中文名!</nz-form-explain>
+        <nz-form-explain *ngIf="createAccountForm.get('name').dirty && createAccountForm.get('name').hasError('pattern')">只能输入中文!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="!createAccountId">
+      <nz-form-label [nzSpan]="6" nzFor="password" [nzRequired]="true">密码</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="password" id="password" formControlName="password" placeholder="请输入密码">
+        <nz-form-explain *ngIf="createAccountForm.get('password').dirty && createAccountForm.get('password').errors">不填则为默认密码：123456!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="email">邮箱</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" id="email" formControlName="email" placeholder="请输入邮箱">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">状态</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <nz-radio-group formControlName="status">
+          <label nz-radio-button [nzValue]="0">启用</label>
+          <label nz-radio-button [nzValue]="1">停用</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">备注</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <textarea nz-input formControlName="memo" placeholder="请输入角色备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="showCreateAccount = false">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="createLoading" (click)="crateAccount()">确定</button>
+  </ng-template>
+</nz-modal>

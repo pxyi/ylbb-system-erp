@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="preview" #preview></div>
+  <div class="tables">
+    <nz-tabset>
+      <nz-tab nzTitle="移动门店">
+        <div class="table_btn">
+          <button nz-button nzType="primary" nzSize="size" routerLink="/home/configuration/wechat">
+            <i nz-icon type="edit"></i>编辑门店主页</button>
+        </div>
+        <div class="table_btn">
+          <span>手机扫码访问门店</span>
+          <img style="border: solid 1px #ccc"
+            [src]="'http://www.liantu.com/api.php?text=http://wx.beibeiyue.com/popopooc/index.html?storeId='+storeId "
+            alt="">
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="评价管理">
+        <div class="evaluate" *ngFor="let item of evaluate">
+          <div class="header">
+            <div class="headimg">
+              <img [src]="item.memberPhoto" alt=""> </div>
+            <div class="header_left">
+              <div class="teacherName">{{ item.memberName ? item.memberName : item.name }}</div>
+              <div class="stars_list">
+                <nz-rate [ngModel]="item.starLevel" [nzCount]="4" nzDisabled></nz-rate>
+              </div>
+            </div>
+            <div class="header_right">
+              <button nz-button class="header_rightBtn" nzType="default" *ngIf="item.commentStatus == 0"
+                (click)="evaluateModel(item.id,1)">隐藏</button>
+              <button nz-button class="header_rightBtn" nzType="default" *ngIf="item.commentStatus == 1"
+                (click)="evaluateModel(item.id,0)">显示</button>
+              <div class="headerTime header_rightBtn">{{ item.createTime }}</div>
+            </div>
+          </div>
+          <div class="evaluate_main">
+            <div class="text">
+              {{ item.comment }}
+            </div>
+            <div *ngIf="item.commentPhoto.length&&item.commentPhoto!=''">
+              <div class="main_img" *ngFor="let items of item.commentPhoto">
+                <img [src]="items" (click)="openItemImg(items)" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="paination" *ngIf="evaluate.length">
+          <nz-pagination [nzPageIndex]="1" [nzTotal]="totalEvaluate" (nzPageIndexChange)="evaluateChange($event)">
+          </nz-pagination>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="门店活动">
+        <div class="creatBtn">
+          <button nz-button nzType="primary" routerLink="/home/marketing/activity">去创建活动</button>
+        </div>
+        <nz-table #basicTable [nzData]="listOfData" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th>活动名称</th>
+              <th>活动状态</th>
+              <th>活动时间</th>
+              <th>创建时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of listOfData">
+              <td>{{data.activityHeadline}}</td>
+              <td>{{data.status == 0 ? '进行中' : '已结束' }}</td>
+              <td>{{data.startTime + '——' + data.endTime}}</td>
+              <td>{{data.createTime}}</td>
+              <td *ngIf="data.status == 0">
+                <a (click)="activityStatus(data.activityId,data.isShow)">{{ data.isShow == 0? '显示' :'隐藏'   }}</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="update(data.activityId)">编辑</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a routerLink="/home/marketing/list">预览</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+        <div class="paination">
+          <nz-pagination [nzPageIndex]="1" [nzTotal]="totalList" [nzPageSize]="20" [nzShowTotal]="rangeTemplate"
+            (nzPageIndexChange)="listChange($event)"></nz-pagination>
+          <ng-template #rangeTemplate let-range="range" let-total>
+            共 {{totalList}} 条
+          </ng-template>
+        </div>
+
+      </nz-tab>
+    </nz-tabset>
+  </div>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="图片详情" [nzFooter]="modalFooter" (nzOnCancel)="isVisible = false">
+    <img class="itemImgs" [src]="itemsImg" alt="">
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" (click)="isVisible = false">确定</button>
+    </ng-template>
+  </nz-modal>
+
+
+</div>

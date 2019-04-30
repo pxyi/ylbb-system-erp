@@ -1,0 +1,324 @@
+<div class="head">
+  <div class="head-img"><img src="./assets/images/default-boy.png" alt=""></div>
+  <h1>{{ userInfo.nick || userInfo.name }}</h1>
+  <p *ngIf="followStageId != 4">
+    <b>跟进阶段：</b><span>{{ userInfo.followStage }}</span>
+  </p>
+  <div class="head-btn" *ngIf="followStageId != 4">
+    <button nz-button nz-popconfirm [nzTitle]="'确定要移到无意向客户吗？'" (nzOnConfirm)="intentionCustomer()">移到无意向客户</button>
+    <button nz-button nzType="primary" (click)="update()">编辑</button>
+  </div>
+</div>
+
+
+<nz-tabset>
+  <nz-tab nzTitle="详细信息">
+    <div nz-row class="details">
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>姓名</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.name || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>昵称</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.nick }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>性别</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">
+            <i class="iconfont" [title]="userInfo.sex" [ngClass]="[ userInfo.sex === '男' ? 'icon-nan' : 'icon-nv']"></i>
+          </div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>生日</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.birthday || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>月龄</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.birthday | monthdiff }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>星座</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.constellation || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>家长姓名</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.parentName || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>手机号码</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">
+            <a href="javascript:;" [getMobile]="userInfo.id">查看</a>
+          </div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>家长关系</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.parentRelationShip || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>微信/QQ</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.parentWeChat || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="8">
+            <label>来源</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="16">{{ userInfo.sourceName || '--' }}</div>
+        </div>
+      </div>
+      <div nz-col [nzSpan]="20">
+        <div nz-form-item nz-row>
+          <div nz-form-label nz-col [nzSpan]="3">
+            <label>备注</label>
+          </div>
+          <div nz-form-control nz-col [nzSpan]="21">{{ userInfo.visitRemarks || '--' }}</div>
+        </div>
+      </div>
+    </div>
+  </nz-tab>
+  <nz-tab [nzTitle]="'跟进记录(' + followRecordList.length + ')'">
+    <form nz-form [formGroup]="followRecordGroup">
+      <nz-form-item>
+        <nz-form-control>
+          <textarea nz-input formControlName="content" [nzAutosize]="{ minRows: 3, maxRows: 6 }" placeholder="新建跟进记录......(必填, 限200字)"></textarea>
+          <nz-form-explain *ngIf="followRecordGroup.get('content').dirty && followRecordGroup.get('content').hasError('required')">请输入200字以下跟进记录</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <div class="tags-content" *ngIf="labelList.length">
+        <nz-tag nzColor="blue" (click)="followRecordGroup.patchValue({content: (followRecordGroup.get('content').value || '') + '#'+ item.name +'#'})" *ngFor="let item of labelList">#{{ item.name }}#</nz-tag>
+      </div>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="4" *ngIf="followStageId != 4">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-select formControlName="memberStatusId" nzPlaceHolder="客户状态">
+                <nz-option *ngFor="let item of memberStatusList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="followRecordGroup.get('memberStatusId').dirty && followRecordGroup.get('memberStatusId').hasError('required')">请选择客户状态</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="4">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-select formControlName="followType" nzPlaceHolder="跟进方式">
+                <nz-option *ngFor="let item of followTypeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="followRecordGroup.get('followType').dirty && followRecordGroup.get('followType').hasError('required')">请选择跟进方式</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="4">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-select formControlName="staffId" nzPlaceHolder="跟进老师">
+                <nz-option *ngFor="let item of teacherList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="followRecordGroup.get('staffId').dirty && followRecordGroup.get('staffId').hasError('required')">请选择跟进老师</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="5">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-date-picker formControlName="nextFollowTime" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择下次跟进时间" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+              <nz-form-explain *ngIf="followRecordGroup.get('nextFollowTime').dirty && followRecordGroup.get('nextFollowTime').hasError('required')">请选择下次跟进时间</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="3" *ngIf="followStageId != 4">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-switch formControlName="status" nzCheckedChildren="已预约到店" nzUnCheckedChildren="未预约到店"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="4" style="height: 63px; float: right">
+          <button (click)="saveFollowRecord()" style="margin-top: 4px;float: right;" nz-button nzType="primary" [nzLoading]="saveFollowRecordLoading" [style.margin-top]="'5px'">发布</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="followRecordGroup.get('status').value">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-select formControlName="swimTeacherId" nzPlaceHolder="预约老师">
+                <nz-option *ngFor="let item of swimTeacherList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="followRecordGroup.get('swimTeacherId').dirty && followRecordGroup.get('swimTeacherId').hasError('required')">请选择预约老师</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="8" *ngIf="followRecordGroup.get('status').value">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-input-group nzCompact>
+                <nz-date-picker formControlName="reserveDate" nzPlaceHolder="请选择预约日期" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+                <nz-time-picker formControlName="reserveHour" nzFormat="HH:mm" [nzMinuteStep]="15" [nzDisabledHours]="_disabledHours" [ngClass]="{'has-error': followRecordGroup.get('reserveHour').dirty && followRecordGroup.get('reserveHour').hasError('required')}"></nz-time-picker>
+              </nz-input-group>
+              <nz-form-explain style="color: #f5222d;" *ngIf="(followRecordGroup.get('reserveDate').dirty && followRecordGroup.get('reserveDate').hasError('required')) || (followRecordGroup.get('reserveHour').dirty && followRecordGroup.get('reserveHour').hasError('required'))">请选择预约日期和时间！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+    <ea-quote>跟踪记录</ea-quote>
+    <div class="record-list">
+      <div class="not-found" *ngIf="!followRecordList.length">
+        <i class="iconfont icon-wushuju"></i>
+        <div>暂无记录</div>
+      </div>
+      <nz-timeline>
+        <nz-timeline-item *ngFor="let item of followRecordList; let idx = index">
+          <nz-card [nzTitle]="'第' + (followRecordList.length - idx) + '次跟进'" [nzExtra]="extraTemplate">
+            <ng-template #extraTemplate><a (click)="updateFollowRecord(item)">编辑</a></ng-template>
+            <div class="record-card-title">
+              <div><label>跟进时间：</label><span>{{ item.createTime }}</span></div>
+              <div *ngIf="followStageId != 4"><label>客户状态：</label><span>{{ item.memberStatusName }}</span></div>
+              <div *ngIf="followStageId != 4"><label>跟进方式：</label><span>{{ item.followTypeName }}</span></div>
+              <div><label>跟进家长：</label><span>{{ item.parentName }}</span></div>
+              <div>
+                <label>跟进老师：</label>
+                <nz-tag nzColor="#108ee9">{{ item.staffName }}</nz-tag>
+                <ng-container *ngIf="item.status > 0; else elseTemplate">
+                  <nz-tag nzColor="#2db7f5" *ngIf="followStageId != 4">已预约到店-{{ item.status == 1 ? '体验' : item.status == 2 ? '未体验' : '未到店' }}</nz-tag>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  <nz-tag nzColor="#ccc" *ngIf="followStageId != 4">未预约到店</nz-tag>
+                </ng-template>
+              </div>
+              <div *ngIf="item.reserveDate">
+                <label>预约时间：</label><span>{{ item.reserveDate + ' ' + item.reserveHour + ':' + item.reserveMinute }}</span>
+              </div>
+            </div>
+            <div class="card-main" [innerHTML]="item.contentLabel"></div>
+          </nz-card>
+        </nz-timeline-item>
+      </nz-timeline>
+    </div>
+  </nz-tab>
+</nz-tabset>
+
+
+<nz-drawer [nzClosable]="false" [nzWidth]="700" [nzVisible]="showUpdateRecord" nzTitle="修改跟进记录" (nzOnClose)="close()">
+  <form nz-form [formGroup]="followRecordGroup">
+    <nz-form-item>
+      <nz-form-control>
+        <textarea nz-input formControlName="content" [nzAutosize]="{ minRows: 3, maxRows: 6 }" placeholder="新建跟进记录......(必填, 限200字)"></textarea>
+        <nz-form-explain *ngIf="followRecordGroup.get('content').dirty && followRecordGroup.get('content').hasError('required')">请输入200字以下跟进记录</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="tags-content" *ngIf="labelList.length">
+      <nz-tag nzColor="blue" (click)="followRecordGroup.patchValue({content: (followRecordGroup.get('content').value || '') + '#'+ item.name +'#'})"
+        *ngFor="let item of labelList">#{{ item.name }}#</nz-tag>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="8" *ngIf="followStageId != 4">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-select formControlName="memberStatusId" nzPlaceHolder="客户状态">
+              <nz-option *ngFor="let item of memberStatusList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="followRecordGroup.get('memberStatusId').dirty && followRecordGroup.get('memberStatusId').hasError('required')">请选择跟进状态</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-select formControlName="followType" nzPlaceHolder="跟进方式">
+              <nz-option *ngFor="let item of followTypeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="followRecordGroup.get('followType').dirty && followRecordGroup.get('followType').hasError('required')">请选择跟进方式</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-select formControlName="staffId" nzPlaceHolder="跟进老师">
+              <nz-option *ngFor="let item of teacherList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="followRecordGroup.get('staffId').dirty && followRecordGroup.get('staffId').hasError('required')">请选择跟进方式</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-date-picker formControlName="nextFollowTime" nzFormat="yyyy-MM-dd" nzPlaceHolder="选择下次跟进时间"
+              [nzDisabledDate]="_disabledDate"></nz-date-picker>
+            <nz-form-explain *ngIf="followRecordGroup.get('nextFollowTime').dirty && followRecordGroup.get('nextFollowTime').hasError('required')">请选择下次跟进时间</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8" *ngIf="followStageId != 4">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-switch formControlName="status" nzCheckedChildren="已预约到店" nzUnCheckedChildren="未预约到店"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8" *ngIf="followRecordGroup.get('status').value">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-select formControlName="swimTeacherId" nzPlaceHolder="预约老师">
+              <nz-option *ngFor="let item of swimTeacherList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="followRecordGroup.get('swimTeacherId').dirty && followRecordGroup.get('swimTeacherId').hasError('required')">请选择预约老师</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="16" *ngIf="followRecordGroup.get('status').value">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzCompact>
+              <nz-date-picker style="width: 60%" formControlName="reserveDate" nzPlaceHolder="请选择预约日期" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+              <nz-time-picker style="width: 40%" formControlName="reserveHour" nzFormat="HH:mm" [nzMinuteStep]="15" [nzDisabledHours]="_disabledHours"
+                [ngClass]="{'has-error': followRecordGroup.get('reserveHour').dirty && followRecordGroup.get('reserveHour').hasError('required')}"></nz-time-picker>
+            </nz-input-group>
+            <nz-form-explain style="color: #f5222d;" *ngIf="(followRecordGroup.get('reserveDate').dirty && followRecordGroup.get('reserveDate').hasError('required')) || (followRecordGroup.get('reserveHour').dirty && followRecordGroup.get('reserveHour').hasError('required'))">请选择预约日期和时间！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24"><button (click)="saveFollowRecord()" nz-button nzType="primary" [nzLoading]="saveFollowRecordLoading">发布</button></div>
+    </div>
+  </form>
+</nz-drawer>

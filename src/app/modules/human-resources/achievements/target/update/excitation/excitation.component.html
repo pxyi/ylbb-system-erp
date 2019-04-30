@@ -1,0 +1,483 @@
+<form nz-form [formGroup]="formGroup" [style.width]="'985px'">
+  <h2>整店提成</h2>
+
+  <div nz-row nzGutter="8">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">适用对象</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input value="店长" disabled>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="18">
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="6">店长提成方式</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <nz-radio-group formControlName="settleType1">
+            <label nz-radio [nzValue]="2">阶梯（超出部分使用下个阶梯提成比率）</label>
+            <label nz-radio [nzValue]="1">通提</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="8" formArrayName="commissionConfigList">
+    <div nz-col [nzSpan]="4">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">店长整店收入/月（元）</nz-form-label>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="5" *ngFor="let group of commissionConfigList.controls; let i = index"  [formGroup]="group">
+      <nz-form-item>
+        <nz-form-control [nzSpan]="24" [ngClass]="{'has-error': group.get('minAmount').errors || group.get('maxAmount').errors}">
+          <nz-input-group class="between-content">
+            <input type="text" class="between-one" formControlName="minAmount" nz-input placeholder="最小值" [readOnly]="i != 0">
+            <input type="text" class="between-two" disabled nz-input placeholder="-">
+            <input type="text" class="between-three" formControlName="maxAmount" nz-input placeholder="最大值">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="8">
+    <div nz-col [nzSpan]="4">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">店长整店收入提成比例</nz-form-label>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="5" *ngFor="let group of commissionConfigList.controls; let i = index"  [formGroup]="group">
+      <nz-form-item>
+        <nz-form-control [nzSpan]="24">
+          <nz-input-group [nzAddOnAfter]="'%'">
+            <input nz-input placeholder="百分比" formControlName="ratio">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="buttons">
+      <button nz-button (click)="save('commissionConfigList', 'settleType1')">保存整店提成</button>
+    </div>
+  </div>
+
+</form>
+
+<form nz-form [formGroup]="formGroup" [style.width]="'985px'">
+  <h2>办卡提成</h2>
+
+  <ng-container>
+    <div nz-row nzGutter="8">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">适用对象</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input value="店长" disabled>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="18">
+        <nz-form-item>
+          <nz-form-label nzRequired [nzSpan]="6">店长提成方式</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <nz-radio-group formControlName="settleType2">
+              <label nz-radio [nzValue]="2">阶梯（超出部分使用下个阶梯提成比率）</label>
+              <label nz-radio [nzValue]="1">通提</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row nzGutter="8" formArrayName="managerCardList">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">店长办卡收入/月（元）</nz-form-label>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="5" *ngFor="let group of managerCardList.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [nzSpan]="24" [ngClass]="{'has-error': group.get('minAmount').errors || group.get('maxAmount').errors}">
+            <nz-input-group class="between-content">
+              <input type="text" class="between-one" formControlName="minAmount" nz-input placeholder="最小值" [readOnly]="i != 0">
+              <input type="text" class="between-two" disabled nz-input placeholder="-">
+              <input type="text" class="between-three" formControlName="maxAmount" nz-input placeholder="最大值">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row nzGutter="8">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">店长办卡收入提成比例</nz-form-label>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="5" *ngFor="let group of managerCardList.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [nzSpan]="24">
+            <nz-input-group [nzAddOnAfter]="'%'">
+              <input nz-input placeholder="百分比" formControlName="ratio">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="buttons">
+        <button nz-button (click)="save('managerCardList', 'settleType2')">保存办卡提成</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container>
+    <div nz-row nzGutter="8">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">适用对象</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input value="销售" disabled>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="18">
+        <nz-form-item>
+          <nz-form-label nzRequired [nzSpan]="6">销售提成方式</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <nz-radio-group formControlName="settleType3">
+              <label nz-radio [nzValue]="2">阶梯（超出部分使用下个阶梯提成比率）</label>
+              <label nz-radio [nzValue]="1">通提</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row nzGutter="8" formArrayName="saleCardList">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">销售办卡收入/月（元）</nz-form-label>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="5" *ngFor="let group of saleCardList.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [nzSpan]="24" [ngClass]="{'has-error': group.get('minAmount').errors || group.get('maxAmount').errors}">
+            <nz-input-group class="between-content">
+              <input type="text" class="between-one" formControlName="minAmount" nz-input placeholder="最小值" [readOnly]="i != 0">
+              <input type="text" class="between-two" disabled nz-input placeholder="-">
+              <input type="text" class="between-three" formControlName="maxAmount" nz-input placeholder="最大值">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row nzGutter="8">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">销售办卡收入提成比例</nz-form-label>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="5" *ngFor="let group of saleCardList.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [nzSpan]="24">
+            <nz-input-group [nzAddOnAfter]="'%'">
+              <input nz-input placeholder="百分比" formControlName="ratio">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="buttons">
+        <button nz-button (click)="save('saleCardList', 'settleType3')">保存办卡提成</button>
+      </div>
+    </div>
+  </ng-container>
+
+</form>
+
+
+<form nz-form [formGroup]="excitationFormGroup">
+  <h2>工作激励机制</h2>
+  <div nz-row nzGutter="8" [style.width]="'985px'">
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">适用对象</nz-form-label>
+        <nz-form-control [nzSpan]="10">
+          <nz-select nzMode="multiple" formControlName="roleList" nzPlaceHolder="请选择参与任务设置的店长（可多选）" (nzOpenChange)="roleListChange($event)">
+            <nz-option nzLabel="店长" [nzValue]="1"></nz-option>
+            <nz-option nzLabel="主管" [nzValue]="2"></nz-option>
+            <nz-option nzLabel="销售" [nzValue]="3"></nz-option>
+            <nz-option nzLabel="水育师" [nzValue]="4"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="excitationControlError('roleList')">请输入积分与收入换算！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">积分与收入换算</nz-form-label>
+        <nz-form-control [nzSpan]="6">
+          <nz-input-group [nzAddOnAfter]="'积分 = 1元'">
+            <input nz-input placeholder="多少" formControlName="integralConversion" (blur)="integralChange()">
+          </nz-input-group>
+          <nz-form-explain *ngIf="excitationControlError('integralConversion')">请输入积分与收入换算！</nz-form-explain>
+          <nz-form-explain *ngIf="excitationControlError('integralConversion', 'pattern')">请输入正确的积分与收入换算！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  <div nz-row nzGutter="8" [style.width]="'985px'">
+    <div nz-col [nzSpan]="4">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">满意度</nz-form-label>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input value="不好" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input value="一般" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input value="满意" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input value="表扬" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="8" [style.width]="'985px'">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">一星提成系数/次（分）</nz-form-label>
+        </nz-form-item>
+      </div>
+      <ng-container formArrayName="level1">
+        <div nz-col [nzSpan]="5" *ngFor="let group of level1.controls; let i = index"  [formGroup]="group">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="一星提成系数/次（分）" formControlName="score" (blur)="scoreChange(group, 1)">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </ng-container>
+  </div>
+  <div nz-row nzGutter="8" [style.width]="'985px'">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">二星提成系数/次（分）</nz-form-label>
+        </nz-form-item>
+      </div>
+      <ng-container formArrayName="level1">
+        <div nz-col [nzSpan]="5" *ngFor="let group of level1.controls; let i = index"  [formGroup]="group">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="二星提成系数/次（分）" formControlName="score" (blur)="scoreChange(group, 1)">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </ng-container>
+  </div>
+  <div nz-row nzGutter="8" [style.width]="'985px'">
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="23">三星提成系数/次（分）</nz-form-label>
+        </nz-form-item>
+      </div>
+      <ng-container formArrayName="level1">
+        <div nz-col [nzSpan]="5" *ngFor="let group of level1.controls; let i = index"  [formGroup]="group">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="三星提成系数/次（分）" formControlName="score" (blur)="scoreChange(group, 1)">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </ng-container>
+  </div>
+
+  <nz-divider></nz-divider>
+  
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">服务次数/月</nz-form-label>
+      </nz-form-item>
+    </div>
+
+    <ng-container formArrayName="serviceConfig">
+      <div nz-col *ngFor="let group of serviceConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [ngClass]="{'has-error': group.get('minCount').errors || group.get('maxCount').errors}">
+            <nz-input-group class="between-content">
+              <input type="text" class="between-one" nz-input placeholder="最小值" readonly formControlName="minCount">
+              <input type="text" class="between-two" disabled nz-input placeholder="-">
+              <input type="text" class="between-three" nz-input placeholder="最大值" formControlName="maxCount">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+    <div nz-col><a [style.line-height]="'40px'" (click)="saveServiceCongifList('serviceConfig', '/work/updateOrInsertService', 'serviceConfigList')">保存</a></div>
+  </div>
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">服务次数提成系数</nz-form-label>
+      </nz-form-item>
+    </div>
+    <ng-container formArrayName="serviceConfig">
+      <div nz-col *ngFor="let group of serviceConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control>
+            <input nz-input placeholder="服务次数提成系数" formControlName="ratio">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+
+  <nz-divider></nz-divider>
+  
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">有效线索数/月</nz-form-label>
+      </nz-form-item>
+    </div>
+    <ng-container formArrayName="clueConfig">
+      <div nz-col *ngFor="let group of clueConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [ngClass]="{'has-error': group.get('minCount').errors || group.get('maxCount').errors}">
+            <nz-input-group class="between-content">
+              <input type="text" class="between-one" nz-input placeholder="最小值" readonly formControlName="minCount">
+              <input type="text" class="between-two" disabled nz-input placeholder="-">
+              <input type="text" class="between-three" nz-input placeholder="最大值" formControlName="maxCount">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+    <div nz-col><a [style.line-height]="'40px'" (click)="saveServiceCongifList('clueConfig', '/work/updateOrInsertClue', 'clueConfigList')">保存</a></div>
+  </div>
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">有效线索数提成/条（分）</nz-form-label>
+      </nz-form-item>
+    </div>
+    <ng-container formArrayName="clueConfig">
+      <div nz-col *ngFor="let group of clueConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control>
+            <input nz-input placeholder="有效线索数提成系数" formControlName="ratio">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+
+  <nz-divider></nz-divider>
+  
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">体验卡售卖/月</nz-form-label>
+      </nz-form-item>
+    </div>
+    <ng-container formArrayName="practiceConfig">
+      <div nz-col *ngFor="let group of practiceConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control [ngClass]="{'has-error': group.get('minCount').errors || group.get('maxCount').errors}">
+            <nz-input-group class="between-content">
+              <input type="text" class="between-one" nz-input placeholder="最小值" readonly formControlName="minCount">
+              <input type="text" class="between-two" disabled nz-input placeholder="-">
+              <input type="text" class="between-three" nz-input placeholder="最大值" formControlName="maxCount">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+    <div nz-col><a [style.line-height]="'40px'" (click)="saveServiceCongifList('practiceConfig', '/work/updateOrInsertPractise', 'experienceCardConfigList')">保存</a></div>
+  </div>
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">体验卡售卖提成/条（分）</nz-form-label>
+      </nz-form-item>
+    </div>
+    <ng-container formArrayName="practiceConfig">
+      <div nz-col *ngFor="let group of practiceConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control>
+            <input nz-input placeholder="体验卡售卖提成系数" formControlName="ratio">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+
+  <nz-divider></nz-divider>
+  
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item [style.opacity]="'0'" [style.margin-bottom]="0">
+        <nz-form-label [nzSpan]="23"></nz-form-label>
+      </nz-form-item>
+    </div>
+    <div nz-col>
+      <nz-form-item [style.margin-bottom]="0">
+        <nz-form-control>营业前任务</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col>
+      <nz-form-item [style.margin-bottom]="0">
+        <nz-form-control>服务记录</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col>
+      <nz-form-item [style.margin-bottom]="0">
+        <nz-form-control>闭店任务</nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8" class="child">
+    <div nz-col [style.width]="'156px'">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="23">其它工作提成/次（分）</nz-form-label>
+      </nz-form-item>
+    </div>
+
+    <ng-container formArrayName="otherConfig">
+      <div nz-col *ngFor="let group of otherConfig.controls; let i = index" [formGroup]="group">
+        <nz-form-item>
+          <nz-form-control>
+            <input nz-input placeholder="其它工作提成" formControlName="score" (blur)="scoreChange(group, 2)">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+</form>
+
+<div class="buttons">
+  <button nz-button (click)="next.emit(2)">下一步</button>
+</div>

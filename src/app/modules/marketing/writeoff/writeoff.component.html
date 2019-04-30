@@ -1,0 +1,43 @@
+<div class="container profit" nz-row>
+  <div nz-col [nzSpan]="12" class="search">
+    <nz-input-group style="width: 80%;" nzSearch [nzSuffix]="suffixButton">
+      <input type="text" nz-input [(ngModel)]="couponCode" placeholder="请输入劵号" (keyup.enter)="search()">
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button nz-button nzType="primary" [nzLoading]="searchLoading" (click)="search()" nzSearch>验劵</button>
+    </ng-template>
+  </div>
+  <div nz-col [nzSpan]="4">
+    <span>累计收益(元)</span>
+    <p>{{ amountSum.totalAmount }}</p>
+  </div>
+  <div nz-col [nzSpan]="4">
+    <span>可提取金额(元)</span>
+    <p>{{ amountSum.totalBalance }}</p>
+  </div>
+  <div nz-col [nzSpan]="4">
+    <button nz-button nzType="primary" nzGhost (click)="putForward()">提现申请</button>
+  </div>
+</div>
+
+<div class="container">
+  <ea-list-page-simp 
+    #listPage
+    url="/activity/getVerificationList" 
+    [queryNode]="queryNode"
+    [queryTitle]="'核销列表'"
+    [tableThead]="[ '姓名', '生日', '手机号', '活动名称', '类型', '支付金额', '核销时间' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [allowSpace]="false">
+
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.name }}</td>
+      <td>{{ data.birthday }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.activityHeadline }}</td>
+      <td>{{ data.cashingType }}</td>
+      <td>{{ data.payAmount | currency: '￥' }}</td>
+      <td>{{ data.cashingTime }}</td>
+    </ng-template>
+  </ea-list-page-simp>
+</div>

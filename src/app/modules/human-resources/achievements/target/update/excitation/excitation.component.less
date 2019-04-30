@@ -1,0 +1,31 @@
+.between-one {
+  width: calc(50% - 15px);
+}
+.between-two {
+  width: 30px;
+  border-left: 0px; 
+  pointer-events: none; 
+  background-color: rgb(255, 255, 255);
+}
+.between-two::placeholder {
+  color: #333;
+}
+.between-three {
+  width: calc(50% - 15px);
+  border-left: 0px;
+}
+.buttons {
+  margin-bottom: 24px;
+}
+.child{
+  white-space: nowrap;
+  overflow-x: auto;
+  & > div {
+    width: 190px;
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+input[readonly] {
+  background: #f5f5f5;
+}

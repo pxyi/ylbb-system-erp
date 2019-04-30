@@ -1,0 +1,214 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <!-- 充值卡 -->
+  <ng-container *ngIf="formGroup.get('type').value == 1">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>充值金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="amount">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="changeAmount" nzRequired>变更充值金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="changeAmount" id="changeAmount" placeholder="例如：增加5，减少-5">
+            <nz-form-explain *ngIf="formGroup.get('changeAmount').dirty">
+              <ng-container *ngIf="formGroup.get('changeAmount').hasError('required')">请输入变更充值金额！</ng-container>
+              <ng-container *ngIf="formGroup.get('changeAmount').hasError('pattern')">请输入正确的变更充值金额！</ng-container>
+              <ng-container *ngIf="formGroup.get('changeAmount').hasError('minValue')">超出最小值限制（变更后充值为负数）！</ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>现有赠送金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="freeAmount">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="changeFreeAmount" nzRequired>变更赠送金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="changeFreeAmount" id="changeFreeAmount" placeholder="例如：增加5，减少-5">
+            <nz-form-explain *ngIf="formGroup.get('changeFreeAmount').dirty">
+              <ng-container *ngIf="formGroup.get('changeFreeAmount').hasError('required')">请输入变更赠送金额！</ng-container>
+              <ng-container *ngIf="formGroup.get('changeFreeAmount').hasError('pattern')">请输入正确的变更赠送金额！</ng-container>
+              <ng-container *ngIf="formGroup.get('changeFreeAmount').hasError('minValue')">超出最小值限制（变更后赠送金额为负数）！</ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+  <!-- 计次卡 -->
+  <ng-container *ngIf="formGroup.get('type').value == 0">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>现有正价卡次</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="times">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="changeTimes">变更正价卡次</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="changeTimes" id="changeTimes" placeholder="例如：增加5，减少-5">
+            <nz-form-explain *ngIf="formGroup.get('changeTimes').dirty">
+              <ng-container *ngIf="formGroup.get('changeTimes').hasError('pattern')">请输入正确的变更正价卡次！</ng-container>
+              <ng-container *ngIf="formGroup.get('changeTimes').hasError('minValue')">超出最小值限制（变更后正价卡次为负数）！</ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>现有赠送卡次</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="freeTimes">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="changeFreeTimes">变更赠送卡次</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="changeFreeTimes" id="changeFreeTimes" placeholder="例如：增加5，减少-5">
+            <nz-form-explain *ngIf="formGroup.get('changeFreeTimes').dirty">
+              <ng-container *ngIf="formGroup.get('changeFreeTimes').hasError('pattern')">请输入正确的变更赠送卡次！</ng-container>
+              <ng-container *ngIf="formGroup.get('changeFreeTimes').hasError('minValue')">超出最小值限制（变更后赠送卡次为负数）！</ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>收入金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="changeBalance" [nzRequired]="formGroup.get('type').value == 1">变更收入金额</nz-form-label>
+        <nz-form-control [ngClass]="{'has-error': formGroup.get('changeBalance').errors && formGroup.get('changeBalance').dirty}">
+          <input nz-input formControlName="changeBalance" id="changeBalance" placeholder="例如：增加5，减少-5">
+          <nz-form-explain *ngIf="formGroup.get('changeBalance').dirty">
+            <ng-container *ngIf="formGroup.get('changeBalance').hasError('required') && formGroup.get('type').value == 1">请输入变更收入金额！</ng-container>
+            <ng-container *ngIf="formGroup.get('changeBalance').hasError('pattern')">请输入正确的变更收入金额！</ng-container>
+            <ng-container *ngIf="formGroup.get('changeBalance').hasError('minValue')">超出最小值限制（变更后收入金额为负数）！</ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>失效日期</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="expireDate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>变更失效日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker formControlName="changeExpireDate" nzPlaceHolder="请选择变更失效日期" nzFormat="yyyy-MM-dd"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>原卡类型</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardTypeName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>变更卡类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="changeCardType" nzPlaceHolder="请选择变更卡类型">
+            <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired >销售</nz-form-label>
+        <nz-form-control>          
+          <nz-select formControlName="employeeId" [nzShowSearch]="true" nzPlaceHolder="请选择销售">
+            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择销售！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>停卡限制</nz-form-label>
+        <nz-form-control>
+          <nz-switch formControlName="turnCard" nzCheckedChildren="限制停卡" nzUnCheckedChildren="不限制停卡"></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

@@ -1,0 +1,95 @@
+.head {
+  height: 52px;
+  margin-bottom: 20px;
+  position: relative;
+  .head-img {
+    float: left;
+    width: 52px;
+    img {
+      width: 100%;
+    }
+  }
+  h1 {
+    margin-bottom: 7px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 64px;
+  }
+  p {
+    font-size: 14px;
+    padding-left: 64px;
+    b {
+      font-weight: 400;
+    }
+    span {
+      color: #999;
+      margin-right: 20px;
+    }
+  }
+  .head-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    button:last-child {
+      margin-left: 8px;
+    }
+  }
+}
+.details {
+    & > div > div {
+        margin-bottom: 6px;
+    }
+    div {
+        font-size: 13px;
+        label {
+            color: #999;
+            font-size: 13px;
+        }
+    }
+}
+.record-list {
+  padding: 0 20px;
+  .not-found {
+    padding: 60px 0 30px;
+    color: #ccc;
+    font-size: 12px;
+    text-align: center;
+    i {
+      font-size: 48px;
+    }
+  }
+}
+.tags-content {
+  margin-bottom: 8px;
+  nz-tag {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+}
+.record-card-title {
+    margin-bottom: 20px;
+    overflow: hidden;
+    & > div {
+      width: 50%;
+      float: left;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+}
+.record-status {
+    list-style: none;
+    margin-left: -40px;
+    margin-bottom: -1px;
+}
+.card-main {
+    clear: both;
+}
+:host ::ng-deep nz-input-group {
+  nz-date-picker {
+    width: 60% !important;
+  }
+  nz-time-picker {
+    width: 40%;
+  }
+}

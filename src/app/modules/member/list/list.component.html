@@ -1,0 +1,53 @@
+<div class="container">
+  <ea-list-page
+    #listPage
+    url="/memberCard/list"
+    [queryNode]="queryNode"
+    [paramsInit]="paramsInit"
+    [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '收入金额', '剩余金额(充值/赠送)', '生效日期', '失效日期', '有效期', '谈卡人', '状态', '业务类型', '停卡截止日期', '备注']"
+    [checked]="true"
+    [isRadio]="true"
+    [(checkedItems)]="checkedItems"
+    [allowSpace]="false"
+    [EaBtns]="EaBtns"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    (requestDataChange)="dataChange($event)">
+  </ea-list-page>
+  <ng-template #EaBtns>
+    <div class="ea-button-group" style="margin-bottom: 16px;">
+      <button nz-button [nzType]="'primary'" (click)="operation('appoint')">预约</button>
+      <button nz-button [nzType]="'primary'" (click)="operation('consumption')">消费</button>
+      <button nz-button (click)="operation('change')">卡项变更</button>
+      <button nz-button (click)="operation('continued')">续卡</button>
+      <nz-dropdown>
+        <button nz-button nz-dropdown>更多操作<i nz-icon nzType="down"></i></button>
+        <ul nz-menu>
+          <li nz-menu-item><a (click)="operation('stop')">停卡</a></li>
+          <li nz-menu-item><a (click)="operation('open')">重开卡</a></li>
+          <li nz-menu-item><a (click)="operation('supplement')">补卡</a></li>
+          <li nz-menu-item><a (click)="operation('number')">换卡号</a></li>
+        </ul>
+      </nz-dropdown>
+    </div>
+  </ng-template>
+
+  <ng-template let-data #EaTableTbodyTr>
+    <td>{{ data.cardCode }}</td>
+    <td>{{ data.ctName }}</td>
+    <td>{{ data.name }}</td>
+    <td>{{ data.monthAge }}</td>
+    <td>{{ data.babyType }}</td>
+    <td>{{ data.allTimes }}（{{ data.times }}/{{ data.freeTimes }}）</td>
+    <td>{{ data.remainTimes + data.remainFreeTimes }}（{{ data.remainTimes }}/{{ data.remainFreeTimes }}）</td>
+    <td>{{ data.balance | currency: '￥' }}</td>
+    <td>{{ data.sAmountInt }}（{{ data.remainingAmount }}/{{ data.remainingFreeAmount }}）</td>
+    <td>{{ data.effectDate }}</td>
+    <td>{{ data.expireDate }}</td>
+    <td><nz-tag [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
+    <td>{{ data.employeeName }}</td>
+    <td><nz-tag [nzColor]="data.runningState == '停卡' ? '#f50' : '#2db7f5'">{{ data.runningState == '停卡' ? '停卡' : '正常' }}</nz-tag></td>
+    <td>{{ data.ctcName }}</td>
+    <td>{{ data.stopEndDate || '--' }}</td>    
+    <td><span [nzTitle]="data.comment" nz-tooltip *ngIf="data.comment">{{ data.comment.length > 20 ? data.comment.substr(0, 20) + '...' : data.comment }}</span></td>
+  </ng-template>
+</div>

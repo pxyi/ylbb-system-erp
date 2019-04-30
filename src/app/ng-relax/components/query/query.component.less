@@ -1,0 +1,79 @@
+.ant-form-inline nz-form-item {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.hp-query-btns {
+  float: none;
+  width: 100%;
+  padding-left: 76px !important;
+  overflow: hidden;
+  nz-form-item {
+    margin-bottom: 0 !important;
+  }
+  nz-form-control {
+    padding: 0 !important;
+  }
+} 
+form {
+  padding: 14px;
+  background: rgb(248,248,248);
+  margin-bottom: 16px;
+}
+.query-cell {
+  width: 280px !important;
+  &.multiple2 {
+    width: 560px !important;
+  }
+}
+
+.between-one {
+  width: calc(50% - 15px);
+}
+.between-two {
+  width: 30px;
+  border-left: 0px; 
+  pointer-events: none; 
+  background-color: rgb(255, 255, 255);
+  border-top: 0;
+  border-bottom: 0;
+}
+.between-two::placeholder {
+  color: #333;
+}
+.between-three {
+  width: calc(50% - 15px);
+  border-left: 0px;
+}
+
+:host ::ng-deep { 
+  .ant-form-inline nz-form-item {
+    margin-bottom: 12px !important;
+  }
+  nz-input-group {
+    &:hover .anticon {
+      opacity: 1;
+      visibility: visible;
+    }
+    .anticon {
+      color: rgba(0, 0, 0, 0.25);
+      font-size: 12px;
+      opacity: 0;
+      visibility: hidden;
+      cursor: pointer;
+      transition: all .3s;
+      &:hover {
+        color: rgba(0, 0, 0, 0.43);
+      }
+    }
+  }
+  nz-radio-group > label {
+    padding: 0;
+    text-align: center;
+  }
+  .ant-calendar-picker {
+    width: 100%;
+    .ant-calendar-range-picker-input {
+      text-align: left;
+    }
+  }
+}

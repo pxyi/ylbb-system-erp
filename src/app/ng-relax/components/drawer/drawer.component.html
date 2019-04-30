@@ -1,0 +1,76 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <ng-container *ngFor="let control of _formControls">
+      <div nz-col [nzSpan]="control.colspan || 12">
+        <nz-form-item>
+          <nz-form-label [nzRequired]="control.required" [nzFor]="control.key">{{ control.label }}</nz-form-label>
+          <nz-form-control>
+            <ng-container [ngSwitch]="control.type">
+
+              <ng-container *ngSwitchCase="'input'">
+                <input nz-input [formControlName]="control.key" [placeholder]="control.placeholder || '请输入' + control.label" [id]="control.key">
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'datepicker'">
+                <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder || '请选择' + control.label"></nz-date-picker>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'radio'">
+                <nz-radio-group [formControlName]="control.key">
+                  <label nz-radio *ngFor="let option of control.options" 
+                    [nzValue]="option[control.optionKey?.value]">{{ option[control.optionKey?.label] }}</label>
+                </nz-radio-group>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'select'">
+                <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder || '请选择' + control.label">
+                  <nz-option *ngFor="let option of control.options" 
+                    [nzLabel]="option[control.optionKey?.label]" 
+                    [nzValue]="option[control.optionKey?.value]"
+                    [nzDisabled]="option?.disabled"></nz-option>
+                </nz-select>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'textarea'">
+                <textarea nz-input [formControlName]="control.key" [placeholder]="control.placeholder || '请输入' + control.label" [id]="control.key" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'rangepicker'">
+                <nz-range-picker [nzRanges]="control.ranges" [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd"
+                  [nzPlaceHolder]="[control.placeholder ? control.placeholder[0] : '开始日期', control.placeholder ? control.placeholder[1] :'结束日期']"></nz-range-picker>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'monthpicker'">
+                <nz-month-picker [formControlName]="control.key" nzFormat="yyyy-MM" [nzPlaceHolder]="control.placeholder || '请选择' + control.label"></nz-month-picker>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'checkbox'">
+                <!-- <nz-checkbox-wrapper (nzOnChange)="log($event)">
+                  <label nz-checkbox *ngFor="let option of control.options" 
+                    [nzValue]="option[control.optionKey?.value]">{{ option[control.optionKey?.label] }}</label>
+                </nz-checkbox-wrapper> -->
+              </ng-container>
+
+              <ng-container *ngSwitchDefault><span style="color: #f00">请检查表单类型</span></ng-container>
+
+            </ng-container>
+
+            <ng-container *ngIf="formGroup.get(control.key).dirty">
+              <nz-form-explain *ngIf="control.required && formGroup.get(control.key).hasError('required')">
+                {{ control.placeholder || '请'+ (control.type == 'input' || control.type == 'textarea' ? '输入' : '选择') + control.label }}！
+              </nz-form-explain>
+              <nz-form-explain *ngIf="control.pattern && formGroup.get(control.key).hasError('pattern')">
+                {{ control.placeholder || '请'+ (control.type == 'input' || control.type == 'textarea' ? '输入' : '选择') + '正确的' + control.label }}！
+              </nz-form-explain>
+            </ng-container>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="drawerClose()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="drawerSave()">保存</button>
+</div>

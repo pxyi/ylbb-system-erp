@@ -1,0 +1,9 @@
+<div class="ea-tip" 
+  [ngClass]="[type, isShow ? '' : 'hide']"
+  [style.padding-left]="showIcon ? '38px' : '16px'">
+  <i nz-icon [nzType]="type === 'success' ? 'check-circle' :  type === 'info' || type === 'success' ? 'exclamation-circle' : 'close-circle'" class="type-icon" 
+    *ngIf="showIcon"></i>
+  <ng-content></ng-content>
+
+  <a href="javascript: void(0)" *ngIf="showClose" class="close-button" (click)="_close()"><i nz-icon nzType="close"></i></a>
+</div>

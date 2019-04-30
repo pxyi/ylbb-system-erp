@@ -1,0 +1,95 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <nz-form-item>
+      <nz-form-label>商品名称</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入商品名称" formControlName="name">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>进货价</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入进货价" formControlName="stockPrice">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>销售价</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入销售价" formControlName="price">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>当前库存</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入当前库存" formControlName="dqstock">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>累计自用</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入累计自用" formControlName="selfUse">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>商品说明</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入商品说明" formControlName="introduction" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="8">
+    <nz-form-item>
+      <nz-form-label nzRequired>领用数量</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入领用数量" formControlName="stock">
+        <nz-form-explain *ngIf="formGroup.get('stock').dirty && formGroup.get('stock').hasError('required')">请输入领用数量！</nz-form-explain>
+        <nz-form-explain *ngIf="formGroup.get('stock').dirty && formGroup.get('stock').hasError('pattern')">请输入正确的领用数量！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>领用人</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="employeeId" nzPlaceHolder="请选择领用人">
+            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择领用人！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>领用人密码</nz-form-label>
+        <nz-form-control>
+          <input nz-input type="password" placeholder="请输入领用人密码（即老师APP登录密码）" formControlName="password">
+          <nz-form-explain *ngIf="formGroup.get('password').dirty && formGroup.get('password').hasError('required')">请输入领用人密码！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

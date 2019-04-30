@@ -1,0 +1,54 @@
+.detail-head {
+  position: relative;
+  nz-avatar {
+    width: 80px;
+    height: 80px;
+    float: left;
+  }
+  h2 {
+    font-size: 18px;
+    padding-left: 100px;
+    margin-bottom: 7px;
+  }
+  p {
+    padding-left: 100px;
+    margin-bottom: 0;
+    &:last-of-type {
+      margin-top: 4px;
+    }
+  }
+  .detail-btns {
+    position: absolute;
+    top: 0;
+    right: 0;
+    button {
+      margin-left: 8px;
+    }
+  }
+}
+
+.box {
+  margin-top: 18px;
+}
+
+:host ::ng-deep {
+  nz-date-picker {
+    width: 60% !important;
+  }
+  nz-time-picker {
+    width: 40%;
+  }
+  .ant-calendar-picker {
+    width: 100%;
+  }
+  .ant-avatar-lg > * {
+    line-height: 80px;
+    font-size: 32px;
+  }
+}
+.footer {
+  text-align: right;
+  button {
+    margin-left: 8px;
+  }
+}

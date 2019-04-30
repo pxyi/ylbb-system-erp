@@ -1,0 +1,117 @@
+<nz-table 
+  #basicTable 
+  nzBordered 
+  [nzTitle]="detailTitle"
+  [nzShowPagination]="false" 
+  [nzPageSize]="999" 
+  [nzData]="dataSet" 
+  [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th rowspan="2">时间</th>
+      <th colspan="2">星期一</th>
+      <th colspan="2">星期二</th>
+      <th colspan="2">星期三</th>
+      <th colspan="2">星期四</th>
+      <th colspan="2">星期五</th>
+      <th colspan="2">星期六</th>
+      <th colspan="2">星期日</th>
+      <th rowspan="2">操作</th>
+    </tr>
+    <tr>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of dataSet">
+      <td>
+        <span *ngIf="!data.edit">{{ data.key }}</span>
+        <nz-time-picker *ngIf="data.edit" 
+          [nzDisabledHours]="disabledHours" [nzMinuteStep]="15" nzFormat="HH:mm" nzPlaceHolder="请选择时间段" nzSize="small"
+          [(ngModel)]="data.time" (ngModelChange)="reserveChange($event ,data)"></nz-time-picker>
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week2 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week2" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week2 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week2" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week3 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week3" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week3 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week3" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week4 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week4" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week4 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week4" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week5 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week5" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week5 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week5" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week6 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week6" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week6 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week6" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week7 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week7" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week7 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week7" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.baby.week1 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.baby.week1" nzSize="small">
+      </td>
+      <td>
+        <span *ngIf="!data.edit">{{ data.value.child.week1 }}</span>
+        <input *ngIf="data.edit" nz-input type="text" [(ngModel)]="data.value.child.week1" nzSize="small">
+      </td>
+      <td>
+        <a (click)="update(data)">
+          <i nz-icon nzType="loading" *ngIf="data.loading"></i>
+          <ng-container *ngIf="!data.loading">
+            {{ data.edit ? '保存' : '编辑' }}
+          </ng-container>
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定删除此时段吗?" (nzOnConfirm)="delete(data)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<ng-template #detailTitle>
+  <button nz-button nzType="primary" (click)="add()">添加时间段</button>
+</ng-template>

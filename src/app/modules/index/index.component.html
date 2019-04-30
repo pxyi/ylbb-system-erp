@@ -1,0 +1,150 @@
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="7">
+    <nz-card [nzBordered]="false" nzTitle="今日任务" [nzBodyStyle]="{padding: '12px'}">
+      <div class="user-cell">
+        <div (click)="routerLink('/home/visit/clue')">
+          <p><i nz-icon type="customer-service" theme="outline"></i>需回访/已回访线索</p>
+          <h4>{{ todayTask?.todayTask }}<span style="font-size: 20px; font-weight: 400; color: rgba(0, 0, 0, 0.45)"> / {{
+              todayTask?.doneTodayTask }}</span></h4>
+        </div>
+        <div (click)="routerLink('/home/visit/nocard')">
+          <p><i nz-icon type="dollar" theme="outline"></i>需回访/已回访体未办</p>
+          <h4>{{ todayTask?.experienceTodayTask }}<span style="font-size: 20px; font-weight: 400; color: rgba(0, 0, 0, 0.45)">
+              / {{ todayTask?.experienceDoneTodayTask }}</span></h4>
+        </div>
+        <div (click)="routerLink('/home/visit/member')">
+          <p><i nz-icon type="credit-card" theme="outline"></i>需回访/已回访30天未到店会员</p>
+          <h4>{{ todayTask?.vipTodayTask }}<span style="font-size: 20px; font-weight: 400; color: rgba(0, 0, 0, 0.45)"> / {{
+              todayTask?.vipDoneTodayTask }}</span></h4>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-card [nzBordered]="false" nzTitle="生日提醒" [nzBodyStyle]="{padding: '12px', height: '324px'}" [nzExtra]="extraTemplate" [nzLoading]="birthdayLoading">
+      <ng-template #extraTemplate>
+        <div style="position: absolute;top: 6px; right: 0;">
+          <nz-tabset nzSize="small" (nzSelectChange)="birthdayChange($event)">
+            <nz-tab nzTitle="今日"></nz-tab>
+            <nz-tab nzTitle="明日"></nz-tab>
+            <nz-tab nzTitle="未来一周"></nz-tab>
+          </nz-tabset>
+        </div>
+      </ng-template>
+      <nz-table #basicTable class="birthday-table" [nzShowPagination]="false" [nzData]="birthdayList" nzSize="small" [nzScroll]="{ y: '220px' }">
+        <thead>
+          <tr>
+            <th nzWidth="60px">照片</th>
+            <th nzWidth="80px">姓名</th>
+            <th nzWidth="40px">性别</th>
+            <th nzWidth="40px">月龄</th>
+            <th nzWidth="120px">电话</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td><nz-avatar nzIcon="anticon anticon-user" nzShape="square" [nzSrc]="data.albumUrl"></nz-avatar></td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.sex }}</td>
+            <td>{{ data.monthAge }}</td>
+            <td>{{ data.mobilePhone }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+
+  <div nz-col [nzSpan]="9">
+    <nz-card [nzBordered]="false" nzTitle="精彩活动" [nzBodyStyle]="{padding: '12px'}" [nzLoading]="activityLoading">
+      <nz-carousel nzEffect="scroll">
+        <div nz-carousel-content *ngFor="let item of activityList">
+          <a [href]="item.url" target="_blank"><img class="activityImg" [src]="item.img" [alt]="item.title"></a>
+        </div>
+      </nz-carousel>
+    </nz-card>
+  </div>
+</div>
+
+
+<nz-card [nzBordered]="false" nzTitle="预约" [nzExtra]="extraTmpt" style="margin-top: 24px" [nzLoading]="appointmentLoading">
+  <ng-template #extraTmpt>
+    <div style="position: absolute;top: 8px; right: 0;">
+      <nz-tabset nzSize="small" [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="appointmentChange($event)">
+        <nz-tab [nzTitle]="week.week" *ngFor="let week of weekList"></nz-tab>
+      </nz-tabset>
+    </div>
+  </ng-template>
+
+  <nz-alert nzType="warning" [nzMessage]="message" *ngIf="reserveCount">
+    <ng-template #message>
+      <div class="info-message">
+        预约数量：{{ reserveCount.vipCount + reserveCount.experienceCount + reserveCount.crossedCount }}
+        <span class="text-small">（本店会员{{ reserveCount.vipCount }} + 体验{{ reserveCount.experienceCount }}）</span>
+        <nz-divider nzType="vertical"></nz-divider>
+        预约撤销数量：{{ reserveCount.revocationVipCount + reserveCount.revocationCrossedCount }}
+        <span class="text-small">（本店会员{{ reserveCount.revocationVipCount }}）</span>
+        <nz-divider nzType="vertical"></nz-divider>
+        老师服务数量：{{ reserveCount.vipCount + reserveCount.experienceCount + reserveCount.crossedCount }}
+      </div>
+    </ng-template>
+  </nz-alert>
+
+  <nz-table #reserTable [nzData]="reserveDetail.list" [nzShowPagination]="false" class="appointment" [nzBordered]="true">
+    <thead>
+      <tr>
+        <th>时间</th>
+        <th *ngFor="let th of reserveDetail.teachers">{{ th.name }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of reserTable.data">
+        <td>
+          <div class="reserve-time">
+            <p>{{ data.key }}</p>
+            <h2>{{ data.noReserveRecordTeacher }}/{{ data.teacherSum }}</h2>
+            <span>(未预约/老师总数)</span>
+          </div>
+        </td>
+
+        <td *ngFor="let item of reserveDetail.teachers; let idx = index">
+          <div class="appoint-box" [ngClass]="{'rest': !data.value[item.id].status}">
+            <ng-container *ngIf="data.value[item.id].status">
+              <div class="no-reserve" *ngIf="data.value[item.id].reserveRecord.length == 0" (click)="addAppoint(item.id, data.key)">
+                <i nz-icon type="plus-circle" theme="outline"></i>
+              </div>
+              <div class="reserve-detail" *ngIf="data.value[item.id].reserveRecord.length == 1" (click)="previewAppoint(data.value[item.id].reserveRecord[0])">
+                <div class="detail-head">
+                  <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="data.value[item.id].reserveRecord[0].albumUrl"></nz-avatar>
+                  <h4>
+                    {{ data.value[item.id].reserveRecord[0].name }}
+                    <span>{{ data.value[item.id].reserveRecord[0].babyType }}</span>
+                    <i [ngClass]="[ data.value[item.id].reserveRecord[0].haveCard == 0 ? 'ty' : data.value[item.id].reserveRecord[0].haveCard == 1 && data.value[item.id].reserveRecord[0].isCrossed == 1 ? 'tk' : 'hy' ]">
+                      {{ data.value[item.id].reserveRecord[0].haveCard == 0 ? '体' : '会' }}
+                    </i>
+                  </h4>
+                  <p>{{ data.value[item.id].reserveRecord[0].mobilePhone }}</p>
+                </div>
+                <div class="detail-remark">{{ data.value[item.id].reserveRecord[0].comment || '无预约备注' }}</div>
+              </div>
+              <ng-container *ngIf="data.value[item.id].reserveRecord.length > 1">
+                <div class="reserve-box">
+                  <div class="reserve-list" *ngFor="let reserve of data.value[item.id].reserveRecord" (click)="previewAppoint(reserve)">
+                    <span class="name">{{ reserve.name }}</span>
+                    <span class="type">{{ reserve.babyType }}</span>
+                    <span class="phone">{{ reserve.mobilePhone.substr(0,3) }}****{{ reserve.mobilePhone.substr(7,4) }}</span>
+                    <i [ngClass]="[ reserve.haveCard == 0 ? 'ty' : reserve.haveCard == 1 && reserve.isCrossed == 1 ? 'tk' : 'hy' ]">
+                      {{ reserve.haveCard == 0 ? '体' : '会' }}
+                    </i>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!data.value[item.id].status">
+              休息
+            </ng-container>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

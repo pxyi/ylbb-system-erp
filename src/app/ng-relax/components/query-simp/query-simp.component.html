@@ -1,0 +1,52 @@
+<form nz-form [formGroup]="_queryForm" style="float: right">
+  <div class="eq-query-simp-box">
+    <div class="query-cell" *ngIf="!hideQueryBtn">
+      <button nz-button nzType="primary" (click)="_submit()">查询</button>
+    </div>
+    <div class="query-cell" *ngFor="let control of node">
+
+      <ng-container *ngIf="control.type === 'input'">
+        <nz-input-group [nzSuffix]="suffixIconButton">
+          <input [formControlName]="control.key" nz-input (keyup.enter)="_submit()" [placeholder]="control.placeholder || '请输入' + control.label">
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <i nz-icon type="search" (click)="_submit()"></i>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="control.type === 'select'">
+        <nz-select [formControlName]="control.key" nzShowSearch nzAllowClear [nzPlaceHolder]="control.placeholder || '请选择' + control.label" (ngModelChange)="_submit()">
+          <nz-option *ngFor="let option of control.options" [nzLabel]="option[control.optionKey?.label]" [nzValue]="option[control.optionKey?.value]"
+            [nzDisabled]="option?.disabled"></nz-option>
+        </nz-select>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'radio'">
+        <nz-radio-group [formControlName]="control.key" (ngModelChange)="_submit()">
+          <label nz-radio-button *ngFor="let option of control.options" [nzValue]="option[control.optionKey?.value]">{{ option[control.optionKey?.label] }}</label>
+        </nz-radio-group>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'between'">
+        <nz-input-group class="between-content">
+          <input type="text" class="between-one" (keyup.enter)="_submit()" [formControlName]="control.valueKey[0]" nz-input [placeholder]="control.placeholder ? control.placeholder[0] : '最小值'">
+          <input type="text" class="between-two" disabled nz-input placeholder="-">
+          <input type="text" class="between-three" (keyup.enter)="_submit()" [formControlName]="control.valueKey[1]" nz-input [placeholder]="control.placeholder ? control.placeholder[1] : '最大值'">
+        </nz-input-group>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'datepicker'">
+        <nz-date-picker [formControlName]="control.key" nzFormat="yyyy-MM-dd" [nzPlaceHolder]="control.placeholder || '请选择' + control.label" (ngModelChange)="_submit()"></nz-date-picker>
+      </ng-container>
+      
+      <ng-container *ngIf="control.type === 'rangepicker'">
+        <nz-range-picker [formControlName]="control.key" nzAllowClear nzFormat="yyyy-MM-dd" [nzPlaceHolder]="[control.placeholder ? control.placeholder[0] : '开始日期', control.placeholder ? control.placeholder[1] :'结束日期']"></nz-range-picker>
+      </ng-container>
+
+      <ng-container *ngIf="control.type === 'monthpicker'">
+        <nz-month-picker [formControlName]="control.key" nzFormat="yyyy-MM" [nzPlaceHolder]="control.placeholder || '请选择' + control.label"></nz-month-picker>
+      </ng-container>
+
+    </div>
+  </div>
+</form>

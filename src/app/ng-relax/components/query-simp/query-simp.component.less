@@ -1,0 +1,72 @@
+.eq-query-simp-box {
+  margin-bottom: 24px;
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+  }
+  .query-title {
+    float: left;
+    line-height: 32px;    
+    font-size: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: rgba(0,0,0,.85);
+    font-weight: 500;
+  }
+  .query-cell {
+    float: right;
+    margin-left: 16px;
+  }
+}
+
+.between-one {
+  width: calc(50% - 15px);
+}
+.between-two {
+  width: 30px;
+  border-left: 0px; 
+  pointer-events: none; 
+  background-color: rgb(255, 255, 255);
+  border-top: 0;
+  border-bottom: 0;
+}
+.between-two::placeholder {
+  color: #333;
+}
+.between-three {
+  width: calc(50% - 15px);
+  border-left: 0px;
+}
+
+:host ::ng-deep { 
+  nz-select {
+    min-width: 190px;
+  }
+  form :not(.ant-input-group-wrapper) > .ant-input-group {
+    top: 0;
+  }
+  nz-input-group {
+    .anticon {
+      color: rgba(0, 0, 0, 0.43);
+      cursor: pointer;
+      transition: all .3s;
+      &:hover {
+        color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+  .ant-calendar-picker {
+    width: 100%;
+    .ant-calendar-range-picker-input {
+      text-align: left;
+    }
+  }
+}
+
+:host {
+  display: block;
+  overflow: hidden;
+}

@@ -1,0 +1,19 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/consume/getConsumeSmsRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '卡号','姓名','发送人','发送时间','手机号','发送内容','备注' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.operatorName }}</td>
+      <td>{{ data.sendTime }}</td>
+      <td>{{ data.mobile }}</td>
+      <td><span [nzTitle]="data.content" nz-tooltip *ngIf="data.content">{{ data.content.length > 40 ? data.content.substr(0, 40) + '...' : data.comment }}</span></td>
+      <td><span [nzTitle]="data.comment" nz-tooltip *ngIf="data.comment">{{ data.comment.length > 20 ? data.comment.substr(0, 20) + '...' : data.comment }}</span></td>
+    </ng-template>
+  </ea-list-page>
+</div>

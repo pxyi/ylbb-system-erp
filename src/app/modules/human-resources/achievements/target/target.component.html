@@ -1,0 +1,47 @@
+<div class="not-target" *ngIf="!showInfo">
+  <h2>您还没制定业绩目标，现在开始吧~</h2>
+  <button nz-button nzType="primary" (click)="setGoals(true)">制定业绩目标</button>
+</div>
+
+<div nz-row class="profit container" *ngIf="showInfo">
+  <div nz-col [nzSpan]="8">
+    <span>本月收入目标(元)</span>
+    <p>{{ managementInfo.incomeGogal?.expectTotalIncome }}</p>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <span>本月累计收入(元)</span>
+    <p>{{ managementInfo.actualShopIncome }}</p>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <button nz-button nzType="primary" (click)="setGoals()">调整目标</button>
+  </div>
+</div>
+
+<div class="container" *ngIf="showInfo">
+
+  <ea-quote>完成进度</ea-quote>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="6" class="target">
+      <nz-progress [nzPercent]="managementInfo.actualCallBackClueNum / managementInfo.incomeGogal?.expectClueNum * 100 | math: 'ceil'" [nzWidth]="80" nzType="circle"></nz-progress>
+      <p>新增线索</p>
+      <h2>{{ managementInfo.actualCallBackClueNum }}/{{ managementInfo.incomeGogal?.expectClueNum }}<span>条线索</span></h2>
+    </div>
+    <div nz-col [nzSpan]="6" class="target">
+      <nz-progress [nzPercent]="managementInfo.actualExperienceCard / managementInfo.incomeGogal?.expectExperienceNum * 100 | math: 'ceil'" [nzWidth]="80" nzType="circle"></nz-progress>
+      <p>卖体验卡</p>
+      <h2>{{ managementInfo.actualExperienceCard }}/{{ managementInfo.incomeGogal?.expectExperienceNum }}<span>张体验卡</span></h2>
+    </div>
+    <div nz-col [nzSpan]="6" class="target">
+      <nz-progress [nzPercent]="managementInfo.actualCreateCard / managementInfo.incomeGogal?.expectCardNum * 100 | math: 'ceil'" [nzWidth]="80" nzType="circle"></nz-progress>
+      <p>会员办卡</p>
+      <h2>{{ managementInfo.actualCreateCard }}/{{ managementInfo.incomeGogal?.expectCardNum }}<span>张会员卡</span></h2>
+    </div>
+    <div nz-col [nzSpan]="6" class="target">
+      <nz-progress [nzPercent]="managementInfo.actualConsumeCard / managementInfo.incomeGogal?.expectConsumeCardNum * 100 | math: 'ceil'" [nzWidth]="80" nzType="circle"></nz-progress>
+      <p>会员消卡</p>
+      <h2>{{ managementInfo.actualConsumeCard }}/{{ managementInfo.incomeGogal?.expectConsumeCardNum }}<span>次会员卡</span></h2>
+    </div>
+  </div>
+
+</div>

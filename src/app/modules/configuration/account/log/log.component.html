@@ -1,0 +1,12 @@
+<div class="container">
+  <ea-list-page-simp url="/loginLog/list" [queryNode]="queryNode" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.userCode }}</td>
+      <td>{{ data.userName }}</td>
+      <td>{{ data.ip }}</td>
+      <td>{{ data.ipCity }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.type || '未知' }}</td>
+    </ng-template>
+  </ea-list-page-simp>
+</div>

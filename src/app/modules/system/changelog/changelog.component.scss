@@ -1,0 +1,70 @@
+.container {
+    padding: 24px 0;
+    .content {
+        width: 90%;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    h1 {
+        color: rgba(0,0,0,.85);
+        font-weight: 400;
+        line-height: 40px;
+        font-size: 28px;
+        margin-bottom: 24px;
+        margin-top: 8px;
+        padding-bottom: 24px;
+        border-bottom: solid 1px #e8e8e8;
+    }
+    h4 {
+        color: rgba(0,0,0,.85);
+        font-size: 16px;
+        margin: 1.6em 0 .6em;
+    }
+
+    .markdown {
+        color: rgba(0,0,0,.65);
+        font-size: 14px;
+        line-height: 1.8;
+        li {
+            list-style: circle;
+            margin-left: 20px;
+            padding-left: 4px;
+        }
+    }
+    .changelog {
+        margin-top: 24px;
+
+        .item {
+            h3 {
+                color: rgba(0,0,0,.85);
+                font-size: 28px;
+                line-height: 28px;
+                font-weight: 400;
+                margin-bottom: 18px;
+            }
+            h4 {
+                font-size: 18px;
+                color: rgba(0,0,0,.85);
+                margin: 1.6em 0 .6em;
+                font-weight: 400;
+                clear: both;
+            }
+        }
+    }
+}
+
+
+:host ::ng-deep {
+    nz-tag {
+        margin-top: 3px;
+        margin-left: 24px;
+        height: 22px;
+        vertical-align: top;
+        span {
+            vertical-align: top;
+        }
+    }
+    .ant-timeline-item-content {
+        padding-bottom: 30px;
+    }
+}

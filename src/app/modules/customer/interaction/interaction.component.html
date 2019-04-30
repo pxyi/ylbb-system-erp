@@ -1,0 +1,16 @@
+<div class="container">
+  <ea-list-page #EaListPage url="/userAdvice/list" [queryNode]="queryNode" [allowSpace]="false" [tableThead]="tableThead" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.phone }}</td>
+      <td><span nz-tooltip [nzTitle]="data.content" class="ellipsis">{{ data.content }}</span></td>
+      <td>{{ data.createDate }}</td>
+      <td><nz-tag [nzColor]="data.status == 0 ? '' : '#2db7f5'">{{ data.status == 0 ? '未处理' : '已处理' }}</nz-tag></td>
+      <td>{{ data.dealDate || '--' }}</td>
+      <td>
+        <a (click)="preview({ interactionInfo: data})">{{ data.status == 0 ? '处理' : '查看' }}</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

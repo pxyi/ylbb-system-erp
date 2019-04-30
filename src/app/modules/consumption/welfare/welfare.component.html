@@ -1,0 +1,19 @@
+<div class="container">
+  <ea-query-simp [node]="queryNode" (onSubmit)="table.request($event)"></ea-query-simp>
+  <ea-table #table
+    url="/welfare/getWelfareConsumeList"
+    [allowSpace]="false"
+    [thead]="[ '会员姓名', '订单号', '会员小名', '联系电话', '商品名称', '兑换时间', '已使用卡次', '消耗卡次' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.orderNumber }}</td>
+      <td>{{ data.memberNick }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.productName }}</td>
+      <td>{{ data.reserveTime }}</td>
+      <td>{{ data.cardTime }}</td>
+      <td>{{ data.cardCount }}</td>
+    </ng-template>
+  </ea-table>
+</div>

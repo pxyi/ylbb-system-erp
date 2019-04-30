@@ -1,0 +1,70 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/reserve/list"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [paramsDefault]="paramsInit"
+    [showPage]="false"
+    (requestDataChange)="requestDataLength = $event.length"
+    [tableThead]="[ '照片', '卡号', '卡类型', '婴儿类型', '姓名', '小名', '月龄'  ,'预约时间', '消费时间', '预约状态', '预约泳师', '泳圈', '操作时间', '预约方式'
+    ,'爽约率', '业务类型', '备注', '取消人' , '操作' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>
+        <nz-avatar nzShape="square" [nzOverlayStyle]="{padding: '0 !important'}" nzPlacement="rightBottom" [nzSrc]="data.albumUrl" nz-tooltip [nzTitle]="titleTemplate"></nz-avatar>
+        <ng-template #titleTemplate>
+          <img [src]="data.albumUrl" [ngStyle]="{'max-width': '226px', 'max-height': '400px', 'transform': 'scale(1.1)'}">
+        </ng-template>
+      </td>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.cardTypeName }}</td>
+      <td>{{ data.babyType }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.monthAge }}</td>
+      <td>{{ data.reserveDate }}&nbsp;{{ data.rHour }}:{{ data.rMinute }}</td>
+      <td>{{ data.consumeDate }}</td>
+      <td><nz-tag [nzColor]="data.reserveStatus == 0 ? '#87d068' : data.reserveStatus == 1 ? '#f50' : '#2db7f5'">{{ data.reserveStatus == 0 ? '预约中' : data.reserveStatus == 1 ? '已撤销' : '已完成' }}</nz-tag></td>
+      <td>{{ data.teacherName }}</td>
+      <td>{{ data.ringName }}</td>
+      <td>{{ data.updateTime }}</td>
+      <td>{{ data.type == 0 ? '门店' : data.type == 2 ? '会员APP' : data.type == 5 ? '小程序' : '总部活动' }}</td>
+      <td>{{ data.reserveCancel/data.reserveTotal | percent }}</td>
+      <td>{{ data.cardTypeCategoryName }}</td>
+      <td><span [nzTitle]="data.comment" nz-tooltip *ngIf="data.comment">{{ data.comment.length > 20 ? data.comment.substr(0, 20) + '...' : data.comment }}</span></td>
+      <td>{{ data.cancelName }}</td>
+      <td>
+        <a (click)="preview(data)">查看</a>
+        <nz-divider nzType="vertical" *ngIf="!data.isWelcome"></nz-divider>
+        <a (click)="welcome(data)" *ngIf="!data.isWelcome">欢迎</a>
+        <nz-divider nzType="vertical" *ngIf="data.reserveStatus == 0"></nz-divider>
+        <nz-dropdown *ngIf="data.reserveStatus == 0">
+          <a nz-dropdown>操作<i nz-icon nzType="down"></i>
+          </a>
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <a (click)="reserveCancel(data.id)">撤销</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="consumption({ consumptionInfo: data })">结算</a>
+            </li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+
+    <ng-template #EaBtns>
+      <form nz-form nzLayout="inline" [formGroup]="weilaiForm">
+        <div nz-col style="width: 600px">
+          <nz-radio-group formControlName="weilai" style="width: 100%; display: flex;">
+            <label style="flex: 1; text-align: center" *ngFor="let option of weilaiOptionList" nz-radio-button [nzValue]="option.id">{{
+              option.name }}</label>
+          </nz-radio-group>
+        </div>
+      </form>
+    </ng-template>
+  </ea-list-page>
+  <div style="margin-top: 16px;" *ngIf="requestDataLength">共{{ requestDataLength }}条记录</div>
+</div>

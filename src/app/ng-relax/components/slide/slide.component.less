@@ -1,0 +1,37 @@
+.cm-slide {
+  width: 960px;
+  max-width: 100%;
+  height: 100%;
+  padding: 20px 20px 84px;
+  background: #fff;
+  box-shadow: 0 0 5px #ccc;
+  position: fixed;
+  top: 64px;
+  right: 0;
+  z-index: 999;
+  animation: slideIn .5s;
+  transition: all .3s;
+}
+.close {
+  width: 50px;
+  height: 50px;
+  color: rgba(0, 0, 0, .25);
+  font-size: 24px;
+  line-height: 50px;
+  text-align: center;
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  z-index: 99;
+  outline: none;
+  cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    color: rgba(0, 0, 0, .55);
+  }
+}
+
+@keyframes slideIn {
+  0%  {transform: translate3d(960px, 0, 0)}
+  100%{transform: none;}
+}

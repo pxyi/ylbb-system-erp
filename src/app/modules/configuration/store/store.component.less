@@ -1,0 +1,119 @@
+.wechat-small-program-breadcrum {
+  position: relative;
+  .head-flex {
+    display: flex;
+  }
+  .breadcrum-icon {
+    margin-right: 16px;
+    img {
+      width: 28px;
+    }
+  }
+  .breadcrum-content {
+    flex: auto;
+    h2 {
+      line-height: 28px;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .breadcrum-tip {
+      display: flex;
+      margin-bottom: 20px;
+      h4 {
+        width: 76px;
+        margin: 0;
+        color: rgba(0,0,0,.65);
+      }
+      p {
+        flex: 0 5 auto;
+        margin: 0;
+        color: rgba(0,0,0,.45);
+      }
+    }
+  }
+}
+
+form {
+  padding: 0 24px;
+  background: #fff;
+}
+
+.operation-btns {
+  padding-bottom: 24px;
+  text-align: center;
+  background: #fff;
+  nz-button-group {
+    margin-left: 8px;
+  }
+}
+
+.ant-card-bordered {
+  border: 0 !important;
+}
+
+.form-group-content {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+  }
+}
+
+:host ::ng-deep {
+  .anchorBL, .anchorTR {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  nz-input-group {
+    display: flex !important;
+    nz-cascader {
+      width: 400px !important;
+    }
+    #shopAddress {
+      flex: 0 1 auto !important;
+    }
+  }
+}
+.teachName{
+  overflow: hidden;
+  clear: both;
+}
+.teachName input{
+  width: 100px;
+  float: left;
+  margin-right: 10px;
+}
+.teacherList input{
+  width: 102px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.list{
+  width: 112px;
+  float: left;
+}
+.addTeacher{
+  width: 100px;
+  height: 145px;
+  line-height: 150px;
+  text-align: center;
+  border: dashed 1px #ccc;
+  float: left;
+}
+.removeTeacher{
+  width: 102px;
+  display: block;
+  text-align: center;
+  color: #f39b9b;
+  height: 30px;
+  line-height: 30px;
+  border: dashed 1px #f39b9b;
+  margin-bottom: 10px;
+  clear: both;
+}
+.removeTeacher:hover{
+  color: #f00;
+}

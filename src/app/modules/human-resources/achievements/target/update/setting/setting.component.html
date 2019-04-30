@@ -1,0 +1,175 @@
+<form nz-form [formGroup]="formGroup" nzLayout="horizontal">
+  <h2>门店收入目标/月</h2>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="expectTotalIncome">期望本月流水收入(元)</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入期望本月流水收入(元)" formControlName="expectTotalIncome" id="expectTotalIncome">
+          <nz-form-explain *ngIf="formControlError('expectTotalIncome')">请输入期望本月流水收入！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('expectTotalIncome', 'pattern')">请输入正确的期望本月流水收入！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="expectAvgCardprice">期望卡单价(元)</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入期望卡单价(元)" formControlName="expectAvgCardprice" id="expectAvgCardprice">
+          <nz-form-explain *ngIf="formControlError('expectAvgCardprice')">请输入期望卡单价！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('expectAvgCardprice', 'pattern')">请输入正确的请输入期望卡单价！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="expectCardsuccessRate">期望办卡成功率</nz-form-label>
+        <nz-form-control>
+          <nz-input-group [nzAddOnAfter]="'%'">
+            <input nz-input placeholder="请输入期望办卡成功率" formControlName="expectCardsuccessRate" id="expectCardsuccessRate">
+          </nz-input-group>
+          <nz-form-explain *ngIf="formControlError('expectCardsuccessRate')">请输入期望办卡成功率！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('expectCardsuccessRate', 'pattern')">请输入正确的期望办卡成功率！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="expectInvitationsuccessRate">期望电话邀约成功率</nz-form-label>
+        <nz-form-control>
+          <nz-input-group [nzAddOnAfter]="'%'">
+            <input nz-input placeholder="请输入期望电话邀约成功率" formControlName="expectInvitationsuccessRate" id="expectInvitationsuccessRate">
+          </nz-input-group>
+          <nz-form-explain *ngIf="formControlError('expectInvitationsuccessRate')">请输入期望电话邀约成功率！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('expectInvitationsuccessRate', 'pattern')">请输入正确的期望电话邀约成功率！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>办卡数</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="办卡数" formControlName="expectCardNum" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>体验数</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="体验数" formControlName="expectExperienceNum" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>邀约所需线索数</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="邀约所需线索数" formControlName="expectClueNum" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <h2>门店基础数据</h2>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="businessDay">营业天数/月</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入营业天数/月" formControlName="businessDay" id="businessDay">
+          <nz-form-explain *ngIf="formControlError('businessDay')">请输入营业天数/月！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('businessDay', 'pattern')">请输入正确的营业天数！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>目前会员数</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="目前会员数" formControlName="memberNum" readonly>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="expectIntoShopNum">期望会员每月来几次</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入期望会员每月来几次" formControlName="expectIntoShopNum" id="expectIntoShopNum">
+          <nz-form-explain *ngIf="formControlError('expectIntoShopNum')">请输入期望会员每月来几次！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('expectIntoShopNum', 'pattern')">请输入正确的次数！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<form nz-form [formGroup]="formGroup" nzLayout="horizontal">
+  <h2>参与任务员工设置</h2>
+  <div nz-row nzGutter="8" formArrayName="personList">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>店长</nz-form-label>
+        <nz-form-control [ngClass]="{ 'has-error': personList.errors && personList.dirty }">
+          <nz-select nzMode="multiple" [formControlName]="0" nzPlaceHolder="请选择参与任务设置的店长（可多选）">
+            <nz-option *ngFor="let option of managerShopList" [nzLabel]="option.name" [nzValue]="option.value"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="personList.errors">员工设置各至少选择一种角色！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>主管</nz-form-label>
+        <nz-form-control [ngClass]="{ 'has-error': personList.errors && personList.dirty }">
+          <nz-select nzMode="multiple" [formControlName]="1" nzPlaceHolder="请选择参与任务设置的主管（可多选）">
+            <nz-option *ngFor="let option of directorlistList" [nzLabel]="option.name" [nzValue]="option.value"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="personList.errors">员工设置各至少选择一种角色！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>销售</nz-form-label>
+        <nz-form-control [ngClass]="{ 'has-error': personList.errors && personList.dirty }">
+          <nz-select nzMode="multiple" [formControlName]="2" nzPlaceHolder="请选择参与任务设置的销售（可多选）">
+            <nz-option *ngFor="let option of saleList" [nzLabel]="option.name" [nzValue]="option.value"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="personList.errors">员工设置各至少选择一种角色！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>水育师</nz-form-label>
+        <nz-form-control [ngClass]="{ 'has-error': personList.errors && personList.dirty }">
+          <nz-select nzMode="multiple" [formControlName]="3" nzPlaceHolder="请选择参与任务设置的水育师（可多选）">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.value"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="personList.errors">员工设置各至少选择一种角色！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+
+  <h2>参与任务员工设置</h2>
+
+  <ea-table [thead]="['职位', '姓名', '线索数', '体验数', '会员消卡', '办卡', '新线索回访']" [showPage]="false" [EaTableTbodyTr]="EaTableTbodyTr" [dataSet]="dataSet">
+    <ng-template #EaTableTbodyTr let-item>
+      <td>{{ item.role == 1 ? '店长' : item.role == 2 ? '销售' : item.role == 3 ? '主管' : '水育师' }}</td>
+      <td>{{ item.teacherName }}</td>
+      <td>{{ item.clueNum }}</td>
+      <td>{{ item.experienceNum }}</td>
+      <td>{{ item.consumeCard }}</td>
+      <td>{{ item.createCard }}</td>
+      <td>{{ item.callbackClue }}</td>
+    </ng-template>
+  </ea-table>
+
+  <div class="buttons">
+    <button nz-button nzType="primary" (click)="save()">保存</button>
+    <button nz-button (click)="next.emit(1)">下一步</button>
+  </div>
+</form>

@@ -1,0 +1,776 @@
+Searching 432 files for "{}, false"
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/list/list.component.ts:
+  169        weilai: []
+  170      })
+  171:     this.http.post('/homePage/getWeeks', {}, false).then(res => {
+  172        res.result.map(item => this.weilaiOptionList.push({ name: item.week, id: new Date(item.date) }));
+  173        this.weilaiOptionList[0].name = '今天';
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/list/preview/preview.component.ts:
+   30  
+   31    ngOnInit() {
+   32:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   33:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   34:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   35      this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => this.memberCardList = res.result);
+   36      
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/setting/rule/rule.component.ts:
+   20      private http: HttpService
+   21    ) { 
+   22:     this.http.post('/reserve/getReserveSetting', {}, false).then(res => res.code == 1000 && (this.ruleSetting = res.result));
+   23    }
+   24  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/swimmer/base/base.component.ts:
+   23    getData() {
+   24      this.baseLoading = true;
+   25:     this.http.post('/teacherCommonHour/list', {}, false).then(res => {
+   26        this.scheduleStatus = res.result.teacherScheduleStatus;
+   27        this.baseList = res.result.list;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/swimmer/byday/byday.component.ts:
+   26    getData() {
+   27      this.dayLoading = true;
+   28:     this.http.post('/teacherDayConfig/list', {}, false).then(res => {
+   29        this.scheduleStatus = res.result.teacherScheduleStatus;
+   30        this.dayList = res.result;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/base/base.component.ts:
+   27        teacherSchedule: [false, [Validators.required]]
+   28      });
+   29:     this.http.post('/storeHoursConfig/getStoreHours', {}, false).then(res => {
+   30        this.businessLoading = false;
+   31        res.result.teacherSchedule = res.result.teacherSchedule == 0;
+   ..
+   48        monthReachMsg: [false]
+   49      });
+   50:     this.http.post('/storeMessageConfig/getStoreMessage', {}, false).then(res => {
+   51        this.messageLoading = false;
+   52        this.messageSendForm.patchValue(res.result);
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/commodity/list/selfuse/selfuse.component.ts:
+   24      private drawerRef: NzDrawerRef<boolean>
+   25    ) {
+   26:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.employeeList = res.result);
+   27    }
+   28  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/commodity/list/update/update.component.ts:
+   25      private http: HttpService
+   26    ) {
+   27:     this.http.post('/cardBusinessManagement/getStoreCardTypeCategores', {}, false).then(res => this.cardTypeList = res.result);
+   28    }
+   29  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/commodity/list/warehousing/warehousing.component.ts:
+   24      private drawerRef: NzDrawerRef<boolean>
+   25    ) {
+   26:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.employeeList = res.result);
+   27    }
+   28  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/payment/autograph.service.ts:
+   12    getAutograph(): Promise<object> {
+   13      return new Promise((resolve, reject) => {
+   14:       this.http.post('/payment/intoOnlinePayment', {}, false).then(res => {
+   15          let nowDate = new Date().getTime();
+   16          this.store.select('userInfoState').subscribe((userInfo: any) => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/store/store.component.ts:
+   56  
+   57  
+   58:     this.http.post('/activity/getBasicConfig', {}, false).then(res => {
+   59        this.getInfoLoading = false;
+   60        if (res.code == 1000) {
+   ..
+  179      return new Promise((resolve) => {
+  180        if (index < 0) {
+  181:         this.http.post('/wechat/getPosition', {}, false).then(res => {
+  182            node.children = res.result.provinceList;
+  183            resolve();
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/consumption/list/message/message.component.ts:
+   26      private fb: FormBuilder = new FormBuilder()
+   27    ) {
+   28:     this.http.post('/common/getStoreSmsTemplate', {}, false).then(res => this.smsTemplateList = res.result);
+   29    }
+   30  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/consumption/list/preview/preview.component.ts:
+   30      private drawerRef: NzDrawerRef
+   31    ) { 
+   32:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   33:     this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieList = res.result);
+   34:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/customer/list/construction/construction.component.ts:
+   31      private drawerRef: NzDrawerRef
+   32    ) { 
+   33:     this.http.post('/cardAttributeController/getList', {}, false).then(res => this.cardAttribuiteList = res.result);
+   34:     this.http.post('/employee/listEmployee', {}, false).then(res => this.employeeList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/customer/list/update/update.component.ts:
+   27    ) {
+   28      /* ----------------------- 获取该门店下所有小区 ----------------------- */
+   29:     this.http.post('/member/communityList', {}, false).then(res => {
+   30        this.communityList = res.result;
+   31        !this.id && this.formGroup.patchValue({ communityId: res.result[0].id })
+   32      });
+   33:     this.http.post('/common/recommenderList', {}, false).then(res => this.recommenderList = res.result);
+   34:     this.http.post('/retrunVisit/getEmployeeList', {}, false).then(res => this.collectorList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/commission/commission.component.ts:
+   21  
+   22    getData() {
+   23:     this.http.post('/bonusRate/getBonusRateConfigs', {}, false).then(res => this.bonusRateList = res.result.list);
+   24    }
+   25  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/target.component.ts:
+   16      private http: HttpService
+   17    ) {
+   18:     this.http.post('/income/queryShopBusiness', {}, false).then(res => {
+   19        res.code == 1000 && (this.managementInfo = res.result);
+   20        this.showInfo = res.code == 1000;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/update/excitation/excitation.component.ts:
+   76        }
+   77      });
+   78:     this.http.get('/work/list/motivation', {}, false).then(res => {
+   79        Object.keys(res.result.satisfityLevel).map(key => {
+   80          res.result.satisfityLevel[key].map(level => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/update/setting/setting.component.ts:
+  155  
+  156    private _init(requestPath) {
+  157:     this.http.post(requestPath, {}, false).then(res => {
+  158        let employeeList = [[], [], [], []];
+  159        this.managerShopList = res.result.managerShopList.map(item => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/update/sop/sop.component.ts:
+   16      private http: HttpService
+   17    ) {
+   18:     this.http.post('/shopTask/listShopTask', {}, false).then(res => {
+   19        this.dataSet = res.result;
+   20      });
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/department/update/update.component.ts:
+   31        comment: []
+   32      });
+   33:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   34    }
+   35  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/staff/update/update.component.ts:
+   25      private drawerRef: NzDrawerRef<string>
+   26    ) {
+   27:     this.http.post('/humanInformation/getBands', {}, false).then(res => this.bandList = res.result);
+   28:     this.http.post('/department/getDepartments', {}, false).then(res => this.departmentList = res.result);
+   29    }
+   30  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/staff/upload/upload.component.ts:
+   21    ) {
+   22      /* ----------------- 获取OSS上传凭证 ----------------- */
+   23:     this.http.get('http://oss.beibeiyue.com/oss/getOSSToken?type=1', {}, false).then(res => {
+   24        if (res.result == 0) {
+   25          let creds = res['data'];
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/addapoint/addapoint.component.ts:
+   30    ) { 
+   31      /* -------------------- 获取泳圈型号 -------------------- */
+   32:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   33      /* -------------------- 获取所有社区 -------------------- */
+   34:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/appoint-detail/appoint-detail.component.ts:
+   32    ) {
+   33      /* -------------------- 获取泳圈型号 -------------------- */
+   34:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   35      /* -------------------- 获取所有社区 -------------------- */
+   36:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   37      /* -------------------- 获取所有老师 -------------------- */
+   38:     this.http.post('/tongka/teacherList', {}, false).then(res => this.teacherList = res.result);
+   39    }
+   40  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/appoint-detail/consumption/consumption.component.ts:
+   87  
+   88      /* ------------------------- 获取服务器时间 ------------------------- */
+   89:     this.http.post('/customer/getSystemDate', {}, false).then(res => {
+   90        this.timesCountGroup.patchValue({ consumeDate: res.result });
+   91        this.singleTimeGroup.patchValue({ consumeDate: res.result });
+   ..
+   93  
+   94      /* -------------------- 获取下拉列表数据 -------------------- */
+   95:     this.http.post('/member/getStoreTeachers', {}, false).then(res => {
+   96        this.teacherList = res.result;
+   97        this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
+   98        this.singleTimeGroup.patchValue({ swimTeacherId: res.result[0].id });
+   99      });
+  100:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+  101:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+  102      this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
+  103        this.memberCardList = res.result;
+  ...
+  105      });
+  106  
+  107:     this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
+  108        this.commoditieListdc = res.result;
+  109        /* ------------------------- 判断是否有默认商品 ------------------------- */
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/index.component.ts:
+   30    ) {
+   31      /* ----------------- 获取活动集合 ----------------- */
+   32:     this.http.post('/homePage/getShopMessageList', {}, false).then(res => {
+   33        this.activityLoading = false;
+   34        this.activityList = res.result;
+   35      });
+   36      /* ------------------ 获取周集合 ------------------ */
+   37:     this.http.post('/homePage/getWeeks', {}, false).then(res => {
+   38        this.weekList = res.result;
+   39        this.appointmentChange({ index: this.selectedIndex });
+   ..
+   47  
+   48    ngOnInit() {
+   49:     this.http.post('/homePage/showHomePage', {}, false).then(res => this.todayTask = res.result);
+   50  
+   51      this.store.select('userInfoState').subscribe(res => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/marketing/activity/activity.component.ts:
+   31      private router: Router
+   32    ) {
+   33:     this.http.post('/activity/getActivityTypes', {}, false).then(res => this.templateTypeList = [{ templateLabel: '全部', templateType: null }, ...res.result]);
+   34    }
+   35  
+   ..
+   52  
+   53    join(activityInfo) {
+   54:     this.http.post('/activity/checkBasicConfig', {}, false).then(res => {
+   55        if (res.result) {
+   56          this.drawer.create({
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/marketing/list/list.component.ts:
+   21      private drawer: NzDrawerService
+   22    ) {
+   23:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   24    }
+   25  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/marketing/writeoff/writeoff.component.ts:
+   41    ) {
+   42      /* ----------------------- 获取该门店下所有小区 ----------------------- */
+   43:     this.http.post('/member/communityList', {}, false).then(res => {
+   44        this.communityList = res.result;
+   45      });
+   46  
+   47:     this.http.post('/verification/amountSum', {}, false).then(res => this.amountSum = res.result);
+   48    }
+   49  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/member/card-type/update/update.component.ts:
+   26      private drawerRef: NzDrawerRef
+   27    ) {
+   28:     this.http.post('/cardBusinessManagement/findList', {}, false).then(res => this.cardBusinessList = res.result);
+   29:     this.http.post('/cardAttributeController/getList', {}, false).then(res => this.cardAttribuiteList = res.result);
+   30    }
+   31  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/member/list/change/change.component.ts:
+   25      private drawerRef: NzDrawerRef
+   26    ) {
+   27:     this.http.post('/employee/listEmployee', {}, false).then(res => this.employeeList = res.result);
+   28    }
+   29  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/member/list/continued/continued.component.ts:
+   27      private drawerRef: NzDrawerRef
+   28    ) {
+   29:     this.http.post('/employee/listEmployee', {}, false).then(res => this.employeeList = res.result);
+   30    }
+   31  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/message/sendout/sendout.component.ts:
+   95      private modal: NzModalService
+   96    ) {
+   97:     this.http.post('/smsBalance/balance', {}, false).then(res => this.smsBalanceSurplus = res.result);
+   98  
+   99:     this.http.post('/common/getStoreSmsTemplate', {}, false).then(res => this.smsTemplateList = res.result);
+  100:     this.http.post('/smsBalance/balance', {}, false).then(res => this.smsBalance = res.result);
+  101    }
+  102    ngOnInit() {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/public/appoint/appoint.component.ts:
+   54      });
+   55      this.formGroup.patchValue(this.userInfo);
+   56:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   57      this.http.post('/memberCard/getMemberCards', { memberId: this.id }, false).then(res => {
+   58        this.cardList = res.result;
+   ..
+   61  
+   62      /* ------------------ 获取泳师列表 并默认选择第一条数据：到店安排 ------------------ */
+   63:     this.http.post('/tongka/teacherList', {}, false).then(res => {
+   64        this.teacherList = res.result;
+   65        this.formGroup.patchValue({ swimTeacherId: res.result[0].id });
+   66      });
+   67:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   68  
+   69      /* ------------------ 监听预约时间段变化 ------------------ */
+   ..
+   78      })
+   79      /* ------------------ 获取当前系统的预约时间 ------------------ */
+   80:     this.http.post('/reserve/getResetveDate', {}, false).then(res => this.formGroup.patchValue({
+   81        reserveHour: new Date(res.result),
+   82        reserveDate: new Date(res.result)
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/public/consumption/consumption.component.ts:
+   93  
+   94      /* ------------------------- 获取服务器时间 ------------------------- */
+   95:     this.http.post('/customer/getSystemDate', {}, false).then(res => {
+   96        this.timesCountGroup.patchValue({ consumeDate: res.result });
+   97        this.singleTimeGroup.patchValue({ consumeDate: res.result });
+   ..
+   99  
+  100      /* -------------------- 获取下拉列表数据 -------------------- */
+  101:     this.http.post('/member/getStoreTeachers', {}, false).then(res => {
+  102        this.teacherList = res.result;
+  103        if (!this.consumptionInfo.reserveDate) {
+  ...
+  114            this.timesCountGroup.patchValue({ cardId: res.result[0].id });
+  115            this.singleTimeGroup.patchValue({ cardId: res.result[0].id });
+  116:           this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+  117          } else {
+  118            this.consumptionType = 1;
+  ...
+  122      }
+  123  
+  124:     this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
+  125        this.commoditieListdc = res.result;
+  126        /* ------------------------- 判断是否有默认商品 ------------------------- */
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/system/changelog/changelog.component.ts:
+   19    ngOnInit() {
+   20      this.loading = true;
+   21:     this.http.post('/version/getVersionList', {}, false).then(res => {
+   22        res.code == 1000 && (this.changelog = res.result.list);
+   23        this.loading = false;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/visit/public/preview/preview.component.ts:
+   36    ) {
+   37      /* ------------------- 客户状态 ------------------- */
+   38:     this.http.post('/common/showMemberStatus', {}, false).then(res => this.memberStatusList = res.result);
+   39      /* ------------------- 跟进方式 ------------------- */
+   40:     this.http.post('/common/followTypeList', {}, false).then(res => this.followTypeList = res.result);
+   41      /* ------------------- 跟进老师 ------------------- */
+   42:     this.http.post('/retrunVisit/getEmployeeList', {}, false).then(res => this.teacherList = res.result);
+   43      /* ------------------- 预约老师 ------------------- */
+   44:     this.http.post('/tongka/teacherList', {}, false).then(res => this.swimTeacherList = res.result);
+   45    }
+   46  
+   ..
+   72  
+   73      /* ------------------- 获取记录标签 ------------------- */
+   74:     this.http.post('/common/labelList', {}, false).then(res => {
+   75        this.labelList = res.result;
+   76      });
+
+72 matches across 38 files
+
+
+Searching 432 files for ", {}, false"
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/list/list.component.ts:
+  169        weilai: []
+  170      })
+  171:     this.http.post('/homePage/getWeeks', {}, false).then(res => {
+  172        res.result.map(item => this.weilaiOptionList.push({ name: item.week, id: new Date(item.date) }));
+  173        this.weilaiOptionList[0].name = '今天';
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/list/preview/preview.component.ts:
+   30  
+   31    ngOnInit() {
+   32:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   33:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   34:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   35      this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => this.memberCardList = res.result);
+   36      
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/setting/rule/rule.component.ts:
+   20      private http: HttpService
+   21    ) { 
+   22:     this.http.post('/reserve/getReserveSetting', {}, false).then(res => res.code == 1000 && (this.ruleSetting = res.result));
+   23    }
+   24  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/swimmer/base/base.component.ts:
+   23    getData() {
+   24      this.baseLoading = true;
+   25:     this.http.post('/teacherCommonHour/list', {}, false).then(res => {
+   26        this.scheduleStatus = res.result.teacherScheduleStatus;
+   27        this.baseList = res.result.list;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/appointment/swimmer/byday/byday.component.ts:
+   26    getData() {
+   27      this.dayLoading = true;
+   28:     this.http.post('/teacherDayConfig/list', {}, false).then(res => {
+   29        this.scheduleStatus = res.result.teacherScheduleStatus;
+   30        this.dayList = res.result;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/base/base.component.ts:
+   27        teacherSchedule: [false, [Validators.required]]
+   28      });
+   29:     this.http.post('/storeHoursConfig/getStoreHours', {}, false).then(res => {
+   30        this.businessLoading = false;
+   31        res.result.teacherSchedule = res.result.teacherSchedule == 0;
+   ..
+   48        monthReachMsg: [false]
+   49      });
+   50:     this.http.post('/storeMessageConfig/getStoreMessage', {}, false).then(res => {
+   51        this.messageLoading = false;
+   52        this.messageSendForm.patchValue(res.result);
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/commodity/list/selfuse/selfuse.component.ts:
+   24      private drawerRef: NzDrawerRef<boolean>
+   25    ) {
+   26:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.employeeList = res.result);
+   27    }
+   28  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/commodity/list/update/update.component.ts:
+   25      private http: HttpService
+   26    ) {
+   27:     this.http.post('/cardBusinessManagement/getStoreCardTypeCategores', {}, false).then(res => this.cardTypeList = res.result);
+   28    }
+   29  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/commodity/list/warehousing/warehousing.component.ts:
+   24      private drawerRef: NzDrawerRef<boolean>
+   25    ) {
+   26:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.employeeList = res.result);
+   27    }
+   28  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/payment/autograph.service.ts:
+   12    getAutograph(): Promise<object> {
+   13      return new Promise((resolve, reject) => {
+   14:       this.http.post('/payment/intoOnlinePayment', {}, false).then(res => {
+   15          let nowDate = new Date().getTime();
+   16          this.store.select('userInfoState').subscribe((userInfo: any) => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/configuration/store/store.component.ts:
+   56  
+   57  
+   58:     this.http.post('/activity/getBasicConfig', {}, false).then(res => {
+   59        this.getInfoLoading = false;
+   60        if (res.code == 1000) {
+   ..
+  179      return new Promise((resolve) => {
+  180        if (index < 0) {
+  181:         this.http.post('/wechat/getPosition', {}, false).then(res => {
+  182            node.children = res.result.provinceList;
+  183            resolve();
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/consumption/list/message/message.component.ts:
+   26      private fb: FormBuilder = new FormBuilder()
+   27    ) {
+   28:     this.http.post('/common/getStoreSmsTemplate', {}, false).then(res => this.smsTemplateList = res.result);
+   29    }
+   30  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/consumption/list/preview/preview.component.ts:
+   30      private drawerRef: NzDrawerRef
+   31    ) { 
+   32:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   33:     this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieList = res.result);
+   34:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/customer/list/construction/construction.component.ts:
+   31      private drawerRef: NzDrawerRef
+   32    ) { 
+   33:     this.http.post('/cardAttributeController/getList', {}, false).then(res => this.cardAttribuiteList = res.result);
+   34:     this.http.post('/employee/listEmployee', {}, false).then(res => this.employeeList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/customer/list/update/update.component.ts:
+   27    ) {
+   28      /* ----------------------- 获取该门店下所有小区 ----------------------- */
+   29:     this.http.post('/member/communityList', {}, false).then(res => {
+   30        this.communityList = res.result;
+   31        !this.id && this.formGroup.patchValue({ communityId: res.result[0].id })
+   32      });
+   33:     this.http.post('/common/recommenderList', {}, false).then(res => this.recommenderList = res.result);
+   34:     this.http.post('/retrunVisit/getEmployeeList', {}, false).then(res => this.collectorList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/commission/commission.component.ts:
+   21  
+   22    getData() {
+   23:     this.http.post('/bonusRate/getBonusRateConfigs', {}, false).then(res => this.bonusRateList = res.result.list);
+   24    }
+   25  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/target.component.ts:
+   16      private http: HttpService
+   17    ) {
+   18:     this.http.post('/income/queryShopBusiness', {}, false).then(res => {
+   19        res.code == 1000 && (this.managementInfo = res.result);
+   20        this.showInfo = res.code == 1000;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/update/excitation/excitation.component.ts:
+   76        }
+   77      });
+   78:     this.http.get('/work/list/motivation', {}, false).then(res => {
+   79        Object.keys(res.result.satisfityLevel).map(key => {
+   80          res.result.satisfityLevel[key].map(level => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/update/setting/setting.component.ts:
+  155  
+  156    private _init(requestPath) {
+  157:     this.http.post(requestPath, {}, false).then(res => {
+  158        let employeeList = [[], [], [], []];
+  159        this.managerShopList = res.result.managerShopList.map(item => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/achievements/target/update/sop/sop.component.ts:
+   16      private http: HttpService
+   17    ) {
+   18:     this.http.post('/shopTask/listShopTask', {}, false).then(res => {
+   19        this.dataSet = res.result;
+   20      });
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/department/update/update.component.ts:
+   31        comment: []
+   32      });
+   33:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   34    }
+   35  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/staff/update/update.component.ts:
+   25      private drawerRef: NzDrawerRef<string>
+   26    ) {
+   27:     this.http.post('/humanInformation/getBands', {}, false).then(res => this.bandList = res.result);
+   28:     this.http.post('/department/getDepartments', {}, false).then(res => this.departmentList = res.result);
+   29    }
+   30  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/human-resources/staff/upload/upload.component.ts:
+   21    ) {
+   22      /* ----------------- 获取OSS上传凭证 ----------------- */
+   23:     this.http.get('http://oss.beibeiyue.com/oss/getOSSToken?type=1', {}, false).then(res => {
+   24        if (res.result == 0) {
+   25          let creds = res['data'];
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/addapoint/addapoint.component.ts:
+   30    ) { 
+   31      /* -------------------- 获取泳圈型号 -------------------- */
+   32:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   33      /* -------------------- 获取所有社区 -------------------- */
+   34:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   35    }
+   36  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/appoint-detail/appoint-detail.component.ts:
+   32    ) {
+   33      /* -------------------- 获取泳圈型号 -------------------- */
+   34:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   35      /* -------------------- 获取所有社区 -------------------- */
+   36:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   37      /* -------------------- 获取所有老师 -------------------- */
+   38:     this.http.post('/tongka/teacherList', {}, false).then(res => this.teacherList = res.result);
+   39    }
+   40  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/appoint-detail/consumption/consumption.component.ts:
+   87  
+   88      /* ------------------------- 获取服务器时间 ------------------------- */
+   89:     this.http.post('/customer/getSystemDate', {}, false).then(res => {
+   90        this.timesCountGroup.patchValue({ consumeDate: res.result });
+   91        this.singleTimeGroup.patchValue({ consumeDate: res.result });
+   ..
+   93  
+   94      /* -------------------- 获取下拉列表数据 -------------------- */
+   95:     this.http.post('/member/getStoreTeachers', {}, false).then(res => {
+   96        this.teacherList = res.result;
+   97        this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
+   98        this.singleTimeGroup.patchValue({ swimTeacherId: res.result[0].id });
+   99      });
+  100:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+  101:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+  102      this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
+  103        this.memberCardList = res.result;
+  ...
+  105      });
+  106  
+  107:     this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
+  108        this.commoditieListdc = res.result;
+  109        /* ------------------------- 判断是否有默认商品 ------------------------- */
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/index/index.component.ts:
+   30    ) {
+   31      /* ----------------- 获取活动集合 ----------------- */
+   32:     this.http.post('/homePage/getShopMessageList', {}, false).then(res => {
+   33        this.activityLoading = false;
+   34        this.activityList = res.result;
+   35      });
+   36      /* ------------------ 获取周集合 ------------------ */
+   37:     this.http.post('/homePage/getWeeks', {}, false).then(res => {
+   38        this.weekList = res.result;
+   39        this.appointmentChange({ index: this.selectedIndex });
+   ..
+   47  
+   48    ngOnInit() {
+   49:     this.http.post('/homePage/showHomePage', {}, false).then(res => this.todayTask = res.result);
+   50  
+   51      this.store.select('userInfoState').subscribe(res => {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/marketing/activity/activity.component.ts:
+   31      private router: Router
+   32    ) {
+   33:     this.http.post('/activity/getActivityTypes', {}, false).then(res => this.templateTypeList = [{ templateLabel: '全部', templateType: null }, ...res.result]);
+   34    }
+   35  
+   ..
+   52  
+   53    join(activityInfo) {
+   54:     this.http.post('/activity/checkBasicConfig', {}, false).then(res => {
+   55        if (res.result) {
+   56          this.drawer.create({
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/marketing/list/list.component.ts:
+   21      private drawer: NzDrawerService
+   22    ) {
+   23:     this.http.post('/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+   24    }
+   25  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/marketing/writeoff/writeoff.component.ts:
+   41    ) {
+   42      /* ----------------------- 获取该门店下所有小区 ----------------------- */
+   43:     this.http.post('/member/communityList', {}, false).then(res => {
+   44        this.communityList = res.result;
+   45      });
+   46  
+   47:     this.http.post('/verification/amountSum', {}, false).then(res => this.amountSum = res.result);
+   48    }
+   49  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/member/card-type/update/update.component.ts:
+   26      private drawerRef: NzDrawerRef
+   27    ) {
+   28:     this.http.post('/cardBusinessManagement/findList', {}, false).then(res => this.cardBusinessList = res.result);
+   29:     this.http.post('/cardAttributeController/getList', {}, false).then(res => this.cardAttribuiteList = res.result);
+   30    }
+   31  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/member/list/change/change.component.ts:
+   25      private drawerRef: NzDrawerRef
+   26    ) {
+   27:     this.http.post('/employee/listEmployee', {}, false).then(res => this.employeeList = res.result);
+   28    }
+   29  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/member/list/continued/continued.component.ts:
+   27      private drawerRef: NzDrawerRef
+   28    ) {
+   29:     this.http.post('/employee/listEmployee', {}, false).then(res => this.employeeList = res.result);
+   30    }
+   31  
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/message/sendout/sendout.component.ts:
+   95      private modal: NzModalService
+   96    ) {
+   97:     this.http.post('/smsBalance/balance', {}, false).then(res => this.smsBalanceSurplus = res.result);
+   98  
+   99:     this.http.post('/common/getStoreSmsTemplate', {}, false).then(res => this.smsTemplateList = res.result);
+  100:     this.http.post('/smsBalance/balance', {}, false).then(res => this.smsBalance = res.result);
+  101    }
+  102    ngOnInit() {
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/public/appoint/appoint.component.ts:
+   54      });
+   55      this.formGroup.patchValue(this.userInfo);
+   56:     this.http.post('/member/communityList', {}, false).then(res => this.communityList = res.result);
+   57      this.http.post('/memberCard/getMemberCards', { memberId: this.id }, false).then(res => {
+   58        this.cardList = res.result;
+   ..
+   61  
+   62      /* ------------------ 获取泳师列表 并默认选择第一条数据：到店安排 ------------------ */
+   63:     this.http.post('/tongka/teacherList', {}, false).then(res => {
+   64        this.teacherList = res.result;
+   65        this.formGroup.patchValue({ swimTeacherId: res.result[0].id });
+   66      });
+   67:     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+   68  
+   69      /* ------------------ 监听预约时间段变化 ------------------ */
+   ..
+   78      })
+   79      /* ------------------ 获取当前系统的预约时间 ------------------ */
+   80:     this.http.post('/reserve/getResetveDate', {}, false).then(res => this.formGroup.patchValue({
+   81        reserveHour: new Date(res.result),
+   82        reserveDate: new Date(res.result)
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/public/consumption/consumption.component.ts:
+   93  
+   94      /* ------------------------- 获取服务器时间 ------------------------- */
+   95:     this.http.post('/customer/getSystemDate', {}, false).then(res => {
+   96        this.timesCountGroup.patchValue({ consumeDate: res.result });
+   97        this.singleTimeGroup.patchValue({ consumeDate: res.result });
+   ..
+   99  
+  100      /* -------------------- 获取下拉列表数据 -------------------- */
+  101:     this.http.post('/member/getStoreTeachers', {}, false).then(res => {
+  102        this.teacherList = res.result;
+  103        if (!this.consumptionInfo.reserveDate) {
+  ...
+  114            this.timesCountGroup.patchValue({ cardId: res.result[0].id });
+  115            this.singleTimeGroup.patchValue({ cardId: res.result[0].id });
+  116:           this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+  117          } else {
+  118            this.consumptionType = 1;
+  ...
+  122      }
+  123  
+  124:     this.http.post('/commodity/getCommonCommodities', {}, false).then(res => {
+  125        this.commoditieListdc = res.result;
+  126        /* ------------------------- 判断是否有默认商品 ------------------------- */
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/system/changelog/changelog.component.ts:
+   19    ngOnInit() {
+   20      this.loading = true;
+   21:     this.http.post('/version/getVersionList', {}, false).then(res => {
+   22        res.code == 1000 && (this.changelog = res.result.list);
+   23        this.loading = false;
+
+/Users/phuhoang/Desktop/ng7/ylbb-system-erp/src/app/modules/visit/public/preview/preview.component.ts:
+   36    ) {
+   37      /* ------------------- 客户状态 ------------------- */
+   38:     this.http.post('/common/showMemberStatus', {}, false).then(res => this.memberStatusList = res.result);
+   39      /* ------------------- 跟进方式 ------------------- */
+   40:     this.http.post('/common/followTypeList', {}, false).then(res => this.followTypeList = res.result);
+   41      /* ------------------- 跟进老师 ------------------- */
+   42:     this.http.post('/retrunVisit/getEmployeeList', {}, false).then(res => this.teacherList = res.result);
+   43      /* ------------------- 预约老师 ------------------- */
+   44:     this.http.post('/tongka/teacherList', {}, false).then(res => this.swimTeacherList = res.result);
+   45    }
+   46  
+   ..
+   72  
+   73      /* ------------------- 获取记录标签 ------------------- */
+   74:     this.http.post('/common/labelList', {}, false).then(res => {
+   75        this.labelList = res.result;
+   76      });
+
+72 matches across 38 files

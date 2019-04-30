@@ -1,0 +1,42 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="name">部门名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入部门名称" formControlName="name" id="name">
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入部门名称！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('duplicated')">该部门名称已存在</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').pending">
+            <i nz-icon nzType="loading"></i>正在校验部门名称是否存在...</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>部门主管</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="employeeId" nzPlaceHolder="请选择部门主管">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择部门主管！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">部门描述</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入部门描述" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

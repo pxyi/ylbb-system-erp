@@ -1,0 +1,10 @@
+<nz-layout>
+  <nz-sider [nzWidth]="($routerState | async).currentMenu && ($routerState | async).currentMenu.isLeaf || !($routerState | async).currentMenu || ($routerState | async).currentPath == '/home/modifypassword' ? 100 : 221">
+    <app-menu [userInfo]="$userInfo | async"></app-menu>
+  </nz-sider>
+  <nz-layout>
+    <nz-header><app-header [userInfo]="$userInfo | async"></app-header></nz-header>
+    <nz-content><app-content></app-content></nz-content>
+    <nz-footer><app-footer></app-footer></nz-footer>
+  </nz-layout>
+</nz-layout>

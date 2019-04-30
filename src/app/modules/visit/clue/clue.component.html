@@ -1,0 +1,25 @@
+<div class="container">
+  <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
+
+  <button nz-button [nzType]="'primary'" style="margin-bottom: 16px;" (click)="addCustomer()">新增客户线索</button>
+
+  <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [allowSpace]="false" url="/retrunVisit/clubList">
+    <ng-template let-data #EaTableTbodyTr>
+      <td><a (click)="preview({id: data.id})">{{ data.nick }}</a></td>
+      <td><a (click)="preview({id: data.id})">{{ data.name }}</a></td>
+      <td>{{ data.birthday || '--' }}</td>
+      <td><i nz-icon [nzType]="data.sex === '男' ? 'man' : 'woman'" [title]="data.sex" nzTheme="outline"></i></td>
+      <td>{{ data.birthday | monthdiff }}</td>
+      <td>{{ data.parentName }}</td>
+      <td><a href="javascript:;" [getMobile]="data.id">查看</a></td>
+      <td>{{ data.communityName || '--' }}</td>
+      <td>{{ data.createDate }}</td>
+      <td>{{ data.nextFollowTime | date: 'yyyy-MM-dd' || '--' }}</td>
+      <td>{{ data.lastFollowTime || '--' }}</td>
+      <td>{{ data.sourceName || '--' }}</td>
+      <td>{{ data.memberStatus || '--' }}</td>
+      <td>{{ data.followStage + (data.followNum ? '('+ data.followNum +')' : '') }}</td>
+      <td>{{ data.contributors || '--' }}</td>
+    </ng-template>
+  </ea-table>
+</div>

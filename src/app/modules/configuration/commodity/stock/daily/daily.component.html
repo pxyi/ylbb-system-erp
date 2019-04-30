@@ -1,0 +1,24 @@
+<ea-query-simp 
+  [node]="[
+            { label: '记账日期', type: 'rangepicker', key: 'time', valueKey: ['startDate', 'endDate'] },
+            { label: '商品名称', type: 'input', key: 'commodityName' }
+          ]"
+  (onSubmit)="table.request($event)"></ea-query-simp>
+
+<ea-table #table url="/commodityDaliyStock/getCommoditieDaliyStockList"
+  [thead]="['名称','记账日期','进货价','销售价','当日库存','累计销量','累计进货','累计自用','当日入库','当日销量','当日自用','当日撤销']" [EaTableTbodyTr]="EaTableTbodyTr">
+  <ng-template #EaTableTbodyTr let-data>
+    <td>{{ data.name }}</td>
+    <td>{{ data.accountDate }}</td>
+    <td>{{ data.stockPrice }}</td>
+    <td>{{ data.price }}</td>
+    <td>{{ data.stock }}</td>
+    <td>{{ data.totalSale }}</td>
+    <td>{{ data.totalStock }}</td>
+    <td>{{ data.selfUse }}</td>
+    <td>{{ data.dayIn }}</td>
+    <td>{{ data.dayConsume }}</td>
+    <td>{{ data.dayUse }}</td>
+    <td>{{ data.dayRevoke }}</td>
+  </ng-template>
+</ea-table>

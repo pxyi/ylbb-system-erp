@@ -1,0 +1,22 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/pointManagement/redemptionRecordList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '标识', '会员姓名', '会员小名', '性别', '月龄', '所属社区', '婴儿类型', '兑换时间', '消耗分值', '兑换内容' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.id }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.nick }}</td>
+      <td><i class="iconfont" [title]="data.sex" [ngClass]="[data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i></td>
+      <td>{{ data.monthAge }}</td>
+      <td>{{ data.communityName }}</td>
+      <td>{{ data.babyType }}</td>
+      <td>{{ data.exchangeDate }}</td>
+      <td>{{ data.exchangePoint }}</td>
+      <td>{{ data.exchangeRemark }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

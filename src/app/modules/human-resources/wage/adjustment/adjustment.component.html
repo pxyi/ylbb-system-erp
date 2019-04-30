@@ -1,0 +1,29 @@
+<div class="container">
+  <ea-list-page-simp 
+    #listPage
+    url="/payrollAdjustLog/getPayrollAdjustLogs"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '月份', key: 'month', type: 'monthpicker' }
+    ]"
+    [tableThead]="['员工姓名','调整月份','记录时间','调整值','原因','备注','操作']"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaBtns>
+      <button nz-button nzType="primary" (click)="update()">新增</button>
+    </ng-template>
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.month }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.adjustWages }}</td>
+      <td>{{ data.adjustReason }}</td>
+      <td>{{ data.remark }}</td>
+      <td>
+        <a (click)="update({dataInfo: data})">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-list-page-simp>
+</div>

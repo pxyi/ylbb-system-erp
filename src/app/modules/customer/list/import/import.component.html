@@ -1,0 +1,41 @@
+<a style="display: inline-block; margin-bottom: 24px;" download="客户信息导入模板.xls" href="http://ylbb-app-mobile01.oss-cn-beijing.aliyuncs.com/%E5%AE%A2%E6%88%B7%E4%BF%A1%E6%81%AF%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.xls"target="_blank">点击下载导入模板</a>
+
+<nz-upload
+  nzType="drag"
+  [nzName]="'excelFile'"
+  [nzFileType]="'application/vnd.ms-excel'"
+  nzAction="/member/uploadExcel"
+  [nzWithCredentials]="true"
+  (nzChange)="uploadComplate($event)">
+  <p class="ant-upload-drag-icon">
+    <i nz-icon nzType="inbox"></i>
+  </p>
+  <p class="ant-upload-text">点击或拖动文件到这个区域上传</p>
+  <p class="ant-upload-hint">支持单个或批量上传，严禁上传垃圾数据或其他文件</p>
+</nz-upload>
+
+<nz-table 
+  *ngIf="uploadResult.length"
+  #smallTable 
+  [nzTitle]="uploadInfo"
+  nzSize="small" 
+  [nzData]='uploadResult'>
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>手机号</th>
+      <th>失败原因</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of smallTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.mobile }}</td>
+      <td>{{ data.reason }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<div class="drawer-footer">
+  <button nz-button nzType="primary" (click)="save()">确定</button>
+</div>

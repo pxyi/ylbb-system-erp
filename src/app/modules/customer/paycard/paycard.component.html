@@ -1,0 +1,35 @@
+<div class="header">
+  <div style="width: 80%; max-width: 600px; margin: 24px auto 30px;">
+    <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
+      <input type="text" nz-input [(ngModel)]="memberCard" appAfterViewFocus placeholder="请输入会员卡序列化" (keyup.enter)="searchSubmit()">
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button nz-button nzType="primary" nzSize="large" (click)="searchSubmit()">搜索</button>
+    </ng-template>
+  </div>
+</div>
+
+<div class="container">
+  <nz-table #basicTable [nzData]="dataSet" [nzShowPagination]="false" [nzLoading]="loading">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>卡号</th>
+        <th>手机号</th>
+        <th>有效期</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.sex }}</td>
+        <td>{{ data.memberCard }}</td>
+        <td>{{ data.mobilePhone }}</td>
+        <td><nz-tag *ngIf="data.expireDays || data.expireDays == 0" [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
+        <td><a (click)="consumption({ consumptionInfo: data })">消费</a></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

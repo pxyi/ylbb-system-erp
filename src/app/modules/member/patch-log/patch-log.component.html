@@ -1,0 +1,20 @@
+<div class="container">
+  <ea-query-simp [node]="queryNode" title="补卡日志" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <ea-table 
+    #table 
+    url="/repairCard/list" 
+    [allowSpace]="false" 
+    [thead]="['标识','原卡号','新卡号','原序列号','新序列号','操作时间','操作人']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.id }}</td>
+      <td>{{ data.oldCode }}</td>
+      <td>{{ data.newCode }}</td>
+      <td>{{ data.oldSerial }}</td>
+      <td>{{ data.newSerial }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.admin }}</td>
+    </ng-template>
+  </ea-table>
+</div>

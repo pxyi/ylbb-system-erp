@@ -1,0 +1,73 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly formControlName="memberName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员小名</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly formControlName="memberNick">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>服务老师</nz-form-label>
+        <nz-form-control>
+          <input nz-input readonly formControlName="teacherName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>课程类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="type">
+            <nz-option [nzValue]="1" nzLabel="国学"></nz-option>
+            <nz-option [nzValue]="2" nzLabel="双语"></nz-option>
+            <nz-option [nzValue]="3" nzLabel="数学"></nz-option>
+            <nz-option [nzValue]="4" nzLabel="儿歌"></nz-option>
+            <nz-option [nzValue]="5" nzLabel="颜色"></nz-option>
+            <nz-option [nzValue]="6" nzLabel="认识"></nz-option>
+            <nz-option [nzValue]="7" nzLabel="英语对话"></nz-option>
+            <nz-option [nzValue]="8" nzLabel="智力开发游戏"></nz-option>
+            <nz-option [nzValue]="9" nzLabel="其他"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>课程说明</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入课程说明" formControlName="remarks" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">确定</button>
+</div>

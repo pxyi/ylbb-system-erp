@@ -1,0 +1,23 @@
+<ea-query-simp #eaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" *ngIf="queryNode.length"></ea-query-simp>
+
+<div class="ea-btns" *ngIf="EaBtns">
+  <ng-container *ngTemplateOutlet="EaBtns"></ng-container>
+</div>
+
+<ea-table 
+  #EaTable
+  [url]="url"
+  [thead]="tableThead" 
+  [allowSpace]="allowSpace"
+  [paramsDefault]="paramsDefault" 
+  [paramsInit]="paramsInit"
+  [EaTableTbodyTr]="EaTableTbodyTr" 
+  [EaTableTbodyExpand]="EaTableTbodyExpand" 
+  [checked]="checked" 
+  [isRadio]="isRadio" 
+  [checkedItems]="checkedItems" 
+  [checkedKey]="checkedKey" 
+  (ready)="requestReady($event)"
+  (dataChange)="dataChange.emit($event)"
+  (checkedItems)="checkedChange($event)">
+</ea-table>

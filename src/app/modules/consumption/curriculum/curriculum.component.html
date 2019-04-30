@@ -1,0 +1,25 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/memberLesson/getMemberLessonList"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '会员卡号', '会员姓名', '会员小名', '服务老师', '记录时间', '课程类型', '课程说明', '操作' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.cardCode }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.memberNick }}</td>
+      <td>{{ data.teacherName }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.type == 1 ? '国学' : data.type == 2 ? '双语' : data.type == 3 ? '数学' : data.type == 4 ? '儿歌' : data.type == 5 ? '颜色' :
+      data.type == 6 ? '认识' : data.type == 7 ? '英语对话' : data.type == 8 ? '智力开发游戏' : '其他' }}</td>
+      <td>{{ data.remarks }}</td>
+      <td>
+        <a (click)="update({ curriculumInfo: data })">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确认要删除吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>

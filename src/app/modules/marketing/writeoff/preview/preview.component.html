@@ -1,0 +1,39 @@
+<form nz-form [formGroup]="formGroup">
+  <nz-form-item>
+    <nz-form-label>活动名称</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="activityHeadline">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>类型</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="activityType">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>支付金额</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="payAmount">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>用户昵称</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="babyName">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>生日</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="birthday">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>手机号</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="phoneNum">
+    </nz-form-control>
+  </nz-form-item>
+  <div><button nz-button nzType="primary" nzBlock (click)="submit()">确认核销</button></div>
+</form>

@@ -1,0 +1,21 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/pointList/list"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [tableThead]="[ '会员姓名', '会员小名', '积分', '性别', '月龄', '家长姓名', '联系手机', '所属社区', '婴儿类型' ]"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td>{{ data.point }}</td>
+      <td><i class="iconfont" [title]="data.sex" [ngClass]="[data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i></td>
+      <td>{{ data.monthAge }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>{{ data.communityName }}</td>
+      <td>{{ data.babyType }}</td>
+    </ng-template>
+  </ea-list-page>
+</div>

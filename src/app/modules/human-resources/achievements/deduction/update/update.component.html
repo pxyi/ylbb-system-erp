@@ -1,0 +1,65 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>员工</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="employeeId" [nzShowSearch]="true" nzPlaceHolder="请选择员工">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择员工！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>考勤类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="category" nzPlaceHolder="请选择考勤类型">
+            <nz-option *ngFor="let option of payrollList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('category').dirty && formGroup.get('category').hasError('required')">请选择考勤类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>扣减/新增</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="type" nzPlaceHolder="请选择扣减/新增">
+            <nz-option nzLabel="扣减" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="增加" [nzValue]="1"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('type').dirty && formGroup.get('type').hasError('required')">请选择扣减/新增！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="deductPoints">扣减/增加分值</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入扣减/增加分值" formControlName="deductPoints" id="deductPoints">
+          <nz-form-explain *ngIf="formGroup.get('deductPoints').dirty && formGroup.get('deductPoints').hasError('required')">请输入扣减/增加分值！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('deductPoints').dirty && formGroup.get('deductPoints').hasError('pattern')">请输入正确的金额！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

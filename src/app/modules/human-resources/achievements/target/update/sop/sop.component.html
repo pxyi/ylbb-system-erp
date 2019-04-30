@@ -1,0 +1,10 @@
+<ng-container *ngFor="let task of dataSet">
+  <ea-table [thead]="[{name: task.taskName, width: '300px'}, {name: '积分', width: '80px'}, {name: '状态', width: '100px'}, {name: '操作', width: '100px'}]" [dataSet]="task.childTaskList" [showPage]="false" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.taskName }}</td>
+      <td>{{ data.integral }}</td>
+      <td>{{ data.status == 0 ? '使用中' : '暂停中' }}</td>
+      <td><a (click)="statusChange(data)">{{ data.status == 0 ? '暂停' : '启用' }}</a></td>
+    </ng-template>
+  </ea-table>
+</ng-container>

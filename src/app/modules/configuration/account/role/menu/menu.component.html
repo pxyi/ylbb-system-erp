@@ -1,0 +1,11 @@
+<nz-spin [nzSpinning]="loading" nzTip='Loading...'>
+  <nz-tree
+    #NzTree
+    [(ngModel)]="nodes"
+    [nzCheckable]="true"
+    [nzDefaultCheckedKeys]="checkedNodes"
+    [nzDefaultExpandAll]="true"
+    (nzCheckBoxChange)="checkBoxChange()"
+  >
+  </nz-tree>
+</nz-spin>

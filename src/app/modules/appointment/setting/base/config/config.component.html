@@ -1,0 +1,48 @@
+<div style="margin-bottom: 24px; color: #f5222d;">*修改完下表的配置后,预约按日配置并不会立即生效,如果要立即生效,请按初始化日班表按钮!</div>
+
+<ea-table 
+  url="/reserveCommonConfig/queryStoreConfigPlan"
+  [thead]="['序号', '名称', '开始时间', '状态', '描述', '操作']"
+  (ready)="ready($event)"
+  [showPage]="false"
+  [title]="title"
+  [EaTableTbodyTr]="tableTbodyTr">
+  <ng-template #tableTbodyTr let-data>
+    <td>{{ data.index }}</td>
+    <td>
+      <div [hidden]="data.edit"> {{ data.planName }}</div>
+      <div [hidden]="!data.edit">
+        <input nz-input type="text" style="width: 80px" [(ngModel)]="data.planName" nzSize="small" placeholder="方案名称">
+      </div>
+    </td>
+    <td>
+      <div [hidden]="data.edit">{{ data.startDate }}</div>
+      <div [hidden]="!data.edit">
+        <nz-date-picker style="width: 140px" nzFormat="yyyy-MM-dd" nzSize="small" [(ngModel)]="data.startDate" (ngModelChange)="dateChange($event, data)" nzPlaceHolder="方案开始时间"></nz-date-picker>
+      </div>
+    </td>
+    <td><nz-tag [nzColor]="data.planStatus == 0 ? '#2db7f5' : '#f50'">{{ data.planStatus == 0 ? '启用' : '未启用' }}</nz-tag></td>
+    <td>
+      <div [hidden]="data.edit">{{ data.planDes }}</div>
+      <div [hidden]="!data.edit">
+        <input nz-input type="text" [(ngModel)]="data.planDes" nzSize="small" placeholder="方案描述">
+      </div>
+    </td>
+    <td>
+      <a (click)="update(data)">
+        <i nz-icon nzType="loading" *ngIf="data.loading"></i>
+        <ng-container *ngIf="!data.loading">
+          {{ data.edit ? '保存' : '编辑' }}
+        </ng-container>
+      </a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="configure(data.id)">配置</a>
+    </td>
+  </ng-template>
+
+  <ng-template #title>
+    <div [style.text-align]="'right'">
+      <button nz-button nzType="primary" (click)="dataSet.push({index: dataSet.length + 1, edit: true})">添加方案</button>
+    </div>
+  </ng-template>
+</ea-table>

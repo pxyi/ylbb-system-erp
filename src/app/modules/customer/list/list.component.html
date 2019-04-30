@@ -1,0 +1,59 @@
+<div class="container">
+  <ea-list-page 
+    #listPage
+    url="/member/list"
+    [allowSpace]="false"
+    [queryNode]="queryNode"
+    [paramsInit]="paramsInit"
+    [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '婴儿类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注']"
+    [checked]="true"
+    [isRadio]="true"
+    [checkedItems]="checkedItems"
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    (requestDataChange)="dataChange($event)"
+    [EaBtns]="EaBtns">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.memberCard }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.nick }}</td>
+      <td><i class="iconfont" [title]="data.sex" [ngClass]="[data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i></td>
+      <td>{{ data.babyNumber }}</td>
+      <td>{{ data.monthAge }}</td>
+      <td>{{ data.parentName }}</td>
+      <td>{{ data.mobilePhone }}</td>
+      <td>
+        <a (click)="previewCommunity(data.communityId);$event.stopPropagation()">{{ data.communityName }}</a>
+      </td>
+      <td>{{ data.babyType }}</td>
+      <td>{{ data.memberPoint }}</td>
+      <td><nz-tag *ngIf="data.expireDays || data.expireDays == 0" [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
+      <td [style.color]="data.weighRemind ? '#f5222d' : '' ">{{ data.weighRemind ? '需要' : '不需要' }}</td>
+      <td [style.color]="data.photoRemind ? '#f5222d' : '' ">{{ data.photoRemind ? '需要' : '不需要' }}</td>
+      <td>{{ data.loginTimes }}</td>
+      <td>{{ data.createDate }}</td>
+      <td><span [nzTitle]="data.comment" nz-tooltip *ngIf="data.comment">{{ data.comment.length > 20 ? data.comment.substr(0, 20) + '...' : data.comment }}</span></td>
+    </ng-template>
+
+    <ng-template #EaBtns>
+      <div class="ea-button-group">
+        <button nz-button nzType="primary" (click)="insert()">新增客户</button>
+        <button nz-button (click)="import()">导入客户</button>
+        <button nz-button (click)="operation('appoint')">预约</button>
+        <button nz-button (click)="operation('consumption')">消费</button>
+        <nz-dropdown>
+          <button nz-button nz-dropdown>更多操作<i nz-icon nzType="down"></i></button>
+          <ul nz-menu>
+            <li nz-menu-item><a (click)="operation('update')">编辑</a></li>
+            <li nz-menu-item><a (click)="operation('construction')">建卡</a></li>
+            <li nz-menu-item><a (click)="operation('queryCard')">查卡</a></li>
+            <li nz-menu-item><a (click)="operation('resetPassword')">重置密码</a></li>
+            <li nz-menu-item><a (click)="operation('consumptionLog')">消费记录</a></li>
+            <li nz-menu-item><a (click)="operation('addIntegral')">增加积分</a></li>
+            <li nz-menu-item><a (click)="operation('exchange')">积分兑换</a></li>
+            <li nz-menu-item><a (click)="operation('album')">成长相册</a></li>
+          </ul>
+        </nz-dropdown>
+      </div>
+    </ng-template>
+  </ea-list-page>
+</div>

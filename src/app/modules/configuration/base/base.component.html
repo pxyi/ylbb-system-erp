@@ -1,0 +1,134 @@
+<nz-card [nzBordered]="false" nzTitle="营业时间配置" [nzExtra]="extraTemplate" [nzLoading]="businessLoading">
+  <ng-template #extraTemplate>
+    <button nz-button nzType="primary" (click)="saveBusiness()">保存</button>
+  </ng-template>
+  <form nz-form [formGroup]="businessHoursForm">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>营业开始时间</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="startHour" nzPlaceHolder="请选择营业开始时间">
+              <nz-option [nzValue]="6" nzLabel="6点"></nz-option>
+              <nz-option [nzValue]="7" nzLabel="7点"></nz-option>
+              <nz-option [nzValue]="8" nzLabel="8点"></nz-option>
+              <nz-option [nzValue]="9" nzLabel="9点"></nz-option>
+              <nz-option [nzValue]="10" nzLabel="10点"></nz-option>
+              <nz-option [nzValue]="11" nzLabel="11点"></nz-option>
+              <nz-option [nzValue]="12" nzLabel="12点"></nz-option>
+              <nz-option [nzValue]="13" nzLabel="13点"></nz-option>
+              <nz-option [nzValue]="14" nzLabel="14点"></nz-option>
+              <nz-option [nzValue]="15" nzLabel="15点"></nz-option>
+              <nz-option [nzValue]="16" nzLabel="16点"></nz-option>
+              <nz-option [nzValue]="17" nzLabel="17点"></nz-option>
+              <nz-option [nzValue]="18" nzLabel="18点"></nz-option>
+              <nz-option [nzValue]="19" nzLabel="19点"></nz-option>
+              <nz-option [nzValue]="20" nzLabel="20点"></nz-option>
+              <nz-option [nzValue]="21" nzLabel="21点"></nz-option>
+              <nz-option [nzValue]="22" nzLabel="22点"></nz-option>
+              <nz-option [nzValue]="23" nzLabel="23点"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>营业截止时间</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="endHour" nzPlaceHolder="请选择营业截止时间">
+              <nz-option [nzValue]="6" nzLabel="6点"></nz-option>
+              <nz-option [nzValue]="7" nzLabel="7点"></nz-option>
+              <nz-option [nzValue]="8" nzLabel="8点"></nz-option>
+              <nz-option [nzValue]="9" nzLabel="9点"></nz-option>
+              <nz-option [nzValue]="10" nzLabel="10点"></nz-option>
+              <nz-option [nzValue]="11" nzLabel="11点"></nz-option>
+              <nz-option [nzValue]="12" nzLabel="12点"></nz-option>
+              <nz-option [nzValue]="13" nzLabel="13点"></nz-option>
+              <nz-option [nzValue]="14" nzLabel="14点"></nz-option>
+              <nz-option [nzValue]="15" nzLabel="15点"></nz-option>
+              <nz-option [nzValue]="16" nzLabel="16点"></nz-option>
+              <nz-option [nzValue]="17" nzLabel="17点"></nz-option>
+              <nz-option [nzValue]="18" nzLabel="18点"></nz-option>
+              <nz-option [nzValue]="19" nzLabel="19点"></nz-option>
+              <nz-option [nzValue]="20" nzLabel="20点"></nz-option>
+              <nz-option [nzValue]="21" nzLabel="21点"></nz-option>
+              <nz-option [nzValue]="22" nzLabel="22点"></nz-option>
+              <nz-option [nzValue]="23" nzLabel="23点"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>老师早晚班</nz-form-label>
+          <nz-form-control>
+            <nz-switch formControlName="teacherSchedule" nzCheckedChildren="启用" nzUnCheckedChildren="禁用"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card [nzBordered]="false" nzTitle="消息发送配置" [nzExtra]="extraTemplate1" [nzLoading]="messageLoading">
+  <ng-template #extraTemplate1>
+    <button nz-button nzType="primary" (click)="saveMessage()">保存</button>
+  </ng-template>
+  <form nz-form [formGroup]="messageSendForm">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label>消费后</nz-form-label>
+          <nz-form-control>
+            <label nz-checkbox formControlName="consumeSms">发短信</label>
+            <label nz-checkbox formControlName="consumeMsg">发APP消息</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label>预约提醒</nz-form-label>
+          <nz-form-control>
+            <label nz-checkbox formControlName="reserveSms">发短信</label>
+            <label nz-checkbox formControlName="reserveMsg">发APP消息</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label>生日提醒</nz-form-label>
+          <nz-form-control>
+            <label nz-checkbox formControlName="birthdaySms">发短信</label>
+            <label nz-checkbox formControlName="birthdayMsg">发APP消息</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label>开卡短信</nz-form-label>
+          <nz-form-control>
+            <label nz-checkbox formControlName="openCardSms">发短信</label>
+            <label nz-checkbox formControlName="openCardMsg">发APP消息</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label>卡过期提醒</nz-form-label>
+          <nz-form-control>
+            <label nz-checkbox formControlName="expireCardSms">发短信</label>
+            <label nz-checkbox formControlName="expireCardMsg">发APP消息</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" [nzXl]="8">
+        <nz-form-item>
+          <nz-form-label>30天未到店</nz-form-label>
+          <nz-form-control>
+            <label nz-checkbox formControlName="monthReachSms">发短信</label>
+            <label nz-checkbox formControlName="monthReachMsg">发APP消息</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>

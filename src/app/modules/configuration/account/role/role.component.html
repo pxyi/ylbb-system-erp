@@ -1,0 +1,80 @@
+<div class="container">
+  <ng-template #EaBtns>
+    <button nz-button nzType="primary" (click)="openCreate()">新增角色</button>
+  </ng-template>
+  <ea-list-page 
+    #EaListPage 
+    url="/roleManagement/list" 
+    [queryNode]="queryNode" 
+    [tableThead]="['角色名称', '角色代码', '创建日期', '备注', '状态', '操作']" 
+    [allowSpace]="false" 
+    [EaTableTbodyTr]="EaTableTbodyTr"
+    [EaBtns]="EaBtns">
+    <ng-template #EaTableTbodyTr let-data>
+      <td>{{ data.name }}</td>
+      <td>{{ data.code }}</td>
+      <td>{{ data.createTime }}</td>
+      <td>{{ data.memo }}</td>
+      <td><nz-tag [nzColor]="data.status == 0 ? '#2db7f5' : ''">{{ data.status == 0 ? '启用' : '停用' }}</nz-tag></td>
+      <td>
+        <ng-container *ngIf="data.name != '门店管理员'">
+          <a href="javascript:;" (click)="editRole(data)">编辑</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <nz-dropdown>
+            <a nz-dropdown>更多 <i nz-icon type="down"></i></a>
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>
+                <a nz-popconfirm nzTitle="确认删除此角色吗?" nzOkText="删除" nzCancelText="取消" (nzOnConfirm)="deleteRole(data.id)">删除</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="allocationMenu(data.id)">分配菜单</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </ng-container>
+      </td>
+    </ng-template>
+  </ea-list-page>
+</div>
+
+
+<nz-modal [(nzVisible)]="showCreateRole" nzTitle="角色信息" [nzFooter]="modalFooter" (nzOnCancel)="showCreateRole = false">
+
+  <form nz-form [formGroup]="createRoleForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">角色名称</nz-form-label>
+      <nz-form-control [nzSpan]="16" [ngClass]="{'has-error': createRoleForm.get('name').value === '门店管理员'}">
+        <input nz-input type="text" formControlName="name" placeholder="请输入角色名称">
+        <nz-form-explain *ngIf="createRoleForm.get('name').dirty && createRoleForm.get('name').errors">请输入角色名称!</nz-form-explain>
+        <nz-form-explain *ngIf="createRoleForm.get('name').dirty && createRoleForm.get('name').value === '门店管理员'">禁止使用“门店管理员”作为角色名称!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">角色代码</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input type="text" formControlName="code" placeholder="请输入角色代码">
+        <nz-form-explain *ngIf="createRoleForm.get('code').dirty && createRoleForm.get('code').errors">请输入角色代码!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" [nzRequired]="true">状态</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <nz-radio-group formControlName="status">
+          <label nz-radio-button [nzValue]="0">启用</label>
+          <label nz-radio-button [nzValue]="1">停用</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">备注</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <textarea nz-input formControlName="memo" placeholder="请输入角色备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="showCreateRole = false">取消</button>
+    <button nz-button nzType="primary" [nzLoading]="createLoading" (click)="crateRole()">确定</button>
+  </ng-template>
+</nz-modal>

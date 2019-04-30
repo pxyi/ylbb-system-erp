@@ -1,0 +1,58 @@
+<ea-query-simp title="预约设置" [node]="[{ label: '时段', type: 'between', key: 'time', valueKey: ['startHour', 'endHour'], placeholder: ['请输入最小时段', '请输入最大时段'] }]" (onSubmit)="getData($event)"></ea-query-simp>
+
+<div style="margin-bottom: 24px;">
+  <button nz-button nzType="primary" (click)="init()" style="margin-right: 8px;">初始化日班表</button>
+  <button nz-button nzType="primary" (click)="config()">配置方案</button>
+
+<div style="margin-left: 24px; display: inline-block; color: #f5222d;">*修改完下表的配置后,预约按日配置并不会立即生效,如果要立即生效,请按初始化日班表按钮!</div>
+</div>
+
+<nz-table #basicTable nzBordered [nzShowPagination]="false" [nzPageSize]="999" [nzData]="dataSet" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th rowspan="2">时间</th>
+      <th colspan="2">星期一</th>
+      <th colspan="2">星期二</th>
+      <th colspan="2">星期三</th>
+      <th colspan="2">星期四</th>
+      <th colspan="2">星期五</th>
+      <th colspan="2">星期六</th>
+      <th colspan="2">星期日</th>
+    </tr>
+    <tr>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+      <th>婴儿</th>
+      <th>幼儿</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.key }}</td>
+      <td>{{ data.value.baby.week2 }}</td>
+      <td>{{ data.value.child.week2 }}</td>
+      <td>{{ data.value.baby.week3 }}</td>
+      <td>{{ data.value.child.week3 }}</td>
+      <td>{{ data.value.baby.week4 }}</td>
+      <td>{{ data.value.child.week4 }}</td>
+      <td>{{ data.value.baby.week5 }}</td>
+      <td>{{ data.value.child.week5 }}</td>
+      <td>{{ data.value.baby.week6 }}</td>
+      <td>{{ data.value.child.week6 }}</td>
+      <td>{{ data.value.baby.week7 }}</td>
+      <td>{{ data.value.child.week7 }}</td>
+      <td>{{ data.value.baby.week1 }}</td>
+      <td>{{ data.value.child.week1 }}</td>
+    </tr>
+  </tbody>
+</nz-table>

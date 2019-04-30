@@ -1,0 +1,23 @@
+<div class="container">
+  <ea-list-page-simp 
+    #listPage
+    url="/commission/listEmployeeCommission"
+    [allowSpace]="false"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/employee/listEmployee' },
+      { label: '起始日期', key: 'date', valueKey: ['startDate', 'endDate'], type: 'rangepicker' },
+      { label: '类型', key: 'commissionType', type: 'select', options: [ { name: '服务', id: 1 }, { name: '线索', id: 2 }, { name: '体验卡', id: 3 }, { name: '回访', id: 4 }, { name: '其他提成类型', id: 5 } ] }
+    ]"
+    [tableThead]="['员工姓名', '级别', '类型', '宝宝姓名', '满意度', '提成', '时间']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.starLevel == 1 ? '一星(初级)' : data.starLevel == 2 ? '二星(中级)' : data.starLevel == 3 ? '三星(高级)' : '--' }}</td>
+      <td>{{ data.commissionType == 1 ? '服务 ' : data.commissionType == 2 ? '线索 ' : data.commissionType == 3 ? '体验卡' : data.commissionType == 4 ? '回访' : data.commissionType == 5 ? '其他' : '--' }}</td>
+      <td>{{ data.memberName }}</td>
+      <td>{{ data.satisfaction }}</td>
+      <td>{{ data.commissionPoint }}</td>
+      <td>{{ data.createDate }}</td>
+    </ng-template>
+  </ea-list-page-simp>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+  <ea-query-simp [node]="queryNode" title="卡业务管理" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="primary" style="margin-bottom: 24px;" (click)="updateId = null; name = ''; showModal = true;">新增卡业务</button>
+
+  <ea-table 
+    #table 
+    url="/cardBusinessManagement/list" 
+    [allowSpace]="false" 
+    [thead]="['业务名称', '操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>
+        <a (click)="updateId = data.id; name = data.name; showModal = true;">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定要删除此业务类型吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
+
+<nz-modal [(nzVisible)]="showModal" nzTitle="编辑卡业务" (nzOnCancel)="showModal = false" (nzOnOk)="enterUpdate()" [nzOkLoading]="updateLoading">
+  <input type="text" [(ngModel)]="name" nz-input placeholder="请输入卡业务名称">
+</nz-modal>
