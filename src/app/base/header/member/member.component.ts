@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/core/reducers/reducers-config';
 import { debounceTime, filter } from 'rxjs/operators';
 import { EsService } from '../es.service';
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 
 @Component({
   selector: 'app-member',
@@ -105,9 +106,8 @@ export class MemberComponent implements OnInit {
   modelChange() {
     this.searchSubject.next(this.mobilePhone);
   }
-  close() {
-    this.drawerRef.close();
-  }
+  
+  @DrawerClose() close: () => void;
 
   closeDrawer() {
     this.childrenVisible = false;

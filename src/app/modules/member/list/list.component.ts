@@ -125,6 +125,7 @@ export class ListComponent implements OnInit {
         this.paramsInit.cardCode = res.params.code;
         setTimeout(() => {
           this.listPage.eaQuery._queryForm.patchValue({ cardCode: res.params.code })
+          this.listPage.eaQuery._submit();
         });
       }
     });

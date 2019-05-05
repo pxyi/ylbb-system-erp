@@ -1,47 +1,45 @@
 <div [style.margin-bottom]="'20px'">
   <input nz-input placeholder="请输入搜索内容" [(ngModel)]="mobilePhone" (ngModelChange)="modelChange()">
 </div>
-<div class="select_list">
-  <div class="select_tit">客户信息</div>
-  <nz-table #basicTable nzShowPagination="false" [nzData]="memberList_b" [nzLoading]="loading_b">
-    <thead>
-      <tr>
-        <th>姓名</th>
-        <th>小名</th>
-        <th>家长姓名</th>
-        <th>手机号</th>
-        <th>备注</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="shkem" *ngFor="let data of memberList_b" (click)="selectMemberList(data)">
-        <td>
-          <span *ngIf="data.name" [innerHTML]="data.name"></span>
-        </td>
-        <td>
-          <span *ngIf="data.mobile" [innerHTML]="data.nick"></span>
-        </td>
-        <td>
-          <span *ngIf="data.parentName" [innerHTML]="data.parentName"></span>
-        </td>
-        <td>
-          <span *ngIf="data.mobile" [innerHTML]="data.mobile"></span>
-        </td>
-        <td>
-          <span *ngIf="data.comment" nz-tooltip [nzTitle]="data.comment"
-            [innerHTML]="data.comment.length > 10 ? data.comment.substr(0, 10) + '...' : data.comment"></span>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
-  <div style="text-align: right; margin-top: 20px">
-    <nz-pagination [(nzPageIndex)]="pageIndex_b" [nzTotal]="total_b" [nzShowTotal]="totalTemplate" [nzSize]="'small'"
-      nzShowQuickJumper [nzPageSize]="20" (nzPageIndexChange)="modelChange()"></nz-pagination>
-    <ng-template #totalTemplate let-total> 共 {{ total_b ? total_b : 0 }} 条 </ng-template>
-  </div>
+
+<nz-table #basicTable nzShowPagination="false" [nzData]="memberList_b" [nzLoading]="loading_b">
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>小名</th>
+      <th>家长姓名</th>
+      <th>手机号</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="shkem" *ngFor="let data of memberList_b" (click)="selectMemberList(data)">
+      <td>
+        <span *ngIf="data.name" [innerHTML]="data.name"></span>
+      </td>
+      <td>
+        <span *ngIf="data.mobile" [innerHTML]="data.nick"></span>
+      </td>
+      <td>
+        <span *ngIf="data.parentName" [innerHTML]="data.parentName"></span>
+      </td>
+      <td>
+        <span *ngIf="data.mobile" [innerHTML]="data.mobile"></span>
+      </td>
+      <td>
+        <span *ngIf="data.comment" nz-tooltip [nzTitle]="data.comment"
+          [innerHTML]="data.comment.length > 10 ? data.comment.substr(0, 10) + '...' : data.comment"></span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<div style="text-align: right; margin-top: 20px">
+  <nz-pagination [(nzPageIndex)]="pageIndex_b" [nzTotal]="total_b" [nzShowTotal]="totalTemplate" [nzSize]="'small'"
+    nzShowQuickJumper [nzPageSize]="20" (nzPageIndexChange)="modelChange()"></nz-pagination>
+  <ng-template #totalTemplate let-total> 共 {{ total_b ? total_b : 0 }} 条 </ng-template>
 </div>
 
-<nz-drawer [nzClosable]="false" [nzVisible]="childrenVisible" [nzWidth]="720" [nzTitle]="null" (nzOnClose)="closeDrawer()">
+<nz-drawer [nzClosable]="false" [nzVisible]="childrenVisible" [nzWidth]="720" nzTitle="客户信息" (nzOnClose)="closeDrawer()">
   <form nz-form [formGroup]="formGroup">
     <div nz-row nzGutter="8">
       <div nz-col nzSpan="12">
@@ -155,13 +153,13 @@
             [queryParams]="{type: 'consumption', phone: clMobilePhone}" (click)="close()">消费</button>
           <button nz-button nzType="primary" routerLink="/home/customer/list"
             [queryParams]="{type: 'construction', phone: clMobilePhone}" (click)="close()">建卡</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
             [queryParams]="{type: 'change', code: formGroup.get('cardCode').value}" (click)="close()">卡项变更</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
             [queryParams]="{type: 'stop', code: formGroup.get('cardCode').value}" (click)="close()">停卡</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
             [queryParams]="{type: 'open', code: formGroup.get('cardCode').value}" (click)="close()">重开卡</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/membercard/list"
+          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
             [queryParams]="{type: 'continued', code: formGroup.get('cardCode').value}" (click)="close()">续卡</button>
         </nz-button-group>
       </div>
