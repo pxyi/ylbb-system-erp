@@ -5,9 +5,10 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MemberComponent } from './member/member.component';
-import { NzMessageService, NzDrawerService, NzNotificationService } from 'ng-zorro-antd';
+import { NzMessageService, NzDrawerService, NzNotificationService, NzDrawerRef } from 'ng-zorro-antd';
 import { WebsocketService } from './websocket.service';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { EsService } from './es.service';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
     private notification: NzNotificationService,
     private message: NzMessageService,
     private drawer: NzDrawerService,
-    private resuse: AppReuseStrategy
+    private es: EsService
   ) {
     // this.openWs();
 
@@ -71,7 +72,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  esDrawer: NzDrawerRef
   ngOnInit() {
+    this.es.$memberInfoSubject.subscribe(res => this.esDrawer.nzOffsetX = res ? 180 : 0);
   }
 
   routeActiveIndex: number;
@@ -94,10 +97,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
+  childrenVisible: boolean;
   search(mobilePhone) {
-    this.drawer.create({
+    this.esDrawer = this.drawer.create({
       nzTitle: '快捷操作',
-      nzWidth: 1100,
+      nzWidth: 720,
       nzContent: MemberComponent,
       nzContentParams: { datas: mobilePhone }
     })

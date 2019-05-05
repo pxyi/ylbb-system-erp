@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/core/reducers/reducers-config';
 import { debounceTime, filter } from 'rxjs/operators';
+import { EsService } from '../es.service';
 
 @Component({
   selector: 'app-member',
@@ -29,13 +30,15 @@ export class MemberComponent implements OnInit {
     mobilePhone: ''
   };
 
+  childrenVisible: boolean;
+
   constructor(
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef,
     private http: HttpService,
     private store: Store<AppState>,
     private message: NzMessageService,
-
+    private es: EsService
   ) {
     this.store.select('userInfoState').subscribe(res => { this.storeId = res.store['id']; });
 
@@ -90,6 +93,8 @@ export class MemberComponent implements OnInit {
     this.http.get('/homePage/getMemberDetail', { id }, false).then(res => {
       if (res.code == 1000) {
         this.formGroup.patchValue(res.result);
+        this.es.$memberInfoSubject.next(true);
+        this.childrenVisible = true;
         this.clMobilePhone = res.result.mobilePhone;
       } else {
         this.message.create('warning', res.info);
@@ -102,6 +107,11 @@ export class MemberComponent implements OnInit {
   }
   close() {
     this.drawerRef.close();
+  }
+
+  closeDrawer() {
+    this.childrenVisible = false;
+    this.es.$memberInfoSubject.next(false);
   }
 
 }

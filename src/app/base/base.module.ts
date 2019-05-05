@@ -1,3 +1,4 @@
+import { EsService } from './header/es.service';
 import { AppReuseStrategy } from './../core/app-reuse-strategy';
 import { NgRelaxModule } from './../ng-relax/ng-relax.module';
 import { NgModule } from '@angular/core';
@@ -21,6 +22,6 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     NgZorroAntdModule
   ],
   entryComponents: [MemberComponent],
-  providers: [AppReuseStrategy]
+  providers: [AppReuseStrategy, EsService]
 })
 export class BaseModule { }
