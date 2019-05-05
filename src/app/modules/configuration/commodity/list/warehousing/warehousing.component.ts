@@ -28,6 +28,7 @@ export class WarehousingComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
+      id: [this.commodityInfo.id],
       name: [{ value: this.commodityInfo.name, disabled: true }],
       stockPrice: [{ value: this.commodityInfo.stockPrice, disabled: true }],
       price: [{ value: this.commodityInfo.price, disabled: true }],

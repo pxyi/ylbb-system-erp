@@ -80,7 +80,7 @@
       <nz-form-item>
         <nz-form-label nzRequired>入库密码</nz-form-label>
         <nz-form-control>
-          <input nz-input type="password" placeholder="请输入入库密码（即老师APP登录密码）" formControlName="password">
+          <input nz-input [type]="formGroup.get('password').valid ? 'password' : 'text'" placeholder="请输入入库密码（即老师APP登录密码）" formControlName="password">
           <nz-form-explain *ngIf="formGroup.get('password').dirty && formGroup.get('password').hasError('required')">请输入入库密码！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
