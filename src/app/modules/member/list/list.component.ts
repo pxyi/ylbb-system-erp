@@ -106,6 +106,12 @@ export class ListComponent implements OnInit {
       type        : 'input',
       isHide      : true
     }, 
+    {
+      label       : '会员Id',
+      key         : 'memberId',
+      type        : 'input',
+      isHide      : true
+    }
   ]
   
   paramsDefault = {};
@@ -120,11 +126,11 @@ export class ListComponent implements OnInit {
     private drawer: NzDrawerService
   ) {
     this.activatedRoute.queryParamMap.subscribe((res: any) => {
-      if (res.params.code) {
+      if (res.params.memberId) {
         this.type = res.params.type;
-        this.paramsInit.cardCode = res.params.code;
+        this.paramsInit.memberId = res.params.memberId;
         setTimeout(() => {
-          this.listPage.eaQuery._queryForm.patchValue({ cardCode: res.params.code })
+          this.listPage.eaQuery._queryForm.patchValue({ memberId: res.params.memberId })
           this.listPage.eaQuery._submit();
         });
       }

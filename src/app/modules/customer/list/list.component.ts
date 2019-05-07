@@ -149,7 +149,7 @@ export class ListComponent implements OnInit {
             setTimeout(() => {
               this.router.navigate(['/home/member/list'], {
                 queryParams: {
-                  code: res.memberCard
+                  memberId: res.id
                 }
               });
             }, 300);
