@@ -6,6 +6,8 @@
     "start": "ng serve --port 8089",
     "build": "ng build --prod",
     "test": "ng build --prod --configuration=test",
+    "push-dev": "rm -rf /Users/phuhoang/test-83/ylbb-system-erp && mv /Users/phuhoang/Desktop/ylbb-system-erp/dist/ylbb-system-erp /Users/phuhoang/test-83/ylbb-system-erp && cd /Users/phuhoang/test-83 && git pull && git add . && git commit -m '-' && git push",
+    "push-prod": "cd /Users/phuhoang/repository/ylbb-qynewerp-html && rm -rf *.js *.html assets *.txt *.png *.css *.ico && mv /Users/phuhoang/Desktop/ylbb-system-erp/dist/ylbb-system-erp/* /Users/phuhoang/repository/ylbb-qynewerp-html && git pull && git add . && git commit -m '-' && git push",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
