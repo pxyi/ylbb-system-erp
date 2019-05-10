@@ -9,11 +9,20 @@
     }
   }
   nz-card .ant-input-suffix {
+    width: 100%;
+    padding-left: 14px;
     bottom: 0 !important;
     top: auto !important;
     right: 5px !important;
     font-size: 12px !important;
     color: rgba(0,0,0,.5) !important;
+    div {
+      text-align: right;
+      span:first-child {
+        float: left;
+        color: #333;
+      }
+    }
   }
 }
 .header {
@@ -30,4 +39,17 @@ form {
   padding: 0 12px;
   border-radius: 2px;
   border: 1px solid #bababa;
+}
+.content-box {
+  position: relative;
+  .prefix {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    z-index: 9;
+  }
+  textarea {
+    padding-left: 8px;
+    text-indent: 62px;
+  }
 }

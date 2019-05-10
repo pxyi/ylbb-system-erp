@@ -1,8 +1,12 @@
+import { AppState } from './../../../core/reducers/reducers-config';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { HttpService } from './../../../ng-relax/services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { UserInfoState } from 'src/app/core/reducers/userInfo-reducer';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sendout',
@@ -88,11 +92,14 @@ export class SendoutComponent implements OnInit {
 
   queryLoading: boolean;
 
+  $userInfo: Observable<UserInfoState>;
+
   constructor(
     private http: HttpService,
     private message: NzMessageService,
     private fb: FormBuilder = new FormBuilder(),
-    private modal: NzModalService
+    private modal: NzModalService,
+    private store: Store<AppState>
   ) {
     this.http.post('/smsBalance/balance').then(res => this.smsBalanceSurplus = res.result);
 
@@ -100,6 +107,7 @@ export class SendoutComponent implements OnInit {
     this.http.post('/smsBalance/balance').then(res => this.smsBalance = res.result);
   }
   ngOnInit() {
+    this.$userInfo = this.store.select('userInfoState');
     this.formGroup = this.fb.group({
       mobilePhones: [],
       type: [1],
