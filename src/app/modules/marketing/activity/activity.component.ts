@@ -60,7 +60,7 @@ export class ActivityComponent implements OnInit {
           nzContentParams: { activityInfo }
         })
       } else {
-        this.router.navigate(['/home/configuration/wechat', { is: true }]);
+        this.router.navigate(['/home/configuration/store', { is: true }]);
       }
     })
   }
