@@ -45,19 +45,17 @@
         <div nz-row nzGutter="8">
           <nz-form-item>
             <nz-form-label nzRequired nzFor="content">短信内容</nz-form-label>
-            <nz-form-control>
-              <nz-input-group [nzSuffix]="suffixTemplate" class="content-box">
-                <div class="prefix">【{{ ($userInfo | async).store.shopBrand.brandName }}】</div>
-                <textarea nz-input placeholder="请输入短信内容" maxlength="58" formControlName="content" id="content" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+            <nz-form-control class="message-control">
+              <nz-form-text>【{{ ($userInfo | async).store.shopBrand.brandName }}】</nz-form-text>
+              <nz-input-group [nzSuffix]="suffixTemplate">
+                <textarea nz-input placeholder="请输入短信内容" formControlName="content" id="content" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
               </nz-input-group>
+              <nz-form-text>回复TD退订</nz-form-text>
               <ng-template #suffixTemplate>
-                <div>
-                  <span>回复TD退订</span>
-                  <span [style.color]="formGroup.get('content').value && formGroup.get('content').value.length > 58 ? '#f5222d' : ''">
-                    {{ formGroup.get('content').value ? formGroup.get('content').value.length + 12 : 12 }}
-                  </span>
-                  <span>/70</span>
-                </div>
+                <span [style.color]="formGroup.get('content').value && formGroup.get('content').value.length > 58 ? '#f5222d' : ''">
+                  {{ formGroup.get('content').value ? formGroup.get('content').value.length + 12 : 12 }}
+                </span>
+                <span>/70</span>
               </ng-template>
               <nz-form-explain *ngIf="formGroup.get('content').dirty && formGroup.get('content').hasError('required')">请输入短信内容！</nz-form-explain>
             </nz-form-control>

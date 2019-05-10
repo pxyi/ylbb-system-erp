@@ -119,8 +119,8 @@ export class SendoutComponent implements OnInit {
       this.smsTemplateList.map(item => item.id === id && this.formGroup.patchValue({ content: item.memo }));
     });
     this.formGroup.get('content').valueChanges.subscribe(val => {
-      this.sendNum = this.selectList.length * (val && val.length > 60 ? Math.ceil(val.length / 60) : 1);
-    })
+      this.sendNum = this.selectList.length * (val && val.length + 12 > 70 ? Math.ceil((val.length + 12) / 70) : 1);
+    });
   }
 
   query(params = {}) {

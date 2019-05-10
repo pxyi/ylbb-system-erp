@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/core/reducers/reducers-config';
 
 @Component({
   selector: 'app-update',
@@ -17,16 +19,20 @@ export class UpdateComponent implements OnInit {
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
-    private drawerRef: NzDrawerRef
+    private drawerRef: NzDrawerRef,
+    private store: Store<AppState>
   ) { 
     this.formGroup = this.fb.group({
       id: [],
+      prefix: [{ value: null, disabled: true }],
+      suffix: [{ value: '回复TD退订', disabled: true}],
       title: [, [Validators.required]],
       memo: [, [Validators.required]],
     });
   }
 
   ngOnInit() {
+    this.store.select('userInfoState').subscribe(res => this.formGroup.patchValue({ prefix: `【${res.store.shopBrand.brandName}】` }))
   }
 
   saveLoading: boolean;

@@ -10,8 +10,14 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzRequired>短信前缀</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="prefix">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
     <div nz-col nzSpan="24">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="memo">模板内容</nz-form-label>
@@ -20,6 +26,14 @@
             [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
           <nz-form-explain *ngIf="formGroup.get('memo').dirty && formGroup.get('memo').hasError('required')">请输入模板内容！
           </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzRequired>短信后缀</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="suffix">
         </nz-form-control>
       </nz-form-item>
     </div>
