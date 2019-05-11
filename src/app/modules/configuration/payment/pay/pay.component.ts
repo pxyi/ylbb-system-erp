@@ -7,6 +7,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import QRCode from 'qrcode';
 import { AppState } from 'src/app/core/reducers/reducers-config';
 import { YlbbResponse } from 'src/app/core/http.intercept';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class PayComponent implements OnInit, OnDestroy {
   payType;
 
   sign;
-  domain;
+  domain = environment.domainPay;
 
   formGroup: FormGroup;
 
@@ -57,8 +58,7 @@ export class PayComponent implements OnInit, OnDestroy {
     this.autograph.getAutograph().then(res => {
       this.sign = res;
       this.getCommodity();
-    })
-    this.domain = this.autograph.domain;
+    });
   }
 
   getCommodity() {

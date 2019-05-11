@@ -1,5 +1,6 @@
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Injectable } from "@angular/core";
+import { environment } from 'src/environments/environment';
 
 declare const OSS;
 
@@ -9,6 +10,8 @@ export class AliOssClientService {
   private _aliOssClient;
 
   private _loading: boolean;
+
+  private domain = environment.domainOss;
 
   constructor(
     private http: HttpService
@@ -22,7 +25,7 @@ export class AliOssClientService {
         this._getAliOssToken(resolve, reject);
       } else {
         this._loading = true;
-        this.http.get('https://oss.beibeiyue.com/oss/getOSSToken?type=1', {}, false).then(res => {
+        this.http.get(this.domain + '/oss/getOSSToken?type=1', {}, false).then(res => {
           this._loading = false;
           if (res.result == 0) {
             let creds = res['data'];

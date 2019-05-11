@@ -7,8 +7,6 @@ import { AppState } from 'src/app/core/reducers/reducers-config';
 @Injectable()
 export class AutographService {
 
-  domain = 'https://pay.beibeiyue.com/pay';
-
   getAutograph(): Promise<object> {
     return new Promise((resolve, reject) => {
       this.http.post('/payment/intoOnlinePayment').then(res => {
