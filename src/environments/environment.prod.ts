@@ -9,4 +9,5 @@ export const environment = {
   
   domainPay: 'https://pay.haochengzhang.com/pay',
   domainOss: 'https://oss.haochengzhang.com',
+  domainEs: 'http://es.haochengzhang.com'
 };

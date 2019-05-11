@@ -8,6 +8,7 @@ import { AppState } from 'src/app/core/reducers/reducers-config';
 import { debounceTime, filter } from 'rxjs/operators';
 import { EsService } from '../es.service';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-member',
@@ -33,6 +34,8 @@ export class MemberComponent implements OnInit {
 
   childrenVisible: boolean;
 
+  domain = environment.domainEs;
+
   constructor(
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef,
@@ -42,7 +45,6 @@ export class MemberComponent implements OnInit {
     private es: EsService
   ) {
     this.store.select('userInfoState').subscribe(res => { this.storeId = res.store['id']; });
-
   }
 
   ngOnInit() {
@@ -63,11 +65,10 @@ export class MemberComponent implements OnInit {
       expireDate: [],
 
     });
-    // this.formGroup.patchValue(this.memberCardInfo);
     this.searchSubject.pipe(debounceTime(500), filter((txt: string) => txt.length >= 1)).subscribe(res => {
       if ((isNaN(this.mobilePhone) && this.mobilePhone != "" || (!isNaN(this.mobilePhone) && this.mobilePhone.length > 3))) {
         this.loading_b = true;
-        this.http.get('http://es.beibeiyue.com/es/erp/query', { index: 'bss', storeId: this.storeId, type: 'member', condition: this.mobilePhone, pageNo: this.pageIndex_b, pageSize: 20 }, false).then(res => {
+        this.http.get(this.domain + '/es/erp/query', { index: 'bss', storeId: this.storeId, type: 'member', condition: this.mobilePhone, pageNo: this.pageIndex_b, pageSize: 20 }, false).then(res => {
           this.loading_b = false;
           if (res['returnCode'] == 'SUCCESS') {
             if (res.result) {
