@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode, QueryComponent } from 'src/app/ng-relax/components/query/query.component';
 import { YlbbResponse } from 'src/app/core/http.intercept';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-record',
@@ -36,7 +37,7 @@ export class RecordComponent implements OnInit {
   sign;
 
 
-  domain;
+  domain = environment.domainPay
 
   _pageInfo = {
     loading: false,
@@ -50,7 +51,6 @@ export class RecordComponent implements OnInit {
     private autograph: AutographService
   ) {
     this._getSign();
-    this.domain = this.autograph.domain;
   }
 
   ngOnInit() {
