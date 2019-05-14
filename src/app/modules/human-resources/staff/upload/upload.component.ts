@@ -1,8 +1,6 @@
-import { HttpService } from './../../../../ng-relax/services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-
-declare const OSS;
+import { AliOssClientService } from 'src/app/ng-relax/services/alioss-client.service';
 
 @Component({
   selector: 'app-upload',
@@ -17,21 +15,10 @@ export class UploadComponent implements OnInit {
 
   constructor(
     private message: NzMessageService,
-    private http: HttpService
+    private aliOssClient: AliOssClientService
   ) {
     /* ----------------- 获取OSS上传凭证 ----------------- */
-    this.http.get('http://oss.beibeiyue.com/oss/getOSSToken?type=1').then(res => {
-      if (res.result == 0) {
-        let creds = res['data'];
-        this._aliOssClient = new OSS.Wrapper({
-          region: 'oss-cn-beijing',
-          accessKeyId: creds.accessKeyId,
-          accessKeySecret: creds.accessKeySecret,
-          stsToken: creds.securityToken,
-          bucket: 'ylbb-business'
-        });
-      }
-    });
+    this.aliOssClient.getClient().then(aliOssClient => this._aliOssClient = aliOssClient);
   }
 
   ngOnInit() { }
