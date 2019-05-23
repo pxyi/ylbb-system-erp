@@ -95,7 +95,7 @@ export class PromotionComponent implements OnInit {
     iframe.height = '602';
     iframe.frameBorder = '0';
     iframe.scrolling = 'no';
-    iframe.src = 'http://wx.beibeiyue.com/popopooc/indexdemo.html?storeId=' + this.storeId;
+    iframe.src = 'https://wx.haochengzhang.com/popopooc/indexdemo.html?storeId=' + this.storeId;
     this.preview.nativeElement.appendChild(iframe);
   }
   update(activityId) {
