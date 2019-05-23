@@ -155,6 +155,12 @@ const routes: Routes = [
         data: { noReuse: true },
         children: [
           {
+            path: 'order',
+            data: { title: '订单列表' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/consumption/order/order.module#OrderModule'
+          },
+          {
             path: 'list',
             data: { title: '消费列表' },
             canLoad: [ AuthGuardService ],

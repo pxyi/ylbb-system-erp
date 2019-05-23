@@ -136,6 +136,11 @@ export const MenuConfig = [
     icon  : 'red-envelope',
     children : [
       {
+        title : '订单列表',
+        key   : '/home/consumption/order',
+        isLeaf: true
+      },
+      {
         title : '消费列表',
         key   : '/home/consumption/list',
         isLeaf: true
