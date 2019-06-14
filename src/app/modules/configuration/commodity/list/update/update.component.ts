@@ -48,21 +48,19 @@ export class UpdateComponent implements OnInit {
   formTypeChange(val) {
     this.formGroup.patchValue({ chargeType: val });
     if (val == 0) {
-      this.formGroup.addControl('categoryId', new FormControl(this.commodityInfo.id ? this.commodityInfo.categoryId : null, [Validators.required]));
-      this.formGroup.addControl('cardNum', new FormControl(this.commodityInfo.id ? this.commodityInfo.cardNum : 0));
-      this.formGroup.addControl('cardAmount', new FormControl(this.commodityInfo.id ? this.commodityInfo.cardAmount : null, [Validators.required]));
+      this.formGroup.addControl('categoryId', this.fb.control(this.commodityInfo ? this.commodityInfo.categoryId : null, [Validators.required]));
+      this.formGroup.addControl('cardNum', this.fb.control(this.commodityInfo ? this.commodityInfo.cardNum : 0));
+      this.formGroup.addControl('cardAmount', this.fb.control(this.commodityInfo ? this.commodityInfo.cardAmount : null, [Validators.required]));
 
       this.formGroup.removeControl('stockPrice');
       this.formGroup.removeControl('price');
       this.formGroup.removeControl('inventory');
       this.formGroup.removeControl('commission');
-
-
     } else {
-      this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo ? this.commodityInfo.stockPrice : null, [Validators.required]));
-      this.formGroup.addControl('price', new FormControl(this.commodityInfo ? this.commodityInfo.price : null, [Validators.required]));
-      this.formGroup.addControl('inventory', new FormControl(this.commodityInfo ? this.commodityInfo.inventory : true, [Validators.required]));
-      this.formGroup.addControl('commission', new FormControl(this.commodityInfo ? this.commodityInfo.commission : true, [Validators.required]));
+      this.formGroup.addControl('stockPrice', this.fb.control(this.commodityInfo ? this.commodityInfo.stockPrice : null, [Validators.required]));
+      this.formGroup.addControl('price', this.fb.control(this.commodityInfo ? this.commodityInfo.price : null, [Validators.required]));
+      this.formGroup.addControl('inventory', this.fb.control(this.commodityInfo ? this.commodityInfo.inventory : true, [Validators.required]));
+      this.formGroup.addControl('commission', this.fb.control(this.commodityInfo ? this.commodityInfo.commission : true, [Validators.required]));
 
       this.formGroup.removeControl('categoryId');
       this.formGroup.removeControl('cardNum');

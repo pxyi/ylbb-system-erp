@@ -20,12 +20,18 @@
     </div>
     <div nz-col nzSpan="24">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="memo">模板内容</nz-form-label>
+        <nz-form-label nzRequired>模板内容</nz-form-label>
         <nz-form-control>
-          <textarea nz-input placeholder="请输入模板内容" formControlName="memo" id="memo"
-            [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
-          <nz-form-explain *ngIf="formGroup.get('memo').dirty && formGroup.get('memo').hasError('required')">请输入模板内容！
-          </nz-form-explain>
+          <nz-input-group [nzSuffix]="suffixTemplate">
+            <textarea nz-input placeholder="请输入模板内容" formControlName="memo" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+            <ng-template #suffixTemplate>
+              <span [style.color]="formGroup.get('memo').value && formGroup.get('memo').value.length > (70 - (formGroup.get('prefix').value.length + 8)) ? '#f5222d' : ''">
+                {{ formGroup.get('memo').value ? formGroup.get('memo').value.length + formGroup.get('prefix').value.length + 8 : formGroup.get('prefix').value.length + 8 }}
+              </span>
+              <span>/70</span>
+            </ng-template>
+          </nz-input-group>
+          <nz-form-explain *ngIf="formGroup.get('memo').dirty && formGroup.get('memo').hasError('required')">请输入模板内容！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

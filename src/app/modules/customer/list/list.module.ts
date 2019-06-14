@@ -12,7 +12,6 @@ import { AddIntegralComponent } from './add-integral/add-integral.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { ImportComponent } from './import/import.component';
 import { AlbumComponent } from './album/album.component';
-import { AppointComponent } from '../../public/appoint/appoint.component';
 
 @NgModule({
   declarations: [ListComponent, UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent],
