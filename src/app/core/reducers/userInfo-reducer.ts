@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { environment } from 'src/environments/environment';
 /**
  * @method 记录用户信息
  * 
@@ -14,7 +15,7 @@ export function userInfoReducer (state: UserInfoState, action: Action) {
           role.roleJsonInfo && (roleAllowPath = roleAllowPath.concat(role.roleJsonInfo.split(',')));
         });
         action['payload']['roleAllowPath'] = Array.from(new Set(roleAllowPath)).join(',');
-        window.localStorage.setItem('userInfo', JSON.stringify(action['payload']));
+        window.localStorage.setItem(`userInfo${environment.version.replace(/\./g, '')}`, JSON.stringify(action['payload']));
         return action['payload'];
       } catch (error) {
         return state;

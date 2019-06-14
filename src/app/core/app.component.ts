@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MenuConfig } from './menu-config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
     private store: Store<AppState>
   ) {
     try {
-      let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+      let userInfo = JSON.parse(window.localStorage.getItem(`userInfo${environment.version.replace(/\./g, '')}`));
       if (!userInfo.id) throw "未登录";
       this.store.dispatch({ type: 'setUserInfo', payload: userInfo });
     } catch (e) {

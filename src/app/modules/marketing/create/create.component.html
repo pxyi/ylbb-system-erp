@@ -1,7 +1,6 @@
 <div class="title">
   <span>{{ activityInfo?.templateHeadline }}</span>
   <div>
-    <!-- <button nz-button nzSize="small" nzType="primary" nzGhost (click)="previewHtml()">预览</button> -->
     <button nz-button nzSize="small" nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
     <button nz-button nzSize="small" (click)="cancel()">取消</button>
   </div>
@@ -20,7 +19,7 @@
         <nz-form-explain *ngIf="formControlError('activityHeadline', 'maxlength')">最多输入30个字符！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="activityInfo.templateType != 4">
+    <nz-form-item *ngIf="activityInfo.templateType != templateType.get('招聘')">
       <nz-form-label nzRequired nzSpan="4">活动时间</nz-form-label>
       <nz-form-control nzSpan="20">
         <nz-range-picker nzFormat="yyyy-MM-dd" formControlName="time"></nz-range-picker>
@@ -53,7 +52,9 @@
       </ng-container>
     </div>
 
-    <nz-form-item *ngIf="activityInfo.templateType != 4 && activityInfo.templateType != 6">
+    <nz-form-item *ngIf="activityInfo.templateType != templateType.get('招聘') && 
+      activityInfo.templateType != templateType.get('生日') && 
+      activityInfo.templateType != templateType.get('返利')">
       <nz-form-label nzRequired nzSpan="4">活动规则</nz-form-label>
       <nz-form-control nzSpan="20">
         <textarea nz-input formControlName="activityRole" [nzAutosize]="{ minRows: 4, maxRows: 6 }" placeholder="请输入活动规则"></textarea>
@@ -61,7 +62,7 @@
       </nz-form-control>
     </nz-form-item>
 
-    <ng-container *ngIf="activityInfo.templateType == 1">
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('体验卡')">
       <ea-title>活动设置</ea-title>
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">活动价</nz-form-label>
@@ -91,7 +92,7 @@
       </nz-form-item>
     </ng-container>
 
-    <ng-container *ngIf="activityInfo.templateType == 2">
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('老带新')">
       <ea-title>奖项设置</ea-title>
       <div class="bringnew">
         <h2>老用户推荐成功奖品</h2>
@@ -184,7 +185,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="activityInfo.templateType == 3">
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('拼团')">
       <div [formGroup]="activityGroupRule">
         <ea-title>活动设置</ea-title>
         <nz-form-item>
@@ -247,7 +248,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="activityInfo.templateType == 4">
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('招聘')">
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">关于我们</nz-form-label>
         <nz-form-control nzSpan="20">
@@ -316,7 +317,7 @@
     </ng-container>
 
 
-    <ng-container *ngIf="activityInfo.templateType == 6">
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('生日')">
       <ea-title>活动设置</ea-title>
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">参与用户类型</nz-form-label>
@@ -361,6 +362,70 @@
       </nz-form-item>
     </ng-container>
 
+
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('返利')">
+      <ea-title>活动设置</ea-title>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">参与用户类型</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <nz-checkbox-wrapper>
+            <nz-radio-group formControlName="consumerType">
+              <label nz-radio [nzValue]="0">仅限非会员</label>
+              <label nz-radio [nzValue]="1">仅限会员</label>
+              <label nz-radio [nzValue]="2">均可参与</label>
+            </nz-radio-group>
+          </nz-checkbox-wrapper>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">提示语</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <input nz-input formControlName="cuePhrases" placeholder="请输入提示语">
+          <nz-form-explain *ngIf="formControlError('cuePhrases')">请输入提示语！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">活动图片</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <ea-upload-picture formControlName="activityImgs" [maxLength]="1"></ea-upload-picture>
+          <nz-form-explain *ngIf="formControlError('activityImgs')">请选择活动图片！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">门店图片</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <ea-upload-picture formControlName="storeImgs" [maxLength]="1"></ea-upload-picture>
+          <nz-form-explain *ngIf="formControlError('storeImgs')">请选择门店图片！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <ea-title>价格设置</ea-title>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">礼包名称</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <input nz-input formControlName="productName" placeholder="请输入礼包名称">
+          <nz-form-explain *ngIf="formControlError('productName')">请输入礼包名称！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">活动价格</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <input nz-input formControlName="promotionPrice" placeholder="请输入活动价格">
+          <nz-form-explain *ngIf="formControlError('promotionPrice')">请输入活动价格！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('promotionPrice', 'pattern')">请输入正确的活动价格！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">返利比例</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <nz-input-group nzAddOnAfter="%">
+            <input nz-input formControlName="rebateRatio" placeholder="请输入返利比例">
+          </nz-input-group>
+          <nz-form-explain *ngIf="formControlError('rebateRatio')">请输入返利比例！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('rebateRatio', 'pattern')">请输入正确的返利比例！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </ng-container>
+
     <ea-title>分享设置</ea-title>
 
     <nz-form-item>
@@ -371,7 +436,6 @@
         <nz-form-explain *ngIf="formControlError('shareHeadline', 'maxlength')">最多输入26个字符！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-
     <nz-form-item>
       <nz-form-label nzRequired nzSpan="4">描述</nz-form-label>
       <nz-form-control nzSpan="20">
@@ -384,7 +448,7 @@
       <nz-form-label nzRequired nzSpan="4">图片</nz-form-label>
       <nz-form-control nzSpan="20">
         <ea-upload-picture formControlName="shareImg" [maxLength]="1"></ea-upload-picture>
-        <nz-form-explain *ngIf="formControlError('shareImg')">请输入分享图片！</nz-form-explain>
+        <nz-form-explain *ngIf="formControlError('shareImg')">请选择分享图片！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
 
