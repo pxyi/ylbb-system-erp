@@ -140,7 +140,7 @@ export class ExcitationComponent implements OnInit {
   addLevel(level: string, info: any = {}) {
     this[level].push(this.fb.group({
       id: [info.id],
-      score: [info.score, [Validators.required, Validators.pattern(/^-?[1-9]\d*$/)]]
+      score: [info.score, [Validators.required, Validators.pattern(/^-?[0-9]\d*$/)]]
     }))
   }
 
