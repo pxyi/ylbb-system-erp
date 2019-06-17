@@ -241,6 +241,11 @@ export class ListComponent implements OnInit {
   /* ------------------------ 查看社区办卡信息 ------------------------ */
   showModal: boolean;
   chartData;
+  scale = [{
+    dataKey: 'percent',
+    min: 0,
+    formatter: '.0%',
+  }];
   labelConfig = ['percent', {
     formatter: (val, item) => {
       return `${item.point.item}：${item.point.count}`;
@@ -250,7 +255,7 @@ export class ListComponent implements OnInit {
     this.http.post('/member/findCardFromCommunity', { communityId }, false).then(res => {
       if (res.result) {
         this.showModal = true;
-        res.result.map(res => { res.item = res.communityName; res.count = res.cardNum })
+        res.result.map(res => { res.item = res.communityName; res.count = res.cardNum; res.percent = null; })
         const dv = new DataSet.View().source(res.result);
         dv.transform({
           type: 'percent',
