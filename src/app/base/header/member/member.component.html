@@ -149,10 +149,10 @@
           <button nz-button nzType="primary" (click)="consumption({ consumptionInfo: selectUserinfo })">消费</button>
           <button nz-button nzType="primary" (click)="create({ id: selectUserinfo.id, userInfo: selectUserinfo })">建卡</button>
           <ng-container *ngIf="formGroup.get('cardCode').value">
-            <button nz-button nzType="primary" (click)="change({ id: selectUserinfo.id, memberCardInfo: selectUserinfo })">卡项变更</button>
-            <button nz-button nzType="primary" (click)="stop({ id: selectUserinfo.id, memberCardInfo: selectUserinfo })">停卡</button>
-            <button nz-button nzType="primary" *ngIf="selectUserinfo?.runningState == '停卡'" (click)="open({ id: selectUserinfo.id, memberCardInfo: selectUserinfo })">重开卡</button>
-            <button nz-button nzType="primary" (click)="continued({ id: selectUserinfo.id, memberCardInfo: selectUserinfo })">续卡</button>
+            <button nz-button nzType="primary" (click)="change({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">卡项变更</button>
+            <button nz-button nzType="primary" (click)="stop({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">停卡</button>
+            <button nz-button nzType="primary" *ngIf="selectUserinfo?.runningState == '停卡'" (click)="open({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">重开卡</button>
+            <button nz-button nzType="primary" (click)="continued({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">续卡</button>
           </ng-container>
         </nz-button-group>
       </div>
