@@ -145,11 +145,11 @@ export const MenuConfig = [
         key   : '/home/consumption/revokelog',
         isLeaf: true
       },
-      {
-        title : '短信记录',
-        key   : '/home/consumption/shortmsg',
-        isLeaf: true
-      },
+      // {
+      //   title : '短信记录',
+      //   key   : '/home/consumption/shortmsg',
+      //   isLeaf: true
+      // },
       {
         title : '满意度记录',
         key   : '/home/consumption/satisfactionlog',
@@ -160,11 +160,11 @@ export const MenuConfig = [
         key   : '/home/consumption/curriculum',
         isLeaf: true
       },
-      {
-        title : '福利消费列表',
-        key   : '/home/consumption/welfare',
-        isLeaf: true
-      }
+      // {
+      //   title : '福利消费列表',
+      //   key   : '/home/consumption/welfare',
+      //   isLeaf: true
+      // }
     ]
   },
   {
@@ -243,16 +243,16 @@ export const MenuConfig = [
         key   : '/home/humanresources/achievements/target',
         isLeaf: true
       },
-      {
-        title : '满意度管理',
-        key   : '/home/humanresources/achievements/satisfaction',
-        isLeaf: true
-      },
-      {
-        title : '提成阶梯管理',
-        key   : '/home/humanresources/achievements/commission',
-        isLeaf: true
-      },
+      // {
+      //   title : '满意度管理',
+      //   key   : '/home/humanresources/achievements/satisfaction',
+      //   isLeaf: true
+      // },
+      // {
+      //   title : '提成阶梯管理',
+      //   key   : '/home/humanresources/achievements/commission',
+      //   isLeaf: true
+      // },
       {
         title : '考核项目配置',
         key   : '/home/humanresources/wage/assessment',

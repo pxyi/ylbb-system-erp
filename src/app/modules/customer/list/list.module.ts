@@ -1,3 +1,4 @@
+import { ViserModule } from 'viser-ng';
 import { AppointModule } from './../../public/appoint/appoint.module';
 import { RouterModule } from '@angular/router';
 import { ConsumptionModule } from './../../public/consumption/consumption.module';
@@ -24,7 +25,8 @@ import { AlbumComponent } from './album/album.component';
     RouterModule.forChild([{
       path: '',
       component: ListComponent
-    }])
+    }]),
+    ViserModule
   ],
   entryComponents: [UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent,]
 })

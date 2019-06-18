@@ -6,7 +6,7 @@ import { AppComponent } from './core/app.component';
 import { NZ_I18N, zh_CN, NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, DatePipe } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { StoreModule } from '@ngrx/store';
 import { reducersConfig } from './core/reducers/reducers-config';
@@ -29,6 +29,7 @@ registerLocaleData(zh);
     NgZorroAntdModule,
   ],
   providers: [
+    DatePipe,
     { provide: NZ_I18N, useValue: zh_CN },
     { provide: RouteReuseStrategy, useClass: AppReuseStrategy }
   ],

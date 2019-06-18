@@ -39,7 +39,6 @@ export class StoreComponent implements OnInit, OnDestroy {
       shopCoverImag: [, [Validators.required]],
       shopImag: [, [Validators.required]],
       shopLogo: [],
-      brandLogo: [],
       facilitie: [],
       businessTime: [, [Validators.required]],
       healthSafe: [],

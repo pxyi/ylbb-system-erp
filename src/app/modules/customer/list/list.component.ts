@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { NzMessageService, NzModalService, NzDrawerService } from 'ng-zorro-antd';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { UpdateComponent } from './update/update.component';
 import { ConsumptionComponent } from '../../public/consumption/consumption.component';
@@ -127,16 +127,8 @@ export class ListComponent implements OnInit {
     private message: NzMessageService,
     private router: Router,
     private modal: NzModalService,
-    private drawer: NzDrawerService,
-    private activatedRoute: ActivatedRoute
+    private drawer: NzDrawerService
   ) {
-    this.activatedRoute.queryParamMap.subscribe((res: any) => {
-      this.type = res.params.type;
-      this.paramsInit.mobilePhone = res.params.phone;
-      setTimeout(() => {
-        this.listPage.eaQuery._queryForm.patchValue({ mobilePhone: res.params.phone })
-      });
-    });
   }
 
   operation(type) {
@@ -225,22 +217,14 @@ export class ListComponent implements OnInit {
     this.openDrawer({ title: '导入客户', component: ImportComponent, params: {} });
   }
 
-
-  type: string;
-  mobilePhone: number;
-  paramsInit: any = {};
-  dataChange(dataset) {
-    if (this.type) {
-      this.checkedItems.push(dataset[0].id);
-      dataset[0].checked = true;
-      this.operation(this.type);
-      this.type = null;
-    }
-  } 
-
   /* ------------------------ 查看社区办卡信息 ------------------------ */
   showModal: boolean;
   chartData;
+  scale = [{
+    dataKey: 'percent',
+    min: 0,
+    formatter: '.0%',
+  }];
   labelConfig = ['percent', {
     formatter: (val, item) => {
       return `${item.point.item}：${item.point.count}`;
@@ -250,7 +234,7 @@ export class ListComponent implements OnInit {
     this.http.post('/member/findCardFromCommunity', { communityId }, false).then(res => {
       if (res.result) {
         this.showModal = true;
-        res.result.map(res => { res.item = res.communityName; res.count = res.cardNum })
+        res.result.map(res => { res.item = res.communityName; res.count = res.cardNum; res.percent = null; })
         const dv = new DataSet.View().source(res.result);
         dv.transform({
           type: 'percent',

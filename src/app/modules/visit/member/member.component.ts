@@ -86,72 +86,7 @@ export class MemberComponent implements OnInit {
     },
   ];
   
-  tableNode = [
-    {
-      name  : '卡号',
-      width : '120px'
-    },
-    {
-      name  : '卡类型',
-      width : '120px'
-    },
-    {
-      name  : '总卡次（正价/赠送）',
-      width : '140px'
-    },
-    {
-      name  : '剩余卡次（正价/赠送）',
-      width : '160px'
-    },
-    {
-      name  : '宝宝昵称',
-      width : '90px',
-    },
-    {
-      name  : '宝宝姓名',
-      width : '90px'
-    },
-    {
-      name  : '宝宝生日',
-      width : '100px'
-    },
-    {
-      name  : '性别',
-      width : '60px'
-    },
-    {
-      name  : '月龄',
-      width : '60px'
-    },
-    {
-      name  : '家长姓名',
-      width : '80px'
-    },
-    {
-      name  : '家长电话',
-      width : '100px'
-    },
-    {
-      name  : '所属小区',
-      width : '100px'
-    }, 
-    {
-      name  : '办卡时间',
-      width : '140px'
-    },
-    {
-      name  : '下次跟进时间',
-      width : '100px'
-    },
-    {
-      name  : '最后跟进时间',
-      width : '180px'
-    },
-    {
-      name  : '渠道来源',
-      width : '80px'
-    }
-  ]
+  tableNode = ['卡号','卡类型','总卡次（正价/赠送）','剩余卡次（正价/赠送）','宝宝昵称','宝宝姓名','宝宝生日','性别','月龄','家长姓名','家长电话','所属小区','办卡时间','下次跟进时间','最后跟进时间','渠道来源']
 
   constructor(
     private drawer: NzDrawerService

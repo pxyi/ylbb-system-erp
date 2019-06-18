@@ -73,9 +73,7 @@
           <nz-form-label nzRequired nzFor="monthAge">月龄</nz-form-label>
           <nz-form-control>
             <input nz-input readonly placeholder="请输入月龄" formControlName="monthAge" id="monthAge">
-            <nz-form-explain *ngIf="formGroup.get('monthAge').dirty && formGroup.get('monthAge').hasError('required')">
-              请输入月龄！</nz-form-explain>
-
+            <nz-form-explain *ngIf="formGroup.get('monthAge').dirty && formGroup.get('monthAge').hasError('required')">请输入月龄！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -147,20 +145,15 @@
     <div nz-row nzGutter="8">
       <div nz-col nzSpan="24">
         <nz-button-group class="flex">
-          <button nz-button nzType="primary" routerLink="/home/customer/list"
-            [queryParams]="{type: 'appoint', phone: clMobilePhone}" (click)="close()">预约</button>
-          <button nz-button nzType="primary" routerLink="/home/customer/list"
-            [queryParams]="{type: 'consumption', phone: clMobilePhone}" (click)="close()">消费</button>
-          <button nz-button nzType="primary" routerLink="/home/customer/list"
-            [queryParams]="{type: 'construction', phone: clMobilePhone}" (click)="close()">建卡</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
-            [queryParams]="{type: 'change', code: formGroup.get('cardCode').value}" (click)="close()">卡项变更</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
-            [queryParams]="{type: 'stop', code: formGroup.get('cardCode').value}" (click)="close()">停卡</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
-            [queryParams]="{type: 'open', code: formGroup.get('cardCode').value}" (click)="close()">重开卡</button>
-          <button nz-button nzType="primary" *ngIf="formGroup.get('cardCode').value" routerLink="/home/member/list"
-            [queryParams]="{type: 'continued', code: formGroup.get('cardCode').value}" (click)="close()">续卡</button>
+          <button nz-button nzType="primary" (click)="appint({ id: selectUserinfo.id, userInfo: selectUserinfo })">预约</button>
+          <button nz-button nzType="primary" (click)="consumption({ consumptionInfo: selectUserinfo })">消费</button>
+          <button nz-button nzType="primary" (click)="create({ id: selectUserinfo.id, userInfo: selectUserinfo })">建卡</button>
+          <ng-container *ngIf="formGroup.get('cardCode').value">
+            <button nz-button nzType="primary" (click)="change({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">卡项变更</button>
+            <button nz-button nzType="primary" (click)="stop({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">停卡</button>
+            <button nz-button nzType="primary" *ngIf="selectUserinfo?.runningState == '停卡'" (click)="open({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">重开卡</button>
+            <button nz-button nzType="primary" (click)="continued({ id: selectUserinfo.cardId, memberCardInfo: selectUserinfo })">续卡</button>
+          </ng-container>
         </nz-button-group>
       </div>
     </div>
