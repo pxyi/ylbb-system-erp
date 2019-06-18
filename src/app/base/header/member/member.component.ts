@@ -67,7 +67,7 @@ export class MemberComponent implements OnInit {
       babyType: [],
       mobilePhone: [],
       cardCode: [],
-      cardTypeName: [],
+      ctName: [],
       surplusTimes: [],
       tongTimes: [],
       expireDays: [],
