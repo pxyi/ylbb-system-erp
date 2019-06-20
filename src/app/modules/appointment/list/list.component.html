@@ -7,7 +7,7 @@
     [paramsDefault]="paramsInit"
     [showPage]="false"
     (requestDataChange)="requestDataLength = $event.length"
-    [tableThead]="[ '照片', '卡号', '卡类型', '婴儿类型', '姓名', '小名', '月龄'  ,'预约时间', '消费时间', '预约状态', '预约泳师', '泳圈', '操作时间', '预约方式'
+    [tableThead]="[ '照片', '卡号', '卡类型', '剩余卡次', '有效期', '婴儿类型', '姓名', '小名', '月龄'  ,'预约时间', '消费时间', '预约状态', '预约泳师', '泳圈', '操作时间', '预约方式'
     ,'爽约率', '业务类型', '备注', '取消人' , '操作' ]"
     [EaTableTbodyTr]="EaTableTbodyTr"
     [EaBtns]="EaBtns">
@@ -20,6 +20,8 @@
       </td>
       <td>{{ data.cardCode }}</td>
       <td>{{ data.cardTypeName }}</td>
+      <td [style.color]="data.remainFreeTimes + data.remainTimes < 16 ? '#f00' : ''">{{ data.remainFreeTimes + data.remainTimes }}</td>
+      <td [style.color]="data.expireDays < 60 ? '#f00' : ''">{{ data.expireDays }}</td>
       <td>{{ data.babyType }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.nick }}</td>
