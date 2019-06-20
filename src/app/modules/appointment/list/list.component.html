@@ -20,8 +20,8 @@
       </td>
       <td>{{ data.cardCode }}</td>
       <td>{{ data.cardTypeName }}</td>
-      <td><span *ngIf="data.cardCode" [style.color]="data.remainFreeTimes + data.remainTimes < 16 ? '#f00' : ''">{{ data.remainFreeTimes + data.remainTimes }}({{ data.remainTimes }}/{{ data.remainFreeTimes }})</span></td>
-      <td><span *ngIf="data.cardCode" [style.color]="data.expireDays < 60 ? '#f00' : ''">{{ data.expireDays }}</span></td>
+      <td><span *ngIf="data.cardCode" [style.color]="data.remainFreeTimes + data.remainTimes <= 15 ? '#f00' : ''">{{ data.remainFreeTimes + data.remainTimes }}({{ data.remainTimes }}/{{ data.remainFreeTimes }})</span></td>
+      <td><span *ngIf="data.cardCode" [style.color]="data.expireDays <= 60 ? '#f00' : ''">{{ data.expireDays }}</span></td>
       <td>{{ data.babyType }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.nick }}</td>
