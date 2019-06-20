@@ -45,6 +45,10 @@ export class PreviewComponent implements OnInit {
     [6, () => {
       this.queryNode = [...this.queryNode];
       this.tableThead = ['微信昵称', '姓名', '参与人数', '收集者', '联系方式']
+    }],
+    [7, () => {
+      this.queryNode = [...this.queryNode];
+      this.tableThead = ['微信昵称', '分享者', '联系方式', '浏览时间', '有效分享数']
     }]
   ]);
 
