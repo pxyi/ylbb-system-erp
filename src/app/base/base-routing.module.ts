@@ -437,6 +437,12 @@ const routes: Routes = [
                 canLoad: [ AuthGuardService ],
                 loadChildren: 'src/app/modules/configuration/account/log/log.module#LogModule'
               },
+              {
+                path: 'payapply',
+                data: { title: '支付申请' },
+                canLoad: [ AuthGuardService ],
+                loadChildren: 'src/app/modules/configuration/pay-apply/pay-apply.module#PayApplyModule'
+              }
             ]
           },
         ]

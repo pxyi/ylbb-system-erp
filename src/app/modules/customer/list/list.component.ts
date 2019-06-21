@@ -1,8 +1,8 @@
 import { ImportComponent } from './import/import.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { NzMessageService, NzModalService, NzDrawerService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService, NzDrawerService, NzModalRef } from 'ng-zorro-antd';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { UpdateComponent } from './update/update.component';
@@ -12,6 +12,7 @@ import { AddIntegralComponent } from './add-integral/add-integral.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { AlbumComponent } from './album/album.component';
 import { AppointComponent } from '../../public/appoint/appoint.component';
+import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
 
 declare const require: any;
 const DataSet = require('@antv/data-set');
@@ -172,7 +173,7 @@ export class ListComponent implements OnInit {
         nzContent: '<b>您确定要重置密吗</b>',
         nzOnOk: () => this.http.post('/member/modifyPassword', { id: this.checkedItems[0] }).then(res => { })
       });
-    } else if (type === 'construction' || type === 'appoint' || type === 'consumption') {
+    } else if (type === 'construction' || type === 'appoint') {
       this.http.post('/member/checkMemberInfo', { id: this.checkedItems[0] }, false).then(res => {
         if (res.code == 2053) {
           this.message.warning(res.info);
@@ -185,6 +186,27 @@ export class ListComponent implements OnInit {
             options.params = { consumptionInfo }
           }
           this.openDrawer(Object.assign(options, this.operationComponents[type]));
+        }
+      })
+    } else if (type === 'consumption'){
+      this.http.post('/member/checkMemberInfo', { id: this.checkedItems[0] }, false).then(res => {
+        if (res.code == 2053) {
+          this.message.warning(res.info);
+          this.newDrawer({ title: '编辑-请补全基本信息', component: UpdateComponent });
+        } else {
+          let options: any = {};
+          if (type === 'consumption') {
+            let dataSet = JSON.parse(JSON.stringify(this.listPage.eaTable.dataSet));
+            let consumptionInfo = dataSet.filter(res => res.id == this.checkedItems[0])[0];
+            options.params = { consumptionInfo }
+          }
+          var data = {
+            title     : '消费',
+            component : ConsumptionTabComponent,
+            userInfo  : true
+          }
+          this.newDrawer(Object.assign(options, data));
+          // this.newDrawer(Object.assign(options, this.operationComponents[type]));
         }
       })
     } else if (type === 'album') {
@@ -211,6 +233,18 @@ export class ListComponent implements OnInit {
     let userInfo = options.userInfo ? dataSet.filter(res => res.id == this.checkedItems[0])[0] : {};
     const drawer = this.drawer.create({
       nzWidth: 720,
+      nzTitle: options.title || null,
+      nzContent: options.component,
+      nzContentParams: options.params || { id: this.checkedItems[0], userInfo }
+    });
+    drawer.afterClose.subscribe(res => res && this.listPage.eaTable._request());
+  }
+
+  newDrawer(options) {
+    let dataSet = JSON.parse(JSON.stringify(this.listPage.eaTable.dataSet));
+    let userInfo = options.userInfo ? dataSet.filter(res => res.id == this.checkedItems[0])[0] : {};
+    const drawer = this.drawer.create({
+      nzWidth: 1300,
       nzTitle: options.title || null,
       nzContent: options.component,
       nzContentParams: options.params || { id: this.checkedItems[0], userInfo }

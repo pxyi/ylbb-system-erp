@@ -363,6 +363,11 @@ export const MenuConfig = [
         title : '登录日志',
         key   : '/home/configuration/account/loginlog',
         isLeaf: true
+      },
+      {
+        title : '支付申请',
+        key   : '/home/configuration/account/payapply',
+        isLeaf: true
       }
     ]
   }

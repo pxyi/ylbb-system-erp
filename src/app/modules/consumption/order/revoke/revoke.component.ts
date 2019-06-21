@@ -1,9 +1,7 @@
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
-import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,8 +11,9 @@ import { Router } from '@angular/router';
 })
 export class RevokeComponent implements OnInit {
 
+  
   @Input() id;
-
+  
   @Input() recordInfo;
 
   formGroup: FormGroup;
@@ -51,7 +50,49 @@ export class RevokeComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/customer/revocationConsume') save: () => void;
-  @DrawerClose() close: () => void;
+  /*-------------- 取消 --------------*/
+  close() {
+    this.drawerRef.close();
+  }
+  /*-------------- 确定 --------------*/
+  save() {
+    this.DrawerSave('/customer/revocationConsume');
+  }
 
+  DrawerSave(requestPath) {
+
+    const formatTime = date => {
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return [year, month, day].map(formatNumber).join('-');
+    }
+    
+    const formatNumber = n => {
+      n = n.toString()
+      return n[1] ? n : '0' + n
+    }
+
+    if (this.formGroup.invalid) {
+      for (let i in this.formGroup.controls) {
+        this.formGroup.controls[i].markAsDirty();
+        this.formGroup.controls[i].updateValueAndValidity();
+      }
+    } else {
+      this.saveLoading = true;
+      let params = JSON.parse(JSON.stringify(this.formGroup.value));
+      Object.keys(params).map(res => {
+        if (params[res] instanceof Date) {
+          params[res] = formatTime(params[res]);
+        }
+      });
+      this.http.post(requestPath, {
+        paramJson: JSON.stringify(params)
+      }, true).then(res => {
+        this.saveLoading = false;
+        this.drawerRef.close(true);
+      }).catch(err => this.saveLoading = false);
+    }
+  }
+  
 }

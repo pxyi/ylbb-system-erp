@@ -1,0 +1,526 @@
+<!--消费商品、卡次-->
+<div nz-row style="margin-bottom: 20px;">
+  <div nz-col nzSpan="13" nzOffset="4">
+    <nz-input-group nzSearch nzSize="default" [nzAddOnAfter]="suffixButton">
+        <input [(ngModel)]="searchData" type="text" nz-input placeholder="服务名称、商品名称" />
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button nz-button nzSize="default" nzType="primary" nzSearch (click)="createTplModal(tplTitle, tplContent, tplFooter)">搜索</button>
+      </ng-template>
+  </div>
+  <!-- <div nz-col nzSpan="3" nzOffset="4">
+    扫码模式
+    <nz-switch [(ngModel)]="switchValue"></nz-switch>
+  </div> -->
+</div>
+
+<!--搜索弹窗-->
+<ng-template #tplTitle>
+  <span>商品内容</span>
+</ng-template>
+<ng-template #tplContent>
+  <p>some contents...</p>
+</ng-template>
+<ng-template #tplFooter>
+  <button nz-button nzType="primary" (click)="destroyTplModal()">确定</button>
+</ng-template>
+
+<nz-tabset [nzTabPosition]="position" [nzType]="'line'">
+  <nz-tab nzTitle="商品">
+    <div nz-row>
+      <div nz-col nzSpan="15">
+        <nz-table #basicTable [nzData]="resultData" nzShowPagination="false" nzBordered>
+          <thead>
+            <tr>
+              <th nzAlign="center">商品条码</th>
+              <th nzAlign="center">商品名称</th>
+              <th nzAlign="center">数量</th>
+              <th nzAlign="center">售价</th>
+              <th nzAlign="center">折后价</th>
+              <th nzAlign="center">小计</th>
+              <th nzAlign="center">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of resultData">
+              <td nzAlign="center">{{ data.barCode }}</td>
+              <td nzAlign="center">{{ data.name }}</td>
+              <td nzAlign="center">{{ data.num }}</td>
+              <td nzAlign="center">{{ data.price }}</td>
+              <td nzAlign="center">{{ data.changePrice }}</td>
+              <td nzAlign="center">{{ data.subtotal }}</td>
+              <td nzAlign="center">
+                <a (click)="delete(data.id)">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+        <div style="margin-top:20px;">
+          <span>数量：{{ numberOftotal }}</span>
+          <span style="margin-left: 10px;">合计：{{ price }}</span>
+          <button style="float:right;" nz-button nzType="primary" (click)="placeOrder()">提交订单</button>
+          <button style="float:right;margin-right: 10px;" nz-button nzType="primary" (click)="cancel()">清空</button>
+        </div>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-card style="margin-left: 20px;">
+          <form nz-form [formGroup]="singleTimeGroup">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>服务泳师</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24">
+                <nz-select style="width: 188px;" formControlName="swimTeacherId">
+                  <nz-option *ngFor="let data of teacherData" [nzValue]="data.id" [nzLabel]="data.name"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>顾客满意度</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24">
+                <nz-select formControlName="satisfaction" style="width: 188px;" nzPlaceHolder="请选择顾客满意度">
+                  <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+                  <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+                  <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+                  <nz-option nzLabel="不好" nzValue="不好"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24">备注</nz-form-label>
+              <nz-form-control [nzSm]="18" [nzXs]="24">
+                <textarea
+                  nz-input
+                  row="4"
+                  formControlName="remarks"
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </nz-card>
+        <div class="tab-payment" style="margin-left: 20px;margin-top:10px;border:1px solid #e8e8e8;height: 420px;">
+          <nz-tabset nzTabBarGutter='0' nzShowPagination="false">
+            <nz-tab nzTitle="现金支付" (nzSelect)="selectPayType(1)" [nzDisabled]="!isSubmitShopCard">
+              <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/cash.png" alt="现金">
+              <nz-form-item style="margin-top:10px;">
+                <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="price" disabled="true">
+                </nz-form-control>
+                <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="payment">
+                </nz-form-control>
+                <nz-form-label [nzSm]="5" [nzXs]="24">找零</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input disabled="true" [(ngModel)]="changePrice">
+                </nz-form-control>
+              </nz-form-item>
+              <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="settlement()">确定结算</button>
+            </nz-tab>
+            <nz-tab nzTitle="微信" (nzSelect)="selectPayType(2)" [nzDisabled]="!isSubmitShopCard">
+              <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
+              <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
+                margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
+              >请输入付款码</div> -->
+              <nz-form-item style="margin-top:10px;">
+                <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="price" disabled="true">
+                </nz-form-control>
+                <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="payment">
+                </nz-form-control>
+                <nz-form-label [nzSm]="5" [nzXs]="24">付款码</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="payCode" placeholder="请输入付款码">
+                </nz-form-control>
+              </nz-form-item>
+              <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="paymentSubmit()">确定结算</button>
+            </nz-tab>
+            <nz-tab nzTitle="支付宝" (nzSelect)="selectPayType(3)" [nzDisabled]="!isSubmitShopCard">
+              <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
+              <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
+                margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
+              >请输入付款码</div>
+              <nz-form-item style="margin-top:10px;">
+                <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="price" disabled="true">
+                </nz-form-control>
+                <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="payment">
+                </nz-form-control>
+              </nz-form-item>
+            </nz-tab>
+            <nz-tab nzTitle="银行卡" (nzSelect)="selectPayType(null)" [nzDisabled]="!isSubmitShopCard" style="margin-left: 30px;">
+              <p style="text-align:center;">暂不支持该功能</p>
+            </nz-tab>
+            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard">
+              <div class="vip-card">
+                <div class="vip-card-one">
+                  <span class="vip-text">VIP</span>
+                  <span class="vip-card-type">月卡</span>
+                  <div style="clear:both;"></div>
+                </div>
+                <div class="vip-card-two">
+                  <span class="vip-card-name">会员名</span>
+                  <span class="vip-card-date">2017  622  788</span>
+                  <div style="clear:both;"></div>
+                </div>
+              </div>
+              <ul class="consumption-details clearfix">
+                <li>
+                  <p>本次消费金额</p>
+                  <span>{{ thisPrice }}</span>
+                </li>
+                <li>
+                  <p>本次剩余金额</p>
+                  <span>{{ remainPrice }}</span>
+                </li>
+                <li>
+                  <p>本次优惠金额</p>
+                  <span>{{ preferential }}</span>
+                </li>
+              </ul>
+              <nz-form-item>
+                <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="price" disabled="true">
+                </nz-form-control>
+                <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  <input type="text" nz-input [(ngModel)]="payment">
+                </nz-form-control>
+              </nz-form-item>
+              <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="settlement()">确定结算</button>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+      </div>
+    </div>
+  </nz-tab>
+  <nz-tab nzTitle="耗卡">
+    <form nz-form [formGroup]="timesCountGroup">
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费卡</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="cardId" nzPlaceHolder="请选择消费卡">
+                <!-- <nz-option *ngFor="let option of memberCardList" [nzLabel]="option.ctName" [nzValue]="option.id"></nz-option> -->
+              </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('cardId').dirty && timesCountGroup.get('cardId').hasError('required')">请选择消费卡！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>服务泳师</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
+                <!-- <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option> -->
+              </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('swimTeacherId').dirty && timesCountGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费服务</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费服务">
+                <!-- <nz-option *ngFor="let option of commoditieListjc" [nzValue]="option.id" [nzLabel]="option.name"></nz-option> -->
+              </nz-select>
+              <nz-form-explain *ngIf="timesCountGroup.get('commodityId').dirty && timesCountGroup.get('commodityId').hasError('required')">请选择消费服务！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费金额</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="consumption" placeholder="请输入消费金额" readonly>
+              <nz-form-explain *ngIf="timesCountGroup.get('consumption').dirty && timesCountGroup.get('consumption').hasError('required')">请输入消费金额！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>泳圈型号</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="ringId" nzPlaceHolder="请选择泳圈型号">
+                <!-- <nz-option *ngFor="let option of swimRingList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option> -->
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>游泳时长</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="分钟">
+                <input nz-input formControlName="swimDuration" placeholder="请输入游泳时长">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>身高</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="厘米">
+                <input nz-input formControlName="temperaturePost" placeholder="请输入身高">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>体重</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="公斤">
+                <input nz-input formControlName="weight" placeholder="请输入体重">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>体温</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="°C">
+                <input nz-input formControlName="temperature" placeholder="请输入体温">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>顾客满意度</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
+                <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+                <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+                <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+                <nz-option nzLabel="不好" nzValue="不好"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>消费时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="consumeDate" readonly placeholder="请输入消费时间">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label>备注</nz-form-label>
+            <nz-form-control>
+              <textarea nz-input row="4" formControlName="remarks" placeholder="请输入备注"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+    <div style="text-align:right;">
+      <button nz-button (click)="close()" style="margin-right: 10px;">取消</button>
+      <button nz-button nzType="primary" (click)="saveDrawer()">保存</button>
+    </div>
+  </nz-tab>
+</nz-tabset>
+
+<!-- <button nz-button [nzType]="'primary'" (click)="createComponent()"><span>Show Modal</span></button> -->
+<!-- <button nz-button [nzType]="'primary'" (click)="createTplModal(tplTitle, tplContent, tplFooter)"><span>Show Modal</span></button> -->
+<!-- <ng-template #tplTitle>
+  <div nz-row>
+    <div nz-col nzSpan="4">消费</div>
+    <div nz-col nzSpan="12" >
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="服务名称、商品名称" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon type="search"></i>
+      </ng-template>
+    </div>
+    <div nz-col nzSpan="4" nzOffset="4">
+      扫码模式
+      <nz-switch [(ngModel)]="switchValue"></nz-switch>
+    </div>
+  </div>
+</ng-template>
+<ng-template #tplContent>
+  <nz-tabset [nzTabPosition]="position" [nzType]="'line'">
+    <nz-tab nzTitle="商品">
+      <div nz-row>
+        <div nz-col nzSpan="16">
+          <nz-table #basicTable [nzData]="listOfData" nzShowPagination="false" nzBordered>
+            <thead>
+              <tr>
+                <th nzAlign="center">商品条码</th>
+                <th nzAlign="center">商品名称</th>
+                <th nzAlign="center">数量</th>
+                <th nzAlign="center">售价</th>
+                <th nzAlign="center">折后价</th>
+                <th nzAlign="center">小计</th>
+                <th nzAlign="center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td nzAlign="center">{{ data.commodityBarCode }}</td>
+                <td nzAlign="center">{{ data.name }}</td>
+                <td nzAlign="center">{{ data.num }}</td>
+                <td nzAlign="center">{{ data.price }}</td>
+                <td nzAlign="center">{{ data.discountPrice }}</td>
+                <td nzAlign="center">{{ data.subtotal }}</td>
+                <td nzAlign="center">
+                  <a>删除</a>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <div style="margin-top:20px;">
+            <span>数量：3</span>
+            <span style="margin-left: 10px;">合计：254.17</span>
+            <button style="float:right;" nz-button nzType="primary">清空</button>
+          </div>
+        </div>
+        <div nz-col nzSpan="7">
+          <nz-card style="margin-left: 20px;">
+            <nz-form-item>
+              <nz-form-label [nzSm]="5" [nzXs]="24">服务泳师</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24">
+                <nz-select style="width: 198px;" [(ngModel)]="teacherSelect">
+                  <nz-option *ngFor="let p of teacherData" [nzValue]="p" [nzLabel]="p"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="5" [nzXs]="24">满意程度</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24">
+                <nz-select style="width: 198px;" [(ngModel)]="satisfied">
+                  <nz-option *ngFor="let p of satisfiedData" [nzValue]="p" [nzLabel]="p"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="5" [nzXs]="24">备注</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24">
+                <textarea
+                  nz-input
+                  row="4"
+                  [(ngModel)]="inputValue"
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-card>
+          <div class="tab-payment" style="margin-left: 20px;margin-top:10px;border:1px solid #e8e8e8;height: 400px;">
+            <nz-tabset nzTabBarGutter='0' [nzType]="line" [nzSize]="small" nzShowPagination="false">
+              <nz-tab nzTitle="现金支付">
+                <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/cash.png" alt="现金">
+                <nz-form-item style="margin-top:10px;">
+                  <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                  <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                  <nz-form-label [nzSm]="5" [nzXs]="24">找零</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                </nz-form-item>
+                <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary">确定结算</button>
+              </nz-tab>
+              <nz-tab nzTitle="微信">
+                <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
+                <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
+                  margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
+                >请输入付款码</div>
+                <nz-form-item style="margin-top:10px;">
+                  <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                  <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-tab>
+              <nz-tab nzTitle="支付宝">
+                <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
+                <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
+                  margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
+                >请输入付款码</div>
+                <nz-form-item style="margin-top:10px;">
+                  <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                  <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-tab>
+              <nz-tab nzTitle="银行卡" style="margin-left: 30px;">
+                <p style="text-align:center;">暂不支持该功能</p>
+              </nz-tab>
+              <nz-tab nzTitle="充值卡">
+                <div class="vip-card">
+                  <div class="vip-card-one">
+                    <span class="vip-text">VIP</span>
+                    <span class="vip-card-type">月卡</span>
+                    <div style="clear:both;"></div>
+                  </div>
+                  <div class="vip-card-two">
+                    <span class="vip-card-name">会员名</span>
+                    <span class="vip-card-date">2017  622  788</span>
+                    <div style="clear:both;"></div>
+                  </div>
+                </div>
+                <ul class="consumption-details clearfix">
+                  <li>
+                    <p>本次消费金额</p>
+                    <span>45</span>
+                  </li>
+                  <li>
+                    <p>本次剩余金额</p>
+                    <span>299</span>
+                  </li>
+                  <li>
+                    <p>本次优惠金额</p>
+                    <span>23</span>
+                  </li>
+                </ul>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                  <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24">
+                    <input type="text" nz-input>
+                  </nz-form-control>
+                </nz-form-item>
+                <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary">确定结算</button>
+              </nz-tab>
+            </nz-tabset>
+          </div>
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="耗卡">
+      
+    </nz-tab>
+  </nz-tabset>
+</ng-template>
+<ng-template #tplFooter>
+</ng-template> -->

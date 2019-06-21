@@ -13,20 +13,24 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { ImportComponent } from './import/import.component';
 import { AlbumComponent } from './album/album.component';
 import { AppointComponent } from '../../public/appoint/appoint.component';
+import { QRCodeModule } from 'angular2-qrcode';
+import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
+
 
 @NgModule({
-  declarations: [ListComponent, UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent],
+  declarations: [ListComponent, UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent, ConsumptionTabComponent ],
   imports: [
     CommonModule,
     NgRelaxModule,
     NgZorroAntdModule,
     ConsumptionModule,
     AppointModule,
+    QRCodeModule,
     RouterModule.forChild([{
       path: '',
       component: ListComponent
     }])
   ],
-  entryComponents: [UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent,]
+  entryComponents: [UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent, ConsumptionTabComponent ]
 })
 export class ListModule { }

@@ -8,6 +8,9 @@ import { RevokeComponent } from './revoke/revoke.component';
 import { MessageComponent } from './message/message.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
 import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-order',
@@ -18,20 +21,28 @@ export class OrderComponent implements OnInit {
 
   /*-------------- 撤销一整条的提示框 --------------*/
   isVisible = false;
-
-  showModal(): void {
-    this.isVisible = true;
-  }
+  basicTable = [];//撤销一整条展示数据
 
   handleOk(): void {
-    console.log('Button ok clicked!');
-    this.isVisible = false;
+    if (this.formGroup.invalid) {
+      for (let i in this.formGroup.controls) {
+        this.formGroup.controls[i].markAsDirty();
+        this.formGroup.controls[i].updateValueAndValidity();
+      }
+    } else {
+      //订单撤销
+      this.http.post('/consumeOrder/cancel', { orderNo: this.basicTable[0].orderNo, causesRevocation: this.formGroup.get('causesRevocation').value }).then(res => {
+        console.log('整条订单撤销', res);
+        this.isVisible = false;
+      })
+    }
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isVisible = false;
   }
+
+  formGroup:FormGroup;//撤销订单
 
   /*-------------- 撤销一条页面 --------------*/
 
@@ -45,17 +56,37 @@ export class OrderComponent implements OnInit {
   listOfDisplayData: any[] = [];
   listOfAllData: any[] = [];
   mapOfCheckedId: { [key: string]: boolean } = {};
+  backups:any = {};//用来备份
+  selectArray:any = [];//控制单选
 
   currentPageDataChange($event: Array<{ id: number; name: string; age: number; address: string }>): void {
     this.listOfDisplayData = $event;
     this.refreshStatus();
-    console.log(this.listOfDisplayData);
   }
 
-  refreshStatus(): void {
+  resetMapOfCheckedId() {
+    // this.mapOfCheckedId = {1: true};
+  }
+
+  refreshStatus(eve?): void {
     this.isAllDisplayDataChecked = this.listOfDisplayData.every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate =
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
+    //单选
+    if(eve){
+      for (let item of this.listOfData) {
+        item.isChecked = false;
+        if(eve == item.orderNo){
+          if(this.checkedItems[0] == eve){
+            item.isChecked = false
+            this.checkedItems = [];
+          }else{
+            item.isChecked = true
+            this.checkedItems[0] = item.orderNo;
+          }
+        }
+      }
+    }
   }
 
   checkAll(value: boolean): void {
@@ -138,525 +169,8 @@ export class OrderComponent implements OnInit {
     }
   ]
 
-  //定义的假数据
-  listOfData = [
-    {
-      key: '1',
-      commodity: [
-        {
-          name   : '泳儿',
-          number : 1 
-        },
-        {
-          name   : '泳裤',
-          number : 1 
-        },
-        {
-          name   : '泳衣',
-          number : 2 
-        }
-      ],
-      userName: '朱由检',
-      petName: '由检',
-      cardId: 17610613837,
-      cardType: '金卡',
-      price : 74.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '到店安排',
-      isOk: '一般',
-      weight: 20,
-      swimmingRingType: '鱼乐脖圈',
-      times: 20,
-      measure: '需要', //测量
-      photoGraphy: '不需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-05-22', //年月日
-      second: '21:25:08', //时分秒
-      orderId: 20190522212508 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    },
-    {
-      key: '2',
-      commodity: [
-        {
-          name   : '纸尿裤',
-          number : 3 
-        },
-        {
-          name   : '没有名字的商品',
-          number : 1 
-        }
-      ],
-      userName: '方从哲',
-      petName: '从哲',
-      cardId: 13877161741,
-      cardType: '银卡',
-      price : 32.79,
-      usedCard: 1,
-      singleDeductionCard: 1,
-      type: '正价',
-      teacherType: '已预约',
-      isOk: '很好',
-      weight: 24,
-      swimmingRingType: '超级无敌小脖圈',
-      times: 17,
-      measure: '需要', //测量
-      photoGraphy: '需要', //拍照
-      remark: '消费备注', //备注
-      year: '2019-03-26', //年月日
-      second: '17:06:25', //时分秒
-      orderId: 20190509115509 //订单号
-    }
-  ];
+  //订单列表数据
+  listOfData:any = [];
 
   result = [] //整理出来循环的数据格式
 
@@ -683,66 +197,21 @@ export class OrderComponent implements OnInit {
     }
   };
 
+  inputValue:any;//撤销原因备注
+
   checkedItems: any[] = [];
 
   constructor(
     private message: NzMessageService,
-    private drawer: NzDrawerService
+    private drawer: NzDrawerService,
+    private http: HttpService,
+    private fb: FormBuilder,
+    private httpSubscribe: HttpClient
   ) { }
 
   ngOnInit() {
-
-    /*-------------- 重组数据格式 --------------*/
-    for (let i=0; i<this.listOfData.length; i++) {
-      var f = 0;
-      for (let j=0; j<this.listOfData[i].commodity.length; j++) {
-        var item = {
-          commodity : [
-            {
-              "name"                : '',
-              "number"              : 0,
-              "key"                 : this.listOfData[i].key,
-              "userName"            : this.listOfData[i].userName,
-              "petName"             : this.listOfData[i].petName,
-              "cardId"              : this.listOfData[i].cardId,
-              "cardType"            : this.listOfData[i].cardType,
-              "price"               : this.listOfData[i].price,
-              "usedCard"            : this.listOfData[i].usedCard,
-              "singleDeductionCard" : this.listOfData[i].singleDeductionCard,
-              "type"                : this.listOfData[i].type,
-              "teacherType"         : this.listOfData[i].teacherType,
-              "isOk"                : this.listOfData[i].isOk,
-              "weight"              : this.listOfData[i].weight,
-              "swimmingRingType"    : this.listOfData[i].swimmingRingType,
-              "times"               : this.listOfData[i].times,
-              "measure"             : this.listOfData[i].measure,
-              "photoGraphy"         : this.listOfData[i].photoGraphy,
-              "remark"              : this.listOfData[i].remark,
-              "year"                : this.listOfData[i].year,
-              "second"              : this.listOfData[i].second, 
-              "orderId"             : this.listOfData[i].orderId,
-              "rowspan"             : 0
-            }
-          ]
-        }
-        if(this.listOfData[i].cardId == item.commodity[0].cardId){
-          f++;
-          if(f >= 2){
-            var data = {
-              "name"    : this.listOfData[i].commodity[j].name,
-              "number"  : this.listOfData[i].commodity[j].number,
-              "rowspan" : this.listOfData[i].commodity.length
-            }
-            this.result[i].commodity.push(data);
-          }else{
-            item.commodity[0].name    = this.listOfData[i].commodity[j].name;
-            item.commodity[0].number  = this.listOfData[i].commodity[j].number;
-            item.commodity[0].rowspan = this.listOfData[i].commodity.length;
-            this.result.push(item);
-          }
-        }
-      }
-    }
+    /*-------------- 获取消费订单列表 --------------*/
+    this._request();
 
     /* 表格测试数据开始 */
     for (let i = 0; i < 3; ++i) {
@@ -778,12 +247,45 @@ export class OrderComponent implements OnInit {
     }
     /* 表格测试数据结束 */
 
+    this.formGroup = this.fb.group({
+      causesRevocation : [, [Validators.required]]
+    })
+
+  }
+
+  /*-------------- 单条撤销 --------------*/
+  revokeOne(data,id) {
+    //只有状态为正常时点击生效
+    for(let item of data.consumeRecordVOS){
+      if(item.id == id){
+        if(item.status == 0){
+          let recordInfo = data;
+          recordInfo.id = id;
+          const drawer = this.drawer.create({
+            nzTitle: '撤销消费',
+            nzWidth: 720,
+            nzContent: RevokeComponent,
+            nzContentParams: { id: id, recordInfo:data }
+          });
+          drawer.afterClose.subscribe(res => res && this._request())
+        }
+      }
+    }
   }
 
   /*-------------- 查看、撤销、修改满意度等按钮 --------------*/
   operation(type) {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
+    } else if(type == 'revoke') {
+      //遍历查询该条
+      this.basicTable = [];
+      this.isVisible = true;
+      for(let item of this.listOfData){
+        if(item.orderNo == this.checkedItems[0]){
+          this.basicTable.push(item);
+        }
+      }
     } else {
       let recordInfo = this.listPage.eaTable.dataSet.filter(res => res.id === this.checkedItems[0])[0];
       const drawer = this.drawer.create({
@@ -794,6 +296,21 @@ export class OrderComponent implements OnInit {
       });
       drawer.afterClose.subscribe(res => res && this.listPage.eaTable._request());
     }
+  }
+
+  /*---------------- 异步刷新数据 ----------------*/
+  _request() {
+    this.httpSubscribe.post<any>('/consumeOrder/list', {}, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    }).subscribe(res => {
+      console.log(res);
+      var temp = res.result.list;
+      for(let item of temp){
+        item.isChecked = false;
+      }
+      this.listOfData = temp;
+      console.log('subscribe---listOfData', this.listOfData);
+    });
   }
 
 }
