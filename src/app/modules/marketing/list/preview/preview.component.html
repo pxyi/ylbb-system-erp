@@ -23,8 +23,8 @@
       </ea-list-page-simp>
     </nz-tab>
     <nz-tab nzTitle="购买记录">
-      <ea-list-page-simp url="/activity/getJoinData" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1 }" [tableThead]="['微信昵称', '收集老师', '分享用户', '联系方式', '授权时间', '支付时间', '支付金额', '商品名称', '有效分享数']" [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr">
-        <ng-template #EaTableTbodyTr let-item>
+      <ea-list-page-simp url="/activity/getJoinData" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1 }" [tableThead]="['微信昵称', '收集老师', '分享用户', '联系方式', '授权时间', '支付时间', '支付金额', '商品名称', '有效分享数']" [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr1">
+        <ng-template #EaTableTbodyTr1 let-item>
           <td>{{ item.nickName }}</td>
           <td>{{ item.teacherName }}</td>
           <td>{{ item.shareName }}</td>
