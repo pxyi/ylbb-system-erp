@@ -10,14 +10,15 @@ import { CurriculumComponent } from './curriculum/curriculum.component';
 import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { serialize } from 'src/app/core/http.intercept';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.less']
+  selector: 'app-revoke-list',
+  templateUrl: './revoke-list.component.html',
+  styleUrls: ['./revoke-list.component.less']
 })
-export class OrderComponent implements OnInit {
+export class RevokeListComponent implements OnInit {
 
   /*-------------- 撤销一整条的提示框 --------------*/
   isVisible = false;
@@ -219,7 +220,7 @@ export class OrderComponent implements OnInit {
 
     /*-------------- 初始化列表数据 --------------*/
     //更改数据
-    this.http.post('/consumeOrder/list').then(res => {
+    this.http.post('/consumeOrder/list', { status: 5 }).then(res => {
       this.listOfData = res.result.list;     //数据
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
@@ -318,10 +319,9 @@ export class OrderComponent implements OnInit {
 
   /*---------------- 异步刷新数据 ----------------*/
   _request() {
-    this.httpSubscribe.post<any>('/consumeOrder/list', {}, {
+    this.httpSubscribe.post<any>('/consumeOrder/list', serialize({status: 5}), {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
-      // console.log(res);
       var temp = res.result.list;
       for(let item of temp){
         item.isChecked = false;
@@ -335,7 +335,7 @@ export class OrderComponent implements OnInit {
   nzPageIndexChange(event) {
     //更改数据
     this.loading = true;
-    this.http.post('/consumeOrder/list', {pageNum: event, pageSize: this.nzPageSize}).then(res => {
+    this.http.post('/consumeOrder/list', { status: 5, pageNum: event, pageSize: this.nzPageSize }).then(res => {
       this.listOfData = res.result.list;     //数据
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
@@ -348,7 +348,7 @@ export class OrderComponent implements OnInit {
   nzPageSizeChange(event) {
     //更改数据
     this.loading = true;
-    this.http.post('/consumeOrder/list', {pageNum: this.nzPageIndex, pageSize: event}).then(res => {
+    this.http.post('/consumeOrder/list', { status: 5, pageNum: this.nzPageIndex, pageSize: event }).then(res => {
       this.listOfData = res.result.list;     //数据
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少

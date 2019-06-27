@@ -141,6 +141,11 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
+        title : '订单撤销列表',
+        key   : '/home/consumption/revokelist',
+        isLeaf: true
+      },
+      {
         title : '消费列表',
         key   : '/home/consumption/list',
         isLeaf: true

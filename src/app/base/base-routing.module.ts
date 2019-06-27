@@ -161,6 +161,12 @@ const routes: Routes = [
             loadChildren: 'src/app/modules/consumption/order/order.module#OrderModule'
           },
           {
+            path: 'revokelist',
+            data: { title: '订单撤销列表' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/consumption/revoke-list/revoke-list.module#RevokeListModule'
+          },
+          {
             path: 'list',
             data: { title: '消费列表' },
             canLoad: [ AuthGuardService ],

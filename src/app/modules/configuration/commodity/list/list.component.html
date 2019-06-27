@@ -11,7 +11,7 @@
       <button nz-button nzType="primary" (click)="update()">新增商品</button>
     </ng-template>
     <ng-template let-data #EaTableTbodyTr>
-      <td>{{ data.img }}</td>
+      <td><img *ngIf="data.img" style="width: 30px;" [src]="data.img" alt="icon"></td>
       <td>{{ data.barCode }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.stockPrice | currency: '￥' }}</td>

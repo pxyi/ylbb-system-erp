@@ -81,8 +81,8 @@
       <ng-template ngFor let-data [ngForOf]="listOfData">
       <!-- <ng-template ngFor let-data [ngForOf]="rowSelectionTable.data"> -->
         <tr>
-          <td class="ttd" [nzShowExpand]="false" nzShowCheckbox [(nzExpand)]="data.expand" [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
-          <!-- <td class="ttd" nzShowCheckbox ShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="mapOfCheckedId[data.key]" (nzCheckedChange)="refreshStatus(data.id)"></td> -->
+          <td class="ttd" [nzShowExpand]="false" nzShowCheckbox nzShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
+          <!-- <td class="ttd" nzShowCheckbox nzShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="mapOfCheckedId[data.key]" (nzCheckedChange)="refreshStatus(data.id)"></td> -->
           <td>{{ data.payTime}}  {{ data.orderNo }}</td>
           <td>{{ data.memberName }} {{ data.memberNickstring }}<br>卡号：{{ data.cardCode }}<br>卡类型：{{ data.cartTypeName }}</td>
           <td>¥{{ data.payment }}</td>
@@ -95,8 +95,8 @@
             <nz-table #innerTable [nzData]="data.consumeRecordVOS" nzSize="middle" [nzShowPagination]="false">
               <thead>
                 <tr>
-                  <th style="width:40.76%;">商品名称</th>
-                  <th style="width:20.3%;">数量</th>
+                  <th style="width: 40.56%">商品名称</th>
+                  <th style="width: 20.2%">数量</th>
                   <th>操作</th>
                 </tr>
               </thead>
