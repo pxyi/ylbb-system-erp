@@ -136,6 +136,16 @@ export const MenuConfig = [
     icon  : 'red-envelope',
     children : [
       {
+        title : '订单列表',
+        key   : '/home/consumption/order',
+        isLeaf: true
+      },
+      {
+        title : '订单撤销列表',
+        key   : '/home/consumption/revokelist',
+        isLeaf: true
+      },
+      {
         title : '消费列表',
         key   : '/home/consumption/list',
         isLeaf: true
@@ -357,6 +367,11 @@ export const MenuConfig = [
       {
         title : '登录日志',
         key   : '/home/configuration/account/loginlog',
+        isLeaf: true
+      },
+      {
+        title : '支付申请',
+        key   : '/home/configuration/account/payapply',
         isLeaf: true
       }
     ]

@@ -45,7 +45,8 @@ export class BaseComponent implements OnInit {
       expireCardSms: [false],
       expireCardMsg: [false],
       monthReachSms: [false],
-      monthReachMsg: [false]
+      monthReachMsg: [false],
+      stockReminderSms: [false]
     });
     this.http.post('/storeMessageConfig/getStoreMessage').then(res => {
       this.messageLoading = false;

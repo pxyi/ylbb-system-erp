@@ -1,0 +1,228 @@
+<div class="container">
+
+  <!-- 查询条件 -->
+  <ea-query [node]="queryNode"></ea-query>
+  <!-- <ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns" *ngIf="queryNode.length"></ea-query> -->
+
+  <!-- 按钮组 -->
+  <div style="margin-bottom: 10px;" class="ea-button-group">
+    <button nz-button nzType="primary" (click)="operation('preview')">查看</button>
+    <button nz-button nzType="primary" (click)="operation('revoke')">撤销</button>
+    <!-- <button nz-button nzType="primary" (click)="operation('revoke')">撤销</button> -->
+    <button nz-button (click)="operation('satisfaction')">修改满意度</button>
+    <nz-dropdown>
+      <button nz-button nz-dropdown>更多操作<i nz-icon nzType="down"></i></button>
+      <ul nz-menu>
+        <li nz-menu-item><a (click)="operation('message')">发短信</a></li>
+      </ul>
+    </nz-dropdown>
+  </div>
+
+  <!-- 提示框 -->
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="订单撤销" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <nz-table #basic [nzData]="basicTable" nzBordered nzShowPagination="false">
+      <thead>
+        <tr>
+          <th>订单号</th>
+          <th>商品</th>
+          <th>下单时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <ng-template ngFor let-data [ngForOf]="basic.data"> -->
+          <tr *ngFor="let data of basicTable">
+            <td>{{ data.orderNo }}</td>
+            <td><span *ngFor="let item of data.consumeRecordVOS">{{ item.commodityName }}&nbsp;</span></td>
+            <!-- <td>{{ data.commodity }}</td> -->
+            <td>{{ data.payTime }}</td>
+          </tr>
+        <!-- </ng-template> -->
+      </tbody>
+    </nz-table>
+    <form [formGroup]="formGroup">
+      <nz-form-item>
+        <nz-form-label nzRequired>撤销原因</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input row="4" formControlName="causesRevocation" placeholder="请输入备注"></textarea>
+          <nz-form-explain *ngIf="formGroup.get('causesRevocation').dirty && formGroup.get('causesRevocation').hasError('required')">请输入备注！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
+
+  <!-- 表格 -->
+  <nz-table
+      #rowSelectionTable
+      nzShowSizeChanger
+      [nzData]="listOfData"
+      (nzCurrentPageDataChange)="currentPageDataChange($event)"
+      [nzShowPagination]="false"
+      [nzLoading] = "loading"
+      nzBordered
+    >
+    <thead>
+      <tr>
+        <th></th>
+        <!-- <th
+          nzShowExpand
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th> -->
+        <th>订单详情</th>
+        <th>客户信息</th>
+        <th>金额</th>
+        <th>其他信息</th>
+        <th>服务信息</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="listOfData">
+      <!-- <ng-template ngFor let-data [ngForOf]="rowSelectionTable.data"> -->
+        <tr>
+          <td class="ttd" [nzShowExpand]="false" nzShowCheckbox nzShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
+          <!-- <td class="ttd" nzShowCheckbox nzShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="mapOfCheckedId[data.key]" (nzCheckedChange)="refreshStatus(data.id)"></td> -->
+          <td>{{ data.payTime}}  {{ data.orderNo }}</td>
+          <td>{{ data.memberName }} {{ data.memberNickstring }}<br>卡号：{{ data.cardCode }}<br>卡类型：{{ data.cartTypeName }}</td>
+          <td>¥{{ data.payment }}</td>
+          <td>服务泳师：{{ data.employeeName }}<br>满意程度：{{ data.satisfaction }}</td>
+          <td>备注：{{ data.comment }}</td>
+        </tr>
+        <tr [nzExpand]="true">
+          <td></td>
+          <td colspan="5">
+            <nz-table #innerTable [nzData]="data.consumeRecordVOS" nzSize="middle" [nzShowPagination]="false">
+              <thead>
+                <tr>
+                  <th style="width: 40.56%">商品名称</th>
+                  <th style="width: 20.2%">数量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of data.consumeRecordVOS">
+                  <td>{{ item.commodityName }}</td>
+                  <td>{{ item.commodityTotal }}</td>
+                  <!-- <td><a (click)="revokeOne(data,item.id)">撤销消费</a></td> -->
+                  <td><nz-tag [nzColor]="item.status == 0 ? '#2db7f5' : '#f50'"(click)="revokeOne(data,item.id)">{{ item.status == 0 ? '撤销消费' : '已撤销' }}</nz-tag></td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>
+  <nz-pagination class="nz-pagination" (nzPageIndexChange)="nzPageIndexChange($event)" (nzPageSizeChange)="nzPageSizeChange($event)" [nzPageIndex]="nzPageIndex" [nzTotal]="nzTotal" nzShowSizeChanger [nzPageSize]="nzPageSize"></nz-pagination>
+  <!-- <nz-pagination class="nz-pagination" (nzPageIndexChange)="nzPageIndexChange()" (nzPageSizeChange)="nzPageSizeChange()" [nzPageIndex]="1" [nzTotal]="nzTotal" nzShowSizeChanger [nzPageSize]="nzPageSize"></nz-pagination> -->
+
+
+
+
+
+
+
+  <!-- <nz-table #nestedTable nzShowSizeChanger [nzData]="listOfParentData" [nzPageSize]="10">
+    <thead>
+      <tr>
+        <th nzShowExpand></th>
+        <th>Name</th>
+        <th>Platform</th>
+        <th>Version</th>
+        <th>Upgraded</th>
+        <th>Creator</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+        <tr>
+          <td nzShowExpand [(nzExpand)]="data.expand"></td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.platform }}</td>
+          <td>{{ data.version }}</td>
+          <td>{{ data.upgradeNum }}</td>
+          <td>{{ data.creator }}</td>
+          <td>{{ data.createdAt }}</td>
+          <td>
+            <a>Publish</a>
+          </td>
+        </tr>
+        <tr [nzExpand]="data.expand">
+          <td></td>
+          <td colspan="7">
+            <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Upgrade Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of innerTable.data">
+                  <td>{{ data.date }}</td>
+                  <td>{{ data.name }}</td>
+                  <td>
+                    <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge>
+                  </td>
+                  <td>{{ data.upgradeNum }}</td>
+                  <td>
+                    <span class="table-operation">
+                      <nz-dropdown>
+                        <a nz-dropdown class="operation"> Pause <i nz-icon type="down"></i> </a>
+                        <ul nz-menu>
+                          <li nz-menu-item>
+                            <a>Action 1</a>
+                          </li>
+                          <li nz-menu-item>
+                            <a>Action 2</a>
+                          </li>
+                        </ul>
+                      </nz-dropdown>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a class="operation">Stop</a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a>More</a>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </nz-table> -->
+
+  <!-- <nz-checkbox-wrapper style="width: 100%;">
+    <ul>
+      <li style="height: 22px;line-height: 22px;border-top: 1px solid #e8e8e8;border-bottom: 1px solid #e8e8e8;">
+        <span nz-col nzSpan="7" style="text-align: center;border-left: 1px solid #e8e8e8;border-right: 1px solid #e8e8e8;">订单信息</span>
+        <span nz-col nzSpan="4" style="text-align: center;border-right: 1px solid #e8e8e8;">客户信息</span>
+        <span nz-col nzSpan="4" style="text-align: center;border-right: 1px solid #e8e8e8;">金额</span>
+        <span nz-col nzSpan="4" style="text-align: center;border-right: 1px solid #e8e8e8;">其他信息</span>
+        <span nz-col nzSpan="5" style="text-align: center;border-right: 1px solid #e8e8e8;">服务信息</span>
+      </li>
+      <li *ngFor="let data of result">
+        <p class="information"><label nz-checkbox nzValue="A"></label>&nbsp;{{ data.commodity[0].year }}&nbsp;&nbsp;{{ data.commodity[0].second }}&nbsp;&nbsp;&nbsp;&nbsp;订单号{{ data.commodity[0].orderId }}</p>
+        <nz-table style="margin-bottom: 10px;" [nzData]="result" nzBordered nzShowPagination="false">
+          <tr *ngFor="let item of data.commodity">
+            <td style="width: 29%;">{{ item.name }} x{{ item.number }} <a style="float: right;">撤销消费</a></td>
+            <td nzAlign="center" style="width: 17%;" [attr.rowspan]="item.rowspan" *ngIf="item.userName">{{ item.userName }}&nbsp;&nbsp;{{ item.petName }}<br>卡号：{{ item.cardId }}<br>卡类型：{{ item.cardType }}</td>
+            <td nzAlign="center" style="width: 16.5%" [attr.rowspan]="item.rowspan" *ngIf="item.price">¥{{ item.price }}</td>
+            <td nzAlign="center" style="width: 16.8%" [attr.rowspan]="item.rowspan" *ngIf="item.usedCard">已使用卡次：{{ item.usedCard }}<br>单次扣除卡次：{{ item.singleDeductionCard }}<br>类型：{{ item.type }}<br>服务泳师：{{ item.teacherType }}<br>满意度：{{ item.isOk }}</td>
+            <td nzAlign="center" [attr.rowspan]="item.rowspan" *ngIf="item.weight">体重：{{ item.weight }}<br>泳圈型号：{{ item.swimmingRingType }}<br>游泳时长：{{ item.times }}<br>测量：{{ item.measure }}<br>拍照：{{ item.photoGraphy }}<br>备注：{{ item.remark }}</td>
+          </tr>
+        </nz-table>
+      </li>
+    </ul>
+  </nz-checkbox-wrapper>
+
+  <nz-pagination [nzPageIndex]="1" [nzTotal]="20"></nz-pagination> -->
+
+</div>
