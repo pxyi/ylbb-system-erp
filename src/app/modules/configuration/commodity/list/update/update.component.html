@@ -164,6 +164,26 @@
       </div>
       <div nz-col nzSpan="24">
         <nz-form-item>
+          <nz-form-label style="overflow:visible;" nzRequired>库存提醒值
+            <i 
+              style="position:absolute;top:50%;right:-16px;transform:translateY(-50%);font-size:20px;"
+              nz-icon
+              nzType="info-circle"
+              nzTheme="outline"
+              nzTitle="当库存低于提醒值的时候，系统会给系统预留经营者发短信提醒"
+              nzPlacement="right"
+              nz-tooltip
+            ></i>
+          </nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入库存提醒值" formControlName="warningValue" id="warningValue">
+            <nz-form-explain *ngIf="formGroup.get('warningValue').dirty && formGroup.get('warningValue').hasError('required')">请输入库存提醒值！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('warningValue').dirty && formGroup.get('warningValue').hasError('pattern')">请输入正确的库存提醒值！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
           <nz-form-label nzFor="introduction">商品说明</nz-form-label>
           <nz-form-control>
             <textarea nz-input placeholder="请输入商品说明" formControlName="introduction" id="introduction" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>

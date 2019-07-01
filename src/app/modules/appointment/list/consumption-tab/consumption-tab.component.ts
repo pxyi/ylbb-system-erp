@@ -40,8 +40,8 @@ export class ConsumptionTabComponent implements OnInit {
   htmlModalVisible = false;
   disabled = false;
   switchValue = false;
-  //商品还是耗卡 1 商品
-  nzSelectedIndex = 1;
+  //商品还是耗卡 0商品 1耗卡
+  nzSelectedIndex:any;
   //搜索展示数据
   searchList:any = [];
   //tab标签
@@ -73,8 +73,6 @@ export class ConsumptionTabComponent implements OnInit {
   numberOftotal:any = 0;
   //当前订单号
   orderNo:any = '';
-  //这次消费金额
-  thisPrice:any = 0;
   //剩余金额
   remainPrice:any = 0;
   //本次优惠
@@ -92,6 +90,7 @@ export class ConsumptionTabComponent implements OnInit {
   shopTel:string;         //预约电话
   time:string;            //时间
   username:string;        //名字
+  phoneNumber:string;     //会员电话
   generalDiscount:string; //总优惠
 
   //服务小票参数
@@ -105,10 +104,21 @@ export class ConsumptionTabComponent implements OnInit {
   deductionTimes:number;  //消费次数
 
   //会员信息
-  isHaveCard:boolean = false; //是否是会员
-  memberName:string;          //名字
-  memberType:string;          //卡类型
-  memberCode:string;          //卡号
+  memberInfo = {
+    isHaveCard : false, //是否是会员
+    memberName : '',    //名字
+    memberType : '',    //卡类型
+    memberCode : '',    //卡号
+    discount   : '',    //折扣
+    amount     : ''     //剩余金额
+  }
+  
+
+  //商品耗卡是否禁用
+  nzDisabled = {
+    commodity: false, //商品
+    card:      false  //服务
+  }
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
@@ -122,6 +132,16 @@ export class ConsumptionTabComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //非会员 禁用耗卡
+    if (this.consumptionInfo.haveCard == 0) {
+      this.nzDisabled.card = true;
+    }
+
+    //会员 优先展示耗卡
+    if (this.consumptionInfo.haveCard == 1) {
+      this.nzSelectedIndex = 1;
+    }
 
     //解决扫码回车事件闪退问题
     setTimeout(() => {
@@ -148,67 +168,88 @@ export class ConsumptionTabComponent implements OnInit {
           // console.log(this.listOfData);
           for(let item of this.listOfData){
             if (this.code == item.barCode) {
-              //计算数量和总价
-              item.num = parseInt(item.num) + 1;
-              item.subtotal = item.num * item.changePrice;
 
-              //清空操作
-              this.data = {};//清空
-              this.numberOftotal = 0;//总数数量先清零
-              this.price = 0;//应收先清零
-              this.payment = 0;//实收先清零
-              this.resultData = [];
-              //同步listOfData和resultData的数据
-              for (let item of this.listOfData) {
-                this.resultData.push(item);
-              }
-              //遍历数据计算金额和商品数量
-              for(let item of this.resultData){
-                this.price += item.num * item.changePrice; //计算实收金额
-                this.numberOftotal += parseInt(item.num);  //计算总数数量
-              }
+              //库存校验
+              var num = Number(item.num) + 1;
+              this.http.post('/commodity/checkStock', {id : item.id, count : num}).then(res => {
+                if (res.code == 1000) {
+                  //计算数量和总价
+                  item.num = Number(item.num) + 1;
+                  item.subtotal = item.num * item.changePrice;
 
-              this.payment = this.price;//实收金额默认值
-              //tab取消禁用
-              this.isSubmitShopCard = true;
-              this.isMerge = false;//将状态更改为不可合并
-              // console.log('合并', this.listOfData);
+                  //清空操作
+                  this.data = {};//清空
+                  this.numberOftotal = 0;//总数数量先清零
+                  this.price = 0;//应收先清零
+                  this.payment = 0;//实收先清零
+                  this.resultData = [];
+                  //同步listOfData和resultData的数据
+                  for (let item of this.listOfData) {
+                    this.resultData.push(item);
+                  }
+                  //遍历数据计算金额和商品数量
+                  for(let item of this.resultData){
+                    this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+                    this.price = this.keepTwoDecimalFull(this.price);
+                    this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+                  }
+
+                  this.payment = this.price;//实收金额默认值
+                  //tab取消禁用
+                  this.isSubmitShopCard = true;
+                  this.isMerge = false;//将状态更改为不可合并
+                } else {
+                  this.message.create('warning', res.info);
+                }
+              })
+
             }
           }
 
           //listOfData为空或者listOfData中没有此条码的时候走接口
-          if(this.listOfData.length == 0 || this.isMerge || this.orderIsSubmit){
+          if(this.listOfData.length == 0 || this.orderIsSubmit){
             this.http.post('/commodity/getCommodities', { cardId : this.consumptionInfo.id, barCode : this.code }).then(res => {
               if(res.result[0] && res.result[0].changePrice){
-                for(let item of res.result){
-                  //计算数量和总价
-                  item.num = 1;
-                  item.subtotal = item.num * item.changePrice;
-                }
-                this.data = res.result[0];
-                this.data.barCode = this.code;
-                this.listOfData.push(this.data);
-                //清空操作
-                this.data = {};//清空
-                this.numberOftotal = 0;//总数数量先清零
-                this.price = 0;//应收先清零
-                this.payment = 0;//实收先清零
-                this.resultData = [];
-                //同步listOfData和resultData的数据
-                for (let item of this.listOfData) {
-                  this.resultData.push(item);
-                }
-                //遍历数据计算金额和商品数量
-                for(let item of this.resultData){
-                  this.price += item.num * item.changePrice; //计算实收金额
-                  this.numberOftotal += parseInt(item.num);  //计算总数数量
-                }
 
-                this.payment = this.price;//实收金额默认值
-                //tab取消禁用
-                this.isSubmitShopCard = true;
-                this.isMerge = false;//将状态更改为不可合并
-                // console.log('未合并', this.listOfData);
+                this.http.post('/commodity/checkStock', {id : res.result[0].id, count: 1}).then(res => {
+                  if (res.code == 1000) {
+
+                    for(let item of res.result){
+                      //计算数量和总价
+                      item.num = 1;
+                      item.subtotal = item.num * item.changePrice;
+                    }
+                    this.data = res.result[0];
+                    this.data.barCode = this.code;
+                    this.listOfData.push(this.data);
+                    //清空操作
+                    this.data = {};//清空
+                    this.numberOftotal = 0;//总数数量先清零
+                    this.price = 0;//应收先清零
+                    this.payment = 0;//实收先清零
+                    this.resultData = [];
+                    //同步listOfData和resultData的数据
+                    for (let item of this.listOfData) {
+                      this.resultData.push(item);
+                    }
+                    //遍历数据计算金额和商品数量
+                    for(let item of this.resultData){
+                      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+                      this.price = this.keepTwoDecimalFull(this.price);
+                      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+                    }
+  
+                    this.payment = this.price;//实收金额默认值
+                    //tab取消禁用
+                    this.isSubmitShopCard = true;
+                    this.isMerge = false;//将状态更改为不可合并
+                    // console.log('未合并', this.listOfData);
+
+                  } else {
+                    this.message.create('warning', res.info);
+                  }
+                })
+
               }
             })
             
@@ -271,8 +312,6 @@ export class ConsumptionTabComponent implements OnInit {
             if (res.code == 1000) {
               this.orderNo = res.result.orderNo;
               //获取消费剩余金额
-              this.thisPrice = res.result.thisPrice;//这次消费
-              this.remainPrice = res.result.remainPrice;//剩余金额
               this.preferential = res.result.preferential;//本次优惠
               this.orderIsSubmit = true;
               this.message.create('success', '操作成功,请结算或展示付款码');
@@ -286,9 +325,6 @@ export class ConsumptionTabComponent implements OnInit {
                 if (res.code == 1000) {
                   this.message.create('success','付款成功');
                   this.orderIsSubmit = false;
-                  //清空并重置
-                  this.cancel();
-                  this.reset();
                   //打印
                   this.printTest();
                 } else {
@@ -317,15 +353,17 @@ export class ConsumptionTabComponent implements OnInit {
     /* ---------------- 设置充值卡 ---------------- */
     if (this.consumptionInfo.haveCard == 1) {
       //是会员 开放会员卡支付选项
-      this.isHaveCard = true;
+      this.memberInfo.isHaveCard = true;
       this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
-        this.memberName = res.result.name;
-        this.memberType = res.result.ctName;
-        this.memberCode = res.result.cardCode;
+        this.memberInfo.memberName = res.result.name;
+        this.memberInfo.memberType = res.result.ctName;
+        this.memberInfo.memberCode = res.result.cardCode;
+        this.memberInfo.discount = res.result.discount;
+        this.memberInfo.amount = res.result.amount;
       })
     } else {
       //不是会员 禁用会员卡支付选项
-      this.isHaveCard = false;
+      this.memberInfo.isHaveCard = false;
     }
     
 
@@ -466,10 +504,13 @@ export class ConsumptionTabComponent implements OnInit {
 
   showConsumptionDetail(id) {
     this.http.post('/customer/viewCardDateils', { id }, false).then(res => {
+      console.log(res);
+      var phoneNumber = res.result.mobilePhone.slice(0,3) + '****' + res.result.mobilePhone.slice(7);
       //服务打印小票参数
       this.username = res.result.name;                 //姓名
+      this.phoneNumber = phoneNumber;                  //会员电话
       this.cardInfo = res.result.cardInfo;             //会员卡
-      this.remainTimes = res.result.remaintimes+'('+res.result.remaintimes+'/0)';   //剩余次数
+      this.remainTimes = (Number(res.result.remaintimes) + Number(res.result.remainFreeTimes))+'('+res.result.remaintimes+'/'+res.result.remainFreeTimes+')';   //剩余次数
       this.remainAmount = res.result.remainAmount;     //剩余金额
       this.serviceName = res.result.commodityName;     //商品名称
       this.expireDate = res.result.expireDate;         //过期时间
@@ -547,42 +588,50 @@ export class ConsumptionTabComponent implements OnInit {
 
     // 先遍历当前商品列表 判断是否需要进行数据合并
     this.isMerge = true;//默认将状态更改为true
-    // console.log(this.listOfData);
     for(let item of this.listOfData){
       if (data.barCode == item.barCode) {
-        //计算数量和总价
-        item.num = parseInt(item.num) + 1;
-        item.subtotal = item.num * item.changePrice;
+        //库存校验
+        var num = Number(item.num) + 1;
+        this.http.post('/commodity/checkStock', {id : data.id, count : num}).then(res => {
+          if (res.code == 1000) {
+            //计算数量和总价
+            item.num = Number(item.num) + 1;
+            item.subtotal = item.num * item.changePrice;
 
-        //清空操作
-        this.data = {};//清空
-        this.numberOftotal = 0;//总数数量先清零
-        this.price = 0;//应收先清零
-        this.payment = 0;//实收先清零
-        this.resultData = [];
-        //同步listOfData和resultData的数据
-        for (let item of this.listOfData) {
-          this.resultData.push(item);
-        }
-        //遍历数据计算金额和商品数量
-        for(let item of this.resultData){
-          this.price += item.num * item.changePrice; //计算实收金额
-          this.numberOftotal += parseInt(item.num);  //计算总数数量
-        }
+            //清空操作
+            this.data = {};//清空
+            this.numberOftotal = 0;//总数数量先清零
+            this.price = 0;//应收先清零
+            this.payment = 0;//实收先清零
+            this.resultData = [];
+            //同步listOfData和resultData的数据
+            for (let item of this.listOfData) {
+              this.resultData.push(item);
+            }
+            //遍历数据计算金额和商品数量
+            for(let item of this.resultData){
+              this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+              this.price = this.keepTwoDecimalFull(this.price);
+              this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+            }
+
+            this.payment = this.price;//实收金额默认值
+            //tab取消禁用
+            this.isSubmitShopCard = true;
+            this.isMerge = false;//将状态更改为不可合并
+            // console.log('合并', this.listOfData);
+          } else {
+            this.message.create('warning', res.info);
+          }
+        })
         
-        this.payment = this.price;//实收金额默认值
-        //tab取消禁用
-        this.isSubmitShopCard = true;
-        this.isMerge = false;//将状态更改为不可合并
-        // console.log('合并', this.listOfData);
       }
     }
 
     //添加数量和总价
     var resultData = data;
 
-    if(this.listOfData.length == 0 || this.isMerge){
-
+    if(this.listOfData.length == 0){
       //计算数量和总价
       resultData.num = 1;
       resultData.subtotal = resultData.num * resultData.changePrice;
@@ -601,15 +650,15 @@ export class ConsumptionTabComponent implements OnInit {
       }
       //遍历数据计算金额和商品数量
       for(let item of this.resultData){
-        this.price += item.num * item.changePrice; //计算实收金额
-        this.numberOftotal += parseInt(item.num);  //计算总数数量
+        this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+        this.price = this.keepTwoDecimalFull(this.price);
+        this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
       }
 
       this.payment = this.price;//实收金额默认值
       //tab取消禁用
       this.isSubmitShopCard = true;
       this.isMerge = false;//将状态更改为不可合并
-      // console.log('合并', this.listOfData);
 
     }
     
@@ -628,42 +677,47 @@ export class ConsumptionTabComponent implements OnInit {
 
   changeNum(id, data) {
     //0 减  1 加
-    var d = data;
     for (let item of this.listOfData) {
       if (item.id == data.id) {
         if (id == 0) {
-          if (item.num == 1){
-            this.message.create('warning','商品数量不能小于1');
-            return;
-          }
+          if (item.num == 1){this.message.create('warning','商品数量不能小于1');return;}
           //减
           item.num --;
         } else if (id == 1) {
           //加
-          item.num = parseInt(item.num) + 1;
+          var num = Number(item.num) + 1
+          this.http.post('/commodity/checkStock', {id : item.id, count : num }).then(res => {
+            if (res.code == 1000) {
+              item.num = Number(item.num) + 1;
+
+              //同步listOfData和resultData
+              this.resultData = [];
+              for (let item of this.listOfData) {
+                this.resultData.push(item);
+              }
+
+              //更新数量合计
+              this.data = {};//清空
+              this.numberOftotal = 0;//总数数量先清零
+              this.price = 0;//应收先清零
+              this.payment = 0;//实收先清零
+              //遍历数据计算金额和商品数量
+              for(let item of this.resultData){
+                this.price += this.keepTwoDecimalFull(item.num * item.changePrice);
+                this.price = this.keepTwoDecimalFull(this.price);
+                this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));    //计算总数数量
+                item.subtotal = this.keepTwoDecimalFull(item.num * item.changePrice); //计算小计
+              }
+              
+              this.payment = this.price;//实收金额默认值
+            } else {
+              this.message.create('warning', res.info);
+              return;
+            }
+          })
         }
       }
     }
-
-    //同步listOfData和resultData
-    this.resultData = [];
-    for (let item of this.listOfData) {
-      this.resultData.push(item);
-    }
-
-    //更新数量合计
-    this.data = {};//清空
-    this.numberOftotal = 0;//总数数量先清零
-    this.price = 0;//应收先清零
-    this.payment = 0;//实收先清零
-    //遍历数据计算金额和商品数量
-    for(let item of this.resultData){
-      this.price += item.num * item.changePrice;   //计算实收金额
-      this.numberOftotal += parseInt(item.num);    //计算总数数量
-      item.subtotal = item.num * item.changePrice; //计算小计
-    }
-    
-    this.payment = this.price;//实收金额默认值
 
   }
 
@@ -721,8 +775,6 @@ export class ConsumptionTabComponent implements OnInit {
       if (res.code == 1000) {
         this.orderNo = res.result.orderNo;
         //获取消费剩余金额
-        this.thisPrice = res.result.thisPrice;//这次消费
-        this.remainPrice = res.result.remainPrice;//剩余金额
         this.preferential = res.result.preferential;//本次优惠
         this.orderIsSubmit = true;
         this.message.create('success', '操作成功,请结算或展示付款码');
@@ -731,9 +783,6 @@ export class ConsumptionTabComponent implements OnInit {
         this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
           if(res.code == 1000){
             this.message.create('success', '支付成功');
-            //清空并重置
-            this.cancel();
-            this.reset();
             //打印
             this.printTest();
           }else{
@@ -777,8 +826,9 @@ export class ConsumptionTabComponent implements OnInit {
 
     //遍历数据计算金额和商品数量
     for(let item of this.resultData){
-      this.price += item.num * item.changePrice; //计算实收金额
-      this.numberOftotal += parseInt(item.num);  //计算总数数量
+      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+      this.price = this.keepTwoDecimalFull(this.price);
+      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
     }
     this.payment = this.price;
     this.changePrice = this.payment - this.price;
@@ -852,18 +902,18 @@ export class ConsumptionTabComponent implements OnInit {
     }
     //增加每个商品的优惠价格
     for (let item of this.resultData) {
-      item.discount =  parseInt(item.changePrice) - parseInt(item.price);
+      item.discount =  Number(item.changePrice) - Number(item.price);
     }
     //总优惠价格
     this.generalDiscount = '0';
 
     //打印
     setTimeout(()=>{
-      if (this.nzSelectedIndex == 1) {
-        //1 商品
+      if (this.nzSelectedIndex == 0) {
+        //0 商品
         var el = this.el.nativeElement;
-      } else if (this.nzSelectedIndex == 0) {
-        //0 服务
+      } else if (this.nzSelectedIndex == 1) {
+        //1 服务
         var el = this.service.nativeElement;
       }
       
@@ -884,7 +934,27 @@ export class ConsumptionTabComponent implements OnInit {
       {
         document.body.removeChild(iframe);
       }
+      //清空并重置
+      this.cancel();
+      this.reset();
     },1000)
+  }
+
+  /*---------------- 解决JS数字精度问题 ----------------*/
+  keepTwoDecimalFull (num) {
+    var result = parseFloat(num);
+    if (isNaN(result)) {return;}
+    result = Math.round(num * 100) / 100;
+    var s_x = result.toString();
+    var post_decimal = s_x.indexOf('.');
+    if(post_decimal < 0){
+        post_decimal = s_x.length;
+        s_x += '.';
+    }
+    while(s_x.length <= post_decimal + 2){
+        s_x += '0';
+    }
+    return Number(s_x);
   }
 
 }

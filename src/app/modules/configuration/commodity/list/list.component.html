@@ -11,7 +11,12 @@
       <button nz-button nzType="primary" (click)="update()">新增商品</button>
     </ng-template>
     <ng-template let-data #EaTableTbodyTr>
-      <td><img *ngIf="data.img" style="width: 30px;" [src]="data.img" alt="icon"></td>
+      <td>
+        <nz-avatar *ngIf="data.img" nzShape="square" [nzOverlayStyle]="{padding: '0 !important'}" nzPlacement="rightBottom" [nzSrc]="data.img" nz-tooltip [nzTitle]="titleTemplate"></nz-avatar>
+        <ng-template #titleTemplate>
+          <img [src]="data.img" [ngStyle]="{'max-width': '226px', 'max-height': '400px', 'transform': 'scale(1.1)'}">
+        </ng-template>
+      </td>
       <td>{{ data.barCode }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.stockPrice | currency: '￥' }}</td>
