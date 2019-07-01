@@ -31,14 +31,15 @@ export class UpdateComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.fb.group({
       id: [],
-      name: [, [Validators.required], [this.nameAsyncValidator]], // 商品名称
-      status: [0, [Validators.required]],                         // 商品状态 0:’启用’,1:’禁用’
-      chargeType: [0, [Validators.required]],                     // 是否计次消费 0:’是’,1:’否’
-      type: [1, [Validators.required]],                           //	商品类型
-      integral: [0, [Validators.required]],                       // 是否积分 计积分 0:’不记积分’,1:’记积分’
-      defaultTag: [0, [Validators.required]],                     // 是否设置为默认 是否默认 0:’否’,1:’是’
-      introduction: [],                                           //	商品说明
-      discountFlag: [0, [Validators.required]]                    //是否参与折扣
+      name: [, [Validators.required], [this.nameAsyncValidator]],                  // 商品名称
+      status: [0, [Validators.required]],                                          // 商品状态 0:’启用’,1:’禁用’
+      chargeType: [0, [Validators.required]],                                      // 是否计次消费 0:’是’,1:’否’
+      type: [1, [Validators.required]],                                            //	商品类型
+      integral: [0, [Validators.required]],                                        // 是否积分 计积分 0:’不记积分’,1:’记积分’
+      defaultTag: [0, [Validators.required]],                                      // 是否设置为默认 是否默认 0:’否’,1:’是’
+      introduction: [],                                                            //	商品说明
+      discountFlag: [0, [Validators.required]],                                    //是否参与折扣
+      warningValue: [, [Validators.required], [Validators.pattern(/^[1-9]\d*$/)]]  //库存提醒值
     });
     this.formTypeChange(this.formGroup.get('type').value);
     this.formGroup.get('type').valueChanges.subscribe(val => this.formTypeChange(val));
