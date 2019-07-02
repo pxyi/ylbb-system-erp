@@ -239,7 +239,8 @@ export class ListComponent implements OnInit {
       nzWidth: 1300,
       nzTitle: options.title || null,
       nzContent: options.component,
-      nzContentParams: options.params || { id: this.checkedItems[0], userInfo }
+      nzContentParams: options.params || { id: this.checkedItems[0], userInfo },
+      nzWrapClassName: 'drawerRef'
     });
     drawer.afterClose.subscribe(res => res && this.listPage.eaTable._request());
   }
