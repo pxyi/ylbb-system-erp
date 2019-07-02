@@ -109,7 +109,7 @@ export class ConsumptionTabComponent implements OnInit {
     memberName   : '',    //名字
     memberType   : '',    //卡类型
     memberCode   : '',    //卡号
-    discount     : '',    //折扣
+    discount     : 0,     //折扣
     amount       : '',    //剩余金额
     preferential : 0      //优惠了多少钱
   }
@@ -1027,7 +1027,7 @@ export class ConsumptionTabComponent implements OnInit {
       this.memberInfo.memberName = res.result.name;
       this.memberInfo.memberType = res.result.ctName;
       this.memberInfo.memberCode = res.result.cardCode;
-      this.memberInfo.discount = res.result.discount;
+      this.memberInfo.discount = Number(res.result.discount);
       this.memberInfo.amount = res.result.amount;
       this.Memberprice = this.price*res.result.discount;//会员价格
       this.memberInfo.preferential = this.price-this.Memberprice;//优惠金额(优惠了多少钱)
