@@ -90,7 +90,7 @@ export class ConsumptionTabComponent implements OnInit {
   shopTel:string;         //预约电话
   time:string;            //时间
   username:string;        //名字
-  phoneNumber:string;     //会员电话
+  phoneNumber:any;        //会员电话
   generalDiscount:string; //总优惠
 
   //服务小票参数
@@ -123,6 +123,8 @@ export class ConsumptionTabComponent implements OnInit {
 
   //扫码判断列表中有无该商品
   existCommodity = true;
+
+  residualAmount:any; //卡剩余金额
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
@@ -686,7 +688,6 @@ export class ConsumptionTabComponent implements OnInit {
   /*---------------- 支付方式 ----------------*/
   selectPayType(eve) {
     this.paymentType = eve;
-    console.log(this.paymentType);
   }
 
   changeNum(id, data) {
@@ -781,12 +782,11 @@ export class ConsumptionTabComponent implements OnInit {
     this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
       this.Memberprice = this.price*res.result.discount;//会员价格
       this.memberInfo.preferential = this.price-this.Memberprice;//优惠金额(优惠了多少钱)
-      if (this.Memberprice < res.result.amount) {
+      if (this.paymentType == 4 && res.result.amount < this.Memberprice) {
         this.message.create('warning', '该储值卡余额不足，请续费！');
       } else {
 
         this.changePrice = this.payment - this.price; //计算找零
-        console.log('第一遍', this.paymentType);
         var paramJson = {
           payment       : this.payment,                                      //实收金额
           price         : this.price,                                        //应收金额
@@ -824,7 +824,6 @@ export class ConsumptionTabComponent implements OnInit {
             this.message.create('success', '操作成功,请结算或展示付款码');
 
             /*---------------- 确定结算 ----------------*/
-            console.log('第二遍', this.paymentType);
             this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
               if(res.code == 1000){
                 this.message.create('success', '支付成功');
@@ -909,15 +908,20 @@ export class ConsumptionTabComponent implements OnInit {
       this.shopTel = res.result.shopTel;         //电话
     })
 
+    //如果是会员卡 小票展示余额
+    if (this.paymentType == 4) {
+      this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
+        if (res.code == 1000) {
+          this.residualAmount = res.result.amount;
+        } else {
+          this.message.create('warning', res.info);
+        }
+      })
+    }
+
     //获取会员电话
-    this.http.post('/customer/viewCardDateils', { id : this.consumptionInfo.id }, false).then(res => {
-      if (res.code == 1000) {
-        var phoneNumber = res.result.mobilePhone.slice(0,3) + '****' + res.result.mobilePhone.slice(7);
-        this.phoneNumber = phoneNumber; //会员电话
-      } else {
-        this.message.create('warning', res.info);
-      }
-    })
+    var phoneNumber = this.consumptionInfo.mobilePhone.slice(0,3) + '****' + this.consumptionInfo.mobilePhone.slice(7);
+    this.phoneNumber = phoneNumber; //会员电话
 
     //时间
     var time;

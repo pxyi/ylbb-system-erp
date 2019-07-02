@@ -41,7 +41,7 @@ export class ConsumptionTabComponent implements OnInit {
   disabled = false;
   switchValue = false;
   //商品还是耗卡 0商品 1耗卡
-  nzSelectedIndex:any;
+  nzSelectedIndex:any = 0;
   //搜索展示数据
   searchList:any = [];
   //tab标签
@@ -58,7 +58,7 @@ export class ConsumptionTabComponent implements OnInit {
   data:any = {};
   resultData:any = [];//处理后的数据数组
   //支付方式
-  paymentType:number = 1; //1现金支付 2微信 3支付宝 4充值卡
+  paymentType:number = 2; //1现金支付 2微信 3支付宝 4充值卡
   //支付方式文字
   paymentTypeText:string = '现金支付';
   //实收
@@ -90,7 +90,7 @@ export class ConsumptionTabComponent implements OnInit {
   shopTel:string;         //预约电话
   time:string;            //时间
   username:string;        //名字
-  phoneNumber:string;     //会员电话
+  phoneNumber:any;        //会员电话
   generalDiscount:string; //总优惠
 
   //服务小票参数
@@ -123,6 +123,8 @@ export class ConsumptionTabComponent implements OnInit {
 
   //扫码判断列表中有无该商品
   existCommodity = true;
+
+  residualAmount:any; //卡剩余金额
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
@@ -589,13 +591,9 @@ export class ConsumptionTabComponent implements OnInit {
 
   //判断是商品还是耗卡
   isSelect(id) {
-    // this.nzSelectedIndex = id;
-    if (id == 0) {
-      //获取消费卡列表
-      //获取服务泳师列表
-      //获取消费列表
-      //获取泳圈型号列表
-    }
+    setTimeout(() => {
+      this.nzSelectedIndex = id;
+    },100)
   }
 
   //搜索后添加商品
@@ -784,7 +782,7 @@ export class ConsumptionTabComponent implements OnInit {
     this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
       this.Memberprice = this.price*res.result.discount;//会员价格
       this.memberInfo.preferential = this.price-this.Memberprice;//优惠金额(优惠了多少钱)
-      if (this.Memberprice < res.result.amount) {
+      if (this.paymentType == 4 && res.result.amount < this.Memberprice) {
         this.message.create('warning', '该储值卡余额不足，请续费！');
       } else {
 
@@ -910,15 +908,20 @@ export class ConsumptionTabComponent implements OnInit {
       this.shopTel = res.result.shopTel;         //电话
     })
 
+    //如果是会员卡 小票展示余额
+    if (this.paymentType == 4) {
+      this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
+        if (res.code == 1000) {
+          this.residualAmount = res.result.amount;
+        } else {
+          this.message.create('warning', res.info);
+        }
+      })
+    }
+
     //获取会员电话
-    this.http.post('/customer/viewCardDateils', { id : this.consumptionInfo.id }, false).then(res => {
-      if (res.code == 1000) {
-        var phoneNumber = res.result.mobilePhone.slice(0,3) + '****' + res.result.mobilePhone.slice(7);
-        this.phoneNumber = phoneNumber; //会员电话
-      } else {
-        this.message.create('warning', res.info);
-      }
-    })
+    var phoneNumber = this.consumptionInfo.mobilePhone.slice(0,3) + '****' + this.consumptionInfo.mobilePhone.slice(7);
+    this.phoneNumber = phoneNumber; //会员电话
 
     //时间
     var time;
@@ -991,8 +994,6 @@ export class ConsumptionTabComponent implements OnInit {
         document.body.removeChild(iframe);
       }
       //清空并重置
-      this.cancel();
-      this.reset();
       this.closeDrawer();
     },1000)
   }
