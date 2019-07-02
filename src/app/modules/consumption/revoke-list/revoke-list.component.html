@@ -1,8 +1,7 @@
 <div class="container">
 
   <!-- 查询条件 -->
-  <ea-query [node]="queryNode"></ea-query>
-  <!-- <ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns" *ngIf="queryNode.length"></ea-query> -->
+  <ea-query #EaQuery [node]="queryNode" (onSubmit)="query($event)"></ea-query>
 
   <!-- 按钮组 -->
   <div style="margin-bottom: 10px;" class="ea-button-group">

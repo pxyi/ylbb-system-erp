@@ -210,6 +210,13 @@ export class RevokeListComponent implements OnInit {
 
   checkedItems: any[] = [];
 
+  _pageInfo = {
+    loading: false,
+    pageSize: 10,
+    pageNo: 1,
+    totalPage: 0
+  };
+
   constructor(
     private message: NzMessageService,
     private drawer: NzDrawerService,
@@ -357,6 +364,29 @@ export class RevokeListComponent implements OnInit {
       this.nzTotal = res.result.totalPage;   //数据总条数
       this.loading = false;
     })
+  }
+
+  queryParams = {};
+  query(e) {
+    this.queryParams = e;
+    this._pageInfo.pageNo = 1;
+    this.request();
+  }
+
+  request() {
+    var params = {
+      status: 5,
+      paramJson: JSON.stringify(this.queryParams)
+    }
+    this.httpSubscribe.post<any>('/consumeOrder/list', serialize(params), {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    }).subscribe(res => {
+      var temp = res.result.list;
+      for(let item of temp){
+        item.isChecked = false;
+      }
+      this.listOfData = temp;
+    });
   }
 
 }

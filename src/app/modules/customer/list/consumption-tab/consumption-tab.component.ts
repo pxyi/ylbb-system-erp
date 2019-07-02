@@ -41,7 +41,7 @@ export class ConsumptionTabComponent implements OnInit {
   disabled = false;
   switchValue = false;
   //商品还是耗卡 0商品 1耗卡
-  nzSelectedIndex:any;
+  nzSelectedIndex:any = 0;
   //搜索展示数据
   searchList:any = [];
   //tab标签
@@ -58,7 +58,7 @@ export class ConsumptionTabComponent implements OnInit {
   data:any = {};
   resultData:any = [];//处理后的数据数组
   //支付方式
-  paymentType:number = 1; //1现金支付 2微信 3支付宝 4充值卡
+  paymentType:number = 2; //1现金支付 2微信 3支付宝 4充值卡
   //支付方式文字
   paymentTypeText:string = '现金支付';
   //实收
@@ -589,13 +589,9 @@ export class ConsumptionTabComponent implements OnInit {
 
   //判断是商品还是耗卡
   isSelect(id) {
-    // this.nzSelectedIndex = id;
-    if (id == 0) {
-      //获取消费卡列表
-      //获取服务泳师列表
-      //获取消费列表
-      //获取泳圈型号列表
-    }
+    setTimeout(() => {
+      this.nzSelectedIndex = id;
+    },100)
   }
 
   //搜索后添加商品
@@ -690,6 +686,7 @@ export class ConsumptionTabComponent implements OnInit {
   /*---------------- 支付方式 ----------------*/
   selectPayType(eve) {
     this.paymentType = eve;
+    console.log(this.paymentType);
   }
 
   changeNum(id, data) {
@@ -789,6 +786,7 @@ export class ConsumptionTabComponent implements OnInit {
       } else {
 
         this.changePrice = this.payment - this.price; //计算找零
+        console.log('第一遍', this.paymentType);
         var paramJson = {
           payment       : this.payment,                                      //实收金额
           price         : this.price,                                        //应收金额
@@ -826,6 +824,7 @@ export class ConsumptionTabComponent implements OnInit {
             this.message.create('success', '操作成功,请结算或展示付款码');
 
             /*---------------- 确定结算 ----------------*/
+            console.log('第二遍', this.paymentType);
             this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
               if(res.code == 1000){
                 this.message.create('success', '支付成功');
@@ -991,8 +990,6 @@ export class ConsumptionTabComponent implements OnInit {
         document.body.removeChild(iframe);
       }
       //清空并重置
-      this.cancel();
-      this.reset();
       this.closeDrawer();
     },1000)
   }
