@@ -11,7 +11,6 @@ import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { serialize } from 'src/app/core/http.intercept';
 
 @Component({
   selector: 'app-order',
@@ -369,9 +368,9 @@ export class OrderComponent implements OnInit {
     })
   }
 
-  request(e) {
-    var paramsJson = e;
-    this.httpSubscribe.post<any>('/consumeOrder/list', serialize(Object.assign(this.queryParams, this._pageInfo)), {
+  request() {
+
+    this.httpSubscribe.post<any>('/consumeOrder/list', Object.assign(this.queryParams, this._pageInfo), {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
       var temp = res.result.list;
@@ -387,7 +386,7 @@ export class OrderComponent implements OnInit {
     console.log(e);
     this.queryParams = e;
     this._pageInfo.pageNo = 1;
-    this.request(e);
+    this._request();
   }
 
 }
