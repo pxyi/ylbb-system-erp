@@ -10,7 +10,8 @@ import { CurriculumComponent } from './curriculum/curriculum.component';
 import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { serialize } from 'src/app/core/http.intercept';
 
 @Component({
   selector: 'app-order',
@@ -368,9 +369,18 @@ export class OrderComponent implements OnInit {
     })
   }
 
-  request() {
+  queryParams = {};
+  query(e) {
+    this.queryParams = e;
+    this._pageInfo.pageNo = 1;
+    this.request();
+  }
 
-    this.httpSubscribe.post<any>('/consumeOrder/list', Object.assign(this.queryParams, this._pageInfo), {
+  request() {
+    var params = {
+      paramJson: JSON.stringify(this.queryParams)
+    }
+    this.httpSubscribe.post<any>('/consumeOrder/list', serialize(params), {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
       var temp = res.result.list;
@@ -379,14 +389,6 @@ export class OrderComponent implements OnInit {
       }
       this.listOfData = temp;
     });
-  }
-
-  queryParams = {};
-  query(e) {
-    console.log(e);
-    this.queryParams = e;
-    this._pageInfo.pageNo = 1;
-    this._request();
   }
 
 }
