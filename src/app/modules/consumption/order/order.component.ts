@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
+import { QueryNode, QueryComponent } from 'src/app/ng-relax/components/query/query.component';
 
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { PreviewComponent } from './preview/preview.component';
@@ -11,6 +11,7 @@ import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { serialize } from 'src/app/core/http.intercept';
 
 @Component({
   selector: 'app-order',
@@ -18,6 +19,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./order.component.less']
 })
 export class OrderComponent implements OnInit {
+
+  @ViewChild('tlModal') tlModal;
+
+  @ViewChild('eaQuery') eaQuery: QueryComponent;
 
   /*-------------- 撤销一整条的提示框 --------------*/
   isVisible = false;
@@ -32,8 +37,8 @@ export class OrderComponent implements OnInit {
     } else {
       //订单撤销
       this.http.post('/consumeOrder/cancel', { orderNo: this.basicTable[0].orderNo, causesRevocation: this.formGroup.get('causesRevocation').value }).then(res => {
-        console.log('整条订单撤销', res);
         this.isVisible = false;
+        this.tlModal.nzAfterClose.subscribe(res => this._request());
       })
     }
   }
@@ -207,6 +212,13 @@ export class OrderComponent implements OnInit {
 
   checkedItems: any[] = [];
 
+  _pageInfo = {
+    loading: false,
+    pageSize: 10,
+    pageNo: 1,
+    totalPage: 0
+  };
+
   constructor(
     private message: NzMessageService,
     private drawer: NzDrawerService,
@@ -355,6 +367,27 @@ export class OrderComponent implements OnInit {
       this.nzTotal = res.result.totalPage;   //数据总条数
       this.loading = false;
     })
+  }
+
+  request(e) {
+    var paramsJson = e;
+    this.httpSubscribe.post<any>('/consumeOrder/list', serialize(Object.assign(this.queryParams, this._pageInfo)), {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    }).subscribe(res => {
+      var temp = res.result.list;
+      for(let item of temp){
+        item.isChecked = false;
+      }
+      this.listOfData = temp;
+    });
+  }
+
+  queryParams = {};
+  query(e) {
+    console.log(e);
+    this.queryParams = e;
+    this._pageInfo.pageNo = 1;
+    this.request(e);
   }
 
 }

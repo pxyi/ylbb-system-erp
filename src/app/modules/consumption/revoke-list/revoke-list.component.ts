@@ -20,6 +20,8 @@ import { serialize } from 'src/app/core/http.intercept';
 })
 export class RevokeListComponent implements OnInit {
 
+  @ViewChild('tlModal') tlModal;
+
   /*-------------- 撤销一整条的提示框 --------------*/
   isVisible = false;
   basicTable = [];//撤销一整条展示数据
@@ -33,8 +35,8 @@ export class RevokeListComponent implements OnInit {
     } else {
       //订单撤销
       this.http.post('/consumeOrder/cancel', { orderNo: this.basicTable[0].orderNo, causesRevocation: this.formGroup.get('causesRevocation').value }).then(res => {
-        console.log('整条订单撤销', res);
         this.isVisible = false;
+        this.tlModal.nzAfterClose.subscribe(res => this._request());
       })
     }
   }

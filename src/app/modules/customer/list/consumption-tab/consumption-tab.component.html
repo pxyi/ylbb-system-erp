@@ -116,10 +116,10 @@
           <nz-tabset nzTabBarGutter='0' nzShowPagination="false">
             <nz-tab nzTitle="微信" (nzSelect)="selectPayType(2)" [nzDisabled]="!isSubmitShopCard">
               <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
-              <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
+              <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
                 margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
-              >请输入付款码</div>
-              <nz-form-item style="margin-top:10px;">
+              >请输入付款码</div> -->
+              <nz-form-item style="margin-top:30px;">
                 <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
                   <input type="text" nz-input [(ngModel)]="price" disabled="true">
@@ -132,10 +132,10 @@
             </nz-tab>
             <nz-tab nzTitle="支付宝" (nzSelect)="selectPayType(3)" [nzDisabled]="!isSubmitShopCard">
               <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
-              <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
+              <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
                 margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
-              >请输入付款码</div>
-              <nz-form-item style="margin-top:10px;">
+              >请输入付款码</div> -->
+              <nz-form-item style="margin-top:30px;">
                 <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
                   <input type="text" nz-input [(ngModel)]="price" disabled="true">
@@ -155,7 +155,7 @@
                 </nz-form-control>
                 <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
-                  <input type="text" nz-input [(ngModel)]="payment">
+                  <input type="text" nz-input (ngModelChange)="giveChange($event)" [(ngModel)]="payment">
                 </nz-form-control>
                 <nz-form-label [nzSm]="5" [nzXs]="24">找零</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
@@ -164,7 +164,7 @@
               </nz-form-item>
               <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="settlement()">确定结算</button>
             </nz-tab>
-            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard || !memberInfo.isHaveCard">
+            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard || !memberInfo.isHaveCard || !feeType">
               <div class="vip-card">
                 <div class="vip-card-one">
                   <span class="vip-text">VIP</span>
@@ -173,7 +173,7 @@
                 </div>
                 <div class="vip-card-two">
                   <span class="vip-card-name">{{ memberInfo.memberName }}</span>
-                  <span class="vip-card-discount">{{ memberInfo.discount }}</span>
+                  <span class="vip-card-discount">{{ memberInfo.discount * 10 }}折</span>
                   <span class="vip-card-date">{{ memberInfo.memberCode }}</span>
                   <div style="clear:both;"></div>
                 </div>
@@ -181,7 +181,7 @@
               <ul class="consumption-details clearfix">
                 <li>
                   <p>本次消费金额</p>
-                  <span>{{ price }}</span>
+                  <span>{{ Memberprice }}</span>
                 </li>
                 <li>
                   <p>本次剩余金额</p>
@@ -189,17 +189,17 @@
                 </li>
                 <li>
                   <p>本次优惠金额</p>
-                  <span>{{ preferential }}</span>
+                  <span>{{ memberInfo.preferential }}</span>
                 </li>
               </ul>
               <nz-form-item>
                 <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
-                  <input type="text" nz-input [(ngModel)]="price" disabled="true">
+                  <input type="text" nz-input [(ngModel)]="Memberprice" disabled="true">
                 </nz-form-control>
                 <nz-form-label [nzSm]="5" [nzXs]="24">实收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
-                  <input type="text" nz-input [(ngModel)]="payment" disabled="true">
+                  <input type="text" nz-input [(ngModel)]="Memberprice" disabled="true">
                 </nz-form-control>
               </nz-form-item>
               <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="settlement()">确定结算</button>
