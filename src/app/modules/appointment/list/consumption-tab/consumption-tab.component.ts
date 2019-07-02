@@ -126,6 +126,8 @@ export class ConsumptionTabComponent implements OnInit {
 
   residualAmount:any; //卡剩余金额
 
+  isPay:boolean = false; //防止重复提交支付
+
   constructor(
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef<boolean | any>,
@@ -275,86 +277,89 @@ export class ConsumptionTabComponent implements OnInit {
 
         } else if (this.code.length == 18) { //长度为18 是付款码
 
-          //现金支付和充值卡功能扫码无效
-          if (this.paymentType == 1 || this.paymentType == 4) {
-            this.message.create('warning', '请点击确定结算按钮');
-            return;
-          }
-          /*---------------- 提交订单 ----------------*/
-          //请添加商品
-          if (this.resultData.length == 0) {
-            this.message.create('warning', '请添加商品');
-            return;
-          }
-          //请输入实收
-          if (!this.payment) {
-            this.message.create('warning', '请输入实收金额');
-            return;
-          }
-          //如果实收金额少于应收金额不允许提交
-          if(this.payment < this.price){
-            this.message.create('warning', '实收金额不能小于应收金额');
-            return;
-          }
-          
-          this.changePrice = this.payment - this.price; //计算找零
-          var paramJson = {
-            payment       : this.payment,                                      //实收金额
-            price         : this.price,                                        //应收金额
-            changePrice   : this.changePrice,                                  //找零
-            paymentType   : this.paymentType,                                  //支付方式
-            memberId      : this.consumptionInfo.id,                           //会员id
-            cardId        : this.consumptionInfo.cardId,                       //会员卡id
-            satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
-            swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
-            comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-            cardPos       : []                                                 //购物车
-          }
-          //购物车列表放到cardPos中
-          for (let item of this.resultData) {
-            var data={};
-            data['id']            = item.id;          //商品id
-            data['count']         = item.num;         //商品数量
-            data['price']         = item.price;       //商品售价
-            data['discountPrice'] = item.changePrice; //商品折扣价
-            data['subtotal']      = item.subtotal;    //总价
-            paramJson.cardPos.push(data);
-          }
-          //haveCard等于1为会员
-          if(this.consumptionInfo.haveCard != 1){
-            delete paramJson.cardId;
-          }
-          // console.log(paramJson);
-          this.http.post('/customer/commodityConsumer', { paramJson : JSON.stringify(paramJson) }).then(res => {
-
-            if (res.code == 1000) {
-              this.orderNo = res.result.orderNo;
-              //获取消费剩余金额
-              this.preferential = res.result.preferential;//本次优惠
-              this.orderIsSubmit = true;
-              this.message.create('success', '操作成功,请结算或展示付款码');
-
-              /*---------------- 确定结算 ----------------*/
-              this.http.post('/customer/payOrder', {
-                payBarCode : this.code,        //付款码
-                orderNo    : this.orderNo,     //订单号
-                payType    : this.paymentType  //支付方式
-              }).then(res => {
-                if (res.code == 1000) {
-                  this.message.create('success','付款成功');
-                  this.orderIsSubmit = false;
-                  //打印
-                  this.printTest();
-                } else {
-                  this.message.create('warning', res.info);
-                }
-              })
-
-            } else {
-              this.message.create('warning', res.info);
+          if (!this.isPay) {
+            this.isPay = true;
+            //现金支付和充值卡功能扫码无效
+            if (this.paymentType == 1 || this.paymentType == 4) {
+              this.message.create('warning', '请点击确定结算按钮');
+              return;
             }
+            /*---------------- 提交订单 ----------------*/
+            //请添加商品
+            if (this.resultData.length == 0) {
+              this.message.create('warning', '请添加商品');
+              return;
+            }
+            //请输入实收
+            if (!this.payment) {
+              this.message.create('warning', '请输入实收金额');
+              return;
+            }
+            //如果实收金额少于应收金额不允许提交
+            if(this.payment < this.price){
+              this.message.create('warning', '实收金额不能小于应收金额');
+              return;
+            }
+            
+            this.changePrice = this.payment - this.price; //计算找零
+            var paramJson = {
+              payment       : this.payment,                                      //实收金额
+              price         : this.price,                                        //应收金额
+              changePrice   : this.changePrice,                                  //找零
+              paymentType   : this.paymentType,                                  //支付方式
+              memberId      : this.consumptionInfo.id,                           //会员id
+              cardId        : this.consumptionInfo.cardId,                       //会员卡id
+              satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
+              swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
+              comment       : this.singleTimeGroup.get('remarks').value || null, //备注
+              cardPos       : []                                                 //购物车
+            }
+            //购物车列表放到cardPos中
+            for (let item of this.resultData) {
+              var data={};
+              data['id']            = item.id;          //商品id
+              data['count']         = item.num;         //商品数量
+              data['price']         = item.price;       //商品售价
+              data['discountPrice'] = item.changePrice; //商品折扣价
+              data['subtotal']      = item.subtotal;    //总价
+              paramJson.cardPos.push(data);
+            }
+            //haveCard等于1为会员
+            if(this.consumptionInfo.haveCard != 1){
+              delete paramJson.cardId;
+            }
+            // console.log(paramJson);
+            this.http.post('/customer/commodityConsumer', { paramJson : JSON.stringify(paramJson) }).then(res => {
+              if (res.code == 1000) {
+                this.orderNo = res.result.orderNo;
+                //获取消费剩余金额
+                this.preferential = res.result.preferential;//本次优惠
+                this.orderIsSubmit = true;
+                this.message.create('success', '操作成功,请结算或展示付款码');
 
-          })
+                /*---------------- 确定结算 ----------------*/
+                this.http.post('/customer/payOrder', {
+                  payBarCode : this.code,        //付款码
+                  orderNo    : this.orderNo,     //订单号
+                  payType    : this.paymentType  //支付方式
+                }).then(res => {
+                  if (res.code == 1000) {
+                    this.message.create('success','付款成功');
+                    this.isPay = false;
+                    this.orderIsSubmit = false;
+                    //打印
+                    this.printTest();
+                  } else {
+                    this.message.create('warning', res.info);
+                  }
+                })
+
+              } else {
+                this.message.create('warning', res.info);
+              }
+
+            })
+          }
 
         }
 
@@ -526,15 +531,15 @@ export class ConsumptionTabComponent implements OnInit {
   showConsumptionDetail(id) {
     this.http.post('/customer/viewCardDateils', { id }, false).then(res => {
       //服务打印小票参数
-      this.username = res.result.name;                 //姓名
-      this.cardInfo = res.result.cardInfo;             //会员卡
+      this.username = res.result.name;                  //姓名
+      this.cardInfo = res.result.cardInfo;              //会员卡
       this.remainTimes = (Number(res.result.remaintimes) + Number(res.result.remainFreeTimes))+'('+res.result.remaintimes+'/'+res.result.remainFreeTimes+')';   //剩余次数
-      this.remainAmount = res.result.remainAmount;     //剩余金额
-      this.serviceName = res.result.commodityName;     //商品名称
-      this.expireDate = res.result.expireDate;         //过期时间
-      this.consumption = res.result.consumption;       //消费金额
-      this.feeType = res.result.feeType;               //消费类型 0次数 1金额
-      this.deductionTimes = res.result.deductionTimes; //消费次数
+      this.remainAmount = res.result.totalRemainAmount; //剩余金额
+      this.serviceName = res.result.commodityName;      //商品名称
+      this.expireDate = res.result.expireDate;          //过期时间
+      this.consumption = res.result.consumption;        //消费金额
+      this.feeType = res.result.feeType;                //消费类型 0次数 1金额
+      this.deductionTimes = res.result.deductionTimes;  //消费次数
       if (res.code == 1000) {
         this.modal.create({
           nzTitle: '消费完成',
