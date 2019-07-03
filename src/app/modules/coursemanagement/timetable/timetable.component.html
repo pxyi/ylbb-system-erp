@@ -1,0 +1,276 @@
+<div class="container">
+  <div class="selectTab">
+    <nz-tabset (nzSelectChange)="tabcurr($event.index)">
+      <nz-tab nzTitle="日课表">
+        <div class="query">
+          <nz-range-picker style="width:300px;" [(ngModel)]="dateArr"></nz-range-picker>
+          <button nz-button nzType="primary" (click)="getDayListquery()" >查询</button>
+          <button nz-button nzType="default" (click)="export(0)">导出</button>
+          <div class="dayList" >
+              <nz-table #basicTable [nzData]="dayList" [nzShowPagination]="false">
+                <thead>
+                  <tr>
+                    <th>上课日期/星期</th>
+                    <th>上课时间段</th>
+                    <th>课程名称</th>
+                    <th>上课教室</th>
+                    <th>主教/助教</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of dayList">
+                    <td>{{data.currentDate}}/{{data.week}}</td>
+                    <td>{{data.startTime}} - {{data.endTime}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.roomName}}</td>
+                    <td>{{data.employeeName}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="周课表">
+      <div class="selectTab">
+        <button nz-button nzType="default" (click)="prveDate()">上周</button>
+        <button nz-button nzType="primary" (click)="nowDate()">本周</button>
+        <button nz-button nzType="default" (click)="nextDate()">下周</button>
+        <button nz-button nzType="dashed">{{startDate}} —— {{endDate}}</button>
+            <nz-radio-group [(ngModel)]="radioValue1">
+              <label nz-radio nzValue="A">简约</label>
+              <label nz-radio nzValue="B">详细</label>
+            </nz-radio-group>
+        <button nz-button nzType="default" (click)="export(1)">导出</button>
+        <div class="weekList">
+                
+                <nz-table #basicTable [nzData]="dateList" [nzShowPagination]="false">
+                  <thead>
+                      <tr>
+                        <th>时段</th>
+                        <th>星期一
+                          <br> {{startDate}}
+                        </th>
+                        <th>星期二
+                          <br> {{Tuesday}}
+                        </th>
+                        <th>星期三
+                          <br> {{Wednesday}}
+                        </th>
+                        <th>星期四
+                          <br> {{Thursday}}
+                        </th>
+                        <th>星期五
+                          <br> {{Friday}}
+                        </th>
+                        <th>星期六
+                          <br> {{Saturday}}
+                        </th>
+                        <th>星期日
+                          <br> {{endDate}}
+                        </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of dateList" >
+                          <td>{{data.startTime}}-{{data.endTime}}</td>
+                            <!-- 星期一 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of startDateList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' : '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </td>
+                            <!-- 星期二 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of TuesdayList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour ">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' :    '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>
+  
+                            
+                                </div>
+                              </ng-container>
+                            </td>
+                            <!-- 星期三 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of WednesdayList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour ">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' :  '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>                        
+                                </div>
+                              </ng-container>
+                            </td>
+                            <!-- 星期四 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of ThursdayList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour ">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' :  '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </td>
+                            <!-- 星期五 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of FridayList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour ">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' : '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </td>
+                            <!-- 星期六 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of SaturdayList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour ">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' :  '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </td>
+                            <!-- 星期日 -->
+                            <td valign="top">
+                              <ng-container *ngFor="let item of endDateList">
+                                <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="'#'+ item.colour ">
+                                  {{item.name}}
+                                  <a (click)="details(item)" class="databtn">【详情】</a>
+                                  <div>教室：{{item.roomName}}</div>
+                                  <div>主教老师：{{item.employeeName}}</div>
+                                  <div> 学员：{{!item.member.length?'暂无':''}}
+                                    <ng-container *ngIf="item.member.length">
+                                      <span *ngFor="let items of item.member; let i = index" style="margin: 0;">
+                                        {{items.memberName}}{{ i == item.member.length-1 ? '' :  '，'}}
+                                      </span>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </td>
+                    </tr>
+                  </tbody>
+                </nz-table>
+              </div>
+
+      </div>
+
+      </nz-tab>
+      <nz-tab nzTitle="月课表">
+          <div class="selectTab">
+            <nz-radio-group [(ngModel)]="monthDetail">
+              <label nz-radio nzValue="JY">简约</label>
+              <label nz-radio nzValue="XX">详细</label>
+            </nz-radio-group>
+           <button nz-button nzType="primary" (click)="prveMoth()">上月</button>
+            <button nz-button nzType="dashed">{{this.monthStartDate}}</button>
+            <button nz-button nzType="primary" (click)="nextMoth()">下月</button>
+          </div>
+            <div class="monthList">
+                  <div class="navList">
+                      <ul>
+                          <li>星期一</li>
+                          <li>星期二</li>
+                          <li>星期三</li>
+                          <li>星期四</li>
+                          <li>星期五</li>
+                          <li>星期六</li>
+                          <li>星期日</li>
+                      </ul>  
+                  </div> 
+                  <div class="mainList">
+                      <ul>
+                          <li  *ngFor="let item of monthList;let i=index;" >
+                            <span *ngIf="item.num>0">{{item.num}}</span>
+                            <div class="kclist" *ngFor="let date of item.list">
+                                <p>课程：{{ date.name }}</p>
+                                <p *ngIf="monthDetail=='XX'">主教老师：{{date.employeeName}}</p>
+                                <p *ngIf="monthDetail=='XX'">教室：{{date.roomName}}</p>
+                            </div>  
+                          </li>
+                      </ul>  
+                  </div>              
+            </div>
+      </nz-tab>
+    </nz-tabset>
+
+  </div>
+
+    <nz-modal [(nzVisible)]="showListdetail" nzTitle="查询" (nzOnCancel)="closeListdetail()" (nzOnOk)="closeListdetail()">
+      <div>
+        <p>课程名称：{{studentdata.name}}</p>
+        <p>教室：{{studentdata.roomName}}</p>
+        <p>主教老师：{{studentdata.employeeName}}</p>
+        <div>
+          <h3>学员</h3>
+        </div>
+        <div style="margin-top: 10px;" *ngFor="let item of studentdata.member">
+          <span style="min-width:90px; display:inline-block; padding-right: 20px; cursor: pointer;" >{{item.memberName}} ：</span>
+          <button nz-button nzType="primary" nzSize="small" *ngIf="item.memberId == memberUserDetail.memberId"  (click)="memberUserDetails(item.memberId)">客户档案</button>
+          <button nz-button nzType="default" nzSize="small" *ngIf="item.memberId != memberUserDetail.memberId" (click)="memberUserDetails(item.memberId)">客户档案</button>
+        </div>
+        <div class="memberDetail" *ngIf="memberUserDetail ">
+          <div>姓名：{{ memberUserDetail.name }}</div>
+          <div>性别：{{ memberUserDetail.sex }}</div>
+          <div>家长电话：{{ memberUserDetail.mobilePhone }}</div>
+          <div>家长姓名：{{ memberUserDetail.parentName }}</div>
+          <div>宝宝生日：{{ memberUserDetail.birthday }}</div>
+          <div>客户状态：{{ memberUserDetail.havacard == 1? '会员' :'非会员' }}</div>
+        </div>
+      </div>
+    </nz-modal>
+
+</div>

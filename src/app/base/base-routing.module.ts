@@ -347,6 +347,48 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'coursemanagement',
+        data: { noReuse: true },
+        children: [
+          {
+            path: 'curriculumtype',
+            data: { title: '课程类型设置' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/coursemanagement/curriculumtype/curriculumtype.module#CurriculumtypeModule'
+          },
+          {
+            path: 'currcategorytype',
+            data: { title: '课程类别设置' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/coursemanagement/currcategory/currcategory.module#CurrcategoryModule'
+          },
+          {
+            path: 'teacher',
+            data: { title: '教师学员课表' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/coursemanagement/teacher/teacher.module#TeacherModule'
+          },
+          {
+            path: 'list',
+            data: { title: '课程管理' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/coursemanagement/list/list.module#ListModule'
+          },
+          {
+            path: 'timetable',
+            data: { title: '课表展示' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/coursemanagement/timetable/timetable.module#TimetableModule'
+          },
+          {
+            path: 'adjustment',
+            data: { title: '课表调整' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/coursemanagement/adjustment/adjustment.module#AdjustmentModule'
+          }
+        ]
+      },
+      {
         path: 'configuration',
         data: { noReuse: true },
         children: [

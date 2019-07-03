@@ -1,0 +1,80 @@
+.selectTab button,.selectTab input{
+  margin-left: 20px;
+}
+.ant-radio-group{
+  margin-left: 20px;
+}
+.dayList,.weekList,.monthList{
+  padding-top: 20px;
+}
+.navList{
+  border-top:solid 1px #ccc;
+  border-bottom:solid 1px #ccc;  
+  overflow: hidden;
+  background: #fafafa;
+}
+.navList,.navList ul{
+  width: 100%;
+  display: block;
+}
+
+.navList ul li{
+  width: 13.2%;
+  float: left;
+  list-style: none;
+  line-height: 50px;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+
+}
+.navList ul li:nth-child(7){
+  border-right: none;
+}
+.mainList{
+  overflow: hidden;
+}
+.mainList ul li{
+  width: 13.2%;
+  padding: 2px;
+  float: left;
+  list-style: none;
+  overflow: hidden;
+  height: 150px;
+  overflow-y: scroll;
+  border-right: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+.mainList span{
+  float: left;
+  display: block;
+  overflow: hidden;
+}
+.mainList .kclist{
+  color: #fff;
+  overflow: hidden;
+  clear: both;
+  background: #1890ff;
+  margin-bottom: 20px;
+}
+.dataList{
+  padding: 10px;
+  background: #40a9ff;
+  color: #fff;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.memberDetail{
+  width: 100%;
+  overflow: hidden;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: solid 1px #fafafa;
+}
+.memberDetail div{
+  width: 50%;
+  float: left;
+  height: 40px;
+  line-height: 10px;
+}

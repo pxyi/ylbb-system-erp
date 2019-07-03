@@ -1,0 +1,113 @@
+<div class="container">
+  <h3>请选择需要调整课程</h3>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label>课程名称</nz-form-label>
+      <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="iscourse">
+        <nz-option *ngFor="let items of courseList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+    <nz-form-control>
+      <nz-form-label>排课日期</nz-form-label>
+      <nz-range-picker style="width: 300px;"  [(ngModel)]="dateName"></nz-range-picker>
+      <button nz-button nzType="primary" (click)="querySelect()" >查询</button>
+      <button nz-button nzType="default" (click)="showModal()">删除</button>
+      <button nz-button nzType="primary" (click)="adjustment()">课程进度调整</button>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-table #rowSelectionTable [nzData]="data" (nzCurrentPageDataChange)="currentPageDataChange($event)"  [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <th>课程名称</th>
+        <th>上课日期/星期</th>
+        <th>上课时间段</th>
+        <th>排课人数</th>
+        <th>课程名称</th>
+        <th>教室</th>
+        <th>主教老师</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of data">
+        <td nzShowCheckbox [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="refreshStatus(data,data.checked)"></td>
+        <td>{{data.name}}</td>
+        <td>{{data.currentDate}}/{{data.week}}</td>
+        <td>{{data.startTime}} — {{data.endTime}}</td>
+        <td>{{data.classNumber}}</td>
+        <td>{{data.name}}</td>
+        <td>{{data.roomName}}</td>
+        <td>{{data.employeeName}}</td>   
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="确定删除？" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <p>您确定删除课程吗?删除后不可恢复。</p>
+  </nz-modal>
+
+  <nz-modal  [(nzVisible)]="isAdjust" [(nzTitle)]="tcTit" nzWidth="80%" (nzOnCancel)="hideAdjust()" (nzOnOk)="AdjustOk()">
+        <nz-table #basicTable [nzData]="adjustmentList" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th>课程名称</th>
+              <th>教室名称</th>
+              <th>上课日期</th>
+              <th>上课时段</th>
+              <th>主教老师</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of adjustmentList; let index =index">
+              <td>{{data.name}}</td>
+              <td>
+                <nz-select style="width: 200px" nzPlaceHolder="请选择" [(ngModel)]="data.roomId"  (ngModelChange)="schoolSelect(index)">
+                  <nz-option *ngFor="let items of ClassroomList" [nzLabel]="items.roomName" [nzValue]="items.id"></nz-option>
+                </nz-select>
+              </td>
+              <td>
+                <nz-date-picker style="width: 200px" [(ngModel)]="data.currentDate"></nz-date-picker>   
+              </td>
+              <td>
+                  <nz-select style="width: 200px" nzPlaceHolder="请选择" [(ngModel)]="data.scourId">
+                    <nz-option *ngFor="let items of selectScourList" [nzLabel]="items.startTime + '-' + items.endTime" [nzValue]="items.id"></nz-option>
+                  </nz-select>
+              </td>
+              <td>
+                   {{data.employeeName}}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      <div class="ctadjustment" *ngIf="ctadjustmentList.length">
+        <h3><br>以下排课冲突，请调整后再试</h3>
+        <nz-table #basicTable [nzData]="ctadjustmentList" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th>课程名称</th>
+              <th>教室名称</th>
+              <th>上课日期</th>
+              <th>上课时段</th>
+          
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of ctadjustmentList">
+              <td>{{data.name}}</td>
+              <td>
+                  {{data.roomName}}
+              </td>
+              <td>
+                 {{data.currentDate}}
+              </td>
+              <td>
+                 {{data.startTime}} - {{data.endTime}}
+              </td>
+            
+            </tr>
+          </tbody>
+        </nz-table>
+
+
+        </div>
+  </nz-modal>
+</div>

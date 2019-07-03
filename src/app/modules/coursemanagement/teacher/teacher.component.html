@@ -1,0 +1,267 @@
+<div class="container">
+  <div class="selectTab">
+    <nz-tabset (nzSelectChange)="tabcurr($event.index)">
+      <nz-tab nzTitle="教师课表">
+        <div class="query">
+          <nz-form-label>主教老师</nz-form-label>
+          <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="isTeacher">
+            <nz-option *ngFor="let items of teacherList" [nzLabel]="items.name" [nzValue]="items.id"></nz-option>
+          </nz-select>
+          <button nz-button nzType="primary" (click)="queryList()">查询</button>
+          <button nz-button nzType="default" (click)="export(2)">导出</button>
+        </div>
+        <div class="dateSelect">
+          <button nz-button nzType="default" (click)="prveDate()">上周</button>
+          <button nz-button nzType="primary" (click)="nowDate()">本周</button>
+          <button nz-button nzType="default" (click)="nextDate()">下周</button>
+          <button nz-button nzType="dashed">{{startDate}}——{{endDate}}</button>
+        </div>
+        <div class="List_table">
+          <nz-table #basicTable [nzData]="formList" nzShowPagination='false'>
+            <thead>
+              <tr>
+                <th>时段</th>
+                <th>星期一
+                  <br> {{startDate}}
+                </th>
+                <th>星期二
+                  <br> {{Tuesday}}
+                </th>
+                <th>星期三
+                  <br> {{Wednesday}}
+                </th>
+                <th>星期四
+                  <br> {{Thursday}}
+                </th>
+                <th>星期五
+                  <br> {{Friday}}
+                </th>
+                <th>星期六
+                  <br> {{Saturday}}
+                </th>
+                <th>星期日
+                  <br> {{endDate}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dateList">
+                <td *ngIf="formList.length" style="width: 150px;">{{item.startTime}} - {{item.endTime}}</td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of startDateList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of TuesdayList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of WednesdayList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of ThursdayList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of FridayList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of SaturdayList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="formList.length">
+                  <ng-container *ngFor="let data of endDateList">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="学员课表">
+        <div class="query">
+          <nz-form-label>学员电话</nz-form-label>
+          <input nz-input style="width: 200px; margin-right: 20px;" placeholder="请输入" [(ngModel)]="mobilePhone">
+
+          <nz-form-label>学员姓名</nz-form-label>
+          <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="memberName">
+          <button nz-button nzType="primary" (click)="squeryList()" *ngIf="!tabv">查询</button>
+          <button nz-button nzType="primary" (click)="listshow()" *ngIf="tabv">查询</button>
+          <button nz-button nzType="default" (click)="export(3)">导出</button>
+          <button nz-button nzType="primary" (click)="tabv = true; listshow()" *ngIf="!tabv">列表展示</button>
+          <button nz-button nzType="primary" (click)="tabv = false;" *ngIf="tabv">课表展示</button>
+        </div>
+        <div class="dateSelect" *ngIf="!tabv">
+          <button nz-button nzType="dashed" *ngIf="member.name">学员姓名：{{member.name}} </button>
+          <button nz-button nzType="dashed" *ngIf="member.mobilePhone">学员电话：{{member.mobilePhone}} </button>
+          <button nz-button nzType="default" [disabled]="mobilePhone.length!=11 && !memberName"
+            (click)="prveDate()">上周</button>
+          <button nz-button nzType="primary" [disabled]="mobilePhone.length!=11 && !memberName"
+            (click)="nowDate()">本周</button>
+          <button nz-button nzType="default" [disabled]="mobilePhone.length!=11 && !memberName"
+            (click)="nextDate()">下周</button>
+          <button nz-button nzType="dashed">{{startDate}}——{{endDate}}</button>
+        </div>
+        <div class="List_table" *ngIf="!tabv">
+          <nz-table #basicTable [nzData]="currformList" nzShowPagination='false'>
+            <thead>
+              <tr>
+                <th>时段</th>
+                <th>星期一
+                  <br> {{startDate}}
+                </th>
+                <th>星期二
+                  <br> {{Tuesday}}
+                </th>
+                <th>星期三
+                  <br> {{Wednesday}}
+                </th>
+                <th>星期四
+                  <br> {{Thursday}}
+                </th>
+                <th>星期五
+                  <br> {{Friday}}
+                </th>
+                <th>星期六
+                  <br> {{Saturday}}
+                </th>
+                <th>星期日
+                  <br> {{endDate}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let data of currformList"> -->
+              <tr *ngFor="let item of dateList">
+                <td *ngIf="currformList.length">{{item.startTime}} — {{item.endTime}}</td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of startDateLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of TuesdayLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of WednesdayLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of ThursdayLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of FridayLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of SaturdayLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td *ngIf="currformList.length">
+                  <ng-container *ngFor="let data of endDateLists">
+                    <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                      <div> 课程：{{data.name}}</div>
+                      <div>教室：{{data.roomName}}</div>
+                    </div>
+                  </ng-container>
+                </td>
+
+
+              </tr>
+            </tbody>
+          </nz-table>
+
+        </div>
+
+
+        <div class="lbList" *ngIf="tabv" style="padding-top: 20px">
+          <nz-table #basicTable [nzData]="listMap" nzShowPagination='false'>
+            <thead>
+              <tr>
+                <th>上课日期/日期</th>
+                <th>上课时间段</th>
+                <th>课程名称</th>
+                <th>上课教室</th>
+                <th>主教/助教</th>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let data of currformList"> -->
+              <tr *ngFor="let item of listMap">
+                <td>{{ item.currentDate }}/{{ item.week }}</td>
+                <td>{{ item.startTime }} — {{ item.endTime }}</td>
+                <td>{{ item.syllabusName }}</td>
+                <td>{{ item.roomName }}</td>
+                <td>{{ item.teacherName }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <div style="text-align:right; margin-top:20px;" *ngIf="listMap.length">
+            <nz-pagination [(nzPageIndex)]="showPageNum" [(nzTotal)]="showTotal" [nzPageSize]="50"
+              [nzShowTotal]="totalTemplate" (nzPageIndexChange)="listshow()"></nz-pagination>
+            <br />
+            <ng-template #totalTemplate let-total> 共 {{ showTotal }} 条 </ng-template>
+          </div>
+        </div>
+      </nz-tab>
+
+
+    </nz-tabset>
+
+  </div>
+</div>

@@ -10,7 +10,8 @@ export const environment = {
   domainWs: 'ws://101.200.177.83:8008/new_bss',
   domainPay: 'https://tpay.beibeiyue.com/pay',
   domainOss: 'https://oss.beibeiyue.com',
-  domainEs: 'http://es.beibeiyue.com'
+  domainEs: 'http://es.beibeiyue.com',
+  domainYeqs: 'http://192.168.1.135:8888'
   // domain: 'https://erpserver.baobaoyouyong.com',
   // domainWs: 'wss://erpserver.baobaoyouyong.com',
 

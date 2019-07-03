@@ -1,0 +1,178 @@
+<div class="container">
+  <div class="selectquery">
+    <form nz-form>
+        <nz-form-item>
+            <button nz-button nzType="primary" (click)="addcoursefun()">新增</button> 
+            <button nz-button nzType="default" >导出</button>
+        </nz-form-item>
+        <nz-form-item>
+          <span>
+              <nz-form-label>课程类别</nz-form-label>
+              <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" nzAllowClear="true" [(ngModel)]="courseName" >
+                <nz-option *ngFor="let items of CoursecategoryList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+              </nz-select>
+          </span>
+          <span>
+            <nz-form-label>课程名称</nz-form-label>
+            <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="name"  nzAllowClear="true" [(ngModel)]="name" >
+              <nz-option *ngFor="let items of CoursenameList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+            </nz-select>
+          </span>
+          <span>
+            <nz-form-label>课程类型</nz-form-label>
+            <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="lessonName"  nzAllowClear="true" [(ngModel)]="lessonName">
+              <nz-option *ngFor="let items of ClasstypesList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+            </nz-select>
+          </span>
+          <span>
+
+            <nz-form-label>课程状态</nz-form-label>
+            <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseStatus"  nzAllowClear="true" [(ngModel)]="courseStatus">
+              <nz-option *ngFor="let items of StateCourseList" [nzLabel]="items.name" [nzValue]="items.value"></nz-option>
+            </nz-select>
+          </span>
+          <button nz-button nzType="primary" (click)="querySelect()">查询</button>
+        </nz-form-item>
+    </form>
+    </div>
+    <div class="List_table">
+        <nz-table #basicTable [nzData]="courseList" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th>课程名称</th>
+              <th>课程类别</th>
+              <th>课程类型</th>
+              <th>单位</th>
+              <th>耗卡</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of courseList; let i = index">
+              <td>{{data.name}}</td>
+              <td>{{data.courseName}}</td>
+              <td>{{data.lessonName}}</td>
+              <td>课时</td>
+              <td>{{data.number}}</td>
+              <td>{{data.courseStatus==0?'启用':'停用'}}</td>
+              <td>
+                <a (click)="courseContent(data.id)">上课内容</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="EditingCourse(data.id)">修改</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="removecourse(data.name)">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+    
+    </div>
+</div>
+
+<!-- 新增弹框 -->
+    <nz-modal [(nzVisible)]="addcourse" [nzTitle]="editor" (nzOnCancel)="closeaddcourse()" (nzOnOk)="isaddcourse()">
+      <p>
+        <nz-form-label>课程类别</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" [(ngModel)]="addcourseTypeId" [disabled]="courseIdblon">
+          <nz-option *ngFor="let items of CoursecategoryList" [nzLabel]="items.name" [nzValue]="items.id"></nz-option>
+        </nz-select>
+      </p>
+      <p>
+        <nz-form-label>课程名称</nz-form-label>
+        <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="addname" [disabled]="courseIdblon">
+      </p>
+      <p>
+        <nz-form-label>收费模式</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" [(ngModel)]="addcharging" [disabled]="courseIdblon">
+          <nz-option *ngFor="let items of modeList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+        </nz-select>
+      </p>
+      <p>
+        <nz-form-label>每课时耗卡</nz-form-label>
+        <input nz-input style="width: 200px;" type="number" placeholder="请输入" [(ngModel)]="addnumber">
+      </p>
+      <p>
+        <nz-form-label>课程类型</nz-form-label>
+        <nz-radio-group [(ngModel)]="addlessonTypeId">
+          <label nz-radio *ngFor="let items of ClasstypesList"  [nzValue]="items.id">{{ items.name }}</label>
+        </nz-radio-group>
+      </p>
+      <p>
+        <nz-form-label>课程状态</nz-form-label>
+        <nz-radio-group [(ngModel)]="addcourseStatus">
+          <label nz-radio *ngFor="let items of StateCourseList" [nzValue]="items.value">{{ items.name }}</label>
+        </nz-radio-group>
+      </p>
+      <p>
+          <nz-form-label style="float:left;">课程颜色</nz-form-label>
+          <!-- <input nz-input readonly="readonly" style="width: 50px;"   [(colorPicker)]="color" [style.background]="color" > -->
+          <span class="colorList">
+            <span *ngFor="let data of colorList; let i = index" class="{{ color == data.color ? 'cli' : '' }}" [ngStyle]="{'background-color':data.color}" (click)="selectColor(data.color)">
+            </span>
+
+            <!-- <span style="background:#496A39"></span>
+            <span style="background:#2C6799"></span>
+            <span style="background:#9D5900"></span>
+            <span style="background:#993C3D"></span>
+            <span style="background:#A04647"></span>
+            <span style="background:#3A6848"></span>
+            <span style="background:#9e9a5b"></span> -->
+          </span>
+        </p>     
+    </nz-modal>
+<!-- 删除弹框 -->
+    <nz-modal [(nzVisible)]="removeanddisable" [nzTitle]="removeanddisableTit" (nzOnCancel)="closeremoveanddisable()" (nzOnOk)="isremoveanddisable()">
+          <p>{{removeanddisableContent}}</p>
+    </nz-modal>
+<!-- 上课内容弹框 -->
+    <nz-modal [(nzVisible)]="classContent" nzTitle="设置上课内容" (nzOnCancel)="closeclassContent()" (nzOnOk)="isclassContent()">
+      <button nz-button nzType="primary" (click)="addcontentfindList()">新增</button>
+            <div class="List_table">
+              <nz-table #basicTable [nzData]="Listmain" [nzShowPagination]="false">
+                <thead>
+                  <tr>
+                    <th>课时</th>
+                    <th>课程重点</th>
+                    <th>上课内容</th>
+                    <th>操作</th>
+          
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of Listmain; let i = index">
+                  
+                    <td>{{data.period}}</td>
+                    <td>{{data.curriculum}}</td>
+                    <td>{{data.content}}</td>
+                    <td>
+                      <a (click)="modifyListContent(data.id)">修改</a>
+                      <nz-divider nzType="vertical"></nz-divider>
+                      <a (click)="removeclassContentfun(data.id)">删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            
+            </div>
+    </nz-modal>
+<!-- 新增上课内容弹框 -->
+  <nz-modal [(nzVisible)]="addclassContent" nzTitle="设置上课内容" (nzOnCancel)="closeaddclassContent()" (nzOnOk)="isaddclassContent()">
+      <p>
+          <nz-form-label>课时</nz-form-label>
+          <input nz-input style="width: 200px;"  placeholder="请输入" [(ngModel)]="period">
+      </p>
+    <p>
+      <nz-form-label>课时重点</nz-form-label>
+      <input nz-input style="width: 200px;"  placeholder="请输入" [(ngModel)]="curriculum">
+    </p>
+    <p>
+      <nz-form-label>上课内容</nz-form-label>
+      <textarea  rows="4" nz-input [(ngModel)]="content"></textarea>
+    </p>
+  </nz-modal>
+  <!-- 删除上课内容弹框 -->
+  <nz-modal [(nzVisible)]="removeclassContent" nzTitle="确定删除？" (nzOnCancel)="closeremoveclassContent()" (nzOnOk)="isremoveclassContent()">
+    <p>确定删除？</p>
+  </nz-modal>

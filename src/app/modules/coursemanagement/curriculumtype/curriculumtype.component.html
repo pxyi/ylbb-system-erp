@@ -1,0 +1,41 @@
+<div class="container">
+    <nz-form-label>课程类型</nz-form-label>
+    <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="typeName">
+    <button nz-button nzType="primary" (click)="selectTypeListQuery()">查询</button>
+   
+    <div class="typeList">
+        <button class="addcourseType" nz-button nzType="primary" (click)="addcourseType(0)">新增课程类型+</button><br>
+                    <div class="List_table">
+                        <nz-table #basicTable [nzData]="typeList" [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>课程类型</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of typeList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.name}}</td>
+                                    <td>
+                                        <a (click)="removeType(0,data.id)">删除</a>
+                                        <nz-divider nzType="vertical"></nz-divider>
+                                        <a (click)="editType(0,data.id)">编辑</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    
+                    </div>
+    </div>
+</div>
+<!-- 删除确认框 -->
+    <nz-modal [(nzVisible)]="openRemoveType" nzTitle="确定删除" (nzOnCancel)="closeRemoveType()" (nzOnOk)="isRemoveType()">
+        <p>确认删除？</p>
+    </nz-modal>
+<!-- 新增类型 -->
+<nz-modal [(nzVisible)]="openaddType" [(nzTitle)]="openTit" (nzOnCancel)="closeaddType()" (nzOnOk)="isaddType()">
+    <nz-form-label>课程类型</nz-form-label>
+    <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="installName">
+</nz-modal>

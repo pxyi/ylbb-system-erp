@@ -198,6 +198,44 @@ export const MenuConfig = [
     ]
   },
   {
+    title : '课程管理',
+    brief : '课程',
+    key   : '/home/coursemanagement',
+    icon  : 'message',
+    children : [
+      {
+        title : '课程类型设置',
+        key   : '/home/coursemanagement/curriculumtype',
+        isLeaf: true
+      },
+      {
+        title : '课程类别设置',
+        key   : '/home/coursemanagement/currcategorytype',
+        isLeaf: true
+      },
+      {
+        title : '教师学员课表',
+        key   : '/home/coursemanagement/teacher',
+        isLeaf: true
+      },
+      {
+        title : '课程管理',
+        key   : '/home/coursemanagement/list',
+        isLeaf: true
+      },
+      {
+        title : '课表展示',
+        key   : '/home/coursemanagement/timetable',
+        isLeaf: true
+      },
+      {
+        title : '课表调整',
+        key   : '/home/coursemanagement/adjustment',
+        isLeaf: true
+      }
+    ]
+  },
+  {
     title : '人力资源',
     brief : '人力',
     key   : '/home/humanresources',
