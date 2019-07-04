@@ -141,7 +141,7 @@ export class ConsumptionTabComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(this.price);
     //非会员 禁用耗卡
     if (this.consumptionInfo.haveCard == 0) {
       this.nzDisabled.card = true;
@@ -170,50 +170,6 @@ export class ConsumptionTabComponent implements OnInit {
       } else if (ev == 13) {
         //长度为13位 是商品
         if (this.code.length == 13) {
-          // 先遍历当前商品列表 判断是否需要进行数据合并
-          for(let item of this.listOfData){
-            if (this.code == item.barCode) {
-
-              //库存校验
-              var num = Number(item.num) + 1;
-              this.http.post('/commodity/checkStock', {id : item.id, count : num}).then(res => {
-                if (res.code == 1000) {
-                  //计算数量和总价
-                  item.num = Number(item.num) + 1;
-                  item.subtotal = item.num * item.changePrice;
-
-                  //清空操作
-                  this.data = {};//清空
-                  this.numberOftotal = 0;//总数数量先清零
-                  this.price = 0;//应收先清零
-                  this.payment = 0;//实收先清零
-                  this.resultData = [];
-                  //同步listOfData和resultData的数据
-                  for (let item of this.listOfData) {
-                    this.resultData.push(item);
-                  }
-                  //遍历数据计算金额和商品数量
-                  for(let item of this.resultData){
-                    this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
-                    this.price = this.keepTwoDecimalFull(this.price);
-                    this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
-                  }
-
-                  this.payment = this.price;//实收金额默认值
-                  this.memberCard();
-                  //tab取消禁用
-                  this.isSubmitShopCard = true;
-                  //清空
-                  this.code = '';
-                  this.startTime = undefined;
-                  this.endTime = undefined;
-                } else {
-                  this.message.create('warning', res.info);
-                }
-              })
-
-            }
-          }
 
           this.existCommodity = true;
           for (let item of this.listOfData){
@@ -266,12 +222,67 @@ export class ConsumptionTabComponent implements OnInit {
 
                   } else {
                     this.message.create('warning', res.info);
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
                   }
                 })
 
               }
             })
             
+          } else {
+
+            // 先遍历当前商品列表 判断是否需要进行数据合并
+            for(let item of this.listOfData){
+              if (this.code == item.barCode) {
+
+                //库存校验
+                var num = Number(item.num) + 1;
+                this.http.post('/commodity/checkStock', {id : item.id, count : num}).then(res => {
+                  if (res.code == 1000) {
+                    //计算数量和总价
+                    item.num = Number(item.num) + 1;
+                    item.subtotal = item.num * item.changePrice;
+
+                    //清空操作
+                    this.data = {};//清空
+                    this.numberOftotal = 0;//总数数量先清零
+                    this.price = 0;//应收先清零
+                    this.payment = 0;//实收先清零
+                    this.resultData = [];
+                    //同步listOfData和resultData的数据
+                    for (let item of this.listOfData) {
+                      this.resultData.push(item);
+                    }
+                    //遍历数据计算金额和商品数量
+                    for(let item of this.resultData){
+                      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+                      this.price = this.keepTwoDecimalFull(this.price);
+                      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+                    }
+
+                    this.payment = this.price;//实收金额默认值
+                    this.memberCard();
+                    //tab取消禁用
+                    this.isSubmitShopCard = true;
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
+                  } else {
+                    this.message.create('warning', res.info);
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
+                  }
+                })
+
+              }
+            }
+
           }
 
         } else if (this.code.length == 18) { //长度为18 是付款码
@@ -612,7 +623,6 @@ export class ConsumptionTabComponent implements OnInit {
         this.existCom = false;
       }
     }
-
     //添加数量和总价
     if(this.listOfData.length == 0 || this.existCom){
       this.http.post('/commodity/checkStock', {id : data.id, count : 1}).then(res => {
@@ -646,6 +656,10 @@ export class ConsumptionTabComponent implements OnInit {
           this.isSubmitShopCard = true;
         } else {
           this.message.create('warning', res.info);
+          //清空
+          this.code = '';
+          this.startTime = undefined;
+          this.endTime = undefined;
         }
       })
 
@@ -682,6 +696,10 @@ export class ConsumptionTabComponent implements OnInit {
               this.isSubmitShopCard = true;
             } else {
               this.message.create('warning', res.info);
+              //清空
+              this.code = '';
+              this.startTime = undefined;
+              this.endTime = undefined;
             }
           })
           
