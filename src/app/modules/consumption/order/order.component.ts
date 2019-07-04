@@ -38,7 +38,24 @@ export class OrderComponent implements OnInit {
       //订单撤销
       this.http.post('/consumeOrder/cancel', { orderNo: this.basicTable[0].orderNo, causesRevocation: this.formGroup.get('causesRevocation').value }).then(res => {
         this.isVisible = false;
-        this.tlModal.nzAfterClose.subscribe(res => this._request());
+        if (res.code == 1000) {
+          //更改数据
+          this.loading = true;
+          this.http.post('/consumeOrder/list', {pageNum: this.nzPageIndex, pageSize: this.nzPageSize}).then(res => {
+            if (res.code == 1000) {
+              this.listOfData = res.result.list;     //数据
+              this.nzPageIndex = res.result.pageNum; //第几页
+              this.nzPageSize = res.result.pageSize; //每页展示多少
+              this.nzTotal = res.result.totalPage;   //数据总条数
+              this.loading = false;
+              this.tlModal.nzAfterClose.subscribe(res => this._request());
+            } else {
+              this.message.create('warning', res.info);
+            }
+          })
+        } else {
+          this.message.create('warning', res.info);
+        }
       })
     }
   }
@@ -315,6 +332,7 @@ export class OrderComponent implements OnInit {
           this.basicTable.push(item);
         }
       }
+
     } else {
       let recordInfo = this.listOfData.filter(res => res.orderNo == this.checkedItems[0])[0];
       // let recordInfo = this.listPage.eaTable.dataSet.filter(res => res.id === this.checkedItems[0])[0];

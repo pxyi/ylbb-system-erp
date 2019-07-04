@@ -612,7 +612,6 @@ export class ConsumptionTabComponent implements OnInit {
         this.existCom = false;
       }
     }
-
     //添加数量和总价
     if(this.listOfData.length == 0 || this.existCom){
       this.http.post('/commodity/checkStock', {id : data.id, count : 1}).then(res => {
