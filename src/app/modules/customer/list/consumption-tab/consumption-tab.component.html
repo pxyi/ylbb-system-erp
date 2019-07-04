@@ -164,7 +164,7 @@
               </nz-form-item>
               <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="settlement()">确定结算</button>
             </nz-tab>
-            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard || !memberInfo.isHaveCard || !feeType">
+            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard || !memberInfo.isHaveCard || !consumptionInfo.feeType">
               <div class="vip-card">
                 <div class="vip-card-one">
                   <span class="vip-text">VIP</span>

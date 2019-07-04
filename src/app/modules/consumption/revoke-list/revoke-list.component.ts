@@ -234,6 +234,9 @@ export class RevokeListComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+      }
       this.loading = false;
     })
 
@@ -361,6 +364,23 @@ export class RevokeListComponent implements OnInit {
       this.nzTotal = res.result.totalPage;   //数据总条数
       this.loading = false;
     })
+  }
+
+  /*---------------- 展开页面 ----------------*/
+  showCommodity(data) {
+    for (let item of this.listOfData) {
+      if (item.orderNo == data.orderNo) {
+        //根据订单号查询商品
+        this.http.post('/consumeOrder/getConsumeListByOrderNo', {orderNo : data.orderNo}).then(res => {
+          if (res.code == 1000) {
+            item.isShow = !item.isShow;
+            item.consumeRecordVOS = res.result;
+          } else {
+            this.message.create('warning', res.info);
+          }
+        })
+      }
+    }
   }
 
   queryParams = {};

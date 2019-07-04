@@ -73,16 +73,16 @@
     <tbody>
       <ng-template ngFor let-data [ngForOf]="listOfData">
       <!-- <ng-template ngFor let-data [ngForOf]="rowSelectionTable.data"> -->
-        <tr>
-          <td class="ttd" [nzShowExpand]="false" nzShowCheckbox [(nzExpand)]="data.expand" [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
-          <!-- <td class="ttd" nzShowCheckbox ShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="mapOfCheckedId[data.key]" (nzCheckedChange)="refreshStatus(data.id)"></td> -->
-          <td>{{ data.payTime}}  {{ data.orderNo }}</td>
+        <tr (click)="showCommodity(data)">
+          <td class="ttd" [(nzExpand)]="data.expand" nzShowCheckbox [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
+          <td>{{ data.payTime}}  {{ data.orderNo }}   商品数:{{ data.count }}</td>
           <td>{{ data.memberName }} {{ data.memberNickstring }}<br>卡号：{{ data.cardCode }}<br>卡类型：{{ data.cartTypeName }}</td>
           <td>¥{{ data.payment }}</td>
           <td>服务泳师：{{ data.employeeName }}<br>满意程度：{{ data.satisfaction }}</td>
           <td>备注：{{ data.comment }}</td>
         </tr>
-        <tr [nzExpand]="true">
+        <tr [nzExpand]="data.isShow">
+        <!-- <tr [nzExpand]="true"> -->
           <td></td>
           <td colspan="5">
             <nz-table #innerTable [nzData]="data.consumeRecordVOS" nzSize="middle" [nzShowPagination]="false">
