@@ -284,8 +284,8 @@ export class RevokeListComponent implements OnInit {
   revokeOne(data,id) {
     //只有状态为正常时点击生效
     for(let item of data.consumeRecordVOS){
-      if(item.id == id){
-        if(item.status == 0){
+      if(item.crId == id){
+        if(item.crStatus == 0){
           let recordInfo = data;
           recordInfo.id = id;
           const drawer = this.drawer.create({

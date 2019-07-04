@@ -98,7 +98,7 @@
                   <td>{{ item.commodityName }}</td>
                   <td>{{ item.commodityTotal }}</td>
                   <!-- <td><a (click)="revokeOne(data,item.id)">撤销消费</a></td> -->
-                  <td><nz-tag [nzColor]="item.crStatus == 0 ? '#2db7f5' : '#f50'"(click)="revokeOne(data,item.id)">{{ item.crStatus == 0 ? '撤销消费' : '已撤销' }}</nz-tag></td>
+                  <td><nz-tag [nzColor]="item.crStatus == 0 ? '#2db7f5' : '#f50'"(click)="revokeOne(data,item.crId)">{{ item.crStatus == 0 ? '撤销消费' : '已撤销' }}</nz-tag></td>
                 </tr>
               </tbody>
             </nz-table>
