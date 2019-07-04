@@ -31,7 +31,7 @@ export class CardCreateComponent implements OnInit {
     private drawerRef: NzDrawerRef
   ) { 
     this.http.post('/cardAttributeController/getList').then(res => this.cardAttribuiteList = res.result);
-    this.http.post('/employee/listEmployee').then(res => this.employeeList = res.result);
+    this.http.post('/yeqs/employee/listEmployee').then(res => this.employeeList = res.result);
   }
 
   cardTypeInfo: any;
@@ -56,7 +56,7 @@ export class CardCreateComponent implements OnInit {
     this.formGroup.get('cardTypeId').valueChanges.subscribe(id => {
       this.cardTypeList.map(item => item.id === id && (this.feeType = item.feeType));
       this.formTypeChange(this.feeType)
-      this.http.post('/cardTypeManagement/getCardType', { id }, false).then(res => {
+      this.http.post('/yeqs/cardTypeManagement/getCardType', { id }, false).then(res => {
         res.result && this.formGroup.patchValue(res.result);
       });
     });
@@ -65,7 +65,7 @@ export class CardCreateComponent implements OnInit {
     this.formGroup.get('attributeId').valueChanges.subscribe(type => {
       this.cardTypeList.map(item => item.type === type && (this.feeType = item.feeType));
       this.formTypeChange(this.feeType)
-      this.http.post('/cardTypeManagement/findList', { type }, false).then(res => {
+      this.http.post('/yeqs/cardTypeManagement/findList', { type }, false).then(res => {
         this.cardTypeList = res.result;
       });
     });
@@ -115,7 +115,7 @@ export class CardCreateComponent implements OnInit {
 
   /* -------------------- 建卡请求 -------------------- */
   createCard() {
-    this.http.post('/member/createCard', {
+    this.http.post('/yeqs/member/createCard', {
       paramJson: JSON.stringify(this.formGroup.value)
     }, true).then(res => this.drawerRef.close(true)).catch(err => this.saveLoading = false);
   }

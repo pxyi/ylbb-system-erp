@@ -11,8 +11,8 @@ import { environment } from './../../../../environments/environment';
   styleUrls: ['./timetable.component.scss']
 })
 export class TimetableComponent implements OnInit {
-  domain = environment.domain;
-  domainyeqs = environment.domainYeqs;
+  domain:string = environment.domain;
+  domainyeqs:string = environment.domainYeqs;
   dateArr:any = [];
   dayList:any = [];
   weekList:any = [];
@@ -76,7 +76,7 @@ export class TimetableComponent implements OnInit {
     this.monthStartDate = date.getFullYear() + '-' + month;
     this.monthStartDatezw = date.getFullYear() + '年' + month +'月';
     this.selectmonth(this.monthStartDate);
-    this.http.post( this.domainyeqs +  '/intelligent/selectScour', {}, false).then(res => {
+    this.http.post( 'yeqs/intelligent/selectScour', {}, false).then(res => {
       this.dateList = res.result.list;
       console.log(this.dateList)
     });  
@@ -130,7 +130,7 @@ export class TimetableComponent implements OnInit {
       startDate: this.startDate,
       endDate: this.endDate
     }); 
-    this.http.post( this.domainyeqs +  '/curriculum/selectCondition', { paramJson }, false).then(res => {
+    this.http.post( 'yeqs/curriculum/selectCondition', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.weekList = res.result
         let startDateList = [],
@@ -177,7 +177,7 @@ export class TimetableComponent implements OnInit {
     }
       let startDate = this.format.transform(this.dateArr[0], 'yyyy-MM-dd');
       let endDate = this.format.transform(this.dateArr[1], 'yyyy-MM-dd');
-    this.http.post( this.domainyeqs +  '/curriculum/dailySchedule', { startDate, endDate}, false).then(res => {
+    this.http.post( 'yeqs/curriculum/dailySchedule', { startDate, endDate}, false).then(res => {
       if (res.code == 1000) {
         this.dayList = res.result.list
       }else{
@@ -219,7 +219,7 @@ export class TimetableComponent implements OnInit {
     }  
   selectmonth(startDate){
     this.getmonthList(startDate + '-' + '01');
-    this.http.post( this.domainyeqs +  '/curriculum/weeklyTimetable', { startDate }, false).then(res => {
+    this.http.post( 'yeqs/curriculum/weeklyTimetable', { startDate }, false).then(res => {
       if (res.code == 1000) {
         let result = res.result.list;
         result.map( item=>{
@@ -293,7 +293,7 @@ getmonthList(dates){
   }
 
   memberUserDetails(memberId) {
-    this.http.post( this.domainyeqs +  '/curriculum/memberIdMsg', {
+    this.http.post( 'yeqs/curriculum/memberIdMsg', {
       memberId
     }, false).then(res => {
       if (res.code == 1000) {

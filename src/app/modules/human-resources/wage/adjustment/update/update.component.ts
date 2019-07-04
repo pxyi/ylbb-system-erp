@@ -17,7 +17,7 @@ export class UpdateComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  @GetList('/member/getStoreTeachers') teacherList: any;
+  @GetList('/yeqs/member/getStoreTeachers') teacherList: any;
 
   constructor(
     private http: HttpService,
@@ -41,7 +41,7 @@ export class UpdateComponent implements OnInit {
 
 
   saveLoading: boolean;
-  @DrawerSave('/payrollAdjustLog/savePayrollAdjustLog') save: () => void;
+  @DrawerSave('/yeqs/payrollAdjustLog/savePayrollAdjustLog') save: () => void;
 
   @DrawerClose() close: () => void;
 

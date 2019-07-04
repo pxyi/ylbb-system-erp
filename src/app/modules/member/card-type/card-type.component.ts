@@ -19,7 +19,7 @@ export class CardTypeComponent implements OnInit {
       label       : '业务类型',
       key         : 'categoryId',
       type        : 'select',
-      optionsUrl  : '/cardBusinessManagement/findList'
+      optionsUrl  : '/yeqs/cardBusinessManagement/findList'
     },
     {
       label       : '卡类型状态',
@@ -52,7 +52,7 @@ export class CardTypeComponent implements OnInit {
         if (type === 'disable') {
           params.status = status == 0 ? 1 : 0;
         }
-        this.http.post(`/cardTypeManagement/${type === 'delete' ? 'remove' : 'disable'}`, {
+        this.http.post(`/yeqs/cardTypeManagement/${type === 'delete' ? 'remove' : 'disable'}`, {
           paramJson: JSON.stringify(params)
         }, true).then(res => {
           this.table._request();

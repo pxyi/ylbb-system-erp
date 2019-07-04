@@ -4,11 +4,11 @@
   nzType="drag"
   [nzName]="'excelFile'"
   [nzFileType]="'application/vnd.ms-excel'"
-  nzAction="/member/uploadExcel"
+  nzAction="/yeqs/member/uploadExcel"
   [nzWithCredentials]="true"
   (nzChange)="uploadComplate($event)">
   <p class="ant-upload-drag-icon">
-    <i nz-icon nzType="inbox"></i>
+    <i class="anticon anticon-inbox"></i>
   </p>
   <p class="ant-upload-text">点击或拖动文件到这个区域上传</p>
   <p class="ant-upload-hint">支持单个或批量上传，严禁上传垃圾数据或其他文件</p>
@@ -34,8 +34,6 @@
       <td>{{ data.reason }}</td>
     </tr>
   </tbody>
-</nz-table>
-
-<div class="drawer-footer">
-  <button nz-button nzType="primary" (click)="save()">确定</button>
+</nz-table><div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
 </div>

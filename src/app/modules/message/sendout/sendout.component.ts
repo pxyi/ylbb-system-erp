@@ -38,7 +38,7 @@ export class SendoutComponent implements OnInit {
       label: '所属社区',
       key: 'communityId',
       type: 'select',
-      optionsUrl: '/member/communityList'
+      optionsUrl: '/yeqs/member/communityList'
     },
     {
       label: '婴儿类型',
@@ -80,7 +80,7 @@ export class SendoutComponent implements OnInit {
       label: '卡类型',
       key: 'cardTypeId',
       type: 'select',
-      optionsUrl: '/cardTypeManagement/findList'
+      optionsUrl: '/yeqs/cardTypeManagement/findList'
     }
   ]
 

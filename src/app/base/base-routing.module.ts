@@ -93,6 +93,12 @@ const routes: Routes = [
             data: { title: '用户互动' },
             canLoad: [ AuthGuardService ],
             loadChildren: 'src/app/modules/customer/interaction/interaction.module#InteractionModule'
+          },
+          {
+            path: 'settlement',
+            data: { title: '上课结算' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/customer/settlement/settlement.module#SettlementModule'
           }
         ]
       },
@@ -105,6 +111,12 @@ const routes: Routes = [
             data: { title: '会员卡列表' },
             canLoad: [ AuthGuardService ],
             loadChildren: 'src/app/modules/member/list/list.module#ListModule'
+          },
+          {
+            path: 'intelligent',
+            data: { title: '智能排课' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/consumption/intelligent/intelligent.module#IntelligentModule'
           },
           {
             path: 'changelog',
@@ -161,10 +173,10 @@ const routes: Routes = [
             loadChildren: 'src/app/modules/consumption/list/list.module#ListModule'
           },
           {
-            path: 'revokelog',
+            path: 'revoke',
             data: { title: '撤销记录' },
             canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/consumption/revoke-log/revoke-log.module#RevokeLogModule'
+            loadChildren: 'src/app/modules/consumption/revoke/revoke.module#RevokeModule'
           },
           {
             path: 'shortmsg',
@@ -173,10 +185,10 @@ const routes: Routes = [
             loadChildren: 'src/app/modules/consumption/shortmsg/shortmsg.module#ShortmsgModule'
           },
           {
-            path: 'satisfactionlog',
+            path: 'satisfaction',
             data: { title: '满意度记录' },
             canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/consumption/satisfaction-log/satisfaction-log.module#SatisfactionLogModule'
+            loadChildren: 'src/app/modules/consumption/satisfaction/satisfaction.module#SatisfactionModule'
           },
           {
             path: 'curriculum',
@@ -226,10 +238,10 @@ const routes: Routes = [
         data: { noReuse: true },
         children: [
           {
-            path: 'position',
+            path: 'positionsalary',
             data: { title: '职位管理' },
             canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/human-resources/position/position.module#PositionModule'
+            loadChildren: 'src/app/modules/human-resources/positionsalary/positionsalary.module#PositionsalaryModule'
           },
           {
             path: 'department',
@@ -281,6 +293,12 @@ const routes: Routes = [
                 data: { title: '满意度管理' },
                 canLoad: [ AuthGuardService ],
                 loadChildren: 'src/app/modules/human-resources/achievements/satisfaction/satisfaction.module#SatisfactionModule'
+              },
+              {
+                path: 'bonussales',
+                data: { title: '销售提成设置' },
+                canLoad: [ AuthGuardService ],
+                loadChildren: 'src/app/modules/human-resources/bonussales/bonussales.module#BonussalesModule'
               },
               {
                 path: 'commission',

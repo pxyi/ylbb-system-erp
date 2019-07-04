@@ -66,85 +66,126 @@
 </div>
 
 
-<nz-card [nzBordered]="false" nzTitle="预约" [nzExtra]="extraTmpt" style="margin-top: 24px" [nzLoading]="appointmentLoading">
-  <ng-template #extraTmpt>
-    <div style="position: absolute;top: 8px; right: 0;">
-      <nz-tabset nzSize="small" [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="appointmentChange($event)">
-        <nz-tab [nzTitle]="week.week" *ngFor="let week of weekList"></nz-tab>
-      </nz-tabset>
-    </div>
-  </ng-template>
+<nz-card [nzBordered]="false" nzTitle="课表" style="margin-top: 24px" [nzLoading]="appointmentLoading">
+  <div class="selectTab">
+    <button nz-button nzType="default" (click)="prveDate()">上周</button>
+    <button nz-button nzType="primary" (click)="nowDate()">本周</button>
+    <button nz-button nzType="default" (click)="nextDate()">下周</button>
+    <button nz-button nzType="dashed">{{startDate}} —— {{endDate}}</button>
 
-  <nz-alert nzType="warning" [nzMessage]="message" *ngIf="reserveCount">
-    <ng-template #message>
-      <div class="info-message">
-        预约数量：{{ reserveCount.vipCount + reserveCount.experienceCount + reserveCount.crossedCount }}
-        <span class="text-small">（本店会员{{ reserveCount.vipCount }} + 体验{{ reserveCount.experienceCount }}）</span>
-        <nz-divider nzType="vertical"></nz-divider>
-        预约撤销数量：{{ reserveCount.revocationVipCount + reserveCount.revocationCrossedCount }}
-        <span class="text-small">（本店会员{{ reserveCount.revocationVipCount }}）</span>
-        <nz-divider nzType="vertical"></nz-divider>
-        老师服务数量：{{ reserveCount.vipCount + reserveCount.experienceCount + reserveCount.crossedCount }}
-      </div>
-    </ng-template>
-  </nz-alert>
+    <div class="weekList">
 
-  <nz-table #reserTable [nzData]="reserveDetail.list" [nzShowPagination]="false" class="appointment" [nzBordered]="true">
-    <thead>
-      <tr>
-        <th>时间</th>
-        <th *ngFor="let th of reserveDetail.teachers">{{ th.name }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of reserTable.data">
-        <td>
-          <div class="reserve-time">
-            <p>{{ data.key }}</p>
-            <h2>{{ data.noReserveRecordTeacher }}/{{ data.teacherSum }}</h2>
-            <span>(未预约/老师总数)</span>
-          </div>
-        </td>
-
-        <td *ngFor="let item of reserveDetail.teachers; let idx = index">
-          <div class="appoint-box" [ngClass]="{'rest': !data.value[item.id].status}">
-            <ng-container *ngIf="data.value[item.id].status">
-              <div class="no-reserve" *ngIf="data.value[item.id].reserveRecord.length == 0" (click)="addAppoint(item.id, data.key)">
-                <i nz-icon type="plus-circle" theme="outline"></i>
-              </div>
-              <div class="reserve-detail" *ngIf="data.value[item.id].reserveRecord.length == 1" (click)="previewAppoint(data.value[item.id].reserveRecord[0])">
-                <div class="detail-head">
-                  <nz-avatar nzIcon="user" [nzSrc]="data.value[item.id].reserveRecord[0].albumUrl"></nz-avatar>
-                  <h4>
-                    {{ data.value[item.id].reserveRecord[0].name }}
-                    <span>{{ data.value[item.id].reserveRecord[0].babyType }}</span>
-                    <i [ngClass]="[ data.value[item.id].reserveRecord[0].haveCard == 0 ? 'ty' : data.value[item.id].reserveRecord[0].haveCard == 1 && data.value[item.id].reserveRecord[0].isCrossed == 1 ? 'tk' : 'hy' ]">
-                      {{ data.value[item.id].reserveRecord[0].haveCard == 0 ? '体' : '会' }}
-                    </i>
-                  </h4>
-                  <p>{{ data.value[item.id].reserveRecord[0].mobilePhone }}</p>
-                </div>
-                <div class="detail-remark">{{ data.value[item.id].reserveRecord[0].comment || '无预约备注' }}</div>
-              </div>
-              <ng-container *ngIf="data.value[item.id].reserveRecord.length > 1">
-                <div class="reserve-box">
-                  <div class="reserve-list" *ngFor="let reserve of data.value[item.id].reserveRecord" (click)="previewAppoint(reserve)">
-                    <span class="name">{{ reserve.name }}</span>
-                    <span class="type">{{ reserve.babyType }}</span>
-                    <span class="phone">{{ reserve.mobilePhone.substr(0,3) }}****{{ reserve.mobilePhone.substr(7,4) }}</span>
-                    <i [ngClass]="[ reserve.haveCard == 0 ? 'ty' : reserve.haveCard == 1 && reserve.isCrossed == 1 ? 'tk' : 'hy' ]">
-                      {{ reserve.haveCard == 0 ? '体' : '会' }}
-                    </i>
-                  </div>
+      <nz-table [nzData]="dateList" [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th>时段</th>
+            <th>星期一
+              <br> {{startDate}}
+            </th>
+            <th>星期二
+              <br> {{Tuesday}}
+            </th>
+            <th>星期三
+              <br> {{Wednesday}}
+            </th>
+            <th>星期四
+              <br> {{Thursday}}
+            </th>
+            <th>星期五
+              <br> {{Friday}}
+            </th>
+            <th>星期六
+              <br> {{Saturday}}
+            </th>
+            <th>星期日
+              <br> {{endDate}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dateList">
+            <td>{{item.startTime}}-{{item.endTime}}</td>
+            <td>
+              <ng-container *ngFor="let data of startDateList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
                 </div>
               </ng-container>
-            </ng-container>
-            <ng-container *ngIf="!data.value[item.id].status">
-              休息
-            </ng-container>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of TuesdayList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of WednesdayList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of ThursdayList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of FridayList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of SaturdayList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of endDateList">
+                <div class="dataList" [style.background]="data.typefaceColour"
+                  [style.color]="data.colour&&data.colour.indexOf('#')!=-1? data.colour : '#'+ data.colour"
+                  *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
+                  <div>课程名称：{{ data.name }}</div>
+                  <div>教室：{{ data.roomName }}</div>
+                  <p> 主教老师：{{ data.employeeName }}</p>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+
+  </div>
 </nz-card>

@@ -40,7 +40,7 @@ export class WriteoffComponent implements OnInit {
     private drawer: NzDrawerService
   ) {
     /* ----------------------- 获取该门店下所有小区 ----------------------- */
-    this.http.post('/member/communityList').then(res => {
+    this.http.post('/yeqs/member/communityList').then(res => {
       this.communityList = res.result;
     });
 

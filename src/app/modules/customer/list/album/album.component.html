@@ -22,8 +22,19 @@
 
 <form nz-form [formGroup]="formGroup">
   <div nz-row nzGutter="8">
-    <nz-form-item>
-      <nz-form-label nzRequired>照片</nz-form-label>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>拍摄时间</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker formControlName="createTime" nzPlaceHolder="请选择拍摄时间" [style.width]="'100%'" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+          <nz-form-explain *ngIf="formGroup.get('createTime').dirty && formGroup.get('createTime').hasError('required')">请选择拍摄时间！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <nz-form-item nzRequired>
+      <nz-form-label>照片</nz-form-label>
       <nz-form-control>
         <ea-upload-picture formControlName="photoListStr" [maxLength]="99"></ea-upload-picture>
         <nz-form-explain *ngIf="formGroup.get('photoListStr').dirty && formGroup.get('photoListStr').hasError('required')">请上传照片！</nz-form-explain>
@@ -38,7 +49,7 @@
   [paramsDefault]="{babyId: id}" 
   [title]="title">
   <ng-template #EaTableTbodyTr let-data>
-    <td><nz-avatar style="cursor: pointer" nzShape="square" nzSize="large" nzIcon="user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>
+    <td><nz-avatar style="cursor: pointer" nzSize="large" nzIcon="anticon anticon-user" (click)="previewVisible = true; previewImage = data.photo" [nzSrc]="data.photoSmall"></nz-avatar></td>
     <td>{{ data.monthAge }}</td>
     <td>{{ data.createDate }}</td>
     <td><a (click)="delete(data.id)">删除</a></td>
@@ -46,17 +57,16 @@
   <ng-template #title>
     <div class="table-head">
       <span>用户相片</span>
-      <nz-month-picker nzSize="small" style="width: 120px;" nzPlaceHolder="请选择月份" [(ngModel)]="selectedMonth" (ngModelChange)="monthChange($event)"></nz-month-picker>
+      <nz-month-picker nzPlaceHolder="请选择月份" [(ngModel)]="selectedMonth" (ngModelChange)="monthChange($event)"></nz-month-picker>
     </div>
   </ng-template>
 </ea-table>
 
 <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
   <ng-template #modalContent>
-    <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" *ngIf="previewImage" />
+    <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
   </ng-template>
 </nz-modal>
-
 
 <div class="drawer-footer">
   <button nz-button (click)="close()">取消</button>

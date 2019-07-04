@@ -1,16 +1,14 @@
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { NzDrawerRef } from 'ng-zorro-antd';
-import { DrawerSave } from '../../../../ng-relax/decorators/drawer/save.decorator';
-import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 
 @Component({
   selector: 'app-curriculum',
   templateUrl: './curriculum.component.html',
-  styleUrls: ['./curriculum.component.less']
+  styleUrls: ['./curriculum.component.scss']
 })
-export class CurriculumComponent implements OnInit {
+export class UpdateCurriculumComponent implements OnInit {
 
   @Input() id;
 
@@ -20,8 +18,7 @@ export class CurriculumComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private fb: FormBuilder = new FormBuilder(),
-    private drawerRef: NzDrawerRef
+    private fb: FormBuilder = new FormBuilder()
   ) { }
 
   ngOnInit() {
@@ -36,9 +33,6 @@ export class CurriculumComponent implements OnInit {
     })
   }
 
-  saveLoading: boolean;
   @DrawerSave('') save: () => void;
-
-  @DrawerClose() close: () => void;
 
 }

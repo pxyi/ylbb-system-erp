@@ -23,7 +23,7 @@ export class PositionComponent implements OnInit {
   ngOnInit() {
   }
   
-  @ModifyData('/humanInformation/removeBandRecord') delete: (id: number) => void;
+  @ModifyData('/yeqs/humanInformation/removeBandRecord') delete: (id: number) => void;
 
   @DrawerCreate({ title: '编辑职位', content: UpdateComponent }) update: ({ positionInfo: object }?) => void;
 

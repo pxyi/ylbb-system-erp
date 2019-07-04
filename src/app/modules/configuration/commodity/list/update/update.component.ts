@@ -24,7 +24,7 @@ export class UpdateComponent implements OnInit {
     private drawerRef: NzDrawerRef<boolean>,
     private http: HttpService
   ) {
-    this.http.post('/cardBusinessManagement/getStoreCardTypeCategores').then(res => this.cardTypeList = res.result);
+    this.http.post('/yeqs/cardBusinessManagement/getStoreCardTypeCategores').then(res => this.cardTypeList = res.result);
   }
 
   ngOnInit() {

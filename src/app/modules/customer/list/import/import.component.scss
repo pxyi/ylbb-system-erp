@@ -1,0 +1,12 @@
+:host ::ng-deep {
+  nz-upload { 
+    display: block; 
+  }
+  nz-table {
+    display: block;
+    margin-top: 36px;
+  }
+  .ant-upload.ant-upload-drag { 
+    height: 260px;
+  }
+}

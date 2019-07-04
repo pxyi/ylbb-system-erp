@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { DrawerSave } from '../../../../ng-relax/decorators/drawer/save.decorator';
+import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 import { NzDrawerRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-exchange',
   templateUrl: './exchange.component.html',
-  styleUrls: ['./exchange.component.less']
+  styleUrls: ['./exchange.component.scss']
 })
 export class ExchangeComponent implements OnInit {
 
@@ -39,9 +39,9 @@ export class ExchangeComponent implements OnInit {
     })
   }
 
-  @DrawerClose() close: () => void;
 
+  @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/member/redeem') save: () => void;
+  @DrawerSave('/yeqs/member/redeem') save: () => void;
 
 }

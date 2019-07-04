@@ -10,7 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class TeacherComponent implements OnInit {
   domain = environment.domain;
-  domainyeqs = environment.domainYeqs;
+  domainyeqs:string = environment.domainYeqs;
   isTeacher: any = "";
 
   teacherList: any = [];
@@ -57,7 +57,7 @@ export class TeacherComponent implements OnInit {
   ) {
     this.selectEmployee();
     this.nowDate();
-    this.http.post(this.domainyeqs + '/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
       this.dateList = res.result.list;
     });
   }
@@ -106,7 +106,7 @@ export class TeacherComponent implements OnInit {
     this.endDate = this.showWeekFirstDay(7 - nowDayOfWeek + index);
   };
   selectEmployee() {
-    this.http.post(this.domainyeqs + '/scheduling/selectEmployee', {}, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectEmployee', {}, false).then(res => {
       if (res.code == 1000) {
         this.teacherList = res.result.list;
       }
@@ -130,7 +130,7 @@ export class TeacherComponent implements OnInit {
       endDate: this.endDate,
       employeeId: this.isTeacher
     });
-    this.http.post(this.domainyeqs + '/curriculum/selectTeacher', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectTeacher', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.formList = res.result.list;
         let startDateList = [],
@@ -182,7 +182,7 @@ export class TeacherComponent implements OnInit {
       mobilePhone: this.mobilePhone,
       memberName: this.memberName
     });
-    this.http.post(this.domainyeqs + this.domainyeqs + '/curriculum/selectMemberReserve', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectMemberReserve', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.currformList = res.result.list;
         this.member = res.result.member;
@@ -266,7 +266,7 @@ export class TeacherComponent implements OnInit {
       mobilePhone: this.mobilePhone,
       memberName: this.memberName
     });
-    this.http.post(this.domainyeqs + '/curriculum/memberReserveList', { paramJson, pageSize: 50, pageNum: this.showPageNum }, false).then(res => {
+    this.http.post('/yeqs/curriculum/memberReserveList', { paramJson, pageSize: 50, pageNum: this.showPageNum }, false).then(res => {
       if (res.code == 1000) {
         res.result.list.map(item => {
           item.week = this.getWeek(item.currentDate);

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService, NzDrawerRef } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
-  styleUrls: ['./import.component.less']
+  styleUrls: ['./import.component.scss']
 })
 export class ImportComponent implements OnInit {
 
   constructor(
-    private message: NzMessageService,
-    private drawerRef: NzDrawerRef
+    private message: NzMessageService
   ) { }
 
   ngOnInit() {
@@ -33,9 +33,7 @@ export class ImportComponent implements OnInit {
       }
     }
   }
-  
-  save() {
-    this.drawerRef.close(true)
-  }
-  
+
+  @DrawerClose() close: () => void;
+
 }

@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
     private drawer: NzDrawerService,
     private message: NzMessageService
   ) {
-    this.http.post('/member/getStoreTeachers').then(res => this.teacherList = res.result);
+    this.http.post('/yeqs/member/getStoreTeachers').then(res => this.teacherList = res.result);
   }
 
   ngOnInit() {

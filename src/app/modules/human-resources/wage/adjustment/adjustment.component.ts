@@ -25,6 +25,6 @@ export class AdjustmentComponent implements OnInit {
 
   @DrawerCreate({ title: '调整信息', content: UpdateComponent }) update: ({dataInfo: object}?) => void;
 
-  @ModifyData('/payrollAdjustLog/removePayrollAdjustLog') delete: (id) => void;
+  @ModifyData('/yeqs/payrollAdjustLog/removePayrollAdjustLog') delete: (id) => void;
 
 }

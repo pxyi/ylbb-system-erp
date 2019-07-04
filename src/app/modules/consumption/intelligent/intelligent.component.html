@@ -1,0 +1,86 @@
+<div class="content">
+  <div class="header" style="margin-top: 10px;">
+    <form [formGroup]="formModel">
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>课程名称</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="form.syllabusName" formControlName="syllabusId">
+          <nz-option *ngFor="let items of SyllabusAll" [nzDisabled]="items.courseStatus==1"  [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+        </nz-select>
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>排课课时</nz-form-label>
+        <input nz-input style="width: 200px;" placeholder="请输入" formControlName="lessonPeriod" [(ngModel)]="form.lessonPeriod">
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>开始时间</nz-form-label>
+        <nz-date-picker formControlName="startDate" style="width: 200px;" nzFormat="yyyy-MM-dd" [(ngModel)]="startDate" (ngModelChange)="isTime()"></nz-date-picker>
+      </span>
+    </form>
+  </div>
+
+
+  <div class="main">
+    <div nz-row nzType="flex" nzJustify="center">
+      <div *ngFor="let item of weekList; let index = index" [attr.data-index]="index" nz-col nzSpan="3">
+        <label nz-checkbox [(ngModel)]="item.booles" (ngModelChange)="weekChange(index,item.name)">{{item.name}}</label>
+      </div>
+    </div>
+  </div>
+  <nz-table #nzTable #basicTable [nzData]="form.list" nzNoResult=" ">
+    <thead>
+      <tr>
+        <th>星期</th>
+        <th>时段</th>
+        <th>教室</th>
+        <th>主教老师</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of form.list; let index=index">
+      <tr *ngFor="let items of form.list[index].list; let indexs=index">
+        <td [attr.rowspan]="form.list[index].list.length" *ngIf="indexs==0">{{item.week}}</td>
+        <td>
+          <nz-select style="width: 120px;" [(ngModel)]="items.scourId" nzPlaceHolder="请选择">
+            <nz-option *ngFor="let item of ScourList" [nzValue]="item.id" [nzLabel]="item.startTime+'-'+item.endTime"></nz-option>
+          </nz-select>
+        </td>
+        <td>
+          <nz-select style="width: 120px;" [(ngModel)]="items.roomId" nzPlaceHolder="请选择" (ngModelChange)="selectschool(index,indexs)">
+            <nz-option *ngFor="let item of schoolList" [nzValue]="item.id" [nzLabel]="item.roomName"></nz-option>
+          </nz-select>
+        </td>
+        <td>{{items.employeeName}}</td>
+        <td>
+          <a (click)="addListTime(index,indexs)">增加</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="removeListTime(index,indexs)">删除</a>
+        </td>
+      </tr>
+    </tbody>
+
+  </nz-table>
+  <button nz-button nzType="primary" style="margin: 0 auto; display: block; margin-top: 20px;" [nzLoading]="subLoading" (click)="submits()">确认提交</button>
+
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="排课时间冲突" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-table #nzTable [nzData]="checkList" nzNoResult="" nzShowPagination="false">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>教室</th>
+        <th>主教老师</th>
+        <th>时段</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of checkList">
+        <td>{{item.currentDate}}</td>
+        <td>{{item.roomName}}</td>
+        <td>{{item.employeeName}}</td>
+        <td>{{item.startTime}}-{{item.endTime}}</td>
+      </tr>
+    </tbody>
+
+  </nz-table>
+</nz-modal>

@@ -1,0 +1,37 @@
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  left: 0px;
+  background: #fff;
+  button:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+.weekBtn{
+  margin-top: 30px;
+}
+.weekBtn button{
+  margin-right: 15px;
+}
+.listArr span{
+  width: auto;
+  float: left;
+  padding: 5px;
+  background:#1890ff;
+  border-radius: 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 12px;
+}
+.btn{
+  display: block;
+  clear: both;
+}
+.main{
+  overflow: hidden;
+}

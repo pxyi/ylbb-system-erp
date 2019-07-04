@@ -14,8 +14,6 @@
         <nz-form-label nzRequired nzFor="memberPoint">增加分值</nz-form-label>
         <nz-form-control>
           <input nz-input placeholder="请输入增加分值" formControlName="memberPoint" id="memberPoint">
-          <nz-form-explain *ngIf="formGroup.get('memberPoint').dirty && formGroup.get('memberPoint').hasError('required')">请输入增加分值！</nz-form-explain>
-          <nz-form-explain *ngIf="formGroup.get('memberPoint').dirty && formGroup.get('memberPoint').hasError('pattern')">请输入正确的分值！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

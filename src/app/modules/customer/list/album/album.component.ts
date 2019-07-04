@@ -3,15 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { TableComponent } from 'src/app/ng-relax/components/table/table.component';
+import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 import { NzDrawerRef } from 'ng-zorro-antd';
-import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
-import { ModifyData } from 'src/app/ng-relax/decorators/list/modify.decorator';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
-  styleUrls: ['./album.component.less']
+  styleUrls: ['./album.component.scss']
 })
 export class AlbumComponent implements OnInit {
 
@@ -36,17 +35,23 @@ export class AlbumComponent implements OnInit {
       babyId: [this.id],
       monthAge: [this.userInfo.monthAge],
       cardCode: [this.userInfo.memberCard],
+      createTime: [, [Validators.required]],
       photoListStr: [, [Validators.required]]
     })
   }
-  
+
+  @DrawerClose() close: () => void;
+  saveLoading: boolean;
+  @DrawerSave('/babyGrowthAlbum/save') save: () => void;
 
   selectedMonth;
   monthChange(e) {
     this.table.request({ babyId: this.id, createTime: this.format.transform(this.selectedMonth, 'yyyy-MM') });
   }
 
-  @ModifyData('/babyGrowthAlbum/delete') delete: (id) => void;
+  delete(id) {
+    this.http.post('/babyGrowthAlbum/delete', { id }).then(res => this.table._request());
+  }
 
   _disabledDate(current: Date): boolean {
     return current && current.getTime() > Date.now();
@@ -54,10 +59,4 @@ export class AlbumComponent implements OnInit {
 
   previewVisible: boolean;
   previewImage: string;
-
-  @DrawerClose() close: () => void;
-
-  saveLoading: boolean;
-  @DrawerSave('/babyGrowthAlbum/save') save: () => void;
-
 }

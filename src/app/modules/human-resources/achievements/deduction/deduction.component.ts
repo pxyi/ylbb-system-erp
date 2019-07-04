@@ -22,6 +22,6 @@ export class DeductionComponent implements OnInit {
 
   @DrawerCreate({ title: '员工扣分', content: UpdateComponent}) update: ({ deductionInfo: object}?) => void;
 
-  @ModifyData('/attendance/removeAttendance') delete: (id) => void;
+  @ModifyData('/yeqs/attendance/removeAttendance') delete: (id) => void;
 
 }

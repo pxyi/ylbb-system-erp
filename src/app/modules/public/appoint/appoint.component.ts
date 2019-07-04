@@ -53,8 +53,8 @@ export class AppointComponent implements OnInit {
       comment: []
     });
     this.formGroup.patchValue(this.userInfo);
-    this.http.post('/member/communityList').then(res => this.communityList = res.result);
-    this.http.post('/memberCard/getMemberCards', { memberId: this.userInfo.memberId || this.id }, false).then(res => {
+    this.http.post('/yeqs/member/communityList').then(res => this.communityList = res.result);
+    this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.userInfo.memberId || this.id }, false).then(res => {
       this.cardList = res.result;
       res.result.length && this.formGroup.patchValue({ cardId: res.result[0].id });
     });

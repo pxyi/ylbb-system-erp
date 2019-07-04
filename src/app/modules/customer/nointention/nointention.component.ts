@@ -163,7 +163,7 @@ export class NointentionComponent implements OnInit {
   }
 
   gainClue(): void {
-    this.http.post('/customer/gainClue', { paramJson: JSON.stringify({ id: this.checkedItems.join(',') }) }).then(res => {
+    this.http.post('/yeqs/customer/gainClue', { paramJson: JSON.stringify({ id: this.checkedItems.join(',') }) }).then(res => {
       this.checkedItems = [];
       this.table._request();
     })

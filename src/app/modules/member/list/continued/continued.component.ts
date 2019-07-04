@@ -1,14 +1,14 @@
-import { NzDrawerRef } from 'ng-zorro-antd';
 import { Component, OnInit, Input } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { NzDrawerRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-continued',
   templateUrl: './continued.component.html',
-  styleUrls: ['./continued.component.less']
+  styleUrls: ['./continued.component.scss']
 })
 export class ContinuedComponent implements OnInit {
 
@@ -17,7 +17,7 @@ export class ContinuedComponent implements OnInit {
   @Input() memberCardInfo;
 
   cardTypeList: any[] = [];
-  employeeList: any[] = [];
+  salesList: any[] = [];
 
   formGroup: FormGroup;
 
@@ -26,42 +26,26 @@ export class ContinuedComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/employee/listEmployee').then(res => this.employeeList = res.result);
+    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
   }
 
   ngOnInit() {
-    this.http.post('/cardTypeManagement/findList', {type: this.memberCardInfo.type}, false).then(res => this.cardTypeList = res.result);
     this.formGroup = this.fb.group({
       id: [this.id],
       cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
-      name: [{ value: this.memberCardInfo.name, disabled: true }],
+      memberName: [{ value: this.memberCardInfo.memberName, disabled: true }],
       times: [{ value: this.memberCardInfo.times, disabled: true }],
       freeTimes: [{ value: this.memberCardInfo.freeTimes, disabled: true }],
       balance: [{ value: this.memberCardInfo.balance, disabled: true }],
       expireDate: [{ value: this.memberCardInfo.expireDate, disabled: true }],
-      type: [{ value: this.memberCardInfo.type, disabled: true }],
       changeCardType: [, [Validators.required]],
-      employeeId:  [, [Validators.required]]
+      salesId: [, [Validators.required]]
     });
-
-    if (this.memberCardInfo.type == 1) {
-      this.formGroup.addControl('amount', this.fb.control(null, [Validators.required]));
-      this.formGroup.addControl('freeAmount', this.fb.control(null, [Validators.required]));
-      this.formGroup.addControl('discount', this.fb.control(null, [Validators.required]));
-
-      this.formGroup.controls.changeCardType.valueChanges.subscribe(id => {
-        this.http.post('/cardTypeManagement/getCardType', { id }, false).then(res => {
-          this.formGroup.patchValue({ amount: res.result.amount });
-          this.formGroup.patchValue({ freeAmount: res.result.freeAmount });
-          this.formGroup.patchValue({ discount: res.result.discount });
-        })
-      });
-    }
   }
-  saveLoading: boolean;
-  @DrawerSave('/memberCard/continueCard') save: () => void;
 
   @DrawerClose() close: () => void;
-
+  saveLoading: boolean;
+  @DrawerSave('/yeqs/memberCard/continueCard') save: () => void;
 
 }

@@ -22,7 +22,7 @@ export class PreviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.http.post('/payrollRecordDetail/getPayrollRecordDetail', {
+    this.http.post('/yeqs/payrollRecordDetail/getPayrollRecordDetail', {
       paramJson: JSON.stringify({ employeeId: this.dataInfo.employeeId, month: this.dataInfo.month })
     }, false).then(res => {
       if (res.code == 1000) {

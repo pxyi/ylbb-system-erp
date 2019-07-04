@@ -1,35 +1,30 @@
-import { NzDrawerRef } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-revoke',
   templateUrl: './revoke.component.html',
-  styleUrls: ['./revoke.component.less']
+  styleUrls: ['./revoke.component.scss']
 })
-export class RevokeComponent implements OnInit {
+export class UpdateRevokeComponent implements OnInit {
 
   @Input() id;
 
   @Input() recordInfo;
 
   formGroup: FormGroup;
-
+  
   constructor(
     private http: HttpService,
-    private fb: FormBuilder = new FormBuilder(),
-    private drawerRef: NzDrawerRef,
-    private router: Router
+    private fb: FormBuilder = new FormBuilder()
   ) {
+ 
   }
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      id: [this.recordInfo.id],
       memberName: [{ value: this.recordInfo.memberName, disabled: true }],
       memberNick: [{ value: this.recordInfo.memberNick, disabled: true }],
       sex: [{ value: this.recordInfo.sex, disabled: true }],
@@ -46,12 +41,18 @@ export class RevokeComponent implements OnInit {
       weight: [{ value: this.recordInfo.weight, disabled: true }],
       temperature: [{ value: this.recordInfo.temperature, disabled: true }],
       comment: [{ value: this.recordInfo.comment, disabled: true }],
-      reason: [, [Validators.required]]
+      reason: [, [Validators.required]],
+      id: [ this.recordInfo.id ],
+      swimTeacherId: [ this.recordInfo.teacherId],
+      assisTeacherId: [ this.recordInfo.assisTeacherId],
+      showerTeacherId: [ this.recordInfo.showerTeacherId],
+      fitnessTeacherId: [this.recordInfo.fitnessTeacherId],
+      leaveStatus: [this.recordInfo.leaveStatus],
+
     });
+
   }
 
-  saveLoading: boolean;
-  @DrawerSave('/customer/revocationConsume') save: () => void;
-  @DrawerClose() close: () => void;
+  @DrawerSave('/yeqs/customer/revocationConsume') save: () => void;
 
 }

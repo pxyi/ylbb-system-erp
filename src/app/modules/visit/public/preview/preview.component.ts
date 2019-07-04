@@ -66,7 +66,7 @@ export class PreviewComponent implements OnInit {
       }
     });
     /* ------------------- 获取用户信息 ------------------- */
-    this.http.post('/customer/showCustomerInfo', { id: this.id }, false).then(res => {
+    this.http.post('/yeqs/customer/showCustomerInfo', { id: this.id }, false).then(res => {
       this.userInfo = res.result.member;
     });
 

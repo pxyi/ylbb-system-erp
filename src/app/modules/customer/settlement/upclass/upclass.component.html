@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="header">
+      <div class="top">
+        <nz-steps [nzCurrent]="current" nzSize="small">
+          <nz-step nzTitle="选择升班信息"></nz-step>
+          <nz-step nzTitle="确认目标课程信息"></nz-step>
+          <nz-step nzTitle="完成"></nz-step>
+        </nz-steps>
+      </div>
+      <div class="form" *ngIf="current == 0">
+        <div class="content">
+   
+              <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-control>
+                    <nz-form-label >教室</nz-form-label>
+                      <input style="width:200px" disabled nz-input [(ngModel)]="details.roomName"  >
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8">
+                    <nz-form-item>
+                      <nz-form-control>
+                      <nz-form-label >授课老师</nz-form-label>
+                        <input style="width:200px" disabled nz-input [(ngModel)]="details.employeeName" >
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col nzSpan="8">
+                      <nz-form-item>
+                        <nz-form-control>
+                        <nz-form-label >课程名称</nz-form-label>
+                          <input style="width:200px" disabled nz-input [(ngModel)]="details.name" >
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  <div nz-col nzSpan="8">
+                      <nz-form-item>
+                          <nz-form-control>
+                        <nz-form-label >星期</nz-form-label>                         
+                            <nz-select style="width:200px" disabled [(ngModel)]="details.week" nzPlaceHolder="请选择星期">
+                                <nz-option nzLabel="星期一" nzValue="星期一"></nz-option>
+                                <nz-option nzLabel="星期二" nzValue="星期二"></nz-option>
+                                <nz-option nzLabel="星期三" nzValue="星期三"></nz-option>
+                                <nz-option nzLabel="星期四" nzValue="星期四"></nz-option>
+                                <nz-option nzLabel="星期五" nzValue="星期五"></nz-option>
+                                <nz-option nzLabel="星期六" nzValue="星期六"></nz-option>
+                                <nz-option nzLabel="星期日" nzValue="星期日"></nz-option>
+                              </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>   
+                    <div nz-col nzSpan="8">
+                        <nz-form-item>
+                            <nz-form-control>
+                          <nz-form-label >时间段</nz-form-label>                         
+                              <nz-select style="width:200px" disabled [(ngModel)]="details.scourId" nzPlaceHolder="请选择时间段">
+                                  <nz-option  *ngFor="let item of scourList" [nzLabel]="item.label"  [(nzValue)]="item.id"></nz-option>
+                                </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>                    
+                  <div nz-col nzSpan="12">
+                      <nz-form-item>
+                        <nz-form-control>  
+                        <nz-form-label >上课日期</nz-form-label>
+                            <nz-range-picker style="width:300px" [(ngModel)]="dateRange"  [nzDisabledDate]="disabledDate"  (ngModelChange)="dateChange($event)" [nzFormat]="dateFormat"></nz-range-picker>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+        </div>
+          <div class="btn"><button class="nextBtn" nz-button  nzType="primary" (click)="firstNext()" [nzLoading]="isLoadingOne">下一步</button></div> 
+
+      </div>
+      <div class="form" *ngIf="current == 1">
+          <div nz-col nzSpan="8" style="display:block; margin: 0 auto; float: inherit;"> 
+              <nz-form-item>
+                  <nz-form-control>
+                <nz-form-label >课程名称</nz-form-label>                         
+                    <nz-select style="width:200px" [(ngModel)]="details.newName" nzPlaceHolder="请选择课程">
+                        <nz-option  *ngFor="let item of classList" [nzLabel]="item.name"  [nzValue]="item.name"></nz-option>
+ 
+                      </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div> 
+            <div class="btn" >
+                <button class="nextBtn" nz-button   (click)="prve()" [nzLoading]="isLoadingOne">返回上一步</button>
+                <button class="nextBtn" nz-button  nzType="primary" (click)="twoNext()" [nzLoading]="isLoadingOne">下一步并检测</button>
+              </div> 
+      </div>
+
+      <div class="form" *ngIf="current == 2"> 
+          <div class="success_icon"><img src="https://hcz-czg-image.oss-cn-beijing.aliyuncs.com/success201512251221.png" alt=""></div>
+          <div class="success_text">操作成功</div>
+          <div class="btn" >
+              <button class="nextBtn" nz-button  nzType="primary" routerLink="/home/customer/settlement">再次升班</button>
+            </div> 
+        </div>
+
+    
+    </div>
+</div>

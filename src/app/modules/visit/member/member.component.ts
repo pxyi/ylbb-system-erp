@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PreviewComponent } from '../public/preview/preview.component';
 import { DatePipe } from '@angular/common';
 import { DrawerCreate } from 'src/app/ng-relax/decorators/drawer/create.decorator';
+import { VisitComponent } from '../public/visit/visit.component';
 
 @Component({
   selector: 'app-member',
@@ -21,10 +22,10 @@ export class MemberComponent implements OnInit {
     },
     {
       label       : '来源',
-      key         : 'sourceId',
+      key         : 'customerSourceId',
+      optionKey   : { label: 'sourceName', value: 'sourceId' },
       type        : 'select',
-      optionsUrl  : '/activity/getActivitySource',
-      optionKey: { label: 'activityHeadline', value: 'id' }
+      optionsUrl  : '/management/selectSource'
     },
     {
       label       : '家长姓名',
@@ -95,5 +96,8 @@ export class MemberComponent implements OnInit {
   }
 
   @DrawerCreate({ width: 860, closable: false, params: { followStageId: 4 }, content: PreviewComponent }) preview: ({ id: number }) => void;
+
+
+  @DrawerCreate({ title: '今日已回访列表', content: VisitComponent, params: { followStageId: 4, status: 2 } }) visitList: () => void;
 
 }

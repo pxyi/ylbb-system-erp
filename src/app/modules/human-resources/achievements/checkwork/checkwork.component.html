@@ -1,10 +1,10 @@
 <div class="container">
   <ea-list-page-simp 
     #listPage
-    url="/attendance/getAttendanceList"
+    url="/yeqs/attendance/getAttendanceList"
     [allowSpace]="false"
     [queryNode]="[
-      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/yeqs/member/getStoreTeachers' },
       { label: '起始日期', key: 'date', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }
     ]"
     [tableThead]="['员工姓名','考勤类型','考勤日期','当月工资变更','备注','操作']"

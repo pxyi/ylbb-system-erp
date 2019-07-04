@@ -1,0 +1,79 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡类型</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardTypeName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="memberName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有正价卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="times">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有赠送卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="freeTimes">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>失效日期</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="expireDate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>需要增加的通卡卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="tongNum" placeholder="请输入需要增加的通卡卡次" maxlength="4">
+          <nz-form-explain [style.color]="'#f5222d'">*目前剩余卡次 >= (之前剩余通卡卡次 + 调整的通卡卡次) > 目前剩余的通卡卡次</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

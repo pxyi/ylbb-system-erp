@@ -1,0 +1,299 @@
+<div class="container">
+    <div class="header">
+      <div class="top">
+        <nz-steps [nzCurrent]="current" nzSize="small">
+          <nz-step nzTitle="选择调课信息"></nz-step>
+          <nz-step nzTitle="选择目标课程信息"></nz-step>
+          <nz-step nzTitle="完成"></nz-step>
+        </nz-steps>
+      </div>
+      <div class="form" *ngIf="current == 0">
+        <div class="content">
+          <form nz-form [formGroup]="followRecordGroup">
+              <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-control>
+                    <nz-form-label >会员姓名</nz-form-label>  
+                      <input style="width:200px" disabled nz-input placeholder="请输入宝宝姓名" formControlName="memberName">
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8">
+                    <nz-form-item>
+                      <nz-form-control>
+                      <nz-form-label >课程名称</nz-form-label>
+                          <nz-select style="width:200px" formControlName="syllabusName" nzPlaceHolder="请选择课程名称" (ngModelChange)="selectclass()">
+                              <nz-option  *ngFor="let item of conditionList" [nzLabel]="item.name" [nzValue]="item.name"></nz-option>
+                            </nz-select>
+                            <nz-form-explain  *ngIf="followRecordGroup.get('syllabusName').dirty && followRecordGroup.get('syllabusName').hasError('required')">请选择课程名称</nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col nzSpan="8">
+                      <nz-form-item>
+                          <nz-form-control>
+                        <nz-form-label >星期</nz-form-label>                         
+                            <nz-select style="width:200px" formControlName="week" nzPlaceHolder="请选择星期">
+                                <nz-option nzLabel="星期一" nzValue="星期一"></nz-option>
+                                <nz-option nzLabel="星期二" nzValue="星期二"></nz-option>
+                                <nz-option nzLabel="星期三" nzValue="星期三"></nz-option>
+                                <nz-option nzLabel="星期四" nzValue="星期四"></nz-option>
+                                <nz-option nzLabel="星期五" nzValue="星期五"></nz-option>
+                                <nz-option nzLabel="星期六" nzValue="星期六"></nz-option>
+                                <nz-option nzLabel="星期日" nzValue="星期日"></nz-option>
+                              </nz-select>
+                              <nz-form-explain  *ngIf="followRecordGroup.get('week').dirty && followRecordGroup.get('week').hasError('required')">请选择星期</nz-form-explain>      
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>   
+                    <div nz-col nzSpan="8">
+                        <nz-form-item>
+                            <nz-form-control>
+                          <nz-form-label >时间段</nz-form-label>                         
+                             <nz-select style="width:200px"  formControlName="scourId" nzPlaceHolder="请选择时间段">
+                                  <nz-option  *ngFor="let item of scourList" [nzLabel]="item.label"  [nzValue]="item.scourId"></nz-option>
+                                </nz-select> 
+                                <nz-form-explain *ngIf="followRecordGroup.get('scourId').dirty && followRecordGroup.get('scourId').hasError('required')">请选择时间段</nz-form-explain>       
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>   
+                      <div nz-col nzSpan="8">
+                          <nz-form-item>
+                              <nz-form-control>
+                            <nz-form-label >老师</nz-form-label>                         
+                               <nz-select style="width:200px"  formControlName="employeeId" nzPlaceHolder="请选择老师">
+                                    <nz-option  *ngFor="let item of employeeList" [nzLabel]="item.employeeName"  [nzValue]="item.employeeId"></nz-option>
+                                  </nz-select> 
+                                  <nz-form-explain  *ngIf="followRecordGroup.get('employeeId').dirty && followRecordGroup.get('employeeId').hasError('required')">请选择老师</nz-form-explain>       
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>                       
+                      
+
+                  <div nz-col nzSpan="12">
+                      <nz-form-item>
+                        <nz-form-control>  
+                        <nz-form-label >上课日期</nz-form-label>
+                            <nz-range-picker style="width:300px" [(ngModel)]="dateRange" [nzDisabledDate]="disabledDate"  formControlName="date" (ngModelChange)="dateChange($event)"></nz-range-picker>
+                            <nz-form-explain  *ngIf="followRecordGroup.get('date').dirty && followRecordGroup.get('date').hasError('required')">请选择上课日期</nz-form-explain>       
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+          </form>
+        </div>
+          <div class="btn"><button class="nextBtn" nz-button  nzType="primary" (click)="firstNext()" [nzLoading]="isLoadingOne">下一步</button></div> 
+
+      </div>
+
+      <div class="form" *ngIf="current == 1">
+        <p>学员姓名：{{memberdetailTk.name}}</p>
+        <p>可调课次数：{{memberdetailTk.cardNumber}}</p>
+        <div>
+          <h3>请选择课程</h3>
+          <nz-radio-group [(ngModel)]="radioName"  style="width: 100%;">
+            <nz-table #basicTable [nzData]="SyllabusAllList" nzShowPagination='false'>
+              <thead>
+                <tr>
+                  <th>请选择</th>
+                  <th>排课次数</th>
+                  <th>课程名称</th>
+                  <th>课程类型</th>
+                  <th>课程类别</th>
+                  <th>课程状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of SyllabusAllList">
+                  <td>
+                    <!-- <label nz-radio [nzDisabled]="data.courseStatus!=0" [nzValue]="data.name"></label> -->
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="selectlabel(data)" >{{data.name}}</label>
+                  </td>
+                  <td><nz-input-number [(ngModel)]="data.arranging" [nzMin]="1" [nzMax]="10000" [nzStep]="1" nzPlaceHolder="请输入"></nz-input-number></td>
+                  <td>{{data.name}}</td>
+                  <td>{{data.lessonName}}</td>
+                  <td>{{data.courseName}}</td>
+                  <td>{{data.courseStatus==0?'启用':'停用'}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+            </nz-radio-group>
+          </div>
+        <div>
+          <div class="weekBtn">
+            <button nz-button nzType="default" [disabled]="isBtnDisVled" (click)="prveDate()">上周</button>
+            <button nz-button nzType="primary" (click)="nowDate()">本周</button>
+            <button nz-button nzType="default" (click)="nextDate()">下周</button>
+          </div>
+          <h3 style="margin-top: 20px;">课程排期</h3>
+          <nz-radio-group style="width: 100%;">
+            <nz-table #basicTable [nzData]="dateList" nzShowPagination='false'>
+              <thead>
+                <tr>
+                  <th>时段</th>
+                  <th>星期一<div> {{startDate}}</div></th>
+                  <th>星期二<div> {{Tuesday}}</div></th>
+                  <th>星期三<div> {{Wednesday}}</div></th>
+                  <th>星期四<div> {{Thursday}}</div></th>
+                  <th>星期五<div> {{Friday}}</div></th>
+                  <th>星期六<div> {{Saturday}}</div></th>
+                  <th>星期日<div> {{endDate}}</div></th>
+                </tr>
+              </thead>
+                      <tbody>
+                  <tr *ngFor="let item of dateList">
+                    <!-- RecordList -->
+                    <td>{{item.startTime}}-{{item.endTime}}</td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList1">
+                            <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                                  <p>课程：{{data.name}}</p>
+                                  <p>教室：{{data.roomName}}</p>
+                                  <p>主助教：{{data.employeeName}}</p>
+                                  <p>日期：{{data.currentDate}}</p>
+                                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                                  <p *ngIf="data.galleryful-data.number>0">
+                                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                                  </p>
+                            </div>  
+                      </ng-container>  
+                    </td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList2">
+                        <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                          <p>课程：{{data.name}}</p>
+                          <p>教室：{{data.roomName}}</p>
+                          <p>主助教：{{data.employeeName}}</p>
+                          <p>日期：{{data.currentDate}}</p>
+                          <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                          <p *ngIf="data.galleryful-data.number>0">
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                          </p>
+                        </div>
+                      </ng-container>
+                    </td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList3">
+                        <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                          <p>课程：{{data.name}}</p>
+                          <p>教室：{{data.roomName}}</p>
+                          <p>主助教：{{data.employeeName}}</p>
+                          <p>日期：{{data.currentDate}}</p>
+                          <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                          <p *ngIf="data.galleryful-data.number>0">
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                          </p>
+                        </div>
+                      </ng-container>
+                    </td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList4">
+                        <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                          <p>课程：{{data.name}}</p>
+                          <p>教室：{{data.roomName}}</p>
+                          <p>主助教：{{data.employeeName}}</p>
+                          <p>日期：{{data.currentDate}}</p>
+                          <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                          <p *ngIf="data.galleryful-data.number>0">
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                          </p>
+                        </div>
+                      </ng-container>
+                    </td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList5">
+                        <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                          <p>课程：{{data.name}}</p>
+                          <p>教室：{{data.roomName}}</p>
+                          <p>主助教：{{data.employeeName}}</p>
+                          <p>日期：{{data.currentDate}}</p>
+                          <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                          <p *ngIf="data.galleryful-data.number>0">
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                          </p>
+                        </div> 
+                      </ng-container>
+                    </td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList6">
+                        <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                          <p>课程：{{data.name}}</p>
+                          <p>教室：{{data.roomName}}</p>
+                          <p>主助教：{{data.employeeName}}</p>
+                          <p>日期：{{data.currentDate}}</p>
+                          <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                          <p *ngIf="data.galleryful-data.number>0">
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                          </p>
+                        </div>
+                      </ng-container>
+                    </td>
+                    <td>
+                      <ng-container *ngFor="let data of RecordList7">
+                        <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff; border-radius: 10px;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                          <p>课程：{{data.name}}</p>
+                          <p>教室：{{data.roomName}}</p>
+                          <p>主助教：{{data.employeeName}}</p>
+                          <p>日期：{{data.currentDate}}</p>
+                          <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                          <p *ngIf="data.galleryful-data.number>0">
+                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)" style="color: #fff">选择该课程</label>
+                          </p>
+                        </div>
+                      </ng-container>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+            </nz-table>
+          </nz-radio-group>
+          <h3 style="margin-top:20px;" *ngIf="listArr.length">已选择课程</h3>
+       
+          <div class="listArr" >
+              <span *ngFor="let data of listArr">{{ data.name }} {{ data.currentDate }} ({{ data.startTime }}—{{ data.endTime }})</span>
+          </div>
+        </div>
+        <div class="btn" >
+          <button class="nextBtn" nz-button   (click)="prve()" [nzLoading]="isLoadingOne">返回上一步</button>
+          <button class="nextBtn" nz-button  nzType="primary" (click)="twoNext()" [nzLoading]="isLoadingOne">下一步并检测</button>
+        </div> 
+
+      </div>
+
+      <div class="form" *ngIf="current == 2"> 
+          <div class="success_icon"><img src="https://hcz-czg-image.oss-cn-beijing.aliyuncs.com/success201512251221.png" alt=""></div>
+          <div class="success_text">操作成功</div>
+          <div class="copywriting">{{ copywriting }}</div>
+          <div class="insetTable">
+              <nz-table #basicTable [nzData]="reserveList"  [nzShowPagination]="false">
+                  <thead>
+                    <tr>
+                      <th>学员姓名</th>
+                      <th>课程名称</th>
+                      <th>日期</th>
+                      <th>时间段</th>
+                      <th>主教</th>
+                      <th>教室</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of reserveList">
+                      <td>{{data.memberName}}</td>
+                      <td>{{data.syllabusName}}</td>
+                      <td>{{data.currentDate}}</td>
+                      <td>{{data.startTime}} - {{ data.endTime }}</td>
+                      <td>{{data.employeeName}}</td>
+                      <td>{{data.roomName}}</td>
+
+                    </tr>
+                  </tbody>
+                </nz-table>
+          </div>
+          <div class="btn" >
+              <button class="nextBtn" nz-button  nzType="primary" (click)="close()">再次调课</button>
+            </div> 
+        </div>
+
+    
+    </div>
+</div>

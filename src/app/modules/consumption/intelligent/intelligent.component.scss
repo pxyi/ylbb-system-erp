@@ -1,0 +1,25 @@
+.header,.main{
+  width:100%;
+  overflow: hidden;
+  background: #fff;
+  padding: 24px;
+}
+.main{
+  margin-top: 10px;
+}
+.pagination{
+  float:right;
+  margin-top: 20px;
+}
+.ant-radio-button-wrapper{
+  margin-left: 1px;
+  margin-top:2px;
+}
+.submits{
+  width: 100%;
+  line-height: 100px;
+  text-align: center;
+}
+.submits button{
+  margin: 0 auto;
+}

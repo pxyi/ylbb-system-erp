@@ -1,14 +1,14 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DrawerSave } from '../../../../ng-relax/decorators/drawer/save.decorator';
+import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 
 @Component({
   selector: 'app-add-integral',
   templateUrl: './add-integral.component.html',
-  styleUrls: ['./add-integral.component.less']
+  styleUrls: ['./add-integral.component.scss']
 })
 export class AddIntegralComponent implements OnInit {
 
@@ -29,13 +29,13 @@ export class AddIntegralComponent implements OnInit {
     this.formGroup = this.fb.group({
       memberId: [this.id],
       name: [{ value: this.userInfo.name, disabled: true }, [Validators.required]],
-      memberPoint: [, [Validators.required, Validators.pattern(/^-?[1-9]\d*$/)]],
+      memberPoint: [, [Validators.required]],
       comment: []
     })
   }
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/member/saveMemberPoint') save: () => Promise<boolean>;
+  @DrawerSave('/yeqs/member/saveMemberPoint') save: () => void;
 
 }

@@ -79,6 +79,11 @@ export const MenuConfig = [
         key   : '/home/customer/interaction',
         isLeaf: true
       },
+      {
+        title : '上课结算',
+        key   : '/home/customer/settlement',
+        isLeaf: true
+      },
     ]
   },
   {
@@ -90,6 +95,11 @@ export const MenuConfig = [
       {
         title : '会员卡列表',
         key   : '/home/member/list',
+        isLeaf: true
+      },
+      {
+        title : '智能排课',
+        key   : '/home/member/intelligent',
         isLeaf: true
       },
       {
@@ -142,7 +152,7 @@ export const MenuConfig = [
       },
       {
         title : '撤销记录',
-        key   : '/home/consumption/revokelog',
+        key   : '/home/consumption/revoke',
         isLeaf: true
       },
       // {
@@ -152,7 +162,7 @@ export const MenuConfig = [
       // },
       {
         title : '满意度记录',
-        key   : '/home/consumption/satisfactionlog',
+        key   : '/home/consumption/satisfaction',
         isLeaf: true
       },
       {
@@ -243,7 +253,7 @@ export const MenuConfig = [
     children: [
       {
         title : '职位管理',
-        key   : '/home/humanresources/position',
+        key   : '/home/humanresources/positionsalary',
         isLeaf: true
       },
       {
@@ -281,11 +291,16 @@ export const MenuConfig = [
         key   : '/home/humanresources/achievements/target',
         isLeaf: true
       },
-      // {
-      //   title : '满意度管理',
-      //   key   : '/home/humanresources/achievements/satisfaction',
-      //   isLeaf: true
-      // },
+      {
+        title : '满意度管理',
+        key   : '/home/humanresources/achievements/satisfaction',
+        isLeaf: true
+      },
+      {
+        title : '销售提成设置',
+        key   : '/home/humanresources/achievements/bonussales',
+        isLeaf: true
+      },
       // {
       //   title : '提成阶梯管理',
       //   key   : '/home/humanresources/achievements/commission',

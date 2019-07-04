@@ -27,7 +27,7 @@
       <td>{{ data.integral == 0 ? '不计积分' : '记积分' }}</td>
       <td>{{ data.defaulttag == 0 ? '否' : '是' }}</td>
       <td>{{ data.categoryName }}</td>
-      <td><nz-tag [nzColor]="data.status != 0 ? '#f50' : '#2db7f5'">{{ data.status != 0 ? '禁用' : '启用' }}</nz-tag></td>
+      <td><nz-tag [nzColor]="data.status != 0 ? '#f50' : '#2db7f5'">{{ data.status != 0 ? '下架' : '上架' }}</nz-tag></td>
       <td>{{ data.cardNum }}</td>
       <td>
         <a href="javascript:;" (click)="update({commodityInfo: data})">编辑</a>
@@ -45,10 +45,10 @@
               <a (click)="selfuse({commodityInfo: data})">自用</a>
             </li>
             <li nz-menu-item *ngIf="data.status != 0">
-              <a (click)="changeStatus(data.id, 0)">启用</a>
+              <a (click)="changeStatus(data.id, 0)">上架</a>
             </li>
             <li nz-menu-item *ngIf="data.status == 0">
-              <a (click)="changeStatus(data.id, 1)">禁用</a>
+              <a (click)="changeStatus(data.id, 1)">下架</a>
             </li>
             <li nz-menu-item *ngIf="data.defaulttag == 0 && data.type == 1">
               <a (click)="changeDafulat(data.id, 1)">设为默认</a>

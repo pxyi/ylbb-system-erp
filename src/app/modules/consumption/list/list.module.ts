@@ -1,26 +1,26 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListComponent } from './list.component';
-import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { RouterModule } from '@angular/router';
+import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
+import { ListComponent } from './list.component';
 import { PreviewComponent } from './preview/preview.component';
-import { SatisfactionComponent } from './satisfaction/satisfaction.component';
-import { RevokeComponent } from './revoke/revoke.component';
+import { UpdateSatisfactionComponent } from './satisfaction/satisfaction.component';
+import { UpdateRevokeComponent } from './revoke/revoke.component';
 import { MessageComponent } from './message/message.component';
-import { CurriculumComponent } from './curriculum/curriculum.component';
+import { UpdateCurriculumComponent } from './curriculum/curriculum.component';
 
 @NgModule({
-  declarations: [ListComponent, PreviewComponent, SatisfactionComponent, RevokeComponent, MessageComponent, CurriculumComponent],
+  declarations: [ListComponent, PreviewComponent, UpdateSatisfactionComponent, UpdateRevokeComponent, MessageComponent, UpdateCurriculumComponent],
   imports: [
     CommonModule,
-    NgRelaxModule,
     NgZorroAntdModule,
+    NgRelaxModule,
     RouterModule.forChild([{
       path: '',
       component: ListComponent
-    }]),
+    }])
   ],
-  entryComponents: [PreviewComponent, SatisfactionComponent, RevokeComponent, MessageComponent, CurriculumComponent]
+  entryComponents: [PreviewComponent, UpdateSatisfactionComponent, UpdateRevokeComponent, MessageComponent, UpdateCurriculumComponent]
 })
 export class ListModule { }

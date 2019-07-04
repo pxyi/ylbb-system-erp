@@ -26,11 +26,11 @@ export class CardContinuedComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/employee/listEmployee').then(res => this.employeeList = res.result);
+    this.http.post('/yeqs/employee/listEmployee').then(res => this.employeeList = res.result);
   }
 
   ngOnInit() {
-    this.http.post('/cardTypeManagement/findList', {type: this.memberCardInfo.type}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('/yeqs/cardTypeManagement/findList', {type: this.memberCardInfo.type}, false).then(res => this.cardTypeList = res.result);
     this.formGroup = this.fb.group({
       id: [this.id],
       cardCode: [{ value: this.memberCardInfo.cardCode, disabled: true }],
@@ -50,7 +50,7 @@ export class CardContinuedComponent implements OnInit {
       this.formGroup.addControl('discount', this.fb.control(null, [Validators.required]));
 
       this.formGroup.controls.changeCardType.valueChanges.subscribe(id => {
-        this.http.post('/cardTypeManagement/getCardType', { id }, false).then(res => {
+        this.http.post('/yeqs/cardTypeManagement/getCardType', { id }, false).then(res => {
           this.formGroup.patchValue({ amount: res.result.amount });
           this.formGroup.patchValue({ freeAmount: res.result.freeAmount });
           this.formGroup.patchValue({ discount: res.result.discount });
@@ -59,7 +59,7 @@ export class CardContinuedComponent implements OnInit {
     }
   }
   saveLoading: boolean;
-  @DrawerSave('/memberCard/continueCard') save: () => void;
+  @DrawerSave('/yeqs/memberCard/continueCard') save: () => void;
 
   @DrawerClose() close: () => void;
 

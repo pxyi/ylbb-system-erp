@@ -23,7 +23,7 @@ export class DepartmentComponent implements OnInit {
   ngOnInit() {
   }
 
-  @ModifyData('/department/removeDeptRecord') delete: (id: number) => void;
+  @ModifyData('/yeqs/department/removeDeptRecord') delete: (id: number) => void;
 
   @DrawerCreate({ title: '部门信息', content: UpdateComponent }) update: ({ departmentInfo: object }?) => void;
 

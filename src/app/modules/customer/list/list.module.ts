@@ -1,33 +1,31 @@
-import { ViserModule } from 'viser-ng';
-import { AppointModule } from './../../public/appoint/appoint.module';
-import { RouterModule } from '@angular/router';
-import { ConsumptionModule } from './../../public/consumption/consumption.module';
+import { AddIntegralComponent } from './add-integral/add-integral.component';
+import { AlbumComponent } from './album/album.component';
+import { AppointComponent } from './appoint/appoint.component';
+import { ConstructionComponent } from './construction/construction.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { ExchangeComponent } from './exchange/exchange.component';
+import { ListComponent } from './list.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListComponent } from './list.component';
+import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
 import { UpdateComponent } from './update/update.component';
-import { ConstructionComponent } from './construction/construction.component';
-import { AddIntegralComponent } from './add-integral/add-integral.component';
-import { ExchangeComponent } from './exchange/exchange.component';
 import { ImportComponent } from './import/import.component';
-import { AlbumComponent } from './album/album.component';
+import { RouterModule } from '@angular/router';
+import { ViserModule } from 'viser-ng';
 
 @NgModule({
-  declarations: [ListComponent, UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent],
+  declarations: [ListComponent, UpdateComponent, ImportComponent, ExchangeComponent, ConsumptionComponent, ConstructionComponent, AppointComponent, AlbumComponent, AddIntegralComponent],
   imports: [
     CommonModule,
     NgRelaxModule,
     NgZorroAntdModule,
-    ConsumptionModule,
-    AppointModule,
     RouterModule.forChild([{
       path: '',
       component: ListComponent
     }]),
     ViserModule
   ],
-  entryComponents: [UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent,]
+  entryComponents: [UpdateComponent, ImportComponent, ExchangeComponent, ConsumptionComponent, ConstructionComponent, AppointComponent, AlbumComponent, AddIntegralComponent]
 })
 export class ListModule { }

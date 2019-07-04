@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./curriculumtype.component.scss']
 })
 export class CurriculumtypeComponent implements OnInit {
-  private domain = environment.domainYeqs;
+  private domain:string = environment.domainYeqs;
   typeList:any = [];
   typeName:any = [];
   openRemoveType: any = false;
@@ -33,7 +33,7 @@ export class CurriculumtypeComponent implements OnInit {
    }
    //查询课程类型、类别
   selectTypeListQuery() {
-    this.http.post(this.domain + '/intelligent/selectLesson', { status: '0', name: this.typeName }, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectLesson', { status: '0', name: this.typeName }, false).then(res => {
       if (res.code == 1000) {
         this.typeList = res.result.list;
       }
@@ -49,7 +49,7 @@ export class CurriculumtypeComponent implements OnInit {
   }
   
   isRemoveType(){
-    this.http.post(this.domain + '/intelligent/delectLesson', { status: this.Typestatus, id : this.TypeId }, false).then(res => {
+    this.http.post('/yeqs/intelligent/delectLesson', { status: this.Typestatus, id : this.TypeId }, false).then(res => {
       if (res.code == 1000) {
         this.message.create('success', '删除成功！');
         this.selectTypeListQuery();
@@ -73,7 +73,7 @@ export class CurriculumtypeComponent implements OnInit {
       return false;
     }
     if (this.changeId == ""){
-        this.http.post(this.domain + '/intelligent/insertLesson', { status: this.Typestatus, name: this.installName }, false).then(res => {
+        this.http.post('/yeqs/intelligent/insertLesson', { status: this.Typestatus, name: this.installName }, false).then(res => {
           if (res.code == 1000) {
             this.message.create('success', '添加成功！');
             this.selectTypeListQuery();
@@ -84,7 +84,7 @@ export class CurriculumtypeComponent implements OnInit {
           }
         });
     }else{
-      this.http.post(this.domain + '/intelligent/updateLesson', { status: this.Typestatus, name: this.installName, id: this.changeId }, false).then(res => {
+      this.http.post('/yeqs/intelligent/updateLesson', { status: this.Typestatus, name: this.installName, id: this.changeId }, false).then(res => {
         if (res.code == 1000) {
           this.message.create('success', '修改成功！');
           this.selectTypeListQuery();
@@ -101,7 +101,7 @@ export class CurriculumtypeComponent implements OnInit {
       this.addstatus = type;
       this.openaddType = true;
       this.openTit = '编辑课程类型';
-       this.http.post(this.domain + '/intelligent/selectLessonType', { status: this.addstatus, id:id }, false).then(res => {
+       this.http.post('/yeqs/intelligent/selectLessonType', { status: this.addstatus, id:id }, false).then(res => {
           if (res.code == 1000) {
             this.installName = res.result.list.name;
             this.changeId = res.result.list.id;

@@ -6,7 +6,7 @@
         <nz-form-control>
           <input nz-input formControlName="cardCode" id="cardCode" placeholder="请输入卡号">
           <nz-form-explain *ngIf="formGroup.get('cardCode').dirty && formGroup.get('cardCode').hasError('required')">请输入卡号！</nz-form-explain>
-          <nz-form-explain *ngIf="formGroup.get('cardCode').dirty && formGroup.get('cardCode').hasError('pattern')">请输入30位一下数字！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('cardCode').dirty && formGroup.get('cardCode').hasError('required')">请输入30位一下数字！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -23,29 +23,6 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>卡属性</nz-form-label>
-        <nz-form-control>
-          <nz-select formControlName="attributeId" [nzShowSearch]="true" nzPlaceHolder="请选择卡属性" >
-            <nz-option *ngFor="let option of cardAttribuiteList" [nzLabel]="option.attributeName" [nzValue]="option.type"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('attributeId').dirty && formGroup.get('attributeId').hasError('required')">请选择卡属性！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label nzRequired>会员名称</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="memberName" placeholder="请输入会员名称">
-          <nz-form-explain *ngIf="formGroup.get('memberName').dirty && formGroup.get('memberName').hasError('required')">请输入会员名称！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
-  
-  <div nz-row nzGutter="8">
-    <div nz-col nzSpan="12">
-      <nz-form-item>
         <nz-form-label nzRequired>卡类型</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="cardTypeId" [nzShowSearch]="true" nzPlaceHolder="请选择卡类型">
@@ -57,65 +34,52 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>收入金额</nz-form-label>
+        <nz-form-label nzRequired>会员名称</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="balance" readonly placeholder="请输入收入金额">
+          <input nz-input formControlName="memberName"  placeholder="请输入会员名称">
+          <nz-form-explain *ngIf="formGroup.get('memberName').dirty && formGroup.get('memberName').hasError('required')">请输入会员名称！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
-
-  <ng-container *ngIf="feeType == 0">
-    <div nz-row nzGutter="8">
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>有效次数</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="times" readonly placeholder="请输入有效次数">
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>赠送次数</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="freeTimes" readonly placeholder="请输入赠送次数">
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="feeType == 1">
-      <div nz-row nzGutter="8">
-        <div nz-col nzSpan="12">
-          <nz-form-item>
-            <nz-form-label>充值金额</nz-form-label>
-            <nz-form-control>
-              <input nz-input formControlName="amount" readonly placeholder="请输入有效金额">
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="12">
-          <nz-form-item>
-            <nz-form-label>赠送金额</nz-form-label>
-            <nz-form-control>
-              <input nz-input formControlName="freeAmount" readonly placeholder="请输入赠送金额">
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-    </ng-container>
-
-
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>开卡赠送积分</nz-form-label>
+        <nz-form-label>有效次数</nz-form-label>
         <nz-form-control>
-          <input nz-input formControlName="openPoints" readonly placeholder="请输入开卡赠送积分">
+          <input nz-input formControlName="times" readonly placeholder="请输入有效次数">
         </nz-form-control>
       </nz-form-item>
     </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>赠送次数</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="freeTimes" readonly placeholder="请输入赠送次数">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>已使用次数</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="usedTimes" readonly placeholder="请输入已使用次数">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>总金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance" readonly placeholder="请输入总金额">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+ 
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label>生效日期</nz-form-label>
@@ -124,8 +88,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="8">
+
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label>失效日期</nz-form-label>
@@ -134,28 +97,61 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label nzRequired >谈卡人</nz-form-label>
-        <nz-form-control>          
-          <nz-select formControlName="employeeId" [nzShowSearch]="true" nzPlaceHolder="请选择谈卡人">
-            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择谈卡人！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+ 
   </div>
-  <div nz-row nzGutter="8">
+<div nz-row nzGutter="8">
+
+  <div nz-col nzSpan="12">
+    <nz-form-item>
+      <nz-form-label>开卡赠送积分</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="openPoints" readonly placeholder="请输入开卡赠送积分">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="12">
+    <nz-form-item>
+      <nz-form-label>退卡单次价格</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="withdrawAmount" readonly placeholder="请输入退卡单次价格">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+
+<div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>停卡限制</nz-form-label>
+        <nz-form-label nzRequired >协议号</nz-form-label>
         <nz-form-control>
-          <nz-switch formControlName="turnCard" nzCheckedChildren="限制停卡" nzUnCheckedChildren="不限制停卡"></nz-switch>
+          <input nz-input formControlName="contractNo" id="contractNo" maxlength="11" placeholder="数字+字母（可大小写）">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired >成长顾问</nz-form-label>
+        <nz-form-control>          
+          <nz-select formControlName="salesId" [nzShowSearch]="true" nzPlaceHolder="请选择成长顾问">
+            <nz-option *ngFor="let option of salesList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('salesId').dirty && formGroup.get('salesId').hasError('required')">请选择成长顾问！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
+
+  <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>停卡限制</nz-form-label>
+            <nz-form-control>
+              <nz-switch formControlName="turnCard" nzCheckedChildren="限制停卡" nzUnCheckedChildren="不限制停卡"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+    </div>
+
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">
       <nz-form-item>

@@ -23,7 +23,7 @@ export class SatisfactionComponent implements OnInit {
 
   saveRatio(data) {
     data.loading = true;
-    this.http.post('/bonusSatisfaction/editBonusSatisfaction', { paramJson: JSON.stringify({ id: data.id, ratio: data.ratio }) }).then(res => {
+    this.http.post('/yeqs/bonusSatisfaction/editBonusSatisfaction', { paramJson: JSON.stringify({ id: data.id, ratio: data.ratio }) }).then(res => {
       data.loading = false;
       data.edit = false;
     }).catch(err => data.loading = false);

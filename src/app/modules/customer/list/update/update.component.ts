@@ -1,14 +1,14 @@
-import { NzDrawerRef } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { NzDrawerRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.less']
+  styleUrls: ['./update.component.scss']
 })
 export class UpdateComponent implements OnInit {
 
@@ -17,21 +17,20 @@ export class UpdateComponent implements OnInit {
   formGroup: FormGroup;
 
   communityList: any = [];
-  recommenderList: any[] = [];
-  collectorList: any[] = [];
-
+  sourceList: any = [];
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
     /* ----------------------- 获取该门店下所有小区 ----------------------- */
-    this.http.post('/member/communityList').then(res => {
+    this.http.post('/yeqs/member/communityList', {}, false).then(res => {
       this.communityList = res.result;
-      !this.id && this.formGroup.patchValue({ communityId: res.result[0].id })
     });
-    this.http.post('/common/recommenderList').then(res => this.recommenderList = res.result);
-    this.http.post('/retrunVisit/getEmployeeList').then(res => this.collectorList = res.result);
+    this.http.post('/yeqs/management/selectSource', {}, false).then(res => {
+      this.sourceList = res.result;
+      console.log(this.sourceList);
+    });  
   }
 
   ngOnInit() {
@@ -40,33 +39,30 @@ export class UpdateComponent implements OnInit {
       id: [this.id],
       name: [, [Validators.required]],
       nick: [],
-      sex: ['男', [Validators.required]],
+      sex: [, [Validators.required]],
       birthday: [, [Validators.required]],
       parentName: [, [Validators.required]],
       fixPhone: [],
       mobilePhone: [, [Validators.required]],
       communityId: [, [Validators.required]],
-      illHistory: [0, [Validators.required]],
-      allergieHistory: [0, [Validators.required]],
-      babyType: ['婴儿', [Validators.required]],
-      babyNumber: [1],
-      source: [, [Validators.required]],
-      recommendedId: [],
-      collectorId: [],
+      illHistory: [, [Validators.required]],
+      allergieHistory: [, [Validators.required]],
+      babyType: [, [Validators.required]],
+      babyNumber: [, [Validators.required]],
+      customerSourceId: [],
       comment: []
     });
     /* -------------------------- 用户信息回显 -------------------------- */
     if (this.id) {
-      this.http.post('/member/queryMemberById', { id: this.id }, false).then(res => {
+      this.http.post('/yeqs/member/queryMemberById', { id: this.id }, false).then(res => {
         this.formGroup.patchValue(res.result);
       })
     }
-  }
+  } 
 
   @DrawerClose() close: () => void;
-  
   saveLoading: boolean;
-  @DrawerSave('/member/modifyMember') save: () => void;
+  @DrawerSave('/yeqs/member/modifyMember') save: () => void;
 
 
   /* ------------ 宝宝生日禁止选择今天以后的日期 ------------ */

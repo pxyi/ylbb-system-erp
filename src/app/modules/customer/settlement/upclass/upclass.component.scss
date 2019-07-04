@@ -1,0 +1,49 @@
+.form{
+    overflow: hidden;
+    margin-top: 30px;
+}
+form{
+    overflow: hidden;
+}
+.nextBtn{
+    margin: 5px;
+}
+.weekBtn{
+    margin-top: 30px;
+}
+.weekBtn button{
+    margin-right: 15px;
+}
+.listArr span{
+    width: auto;
+    float: left;
+    padding: 5px;
+    background:#1890ff;
+    border-radius: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: #fff;
+    font-size: 12px;
+}
+.btn{
+    display: block;
+    clear: both;
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.success_icon{
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.success_icon img{
+    width: 100%;
+    height: auto;
+}
+.success_text{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 20px;
+}

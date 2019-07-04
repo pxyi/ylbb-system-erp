@@ -2,10 +2,10 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">
       <nz-form-item>
-        <nz-form-label nzRequired>手机号码</nz-form-label>
+        <nz-form-label nzRequired nzFor="mobile">手机号码</nz-form-label>
         <nz-form-control>
-          <textarea nz-input formControlName="mobilePhones" placeholder="请输入手机号码"></textarea>
-          <nz-form-explain *ngIf="formGroup.get('mobilePhones').dirty && formGroup.get('mobilePhones').hasError('required')">请输入手机号码！</nz-form-explain>
+          <textarea nz-input formControlName="mobile" placeholder="请输入手机号码" id="mobile"></textarea>
+          <nz-form-explain *ngIf="formGroup.get('mobile').dirty && formGroup.get('mobile').hasError('required')">请输入手机号码！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -13,7 +13,7 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>发送类型</nz-form-label>
+        <nz-form-label>发送类型</nz-form-label>
         <nz-form-control>
           <nz-checkbox-group formControlName="typeOptions" (ngModelChange)="changeCheckbox(checkOptions)"></nz-checkbox-group>
           <nz-form-explain style="color: #f5222d;" *ngIf="formGroup.get('typeOptions').dirty && formGroup.get('type').hasError('required')">请选择发送类型！</nz-form-explain>
@@ -22,11 +22,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>短信模板</nz-form-label>
+        <nz-form-label nzRequired>短信模板</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="template" nzPlaceHolder="请选择短信模板">
-            <nz-option *ngFor="let option of smsTemplateList" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
+            <nz-option nzLabel="国学" [nzValue]="1"></nz-option>
           </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('template').dirty && formGroup.get('template').hasError('required')">请选择短信模板！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -63,7 +64,7 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="content">短信内容</nz-form-label>
+        <nz-form-label nzFor="content">短信内容</nz-form-label>
         <nz-form-control>
           <textarea nz-input formControlName="content" placeholder="请输入短信内容" id="content" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
           <nz-form-explain *ngIf="formGroup.get('content').dirty && formGroup.get('content').hasError('required')">请输入短信内容！</nz-form-explain>
@@ -72,8 +73,3 @@
     </div>
   </div>
 </form>
-
-<div class="drawer-footer">
-  <button nz-button (click)="close()">取消</button>
-  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">确定</button>
-</div>

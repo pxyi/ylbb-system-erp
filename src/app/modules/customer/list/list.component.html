@@ -1,50 +1,45 @@
 <div class="container">
-  <ea-list-page 
-    #listPage
-    url="/member/list"
-    [allowSpace]="false"
-    [queryNode]="queryNode"
-    [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '婴儿类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注']"
-    [checked]="true"
-    [isRadio]="true"
-    [checkedItems]="checkedItems"
-    [EaTableTbodyTr]="EaTableTbodyTr"
-    [EaBtns]="EaBtns">
+  <ea-list-page #listPage url="/yeqs/member/list" [allowSpace]="false" [queryNode]="queryNode"
+    [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '儿童类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注' , '来源']"
+    [checked]="true" [isRadio]="true" [checkedItems]="checkedItems" [EaTableTbodyTr]="EaTableTbodyTr"
+    (requestDataChange)="dataChange($event)" [EaBtns]="EaBtns">
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.memberCard }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.nick }}</td>
-      <td><i class="iconfont" [title]="data.sex" [ngClass]="[data.sex === '男' ? 'icon-nan' : 'icon-nv']"></i></td>
+      <td>{{ data.sex }}</td>
       <td>{{ data.babyNumber }}</td>
       <td>{{ data.monthAge }}</td>
       <td>{{ data.parentName }}</td>
       <td>{{ data.mobilePhone }}</td>
-      <td>
-        <a (click)="previewCommunity(data.communityId);$event.stopPropagation()">{{ data.communityName }}</a>
-      </td>
+      <td>{{ data.communityName }}</td>
       <td>{{ data.babyType }}</td>
       <td>{{ data.memberPoint }}</td>
-      <td><nz-tag *ngIf="data.expireDays || data.expireDays == 0" [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">{{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag></td>
+      <td>
+        <nz-tag *ngIf="data.expireDays || data.expireDays == 0" [nzColor]="data.expireDays > 0 ? '#2db7f5' : '#f50'">
+          {{ data.expireDays > 0 ? data.expireDays + '天' : '已过期' }}</nz-tag>
+      </td>
       <td [style.color]="data.weighRemind ? '#f5222d' : '' ">{{ data.weighRemind ? '需要' : '不需要' }}</td>
       <td [style.color]="data.photoRemind ? '#f5222d' : '' ">{{ data.photoRemind ? '需要' : '不需要' }}</td>
       <td>{{ data.loginTimes }}</td>
       <td>{{ data.createDate }}</td>
-      <td><span [nzTitle]="data.comment" nz-tooltip *ngIf="data.comment">{{ data.comment.length > 20 ? data.comment.substr(0, 20) + '...' : data.comment }}</span></td>
+      <td><span *ngIf="data.comment" nz-tooltip
+          [nzTitle]="data.comment">{{ data.comment.length > 10 ? data.comment.substr(0, 10) + '...' : data.comment }}</span>
+      </td>
+      <td>{{ data.sourceName }}</td>
     </ng-template>
 
     <ng-template #EaBtns>
       <div class="ea-button-group">
-        <button nz-button nzType="primary" (click)="insert()">新增客户</button>
-        <button nz-button (click)="import()">导入客户</button>
-        <button nz-button (click)="operation('appoint')">预约</button>
-        <button nz-button (click)="operation('consumption')">消费</button>
+        <button nz-button nzType="primary" (click)="insert()"><i class="anticon anticon-plus"></i>新增客户</button>
+        <button nz-button (click)="import()"><i class="anticon anticon-file-excel"></i>导入客户</button>
         <nz-dropdown>
-          <button nz-button nz-dropdown>更多操作<i nz-icon nzType="down"></i></button>
+          <button nz-button nz-dropdown>更多操作<i class="anticon anticon-down"></i></button>
           <ul nz-menu>
+            <li nz-menu-item><a (click)="operation('consumption')">消费</a></li>
             <li nz-menu-item><a (click)="operation('update')">编辑</a></li>
             <li nz-menu-item><a (click)="operation('construction')">建卡</a></li>
             <li nz-menu-item><a (click)="operation('queryCard')">查卡</a></li>
-            <li nz-menu-item><a (click)="operation('resetPassword')">重置密码</a></li>
             <li nz-menu-item><a (click)="operation('consumptionLog')">消费记录</a></li>
             <li nz-menu-item><a (click)="operation('addIntegral')">增加积分</a></li>
             <li nz-menu-item><a (click)="operation('exchange')">积分兑换</a></li>
@@ -56,16 +51,192 @@
   </ea-list-page>
 </div>
 
-<nz-modal [(nzVisible)]="showModal" [nzWidth]="560" [nzStyle]="{left: '126px'}" nzTitle="社区信息" (nzOnCancel)="showModal = false"
+<!-- 调课弹框 -->
+<nz-modal nzWidth="95%" [(nzVisible)]="showAdjust" nzTitle="请为该学员选课" [nzFooter]="tplFooter">
+  <p>学员姓名：{{memberdetailTk.name}}</p>
+  <p>剩余卡次：{{memberdetailTk.cardNumber}}</p>
+  <div>
+    <h3>请选择课程</h3>
+    <nz-radio-group [(ngModel)]="radioValue" (ngModelChange)="selectlabel()" style="width: 100%;">
+      <nz-table #basicTable [nzData]="SyllabusAllList" nzShowPagination='false'>
+        <thead>
+          <tr>
+            <th>请选择</th>
+            <th>课程名称</th>
+            <th>课程类型</th>
+            <th>课程类别</th>
+            <th>课程状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of SyllabusAllList">
+            <td>
+              <label nz-radio [nzDisabled]="data.courseStatus!=0" [nzValue]="data.name"></label>
+            </td>
+            <td>{{data.name}}</td>
+            <td>{{data.lessonName}}</td>
+            <td>{{data.courseName}}</td>
+            <td>{{data.courseStatus==0?'启用':'停用'}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-radio-group>
+  </div>
+  <div>
+    <h3 style="margin-top: 20px;">课程排期</h3>
+    <nz-radio-group style="width: 100%;" [(ngModel)]="radioValue">
+      <nz-table #basicTable [nzData]="dateList" nzShowPagination='false'>
+        <thead>
+          <tr>
+            <th>时段</th>
+            <th>星期一</th>
+            <th>星期二</th>
+            <th>星期三</th>
+            <th>星期四</th>
+            <th>星期五</th>
+            <th>星期六</th>
+            <th>星期日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dateList">
+            <!-- RecordList -->
+            <td>{{item.startTime}}-{{item.endTime}}</td>
+            <td>
+              <ng-container *ngFor="let data of RecordList1">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of RecordList2">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of RecordList3">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of RecordList4">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of RecordList5">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of RecordList6">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngFor="let data of RecordList7">
+                <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                  *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                  <p>课程：{{data.name}}</p>
+                  <p>教室：{{data.roomName}}</p>
+                  <p>主助教：{{data.employeeName}}</p>
+                  <p>日期：{{data.currentDate}}</p>
+                  <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                  <p *ngIf="data.galleryful-data.number>0">
+                    <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="datalabelChange(data)"
+                      style="color: #fff">选择该课程</label>
+                  </p>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+
+        </tbody>
+      </nz-table>
+    </nz-radio-group>
+  </div>
+  <ng-template #tplFooter>
+    <button nz-button (click)="closeAdjust()">取消</button>
+    <button *ngIf="!isrepeat" nz-popconfirm nzType="primary" nzTitle="是否继续排课?" nzCancelText="否" nzOkText="是"
+      (nzOnConfirm)="isAdjust(0)" (nzOnCancel)="isAdjust(1)" nzPlacement="top" nz-button>确定</button>
+    <button *ngIf="isrepeat" (click)="isAdjust(0)" nzType="primary" nz-button>确定</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="showModal" [nzStyle]="{left: '126px'}" nzTitle="社区信息" (nzOnCancel)="showModal = false"
   [nzFooter]="null" [nzContent]="chart"></nz-modal>
 <ng-template #chart>
   <div>
-    <v-chart [forceFit]="true" [height]="300" [width]="512" [data]="chartData" [scale]="scale">
-      <v-tooltip [showTitle]="false"></v-tooltip>
+    <v-chart [forceFit]="true" [height]="400" [width]="400" [data]="data" [scale]="scale">
+      <v-tooltip></v-tooltip>
       <v-axis></v-axis>
       <v-coord type="theta"></v-coord>
       <v-pie position="percent" color="item" [style]="{ stroke: '#fff', lineWidth: 1 }" [label]="labelConfig"></v-pie>
-      <v-legend dataKey="item"></v-legend>
     </v-chart>
   </div>
 </ng-template>

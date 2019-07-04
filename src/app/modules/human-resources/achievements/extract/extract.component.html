@@ -4,7 +4,7 @@
     url="/commission/listEmployeeCommission"
     [allowSpace]="false"
     [queryNode]="[
-      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/employee/listEmployee' },
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/yeqs/employee/listEmployee' },
       { label: '起始日期', key: 'date', valueKey: ['startDate', 'endDate'], type: 'rangepicker' },
       { label: '类型', key: 'commissionType', type: 'select', options: [ { name: '服务', id: 1 }, { name: '线索', id: 2 }, { name: '体验卡', id: 3 }, { name: '回访', id: 4 }, { name: '其他提成类型', id: 5 } ] }
     ]"

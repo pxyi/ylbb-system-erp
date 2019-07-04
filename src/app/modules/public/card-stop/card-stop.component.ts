@@ -34,7 +34,7 @@ export class CardStopComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/memberCard/pauseCard') save: () => void;
+  @DrawerSave('/yeqs/memberCard/pauseCard') save: () => void;
 
   @DrawerClose() close: () => void;
 

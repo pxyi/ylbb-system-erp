@@ -101,13 +101,14 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>婴儿类型</nz-form-label>
+        <nz-form-label nzRequired>儿童类型</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="babyType" nzPlaceHolder="请选择婴儿类型">
-            <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
-            <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
+          <nz-select formControlName="babyType" nzPlaceHolder="请选择儿童类型">
+            <nz-option nzLabel="0-3岁" nzValue="0-3岁"></nz-option>
+            <nz-option nzLabel="3-6岁" nzValue="3-6岁"></nz-option>
+            <nz-option nzLabel="6-12岁" nzValue="6-12岁"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('babyType').dirty && formGroup.get('babyType').hasError('required')">请输入婴儿类型！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('babyType').dirty && formGroup.get('babyType').hasError('required')">请输入儿童类型！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -115,7 +116,7 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label>多胞胎</nz-form-label>
+        <nz-form-label nzRequired>多胞胎</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="babyNumber" nzPlaceHolder="请选择多胞胎数目">
             <nz-option nzLabel="1" [nzValue]="1"></nz-option>
@@ -124,53 +125,20 @@
             <nz-option nzLabel="4" [nzValue]="4"></nz-option>
             <nz-option nzLabel="5" [nzValue]="5"></nz-option>
           </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('babyNumber').dirty && formGroup.get('babyNumber').hasError('required')">请选择多胞胎数目！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>客户来源</nz-form-label>
+        <nz-form-label>客户来源</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="source" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
-            <nz-option nzLabel="灯箱路牌" nzValue="灯箱路牌"></nz-option>
-            <nz-option nzLabel="朋友推荐" nzValue="朋友推荐"></nz-option>
-            <nz-option nzLabel="网络推广" nzValue="网络推广"></nz-option>
-            <nz-option nzLabel="社区宣传" nzValue="社区宣传"></nz-option>
-            <nz-option nzLabel="合作机构" nzValue="合作机构"></nz-option>
-            <nz-option nzLabel="自然到店" nzValue="自然到店"></nz-option>
-            <nz-option nzLabel="美团大众点评" nzValue="美团大众点评"></nz-option>
-            <nz-option nzLabel="体验卡" nzValue="体验卡"></nz-option>
-            <nz-option nzLabel="门店地推" nzValue="门店地推"></nz-option>
-            <nz-option nzLabel="总部线索" nzValue="总部线索"></nz-option>
-            <nz-option nzLabel="门店线上活动" nzValue="门店线上活动"></nz-option>
-            <nz-option nzLabel="其他" nzValue="其他"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('source').dirty && formGroup.get('source').hasError('required')">请选择客户来源！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
-  <div nz-row nzGutter="8">
-  <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label>推荐人</nz-form-label>
-        <nz-form-control>          
-          <nz-select formControlName="recommendedId" [nzShowSearch]="true" nzPlaceHolder="请选择推荐人">
-            <nz-option *ngFor="let option of recommenderList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          <nz-select  formControlName="customerSourceId" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
+            <nz-option *ngFor="let item of sourceList" [(nzLabel)]="item.sourceName" [(nzValue)]="item.sourceId"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>收集人</nz-form-label>
-          <nz-form-control>          
-            <nz-select formControlName="collectorId" [nzShowSearch]="true" nzPlaceHolder="请选择收集人">
-              <nz-option *ngFor="let option of collectorList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
   </div>
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">

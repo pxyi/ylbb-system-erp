@@ -29,10 +29,10 @@ export class PreviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.http.post('/member/getStoreTeachers').then(res => this.teacherList = res.result);
-    this.http.post('/member/communityList').then(res => this.communityList = res.result);
+    this.http.post('/yeqs/member/getStoreTeachers').then(res => this.teacherList = res.result);
+    this.http.post('/yeqs/member/communityList').then(res => this.communityList = res.result);
     this.http.post('/swimRing/getStoreSwimRings').then(res => this.swimRingList = res.result);
-    this.http.post('/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => this.memberCardList = res.result);
+    this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => this.memberCardList = res.result);
     
     let groups = {};
     this.appointmentInfo.reserveHM = new Date(`${this.appointmentInfo.reserveDate} ${this.appointmentInfo.rHour}:${this.appointmentInfo.rMinute}`);

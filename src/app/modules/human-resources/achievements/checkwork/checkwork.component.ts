@@ -23,7 +23,7 @@ export class CheckworkComponent implements OnInit {
   ngOnInit() {
   }
 
-  @ModifyData('/attendance/removeAttendance') delete: (id: number) => void;
+  @ModifyData('/yeqs/attendance/removeAttendance') delete: (id: number) => void;
 
   @DrawerCreate({ title: '考勤情况', content: UpdateComponent }) update: ({ checkworkInfo: object }?) => void;
 

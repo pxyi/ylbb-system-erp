@@ -25,7 +25,7 @@ export class UpdateComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/cardBusinessManagement/findList').then(res => this.cardBusinessList = res.result);
+    this.http.post('/yeqs/cardBusinessManagement/findList').then(res => this.cardBusinessList = res.result);
     this.http.post('/cardAttributeController/getList').then(res => this.cardAttribuiteList = res.result);
   }
 
@@ -65,6 +65,6 @@ export class UpdateComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/cardTypeManagement/modify') save: () => void;
+  @DrawerSave('/yeqs/cardTypeManagement/modify') save: () => void;
   @DrawerClose() close: () => void;
 }

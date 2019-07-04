@@ -35,7 +35,7 @@ export class CardOpenComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/memberCard/reopenCard') save: () => void;
+  @DrawerSave('/yeqs/memberCard/reopenCard') save: () => void;
 
   @DrawerClose() close: () => void;
 

@@ -1,16 +1,14 @@
-import { NzDrawerRef } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DrawerSave } from '../../../../ng-relax/decorators/drawer/save.decorator';
-import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 
 @Component({
   selector: 'app-satisfaction',
   templateUrl: './satisfaction.component.html',
-  styleUrls: ['./satisfaction.component.less']
+  styleUrls: ['./satisfaction.component.scss']
 })
-export class SatisfactionComponent implements OnInit {
+export class UpdateSatisfactionComponent implements OnInit {
 
   @Input() id;
 
@@ -20,9 +18,8 @@ export class SatisfactionComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private fb: FormBuilder = new FormBuilder(),
-    private drawerRef: NzDrawerRef
-  ) {
+    private fb: FormBuilder = new FormBuilder()
+  ) { 
   }
 
   ngOnInit() {
@@ -39,12 +36,14 @@ export class SatisfactionComponent implements OnInit {
       consumeDate: [{ value: this.recordInfo.consumeDate, disabled: true }],
       comment: [{ value: this.recordInfo.comment, disabled: true }],
       satisfaction: [this.recordInfo.satisfaction],
-      remarks: [],
+      assisTeacherId: [this.recordInfo.assisTeacherId],
+      showerTeacherId: [this.recordInfo.showerTeacherId],
+      teacherId: [this.recordInfo.teacherId],
+      leaveStatus: [this.recordInfo.leaveStatus]
     });
+
   }
 
-  saveLoading: boolean;
-  @DrawerSave('/customer/modifySat') save: () => void;
-  @DrawerClose() close: () => void;
+  @DrawerSave('/yeqs/customer/modifySat') save: () => void;
 
 }

@@ -1,0 +1,107 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>小名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="nick">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>性别</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="sex">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>月龄</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="monthAge">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员卡</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardTypeName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>成长顾问</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="salesName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>实际办卡金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>退卡单次价格</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="withdrawAmount">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>使用次数</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="usedTimes">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>退卡金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="amount">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input placeholder="请输入备注" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>
