@@ -98,7 +98,6 @@ export class ConsumptionTabComponent implements OnInit {
   expireDate:string;      //过期时间
   serviceName:string;     //服务名称
   consumption:string;     //消费金额
-  feeType:number = 1;     //消费类型 0次数  1金额
   deductionTimes:number;  //消费次数
 
   //会员信息
@@ -127,6 +126,9 @@ export class ConsumptionTabComponent implements OnInit {
 
   isPay:boolean = false; //防止重复提交支付
 
+  startTime:any;
+  endTime:any;
+
   constructor(
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef<boolean | any>,
@@ -139,11 +141,6 @@ export class ConsumptionTabComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    //次卡禁用储值卡
-    if (this.consumptionInfo.feeType == 0) {
-      this.feeType = 0;
-    }
 
     //非会员 禁用耗卡
     if (this.consumptionInfo.haveCard == 0) {
@@ -162,14 +159,13 @@ export class ConsumptionTabComponent implements OnInit {
     },500)
 
     //监听扫码事件
-    var startTime,endTime;
     document.addEventListener('keypress', (even)=>{
       var ev = even.which;
-      endTime = new Date().getTime();
-      if (startTime == undefined) {
-        startTime = endTime;
+      this.endTime = new Date().getTime();
+      if (this.startTime == undefined) {
+        this.startTime = this.endTime;
         this.code = String.fromCharCode(ev);
-      } else if (ev != 13 && endTime - startTime < 1000) {
+      } else if (ev != 13 && this.endTime - this.startTime < 1000) {
         this.code += String.fromCharCode(ev);
       } else if (ev == 13) {
         //长度为13位 是商品
@@ -344,6 +340,10 @@ export class ConsumptionTabComponent implements OnInit {
                     this.orderIsSubmit = false;
                     //打印
                     this.printTest();
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
                   } else {
                     this.message.create('warning', res.info);
                   }
@@ -359,11 +359,11 @@ export class ConsumptionTabComponent implements OnInit {
         }
 
         //清空条码
-        setTimeout(()=>{
-          this.code = '';
-          startTime = undefined;
-          endTime = undefined;
-        },1000)
+        // setTimeout(()=>{
+        //   this.code = '';
+        //   this.startTime = undefined;
+        //   this.endTime = undefined;
+        // },1000)
 
       }
     })
@@ -533,7 +533,6 @@ export class ConsumptionTabComponent implements OnInit {
       this.serviceName = res.result.commodityName;      //商品名称
       this.expireDate = res.result.expireDate;          //过期时间
       this.consumption = res.result.consumption;        //消费金额
-      this.feeType = res.result.feeType;                //消费类型 0次数 1金额
       this.deductionTimes = res.result.deductionTimes;  //消费次数
       if (res.code == 1000) {
         this.modal.create({
@@ -608,33 +607,39 @@ export class ConsumptionTabComponent implements OnInit {
 
     //添加数量和总价
     if(this.listOfData.length == 0 || this.existCom){
-      var resultData = data;
-      //计算数量和总价
-      resultData.num = 1;
-      resultData.subtotal = resultData.num * resultData.changePrice;
-      this.listOfData.push(resultData);
+      this.http.post('/commodity/checkStock', {id : data.id, count : 1}).then(res => {
+        if (res.code == 1000) {
+          var resultData = data;
+          //计算数量和总价
+          resultData.num = 1;
+          resultData.subtotal = resultData.num * resultData.changePrice;
+          this.listOfData.push(resultData);
 
-      //清空操作
-      this.data = {};//清空
-      this.numberOftotal = 0;//总数数量先清零
-      this.price = 0;//应收先清零
-      this.payment = 0;//实收先清零
-      this.resultData = [];
-      //同步listOfData和resultData的数据
-      for (let item of this.listOfData) {
-        this.resultData.push(item);
-      }
-      //遍历数据计算金额和商品数量
-      for(let item of this.resultData){
-        this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
-        this.price = this.keepTwoDecimalFull(this.price);
-        this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
-      }
+          //清空操作
+          this.data = {};//清空
+          this.numberOftotal = 0;//总数数量先清零
+          this.price = 0;//应收先清零
+          this.payment = 0;//实收先清零
+          this.resultData = [];
+          //同步listOfData和resultData的数据
+          for (let item of this.listOfData) {
+            this.resultData.push(item);
+          }
+          //遍历数据计算金额和商品数量
+          for(let item of this.resultData){
+            this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+            this.price = this.keepTwoDecimalFull(this.price);
+            this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+          }
 
-      this.payment = this.price;//实收金额默认值
-      this.memberCard();
-      //tab取消禁用
-      this.isSubmitShopCard = true;
+          this.payment = this.price;//实收金额默认值
+          this.memberCard();
+          //tab取消禁用
+          this.isSubmitShopCard = true;
+        } else {
+          this.message.create('warning', res.info);
+        }
+      })
 
     } else {
       // 先遍历当前商品列表 判断是否需要进行数据合并
@@ -828,6 +833,12 @@ export class ConsumptionTabComponent implements OnInit {
             this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
               if(res.code == 1000){
                 this.message.create('success', '支付成功');
+                this.isPay = false;
+                this.orderIsSubmit = false;
+                //清空
+                this.code = '';
+                this.startTime = undefined;
+                this.endTime = undefined;
                 //打印
                 this.printTest();
               }else{
@@ -919,7 +930,6 @@ export class ConsumptionTabComponent implements OnInit {
         }
       })
     }
-
     //获取会员电话
     var phoneNumber = this.consumptionInfo.mobilePhone.slice(0,3) + '****' + this.consumptionInfo.mobilePhone.slice(7);
     this.phoneNumber = phoneNumber; //会员电话
@@ -966,6 +976,9 @@ export class ConsumptionTabComponent implements OnInit {
     //总优惠价格
     this.generalDiscount = '0';
 
+    //清空并重置
+    this.closeDrawer();
+
     //打印
     setTimeout(()=>{
       var el;
@@ -994,8 +1007,6 @@ export class ConsumptionTabComponent implements OnInit {
       {
         document.body.removeChild(iframe);
       }
-      //清空并重置
-      this.closeDrawer();
     },1000)
   }
 
