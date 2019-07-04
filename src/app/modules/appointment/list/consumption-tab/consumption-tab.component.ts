@@ -203,6 +203,10 @@ export class ConsumptionTabComponent implements OnInit {
                   this.memberCard();
                   //tab取消禁用
                   this.isSubmitShopCard = true;
+                  //清空
+                  this.code = '';
+                  this.startTime = undefined;
+                  this.endTime = undefined;
                 } else {
                   this.message.create('warning', res.info);
                 }
@@ -255,6 +259,10 @@ export class ConsumptionTabComponent implements OnInit {
                     this.memberCard();
                     //tab取消禁用
                     this.isSubmitShopCard = true;
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
 
                   } else {
                     this.message.create('warning', res.info);
