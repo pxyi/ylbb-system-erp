@@ -47,6 +47,23 @@ export class OrderComponent implements OnInit {
               this.nzPageIndex = res.result.pageNum; //第几页
               this.nzPageSize = res.result.pageSize; //每页展示多少
               this.nzTotal = res.result.totalPage;   //数据总条数
+              for(let item of this.listOfData){
+                item.isShow = false;
+                switch(item.paymentType) {
+                  case 1:
+                    item.paymentType = '现金支付';
+                    break;
+                  case 2:
+                    item.paymentType = '微信';
+                    break;
+                  case 3:
+                    item.paymentType = '支付宝';
+                    break;
+                  case 4:
+                    item.paymentType = '储值卡';
+                    break;
+                }
+              }
               this.loading = false;
               this.tlModal.nzAfterClose.subscribe(res => this._request());
             } else {
@@ -255,6 +272,20 @@ export class OrderComponent implements OnInit {
       this.nzTotal = res.result.totalPage;   //数据总条数
       for(let item of this.listOfData){
         item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
       }
       this.loading = false;
     })
@@ -356,7 +387,25 @@ export class OrderComponent implements OnInit {
       for(let item of temp){
         item.isChecked = false;
       }
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.listOfData = temp;
+      
       // console.log('subscribe---listOfData', this.listOfData);
     });
   }
@@ -370,6 +419,23 @@ export class OrderComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.loading = false;
     })
   }
@@ -383,6 +449,23 @@ export class OrderComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.loading = false;
     })
   }
@@ -421,6 +504,23 @@ export class OrderComponent implements OnInit {
       var temp = res.result.list;
       for(let item of temp){
         item.isChecked = false;
+      }
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
       }
       this.listOfData = temp;
     });

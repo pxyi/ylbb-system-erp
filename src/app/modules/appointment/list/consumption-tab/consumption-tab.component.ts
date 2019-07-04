@@ -41,13 +41,13 @@ export class ConsumptionTabComponent implements OnInit {
   disabled = false;
   switchValue = false;
   //商品还是耗卡 0商品 1耗卡
-  nzSelectedIndex:any = 0;
+  nzSelectedIndex:number = 0;
   //搜索展示数据
-  searchList:any = [];
+  searchList:any[] = [];
   //tab标签
   position = 'left';
   //商品表格数据
-  listOfData:any = [];
+  listOfData = [];
   //备注
   inputValue:string;
   //搜索框value
@@ -56,7 +56,7 @@ export class ConsumptionTabComponent implements OnInit {
   code:any = "";
   //扫码临时存储数据
   data:any = {};
-  resultData:any = [];//处理后的数据数组
+  resultData = [];//处理后的数据数组
   //支付方式
   paymentType:number = 2; //1现金支付 2微信 3支付宝 4充值卡
   //支付方式文字
@@ -80,7 +80,6 @@ export class ConsumptionTabComponent implements OnInit {
   //付款码
   payCode:any = '';
   //订单是否提交(提交之后再扫就是付款码)
-  orderIsSubmit:boolean = false;
 
   //商品小票参数
   shopName:string;        //店名
@@ -134,14 +133,12 @@ export class ConsumptionTabComponent implements OnInit {
     private drawerRef: NzDrawerRef<boolean | any>,
     private modalService: NzModalService,
     private http: HttpService,
-    private routeInfo: ActivatedRoute,
     private message: NzMessageService,
     private modal: NzModalService
   ){
   }
 
   ngOnInit() {
-    console.log(this.price);
     //非会员 禁用耗卡
     if (this.consumptionInfo.haveCard == 0) {
       this.nzDisabled.card = true;
@@ -159,233 +156,7 @@ export class ConsumptionTabComponent implements OnInit {
     },500)
 
     //监听扫码事件
-    document.addEventListener('keypress', (even)=>{
-      var ev = even.which;
-      this.endTime = new Date().getTime();
-      if (this.startTime == undefined) {
-        this.startTime = this.endTime;
-        this.code = String.fromCharCode(ev);
-      } else if (ev != 13 && this.endTime - this.startTime < 1000) {
-        this.code += String.fromCharCode(ev);
-      } else if (ev == 13) {
-        //长度为13位 是商品
-        if (this.code.length == 13) {
-
-          this.existCommodity = true;
-          for (let item of this.listOfData){
-            if (item.barCode == this.code) {
-              this.existCommodity = false;
-            }
-          } 
-
-          //listOfData为空或者listOfData中没有此条码的时候走接口
-          if(this.listOfData.length == 0 || this.orderIsSubmit || this.existCommodity){
-            this.http.post('/commodity/getCommodities', { cardId : this.consumptionInfo.id, barCode : this.code }).then(res => {
-              if(res.result[0] && res.result[0].changePrice){
-                var data = res.result;
-                this.http.post('/commodity/checkStock', {id : res.result[0].id, count: 1}).then(res => {
-                  if (res.code == 1000) {
-
-                    for(let item of data){
-                      //计算数量和总价
-                      item.num = 1;
-                      item.subtotal = item.num * item.changePrice;
-                    }
-                    this.data = data[0];
-                    this.data.barCode = this.code;
-                    this.listOfData.push(this.data);
-                    //清空操作
-                    this.data = {};//清空
-                    this.numberOftotal = 0;//总数数量先清零
-                    this.price = 0;//应收先清零
-                    this.payment = 0;//实收先清零
-                    this.resultData = [];
-                    //同步listOfData和resultData的数据
-                    for (let item of this.listOfData) {
-                      this.resultData.push(item);
-                    }
-                    //遍历数据计算金额和商品数量
-                    for(let item of this.resultData){
-                      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
-                      this.price = this.keepTwoDecimalFull(this.price);
-                      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
-                    }
-  
-                    this.payment = this.price;//实收金额默认值
-                    this.memberCard();
-                    //tab取消禁用
-                    this.isSubmitShopCard = true;
-                    //清空
-                    this.code = '';
-                    this.startTime = undefined;
-                    this.endTime = undefined;
-
-                  } else {
-                    this.message.create('warning', res.info);
-                    //清空
-                    this.code = '';
-                    this.startTime = undefined;
-                    this.endTime = undefined;
-                  }
-                })
-
-              }
-            })
-            
-          } else {
-
-            // 先遍历当前商品列表 判断是否需要进行数据合并
-            for(let item of this.listOfData){
-              if (this.code == item.barCode) {
-
-                //库存校验
-                var num = Number(item.num) + 1;
-                this.http.post('/commodity/checkStock', {id : item.id, count : num}).then(res => {
-                  if (res.code == 1000) {
-                    //计算数量和总价
-                    item.num = Number(item.num) + 1;
-                    item.subtotal = item.num * item.changePrice;
-
-                    //清空操作
-                    this.data = {};//清空
-                    this.numberOftotal = 0;//总数数量先清零
-                    this.price = 0;//应收先清零
-                    this.payment = 0;//实收先清零
-                    this.resultData = [];
-                    //同步listOfData和resultData的数据
-                    for (let item of this.listOfData) {
-                      this.resultData.push(item);
-                    }
-                    //遍历数据计算金额和商品数量
-                    for(let item of this.resultData){
-                      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
-                      this.price = this.keepTwoDecimalFull(this.price);
-                      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
-                    }
-
-                    this.payment = this.price;//实收金额默认值
-                    this.memberCard();
-                    //tab取消禁用
-                    this.isSubmitShopCard = true;
-                    //清空
-                    this.code = '';
-                    this.startTime = undefined;
-                    this.endTime = undefined;
-                  } else {
-                    this.message.create('warning', res.info);
-                    //清空
-                    this.code = '';
-                    this.startTime = undefined;
-                    this.endTime = undefined;
-                  }
-                })
-
-              }
-            }
-
-          }
-
-        } else if (this.code.length == 18) { //长度为18 是付款码
-
-          if (!this.isPay) {
-            this.isPay = true;
-            //现金支付和充值卡功能扫码无效
-            if (this.paymentType == 1 || this.paymentType == 4) {
-              this.message.create('warning', '请点击确定结算按钮');
-              return;
-            }
-            /*---------------- 提交订单 ----------------*/
-            //请添加商品
-            if (this.resultData.length == 0) {
-              this.message.create('warning', '请添加商品');
-              return;
-            }
-            //请输入实收
-            if (!this.payment) {
-              this.message.create('warning', '请输入实收金额');
-              return;
-            }
-            //如果实收金额少于应收金额不允许提交
-            if(this.payment < this.price){
-              this.message.create('warning', '实收金额不能小于应收金额');
-              return;
-            }
-            
-            this.changePrice = this.payment - this.price; //计算找零
-            var paramJson = {
-              payment       : this.payment,                                      //实收金额
-              price         : this.price,                                        //应收金额
-              changePrice   : this.changePrice,                                  //找零
-              paymentType   : this.paymentType,                                  //支付方式
-              memberId      : this.consumptionInfo.id,                           //会员id
-              cardId        : this.consumptionInfo.cardId,                       //会员卡id
-              satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
-              swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
-              comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-              cardPos       : []                                                 //购物车
-            }
-            //购物车列表放到cardPos中
-            for (let item of this.resultData) {
-              var data={};
-              data['id']            = item.id;          //商品id
-              data['count']         = item.num;         //商品数量
-              data['price']         = item.price;       //商品售价
-              data['discountPrice'] = item.changePrice; //商品折扣价
-              data['subtotal']      = item.subtotal;    //总价
-              paramJson.cardPos.push(data);
-            }
-            //haveCard等于1为会员
-            if(this.consumptionInfo.haveCard != 1){
-              delete paramJson.cardId;
-            }
-            // console.log(paramJson);
-            this.http.post('/customer/commodityConsumer', { paramJson : JSON.stringify(paramJson) }).then(res => {
-              if (res.code == 1000) {
-                this.orderNo = res.result.orderNo;
-                //获取消费剩余金额
-                this.preferential = res.result.preferential;//本次优惠
-                this.orderIsSubmit = true;
-                this.message.create('success', '操作成功,请结算或展示付款码');
-
-                /*---------------- 确定结算 ----------------*/
-                this.http.post('/customer/payOrder', {
-                  payBarCode : this.code,        //付款码
-                  orderNo    : this.orderNo,     //订单号
-                  payType    : this.paymentType  //支付方式
-                }).then(res => {
-                  if (res.code == 1000) {
-                    this.message.create('success','付款成功');
-                    this.isPay = false;
-                    this.orderIsSubmit = false;
-                    //打印
-                    this.printTest();
-                    //清空
-                    this.code = '';
-                    this.startTime = undefined;
-                    this.endTime = undefined;
-                  } else {
-                    this.message.create('warning', res.info);
-                  }
-                })
-
-              } else {
-                this.message.create('warning', res.info);
-              }
-
-            })
-          }
-
-        }
-
-        //清空条码
-        // setTimeout(()=>{
-        //   this.code = '';
-        //   this.startTime = undefined;
-        //   this.endTime = undefined;
-        // },1000)
-
-      }
-    })
+    document.addEventListener('keypress', this.keypressEvent);
 
     /* ---------------- 设置充值卡 ---------------- */
     if (this.consumptionInfo.haveCard == 1) {
@@ -493,7 +264,10 @@ export class ConsumptionTabComponent implements OnInit {
       res.result.map(item => item.defaulttag && this.singleTimeGroup.patchValue({ commodityId: item.id }))
     });
     /* ---------------- 耗卡end ---------------- */
-    
+  }
+
+  ngOnDestroy(){
+    document.removeEventListener('keypress',()=>{},false)
   }
 
   /* ---------------- 找零更改 ---------------- */
@@ -504,6 +278,7 @@ export class ConsumptionTabComponent implements OnInit {
       return;
     }
     this.changePrice = this.payment - this.price;
+    this.code = '';
   }
 
   /* ---------------- 耗卡start ---------------- */
@@ -605,6 +380,7 @@ export class ConsumptionTabComponent implements OnInit {
       nzMaskClosable: false,
       nzClosable: false
     });
+    this.code = '';
   }
 
   //判断是商品还是耗卡
@@ -718,6 +494,7 @@ export class ConsumptionTabComponent implements OnInit {
   /*---------------- 支付方式 ----------------*/
   selectPayType(eve) {
     this.paymentType = eve;
+    this.code = '';
   }
 
   changeNum(id, data) {
@@ -792,95 +569,128 @@ export class ConsumptionTabComponent implements OnInit {
   settlement() {
 
     /*---------------- 提交订单 ----------------*/
+    if (!this.isPay) {
+      this.isPay = true;
 
-    //请添加商品
-    if (this.resultData.length == 0) {
-      this.message.create('warning', '请添加商品');
-      return;
-    }
-    //请输入实收
-    if (!this.payment) {
-      this.message.create('warning', '请输入实收金额');
-      return;
-    }
-    //如果实收金额少于应收金额不允许提交
-    if(this.payment < this.price){
-      this.message.create('warning', '实收金额不能小于应收金额');
-      return;
-    }
-    //如果储值卡金额不够
-    this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
-      if (this.paymentType == 4){
-        this.Memberprice = this.price*res.result.discount;//会员价格
-        this.memberInfo.preferential = this.price-this.Memberprice;//优惠金额(优惠了多少钱)
+      //请添加商品
+      if (this.resultData.length == 0) {
+        this.message.create('warning', '请添加商品');
+        //清空
+        this.code = '';
+        this.startTime = undefined;
+        this.endTime = undefined;
+        this.isPay = false;
+        return;
       }
-      if( this.paymentType == 4 && res.result.amount < this.Memberprice) {
-        this.message.create('warning', '该储值卡余额不足，请续费！');
-      } else {
-
-        this.changePrice = this.payment - this.price; //计算找零
-        var paramJson = {
-          payment       : this.payment,                                      //实收金额
-          price         : this.price,                                        //应收金额
-          changePrice   : this.changePrice,                                  //找零
-          paymentType   : this.paymentType,                                  //支付方式
-          memberId      : this.consumptionInfo.id,                           //会员id
-          cardId        : this.consumptionInfo.cardId,                       //会员卡id
-          satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
-          swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
-          comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-          cardPos       : []                                                 //购物车
+      //请输入实收
+      if (!this.payment) {
+        this.message.create('warning', '请输入实收金额');
+        //清空
+        this.code = '';
+        this.startTime = undefined;
+        this.endTime = undefined;
+        this.isPay = false;
+        return;
+      }
+      //如果实收金额少于应收金额不允许提交
+      if(this.payment < this.price){
+        this.message.create('warning', '实收金额不能小于应收金额');
+        //清空
+        this.code = '';
+        this.startTime = undefined;
+        this.endTime = undefined;
+        this.isPay = false;
+        return;
+      }
+      //如果储值卡金额不够
+      this.http.post('/memberCard/getMemberCardInfo', {id : this.consumptionInfo.cardId}).then(res => {
+        if (this.paymentType == 4){
+          this.Memberprice = this.keepTwoDecimalFull(this.price*res.result.discount);//会员价格
+          this.Memberprice = this.keepTwoDecimalFull(this.Memberprice);
+          this.memberInfo.preferential = this.keepTwoDecimalFull(this.price-this.Memberprice);//优惠金额(优惠了多少钱)
         }
-        //购物车列表放到cardPos中
-        for (let item of this.resultData) {
-          var data={};
-          data['id']            = item.id;          //商品id
-          data['count']         = item.num;         //商品数量
-          data['price']         = item.price;       //商品售价
-          data['discountPrice'] = item.changePrice; //商品折扣价
-          data['subtotal']      = item.subtotal;    //总价
-          paramJson.cardPos.push(data);
-        }
-        //haveCard等于1为会员
-        if(this.consumptionInfo.haveCard != 1){
-          delete paramJson.cardId;
-        }
-        // console.log(paramJson);
-        this.http.post('/customer/commodityConsumer', { paramJson : JSON.stringify(paramJson) }).then(res => {
+        if( this.paymentType == 4 && res.result.amount < this.Memberprice) {
+          //清空
+          this.code = '';
+          this.startTime = undefined;
+          this.endTime = undefined;
+          this.isPay = false;
+          this.message.create('warning', '该储值卡余额不足，请续费！');
+        } else {
 
-          if (res.code == 1000) {
-            this.orderNo = res.result.orderNo;
-            //获取消费剩余金额
-            this.preferential = res.result.preferential;//本次优惠
-            this.orderIsSubmit = true;
-            this.message.create('success', '操作成功,请结算或展示付款码');
-
-            /*---------------- 确定结算 ----------------*/
-            this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
-              if(res.code == 1000){
-                this.message.create('success', '支付成功');
-                this.isPay = false;
-                this.orderIsSubmit = false;
-                //清空
-                this.code = '';
-                this.startTime = undefined;
-                this.endTime = undefined;
-                //打印
-                this.printTest();
-              }else{
-                this.message.create('warning', res.info);
-              }
-              // console.log('支付结果', res);
-            })
-
-          } else {
-            this.message.create('warning', res.info);
+          this.changePrice = this.payment - this.price; //计算找零
+          var paramJson = {
+            payment       : this.payment,                                      //实收金额
+            price         : this.price,                                        //应收金额
+            changePrice   : this.changePrice,                                  //找零
+            paymentType   : this.paymentType,                                  //支付方式
+            memberId      : this.consumptionInfo.id,                           //会员id
+            cardId        : this.consumptionInfo.cardId,                       //会员卡id
+            satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
+            swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
+            comment       : this.singleTimeGroup.get('remarks').value || null, //备注
+            cardPos       : []                                                 //购物车
           }
+          //购物车列表放到cardPos中
+          for (let item of this.resultData) {
+            var data={};
+            data['id']            = item.id;          //商品id
+            data['count']         = item.num;         //商品数量
+            data['price']         = item.price;       //商品售价
+            data['discountPrice'] = item.changePrice; //商品折扣价
+            data['subtotal']      = item.subtotal;    //总价
+            paramJson.cardPos.push(data);
+          }
+          //haveCard等于1为会员
+          if(this.consumptionInfo.haveCard != 1){
+            delete paramJson.cardId;
+          }
+          // console.log(paramJson);
+          this.http.post('/customer/commodityConsumer', { paramJson : JSON.stringify(paramJson) }).then(res => {
 
-        })
+            if (res.code == 1000) {
+              this.orderNo = res.result.orderNo;
+              //获取消费剩余金额
+              this.preferential = res.result.preferential;//本次优惠
+              this.message.create('success', '操作成功,请结算或展示付款码');
 
-      }
-    })
+              /*---------------- 确定结算 ----------------*/
+              this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
+                if(res.code == 1000){
+                  this.message.create('success', '支付成功');
+                  this.isPay = false;
+                  //清空
+                  this.code = '';
+                  this.startTime = undefined;
+                  this.endTime = undefined;
+                  this.isPay = false;
+                  //打印
+                  this.printTest();
+                }else{
+                  //清空
+                  this.code = '';
+                  this.startTime = undefined;
+                  this.endTime = undefined;
+                  this.isPay = false;
+                  this.message.create('warning', res.info);
+                }
+                // console.log('支付结果', res);
+              })
+
+            } else {
+              //清空
+              this.code = '';
+              this.startTime = undefined;
+              this.endTime = undefined;
+              this.isPay = false;
+              this.message.create('warning', res.info);
+            }
+
+          })
+
+        }
+      })
+    }
 
   }
 
@@ -916,12 +726,11 @@ export class ConsumptionTabComponent implements OnInit {
 
   /*---------------- 清空 ----------------*/
   cancel() {
-    this.listOfData = [];
-    this.resultData = [];
-    this.numberOftotal = 0; //总数数量先清零
-    this.price = 0;         //应收先清零
-    this.changePrice = 0;   //找零金额清零
-    this.payment = 0;       //实收先清零
+    //清空
+    this.code = '';
+    this.startTime = undefined;
+    this.endTime = undefined;
+    this.isPay = false;
   }
 
   /*---------------- 重置 ----------------*/
@@ -1058,6 +867,11 @@ export class ConsumptionTabComponent implements OnInit {
     this.drawerRef.close();
   }
 
+  // ngOnDestory() {
+  //   console.log('ngOnDestory')
+  //   removeEventListener('keypress', this.keypressEvent);
+  // }
+
   /*---------------- 会员卡 ----------------*/
   memberCard() {
     if (this.consumptionInfo.haveCard != 0) {
@@ -1069,10 +883,247 @@ export class ConsumptionTabComponent implements OnInit {
         this.memberInfo.memberCode = res.result.cardCode;
         this.memberInfo.discount = Number(res.result.discount);
         this.memberInfo.amount = res.result.amount;
-        this.Memberprice = this.price*res.result.discount;//会员价格
+        this.Memberprice = this.keepTwoDecimalFull(this.price*res.result.discount);//会员价格
         this.memberInfo.preferential = this.price-this.Memberprice;//优惠金额(优惠了多少钱)
       })
     }
+  }
+
+  keypressEvent = (even) => {
+      var ev = even.which;
+      this.endTime = new Date().getTime();
+      if (this.startTime == undefined) {
+        this.startTime = this.endTime;
+        this.code = String.fromCharCode(ev);
+      } else if (ev != 13 && this.endTime - this.startTime < 1000) {
+        this.code += String.fromCharCode(ev);
+      } else if (ev == 13) {
+        //长度为13位 是商品
+        if (this.code.length == 13) {
+
+          this.existCommodity = true;
+          for (let item of this.listOfData){
+            if (item.barCode == this.code) {
+              this.existCommodity = false;
+            }
+          }
+
+          //listOfData为空或者listOfData中没有此条码的时候走接口
+          if(this.listOfData.length == 0 || this.existCommodity){
+            this.http.post('/commodity/getCommodities', { cardId : this.consumptionInfo.id, barCode : this.code }).then(res => {
+              if(res.result[0] && res.result[0].changePrice){
+                var data = res.result;
+                this.http.post('/commodity/checkStock', {id : res.result[0].id, count: 1}).then(res => {
+                  if (res.code == 1000) {
+
+                    for(let item of data){
+                      //计算数量和总价
+                      item.num = 1;
+                      item.subtotal = item.num * item.changePrice;
+                    }
+                    this.data = data[0];
+                    this.data.barCode = this.code;
+                    this.listOfData.push(this.data);
+                    //清空操作
+                    this.data = {};//清空
+                    this.numberOftotal = 0;//总数数量先清零
+                    this.price = 0;//应收先清零
+                    this.payment = 0;//实收先清零
+                    this.resultData = [];
+                    //同步listOfData和resultData的数据
+                    for (let item of this.listOfData) {
+                      this.resultData.push(item);
+                    }
+                    //遍历数据计算金额和商品数量
+                    for(let item of this.resultData){
+                      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+                      this.price = this.keepTwoDecimalFull(this.price);
+                      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+                    }
+
+                    this.payment = this.price;//实收金额默认值
+                    this.memberCard();
+                    //tab取消禁用
+                    this.isSubmitShopCard = true;
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
+
+                  } else {
+                    this.message.create('warning', res.info);
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
+                  }
+                })
+
+              }
+            })
+            
+          } else {
+
+            // 先遍历当前商品列表 判断是否需要进行数据合并
+            for(let item of this.listOfData){
+              if (this.code == item.barCode) {
+
+                //库存校验
+                var num = Number(item.num) + 1;
+                this.http.post('/commodity/checkStock', {id : item.id, count : num}).then(res => {
+                  if (res.code == 1000) {
+                    //计算数量和总价
+                    item.num = Number(item.num) + 1;
+                    item.subtotal = item.num * item.changePrice;
+
+                    //清空操作
+                    this.data = {};//清空
+                    this.numberOftotal = 0;//总数数量先清零
+                    this.price = 0;//应收先清零
+                    this.payment = 0;//实收先清零
+                    this.resultData = [];
+
+                    //同步listOfData和resultData的数据
+                    for (let item of this.listOfData) {
+                      this.resultData.push(item);
+                    }
+                    //遍历数据计算金额和商品数量
+                    for(let item of this.resultData){
+                      this.price += this.keepTwoDecimalFull(item.num * item.changePrice); //计算实收金额
+                      this.price = this.keepTwoDecimalFull(this.price);
+                      this.numberOftotal += this.keepTwoDecimalFull(Number(item.num));  //计算总数数量
+                    }
+
+                    this.payment = this.price;//实收金额默认值
+                    this.memberCard();
+                    //tab取消禁用
+                    this.isSubmitShopCard = true;
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
+                  } else {
+                    this.message.create('warning', res.info);
+                    //清空
+                    this.code = '';
+                    this.startTime = undefined;
+                    this.endTime = undefined;
+                  }
+                })
+
+              }
+            }
+
+          }
+
+        } else if (this.code.length == 18) { //长度为18 是付款码
+          if (!this.isPay) {
+            this.isPay = true;
+            //现金支付和充值卡功能扫码无效
+            if (this.paymentType == 1 || this.paymentType == 4) {
+              this.message.create('warning', '请点击确定结算按钮');
+              this.isPay = false;
+              return;
+            }
+            /*---------------- 提交订单 ----------------*/
+            //请添加商品
+            if (this.resultData.length == 0) {
+              this.message.create('warning', '请添加商品');
+              this.isPay = false;
+              return;
+            }
+            //请输入实收
+            if (!this.payment) {
+              this.message.create('warning', '请输入实收金额');
+              this.isPay = false;
+              return;
+            }
+            //如果实收金额少于应收金额不允许提交
+            if(this.payment < this.price){
+              this.message.create('warning', '实收金额不能小于应收金额');
+              this.isPay = false;
+              return;
+            }
+            
+            this.pay();
+          }
+
+        }
+
+      }
+  }
+
+  pay() {
+    this.changePrice = this.payment - this.price; //计算找零
+    var paramJson = {
+      payment       : this.payment,                                      //实收金额
+      price         : this.price,                                        //应收金额
+      changePrice   : this.changePrice,                                  //找零
+      paymentType   : this.paymentType,                                  //支付方式
+      memberId      : this.consumptionInfo.id,                           //会员id
+      cardId        : this.consumptionInfo.cardId,                       //会员卡id
+      satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
+      swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
+      comment       : this.singleTimeGroup.get('remarks').value || null, //备注
+      cardPos       : []                                                 //购物车
+    }
+    //购物车列表放到cardPos中
+    for (let item of this.resultData) {
+      var data={};
+      data['id']            = item.id;          //商品id
+      data['count']         = item.num;         //商品数量
+      data['price']         = item.price;       //商品售价
+      data['discountPrice'] = item.changePrice; //商品折扣价
+      data['subtotal']      = item.subtotal;    //总价
+      paramJson.cardPos.push(data);
+    }
+    //haveCard等于1为会员
+    if(this.consumptionInfo.haveCard != 1){
+      delete paramJson.cardId;
+    }
+    // console.log(paramJson);
+    this.http.post('/customer/commodityConsumer', { paramJson : JSON.stringify(paramJson) }).then(res => {
+      if (res.code == 1000) {
+        this.orderNo = res.result.orderNo;
+        //获取消费剩余金额
+        this.preferential = res.result.preferential;//本次优惠
+        this.message.create('success', '操作成功,请结算或展示付款码');
+
+        /*---------------- 确定结算 ----------------*/
+        this.http.post('/customer/payOrder', {
+          payBarCode : this.code,        //付款码
+          orderNo    : this.orderNo,     //订单号
+          payType    : this.paymentType  //支付方式
+        }).then(res => {
+          if (res.code == 1000) {
+            this.message.create('success','付款成功');
+            //清空
+            this.code = '';
+            this.startTime = undefined;
+            this.endTime = undefined;
+            this.isPay = false;
+            //打印
+            this.printTest();
+          } else {
+            this.message.create('warning', res.info);
+            //清空
+            this.code = '';
+            this.startTime = undefined;
+            this.endTime = undefined;
+            this.isPay = false;
+          }
+        })
+
+      } else {
+        this.message.create('warning', res.info);
+        //清空
+        this.code = '';
+        this.startTime = undefined;
+        this.endTime = undefined;
+        this.isPay = false;
+      }
+
+    })
   }
 
 }

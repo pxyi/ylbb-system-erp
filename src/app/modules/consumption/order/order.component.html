@@ -65,6 +65,7 @@
         ></th> -->
         <th>订单详情</th>
         <th>客户信息</th>
+        <th>支付方式</th>
         <th>金额</th>
         <th>其他信息</th>
         <th>服务信息</th>
@@ -77,7 +78,8 @@
           <td class="ttd" [(nzExpand)]="data.expand" nzShowCheckbox [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
           <td>{{ data.payTime}}  {{ data.orderNo }}   商品数:{{ data.count }}</td>
           <td>{{ data.memberName }} {{ data.memberNickstring }}<br>卡号：{{ data.cardCode }}<br>卡类型：{{ data.cartTypeName }}</td>
-          <td>¥{{ data.payment }}</td>
+          <td>{{ data.paymentType }}</td>
+          <td>¥{{ data.price }}</td>
           <td>服务泳师：{{ data.employeeName }}<br>满意程度：{{ data.satisfaction }}</td>
           <td>备注：{{ data.comment }}</td>
         </tr>
