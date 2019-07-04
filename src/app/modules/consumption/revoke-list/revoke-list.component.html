@@ -80,7 +80,7 @@
           <td>{{ data.memberName }} {{ data.memberNickstring }}<br>卡号：{{ data.cardCode }}<br>卡类型：{{ data.cartTypeName }}</td>
           <td>¥{{ data.payment }}</td>
           <td>服务泳师：{{ data.employeeName }}<br>满意程度：{{ data.satisfaction }}</td>
-          <td>备注：{{ data.comment }}</td>
+          <td>备注：{{ data.causesRevocation }}</td>
         </tr>
         <tr [nzExpand]="true">
           <td></td>
@@ -108,5 +108,5 @@
     </tbody>
   </nz-table>
   <nz-pagination class="nz-pagination" (nzPageIndexChange)="nzPageIndexChange($event)" (nzPageSizeChange)="nzPageSizeChange($event)" [nzPageIndex]="nzPageIndex" [nzTotal]="nzTotal" nzShowSizeChanger [nzPageSize]="nzPageSize"></nz-pagination>
-
+  <span class="nz-pagination-des">从{{ nzPageIndex*nzPageSize-nzPageSize+1 }}到{{ nzPageIndex*nzPageSize < nzTotal ? nzPageIndex*nzPageSize : nzTotal }}条记录/共{{ nzTotal }}条记录</span>
 </div>

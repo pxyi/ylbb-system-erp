@@ -237,9 +237,6 @@ export class RevokeListComponent implements OnInit {
       this.loading = false;
     })
 
-    /*-------------- 获取消费订单列表 --------------*/
-    this._request();
-
     /* 表格测试数据开始 */
     for (let i = 0; i < 3; ++i) {
       this.listOfParentData.push({

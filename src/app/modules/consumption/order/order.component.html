@@ -108,5 +108,5 @@
     </tbody>
   </nz-table>
   <nz-pagination class="nz-pagination" (nzPageIndexChange)="nzPageIndexChange($event)" (nzPageSizeChange)="nzPageSizeChange($event)" [nzPageIndex]="nzPageIndex" [nzTotal]="nzTotal" nzShowSizeChanger [nzPageSize]="nzPageSize"></nz-pagination>
-
+  <span class="nz-pagination-des">从{{ nzPageIndex*nzPageSize-nzPageSize+1 }}到{{ nzPageIndex*nzPageSize < nzTotal ? nzPageIndex*nzPageSize : nzTotal }}条记录/共{{ nzTotal }}条记录</span>
 </div>
