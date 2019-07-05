@@ -1,0 +1,62 @@
+<div class="container">
+  <button nz-button nzType="primary" (click)="addClassroomfun()">新增</button>
+  <div class="query">
+    <nz-form-label>教室编号/名称</nz-form-label>
+    <input nz-input style="width: 200px; margin-right: 10px" placeholder="请输入" [(ngModel)]="name">
+    <button nz-button nzType="primary" (click)="queryDataList()">查询</button>
+  </div>
+  <div class="list_query">
+    <nz-table #basicTable [nzData]="classroomList" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th>教室名称</th>
+          <th>教室编号</th>
+          <th>容纳人数</th>
+          <th>主教老师</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of classroomList; let i = index">
+          <td>{{data.roomName}}</td>
+          <td>{{data.roomCode}}</td>
+          <td>{{data.galleryful}}</td>
+          <td>{{data.employeeName}}</td>
+          <td>
+            <a (click)="Editingclassroom(data.id)">修改</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="removeclassroom(data.id)">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<!-- 新增弹框 -->
+<nz-modal [(nzVisible)]="addclassroom" nzTitle="新增教室" (nzOnCancel)="closeaddclassroom()" (nzOnOk)="isaddclassroom()">
+  <p>
+    <nz-form-label>教室名称</nz-form-label>
+    <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="roomName">
+  </p>
+  <p>
+    <nz-form-label>教室编号</nz-form-label>
+    <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="roomCode">
+  </p>
+  <p>
+    <nz-form-label>主教老师</nz-form-label>
+    <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" [(ngModel)]="employeeId">
+      <nz-option *ngFor="let items of TeacherList" [nzLabel]="items.name" [nzValue]="items.id"></nz-option>
+    </nz-select>
+  </p>
+  <p>
+    <nz-form-label>容纳人数</nz-form-label>
+    <nz-input-number [(ngModel)]="galleryful" [nzMin]="1" [nzMax]="4" [nzStep]="1" placeholder="请输入"></nz-input-number>
+  </p>
+</nz-modal>
+<!-- 删除弹框 -->
+<nz-modal [(nzVisible)]="delectclassroom" nzTitle="确认删除？" (nzOnCancel)="closedelectclassroom()"
+  (nzOnOk)="isdelectclassroom()">
+  <p>
+    确定要删除所选教室吗？
+  </p>
+</nz-modal>

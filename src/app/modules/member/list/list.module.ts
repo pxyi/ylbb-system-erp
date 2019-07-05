@@ -16,9 +16,10 @@ import { OpenComponent } from './open/open.component';
 import { StopComponent } from './stop/stop.component';
 import { SupplementComponent } from './supplement/supplement.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
-  declarations: [ListComponent, AdjustingComponent, AdjustmentComponent, AppointComponent, ChangeComponent, ConsumptionComponent, ContinuedComponent, NumberComponent, OpenComponent, StopComponent, SupplementComponent, WithdrawComponent],
+  declarations: [ListComponent, AdjustingComponent, AdjustmentComponent, AppointComponent, ChangeComponent, UpdateComponent, ConsumptionComponent, ContinuedComponent, NumberComponent, OpenComponent, StopComponent, SupplementComponent, WithdrawComponent, UpdateComponent],
   imports: [
     CommonModule,
     NgRelaxModule,
@@ -28,6 +29,6 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
       component: ListComponent
     }])
   ],
-  entryComponents: [AdjustingComponent, AdjustmentComponent, AppointComponent, ChangeComponent, ConsumptionComponent, ContinuedComponent, NumberComponent, OpenComponent, StopComponent, SupplementComponent, WithdrawComponent]
+  entryComponents: [AdjustingComponent, AdjustmentComponent, AppointComponent, ChangeComponent, UpdateComponent, ConsumptionComponent, ContinuedComponent, NumberComponent, OpenComponent, StopComponent, SupplementComponent, WithdrawComponent]
 })
 export class ListModule { }

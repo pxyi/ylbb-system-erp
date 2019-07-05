@@ -24,7 +24,7 @@ export class NocardComponent implements OnInit {
       key         : 'customerSourceId',
       optionKey   : { label: 'sourceName', value: 'sourceId' },
       type        : 'select',
-      optionsUrl  : '/management/selectSource'
+      optionsUrl  : '/yeqs/management/selectSource'
     },
     {
       label       : '家长姓名',

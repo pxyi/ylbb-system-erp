@@ -493,6 +493,18 @@ const routes: Routes = [
               },
             ]
           },
+          {
+            path: 'timetableperiod',
+            data: { title: '排课时段' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/configuration/timetableperiod/timetableperiod.module#TimetableperiodModule'
+          },
+          {
+            path: 'classroom',
+            data: { title: '上课教室' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/configuration/classroom/classroom.module#ClassroomModule'
+          },
         ]
       }
     ]

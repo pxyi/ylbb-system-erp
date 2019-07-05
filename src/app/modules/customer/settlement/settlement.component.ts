@@ -567,9 +567,10 @@ selectquery(){
       currentDate: this.memberdetailTks.currentDate
     });                
     this.http.post('/yeqs/curriculum/adjustDeleteRecord', { paramJson: paramJsonDelect }, false).then(res => {
+      let reserveId = res.result;
       if (res.code == 1000) {
         //调课
-        this.http.post('/yeqs/curriculum/adjustmentRecord', { paramJson }, false).then(res => {
+        this.http.post('/yeqs/curriculum/adjustmentRecord', { paramJson, reserveId }, false).then(res => {
                 if (res.code == 1000) {
                   this.message.create('success', '调课成功！');
                       this.radioValue = '';

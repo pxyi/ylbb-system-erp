@@ -1,0 +1,39 @@
+<div class="container">
+  <ea-query-simp [node]="queryNode" title="卡类型管理" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="primary" style="margin-bottom: 24px;" (click)="update()">新增卡类型</button>
+
+  <ea-table 
+    #table 
+    url="/yeqs/cardTypeManagement/list" 
+    [allowSpace]="false" 
+    [thead]="['卡类型名称','卡属性','业务类型','有效时长','计费类型','正价次数','赠送次数','充值金额','赠送金额','享受优惠','收入金额','开卡积分','状态','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.attributeName }}</td>
+      <td>{{ data.categoryName }}</td>
+      <td>{{ data.effectMonth }}</td>
+      <td>{{ data.feeType ? '计金额' : '计次' }}</td>
+      <td>{{ data.times }}</td>
+      <td>{{ data.freeTimes }}</td>
+      <td>{{ data.amount }}</td>
+      <td>{{ data.freeAmount }}</td>
+      <td>{{ data.discount }}</td>
+      <td>{{ data.balance }}</td>
+      <td>{{ data.openPoints }}</td>
+      <td><nz-tag [nzColor]="data.status == 1 ? '#f50' : '#2db7f5'">{{ data.status == 1 ? '下架' : '上架' }}</nz-tag></td>
+      <td>
+        <a (click)="update({cardTypeInfo: data})">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-dropdown>
+          <a nz-dropdown>更多<i nz-icon type="down"></i></a>
+          <ul nz-menu>
+            <li nz-menu-item><a (click)="operation(data.id, 'delete')">删除</a></li>
+            <li nz-menu-item><a (click)="operation(data.id, 'disable', data.status)">{{ data.status == 1 ? '启用' : '禁用' }}</a></li>
+          </ul>
+        </nz-dropdown>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>

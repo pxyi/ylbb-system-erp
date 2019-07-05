@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="button">
+    <button nz-button nzType="primary" (click)="addcoursefun()">新增</button>
+    <button nz-button nzType="default" (click)="showremoveModal()">删除</button>
+  </div>
+  <div class="list_table">
+    <nz-table [nzData]="data" nzShowPagination="false">
+      <thead>
+        <tr>
+
+          <th>开始时分</th>
+          <th>结束时分</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of data">
+          <td>{{data.startTime}}</td>
+          <td>{{data.endTime}}</td>
+          <td><a (click)="refreshStatus(data.id)">删除</a></td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- 新增弹框 -->
+<nz-modal [(nzVisible)]="addtime" nzTitle="新增上课时段" (nzOnCancel)="closeaddtime()" (nzOnOk)="isaddtime()">
+  <p>
+    <nz-form-label>开始时间</nz-form-label>
+    <nz-time-picker [(ngModel)]="starttime" nzFormat="HH:mm" nzAllowEmpty='false' nzHideDisabledOptions="true">
+    </nz-time-picker>
+  </p>
+  <p>
+    <nz-form-label>结束时间</nz-form-label>
+    <nz-time-picker [(ngModel)]="endtime" nzFormat="HH:mm" nzAllowEmpty='false' nzHideDisabledOptions="true">
+    </nz-time-picker>
+  </p>
+</nz-modal>
+<!-- 删除弹框 -->
+<nz-modal [(nzVisible)]="removeTime" nzTitle="确定删除？" (nzOnCancel)="closeremoveTime()" (nzOnOk)="isremoveTime()">
+  <p>
+    确定删除已选时段？
+  </p>
+
+</nz-modal>

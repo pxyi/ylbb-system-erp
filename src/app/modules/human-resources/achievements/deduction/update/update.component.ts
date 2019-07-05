@@ -43,7 +43,7 @@ export class UpdateComponent implements OnInit {
 
 
   saveLoading: boolean;
-  @DrawerSave('/yeqs/attendance/saveAttendance') save: () => void;
+  @DrawerSave('/yeqs/employeePointsLog/saveEmployeePointsLog') save: () => void;
 
   @DrawerClose() close: () => void;
 

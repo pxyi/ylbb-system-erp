@@ -26,7 +26,7 @@ export class UpdateComponent implements OnInit {
     private drawerRef: NzDrawerRef
   ) {
     this.http.post('/yeqs/cardBusinessManagement/findList').then(res => this.cardBusinessList = res.result);
-    this.http.post('/cardAttributeController/getList').then(res => this.cardAttribuiteList = res.result);
+    this.http.post('/yeqs/cardAttributeController/getList').then(res => this.cardAttribuiteList = res.result);
   }
 
   ngOnInit() {
@@ -40,6 +40,7 @@ export class UpdateComponent implements OnInit {
       balance: [, [Validators.required]],
       openPoints: [, [Validators.required]],
       tong: [this.cardTypeInfo.tong || false],
+      status:[0,[Validators.required]],
       comment: []
     });
     this.formGroup.controls['attributeId'].valueChanges.subscribe(res => this.attribuiteIdChange(res));

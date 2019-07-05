@@ -1,7 +1,7 @@
 <div class="container">
   <ea-list-page
     #listPage
-    url="/list"
+    url="/yeqs/memberCard/list"
     [queryNode]="queryNode"
     [paramsInit]="paramsInit"
     [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期','成长顾问', '退卡单次价格', '协议号',  '备注']"
@@ -30,6 +30,8 @@
         </ul> 
       </nz-dropdown>
       <button nz-button nzType="primary" (click)="arranging()"><i class="anticon anticon-plus"></i>排课</button>
+      <button nz-button nzType="primary" (click)="operation('update')">升级成技能课卡</button>
+
       <button nz-button (click)="noArranging()"><i class="anticon anticon-file-excel"></i>取消排课</button>
       <button nz-button nzType="primary" (click)="adjusting()">会员调课</button>
     </div>

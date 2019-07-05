@@ -30,7 +30,7 @@ export class CardCreateComponent implements OnInit {
     private modal: NzModalService,
     private drawerRef: NzDrawerRef
   ) { 
-    this.http.post('/cardAttributeController/getList').then(res => this.cardAttribuiteList = res.result);
+    this.http.post('/yeqs/cardAttributeController/getList').then(res => this.cardAttribuiteList = res.result);
     this.http.post('/yeqs/employee/listEmployee').then(res => this.employeeList = res.result);
   }
 

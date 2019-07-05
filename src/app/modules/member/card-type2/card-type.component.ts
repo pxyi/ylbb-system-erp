@@ -1,9 +1,8 @@
 import { AddComponent } from './add/add.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';
-import { NzModalService, NzDrawerService } from 'ng-zorro-antd';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd';
 import { TableComponent } from 'src/app/ng-relax/components/table/table.component';
-import { DrawerCreate } from 'src/app/ng-relax/decorators/drawer/create.decorator';
 
 @Component({
   selector: 'app-card-type',
@@ -43,17 +42,25 @@ export class CardTypeComponent implements OnInit {
   constructor(
     private http: HttpService,
     private modal: NzModalService,
-    private drawer: NzDrawerService
+    private resolver: ComponentFactoryResolver
   ) { 
   }
 
   ngOnInit() {
   }
 
-  @DrawerCreate({ title: '卡类型管理', content: AddComponent }) update: ({ id: number, cardTypeInfo: any }?) => void;
+  updateCardType(data: any = {}) {
+    this.showDrawer = true;
+    this.container.clear();
+    const factory: ComponentFactory<AddComponent> = this.resolver.resolveComponentFactory(AddComponent);
+    this.componentRef = this.container.createComponent(factory);
+    this.componentRef.instance.id = data.id;
+    data && (this.componentRef.instance.cardTypeInfo = data);
+  }
 
   saveDrawer() {
     this.saveLoading = true;
+    console.log(this.componentRef.instance);
     this.componentRef.instance.save().then(res => {
       this.saveLoading = false;
       if (res) {

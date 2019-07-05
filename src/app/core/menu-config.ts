@@ -398,6 +398,21 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
+        title : '登录日志',
+        key   : '/home/configuration/account/loginlog',
+        isLeaf: true
+      },
+      {
+        title : '排课时段',
+        key   : '/home/configuration/timetableperiod',
+        isLeaf: true
+      },
+      {
+        title : '上课教室',
+        key   : '/home/configuration/classroom',
+        isLeaf: true
+      },
+      {
         title : '账号管理',
         key   : '/home/configuration/account/number',
         isLeaf: true
@@ -407,11 +422,6 @@ export const MenuConfig = [
         key   : '/home/configuration/account/role',
         isLeaf: true
       },
-      {
-        title : '登录日志',
-        key   : '/home/configuration/account/loginlog',
-        isLeaf: true
-      }
     ]
   }
 ];

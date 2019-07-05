@@ -1,0 +1,112 @@
+<h3 style="color:red;" *ngIf="showSave">{{ showErrText }}</h3>
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode1" [disabled]="true"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>剩余卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="heNum" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>有效日期</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="orgExpireDate" [disabled]="true" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-tabset><nz-tab nzTitle="升级">   </nz-tab>    </nz-tabset>  
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>卡业务类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="newTypeId" nzPlaceHolder="请选择卡业务类型">
+            <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('newTypeId').dirty && formGroup.get('newTypeId').hasError('required')">请选择卡业务类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>升级后正价卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入升级后正价卡次" formControlName="newTimes" disabled>
+          <nz-form-explain *ngIf="formGroup.get('newTimes').dirty && formGroup.get('newTimes').hasError('required')">请输入升级后正价卡次！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>销售</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="employeeId" nzPlaceHolder="请选择销售">
+              <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择销售！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>升级后赠送卡次 </nz-form-label>
+          <nz-form-control>
+            <nz-input-number nz-input  formControlName="newFreeTimes" style="width:332px;" ></nz-input-number>
+            <nz-form-explain *ngIf="formGroup.get('newFreeTimes').dirty && formGroup.get('newFreeTimes').hasError('required')">请输入升级后赠送卡次！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>升级后有效期 </nz-form-label>
+            <nz-form-control>
+              <nz-date-picker formControlName="expireDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="请选择升级后有效期"></nz-date-picker>
+              <nz-form-explain *ngIf="formGroup.get('expireDate').dirty && formGroup.get('expireDate').hasError('required')">请选择升级后有效期！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+      </div>
+      <div nz-row nzGutter="8">
+          
+            <nz-form-item>
+              <nz-form-label nzRequired>备注 </nz-form-label>
+              <nz-form-control>
+                  <textarea nz-input formControlName="comment" placeholder="请输入备注" id="comment" [nzAutosize]="{ minRows: 3, maxRows: 4 }"></textarea>
+                  <nz-form-explain *ngIf="formGroup.get('comment').dirty && formGroup.get('comment').hasError('required')">请输入备注！</nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          
+  
+        </div>
+</form>
+<div class="drawer-footer">
+  <button nz-button (click)="close()"  *ngIf="!showSave">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" *ngIf="!showSave" (click)="save()">保存</button>
+</div>

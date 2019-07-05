@@ -5,6 +5,8 @@ import { StopComponent } from './stop/stop.component';
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { ContinuedComponent } from './continued/continued.component';
 import { ChangeComponent } from './change/change.component';
+import { UpdateComponent } from './update/update.component';
+
 import { AdjustmentComponent } from './adjustment/adjustment.component';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
@@ -68,6 +70,10 @@ export class ListComponent implements OnInit {
     change: {
       title: '卡项变更',
       component: ChangeComponent
+    },
+    update: {
+      title: '升级技能课',
+      component: UpdateComponent
     },
     continued: {
       title: '续卡',

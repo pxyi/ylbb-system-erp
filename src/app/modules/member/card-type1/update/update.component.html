@@ -148,6 +148,18 @@
           </nz-form-item>
         </div>
     </ng-container>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzFor="comment">是否技能课卡</nz-form-label>
+          <nz-form-control>
+              <nz-select formControlName="status" nzPlaceHolder="请选择">
+                  <nz-option nzLabel="否" [nzValue]='0'></nz-option>
+                  <nz-option nzLabel="是" [nzValue]='1'></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="formGroup.get('status').dirty && formGroup.get('status').hasError('required')">是否技能课卡！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
     <div nz-col nzSpan="24">
       <nz-form-item>
         <nz-form-label nzFor="comment">备注</nz-form-label>

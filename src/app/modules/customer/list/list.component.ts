@@ -108,7 +108,7 @@ export class ListComponent implements OnInit {
       key         : 'customerSourceId',
       optionKey: { label: 'sourceName', value: 'sourceId' },
       type        : 'select',
-      optionsUrl  : '/management/selectSource',
+      optionsUrl  : '/yeqs/management/selectSource',
       isHide      : true
     }
   ]
