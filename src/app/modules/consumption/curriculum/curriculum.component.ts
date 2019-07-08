@@ -29,7 +29,7 @@ export class CurriculumComponent implements OnInit {
       label       : '服务老师',
       key         : 'teacherName',
       type        : 'select',
-      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers',
+      optionsUrl  : '/yeqs/member/getStoreTeachers',
     },
     {
       label       : '课程类型',
@@ -48,7 +48,7 @@ export class CurriculumComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberLesson/removeMemberLessonRecord', { id }).then(res => this.listPage.eaTable._request());
+    this.http.post('/yeqs/memberLesson/removeMemberLessonRecord', { id }).then(res => this.listPage.eaTable._request());
   }
 
   @DrawerCreate({ title: '会员课程信息', content: UpdateComponent }) update: ({curriculumInfo: object}) => void;

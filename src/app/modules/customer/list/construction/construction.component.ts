@@ -27,8 +27,8 @@ export class ConstructionComponent implements OnInit {
     private modal: NzModalService,
     private drawerRef: NzDrawerRef
   ) { 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
+    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
   }
 
   ngOnInit() {
@@ -58,7 +58,7 @@ export class ConstructionComponent implements OnInit {
     }
     this.formGroup = this.fb.group(formControls);
     this.formGroup.get('cardTypeId').valueChanges.subscribe(id => {
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/getCardType', { id }, false).then(res => {
+      this.http.post('/yeqs/cardTypeManagement/getCardType', { id }, false).then(res => {
         this.formGroup.patchValue(res.result);
       })
     })
@@ -90,7 +90,7 @@ export class ConstructionComponent implements OnInit {
   /* -------------------- 建卡请求 -------------------- */
   createCard() {
     this.saveLoading = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/createCard', {
+    this.http.post('/yeqs/member/createCard', {
       paramJson: JSON.stringify(this.formGroup.value)
     }).then(res => this.drawerRef.close({ memberId: this.id }));
   }

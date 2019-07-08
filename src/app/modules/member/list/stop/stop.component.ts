@@ -35,6 +35,6 @@ export class StopComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/pauseCard') save: () => void;
+  @DrawerSave('/yeqs/memberCard/pauseCard') save: () => void;
 
 }

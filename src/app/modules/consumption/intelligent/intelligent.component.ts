@@ -200,13 +200,13 @@ export class IntelligentComponent implements OnInit {
   }
   getData() {
     let that = this;
-    that.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
+    that.http.post('/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
       this.SyllabusAll = res.result.list;
     });
-    that.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSchedulingAll', {}, false).then(res => {
+    that.http.post('/yeqs/scheduling/selectSchedulingAll', {}, false).then(res => {
       this.schoolList = res.result.list;
     });
-    that.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
+    that.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
       this.ScourList = res.result.list;
     });
   }
@@ -262,9 +262,9 @@ export class IntelligentComponent implements OnInit {
       return false;
     }
     this.subLoading = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/checkReserveRecord', { paramJson, lessonPeriod: Number(this.form.lessonPeriod) }, false).then(res => {
+    this.http.post('/yeqs/curriculum/checkReserveRecord', { paramJson, lessonPeriod: Number(this.form.lessonPeriod) }, false).then(res => {
       if (typeof res.result.list == "undefined") {
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/saveReserveRecord', { paramJson, residue: res.result.residue, sundays: res.result.sundays }, false).then(res => {
+        this.http.post('/yeqs/curriculum/saveReserveRecord', { paramJson, residue: res.result.residue, sundays: res.result.sundays }, false).then(res => {
           this.subLoading = false;
           this.message.create('success', '添加成功！');
           this.form = {

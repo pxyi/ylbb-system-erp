@@ -1,5 +1,5 @@
 <div class="container">
-  <ea-list-page #listPage url="http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/list" [allowSpace]="false" [queryNode]="queryNode"
+  <ea-list-page #listPage url="/yeqs/member/list" [allowSpace]="false" [queryNode]="queryNode"
     [tableThead]="['卡号', '姓名', '小名', '性别', '多胞', '月龄', '家长姓名', '手机号', '社区', '儿童类型', '积分', '有效期', '测量', '拍照', '登录次数', '建档时间', '备注' , '来源']"
     [checked]="true" [isRadio]="true" [checkedItems]="checkedItems" [EaTableTbodyTr]="EaTableTbodyTr"
     (requestDataChange)="dataChange($event)" [EaBtns]="EaBtns">

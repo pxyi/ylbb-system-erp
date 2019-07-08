@@ -94,7 +94,7 @@ export class ListComponent implements OnInit {
    }
   selectDataArr(){
    //查询课程类别 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectLessonAll', { status: '1' }, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectLessonAll', { status: '1' }, false).then(res => {
       if (res.code == 1000) {
         this.CoursecategoryList = res.result.list;
       } else {
@@ -102,7 +102,7 @@ export class ListComponent implements OnInit {
       }
     });
     //查询课程类型
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectLessonAll', { status: '0' }, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectLessonAll', { status: '0' }, false).then(res => {
       if (res.code == 1000) {
         this.ClasstypesList = res.result.list;
       } else {
@@ -110,7 +110,7 @@ export class ListComponent implements OnInit {
       }
     });
     //查询课程名称
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {  }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectSyllabusAll', {  }, false).then(res => {
       if (res.code == 1000) {
         this.CoursenameList = res.result.list;
       } else {
@@ -126,7 +126,7 @@ export class ListComponent implements OnInit {
       courseStatus: this.courseStatus,
    
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectCondition', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectCondition', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.courseList = res.result.list;
       } else {
@@ -194,7 +194,7 @@ export class ListComponent implements OnInit {
           colour:  this.color,
           typefaceColour: this.typefaceColour
         });  
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/insertSyllabus', { paramJson }, false).then(res => {
+        this.http.post('/yeqs/scheduling/insertSyllabus', { paramJson }, false).then(res => {
           if (res.code == 1000) {
             this.addcourse = false; 
             this.message.create('success', '添加成功！');
@@ -222,7 +222,7 @@ export class ListComponent implements OnInit {
         colour:  this.color,
         typefaceColour: this.typefaceColour
       });
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/updateSyllabus', { paramJson }, false).then(res => {
+      this.http.post('/yeqs/scheduling/updateSyllabus', { paramJson }, false).then(res => {
         if (res.code == 1000) {
           this.addcourse = false;
           this.message.create('success', '修改成功！');
@@ -248,7 +248,7 @@ export class ListComponent implements OnInit {
     this.editor = '编辑课程';
     this.addcourse = true;
     this.courseId = id;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabus', { id:id }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectSyllabus', { id:id }, false).then(res => {
       if (res.code == 1000) {
         this.addname = res.result.list.name;
         this.addcourseTypeId = res.result.list.courseTypeId;
@@ -280,7 +280,7 @@ export class ListComponent implements OnInit {
   isremoveanddisable(){
    
     if (this.openType==0){
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/deleteSyllabus', { syllabusName: this.coursesName }, false).then(res => {
+      this.http.post('/yeqs/scheduling/deleteSyllabus', { syllabusName: this.coursesName }, false).then(res => {
         if (res.code == 1000) {
           this.message.create('success', '删除成功！');
           this.removeanddisable = false;
@@ -297,7 +297,7 @@ export class ListComponent implements OnInit {
   courseContent(id){
     this.classContent = true;
     this.ListmainId = id;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectContentsAll', { id: id }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectContentsAll', { id: id }, false).then(res => {
       if (res.code == 1000) {
         this.Listmain = res.result.list;
       } else {
@@ -345,7 +345,7 @@ export class ListComponent implements OnInit {
         content: this.content,
         syllabusId: this.ListmainId,
       });
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/insertContents', { paramJson }, false).then(res => {
+      this.http.post('/yeqs/scheduling/insertContents', { paramJson }, false).then(res => {
         if (res.code == 1000) {
           this.courseContent(this.ListmainId);
           this.message.create('success', '添加成功！');
@@ -366,7 +366,7 @@ export class ListComponent implements OnInit {
         content: this.content,
         id: this.modifyId,
       });
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/updateContents', { paramJson }, false).then(res => {
+      this.http.post('/yeqs/scheduling/updateContents', { paramJson }, false).then(res => {
         if (res.code == 1000) {
           this.courseContent(this.ListmainId);
           this.message.create('success', '修改成功！');
@@ -390,7 +390,7 @@ export class ListComponent implements OnInit {
     this.removeclassContent = false;   
   }
   isremoveclassContent(){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/deleteContents', { id: this.classListid }, false).then(res => {
+    this.http.post('/yeqs/scheduling/deleteContents', { id: this.classListid }, false).then(res => {
       if (res.code == 1000) {
         this.removeclassContent = false;
         this.message.create('success', '删除成功！');
@@ -402,7 +402,7 @@ export class ListComponent implements OnInit {
   }
   //修改内容
   modifyListContent(id){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectContents', { id: id }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectContents', { id: id }, false).then(res => {
       if (res.code == 1000) {
         this.addclassContent = true;
         this.period = res.result.list.period;

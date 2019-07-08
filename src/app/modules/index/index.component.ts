@@ -14,7 +14,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./index.component.less']
 })
 export class IndexComponent implements OnInit {
-  private domainQs = environment.domainQs;
 
   /* ---------- 活动集合 ---------- */
   activityLoading: boolean = true;
@@ -72,7 +71,7 @@ export class IndexComponent implements OnInit {
     this.monthStartDate = date.getFullYear() + '-' + month;
     this.monthStartDatezw = date.getFullYear() + '年' + month + '月';
     this.selectmonth(this.monthStartDate);
-    this.http.post(this.domainQs + '/yeqs/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
       this.dateList = res.result.list;
     });
 
@@ -200,7 +199,7 @@ export class IndexComponent implements OnInit {
   getDayListquery1() {
     let startDate = this.startDate;
     let endDate = this.endDate;
-    this.http.post(this.domainQs + '/yeqs/curriculum/dailySchedule', { startDate, endDate }, false).then(res => {
+    this.http.post('/yeqs/curriculum/dailySchedule', { startDate, endDate }, false).then(res => {
       if (res.code == 1000) {
         this.weekLists = res.result.list
         let startDateList = [],

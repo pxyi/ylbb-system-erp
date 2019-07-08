@@ -53,6 +53,6 @@ export class UpdateRevokeComponent implements OnInit {
 
   }
 
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/revocationConsume') save: () => void;
+  @DrawerSave('/yeqs/customer/revocationConsume') save: () => void;
 
 }

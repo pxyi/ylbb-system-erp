@@ -37,7 +37,7 @@ export class UpdateComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/saveBandRecord') save: () => void;
+  @DrawerSave('/yeqs/humanInformation/saveBandRecord') save: () => void;
   @DrawerClose() close: () => void;
 
   private positionAsyncValidator = (control: FormControl): any => {
@@ -46,7 +46,7 @@ export class UpdateComponent implements OnInit {
         id: this.formGroup.get('id').value,
         position: control.value
       };
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
+      this.http.post('/yeqs/humanInformation/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
         observer.next(res.result ? null : { error: true, duplicated: true });
         observer.complete();
       }, err => {

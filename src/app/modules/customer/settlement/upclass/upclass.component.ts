@@ -45,8 +45,8 @@ export class UpclassComponent implements OnInit {
       flag: [false]
     });
     this.details = JSON.parse( window.localStorage.getItem('jsons'));
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectCondition', {}, false).then(res => { this.classList = res.result.list; });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectCondition', {}, false).then(res => { this.classList = res.result.list; });
+    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
       res.result.list.map(item => {
         item.label = item.startTime + '-' + item.endTime;
         if(this.details.startTime == item.startTime&&this.details.endTime == item.endTime){
@@ -89,7 +89,7 @@ export class UpclassComponent implements OnInit {
     let paramJson: any = this.details;
     paramJson.startDate = this.startDate;
     paramJson.endDate = this.endDate;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/promotionClass', { paramJson: JSON.stringify(paramJson) }, false).then(res => {
+    this.http.post('/yeqs/curriculum/promotionClass', { paramJson: JSON.stringify(paramJson) }, false).then(res => {
       if (res.code == 1000) {
         this.current = 2;
     } else {

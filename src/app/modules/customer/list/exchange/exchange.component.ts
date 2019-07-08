@@ -42,6 +42,6 @@ export class ExchangeComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/redeem') save: () => void;
+  @DrawerSave('/yeqs/member/redeem') save: () => void;
 
 }

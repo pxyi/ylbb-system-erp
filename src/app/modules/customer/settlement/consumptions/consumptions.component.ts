@@ -76,7 +76,7 @@ export class ConsumptionsComponents implements OnInit {
     });
 
     this.timesCountGroup.get('commodityId').valueChanges.subscribe(id => {
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
+      this.http.post('/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
         this.timesCountGroup.patchValue({ consumption: res.result.price });
       })
     });
@@ -85,20 +85,20 @@ export class ConsumptionsComponents implements OnInit {
     });
 
     /* ------------------------- 获取服务器时间 ------------------------- */
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/getSystemDate', {}, false).then(res => {
+    this.http.post('/yeqs/customer/getSystemDate', {}, false).then(res => {
       this.timesCountGroup.patchValue({ consumeDate: res.result });
       this.singleTimeGroup.patchValue({ consumeDate: res.result });
     });
 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList', {}, false).then(res => this.communityList = res.result);
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
+    this.http.post('/yeqs/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+    this.http.post('/yeqs/member/communityList', {}, false).then(res => this.communityList = res.result);
+    this.http.post('/yeqs/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+    this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
       this.memberCardList = res.result;
       res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/commodity/getCardCommodities', {}, false).then(res => this.commoditieList = res.result);
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
+    this.http.post('/yeqs/commodity/getCardCommodities', {}, false).then(res => this.commoditieList = res.result);
+    this.http.post('/yeqs/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
   }                        
 
 
@@ -117,7 +117,7 @@ export class ConsumptionsComponents implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)), settleStatus: this.timesCountGroup.value.settleStatus }).then(res => {
+        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)), settleStatus: this.timesCountGroup.value.settleStatus }).then(res => {
           this.drawerRef.close(true);
         }).catch(error => this.saveLoading = false);
       }
@@ -129,7 +129,7 @@ export class ConsumptionsComponents implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)), settleStatus: this.singleTimeGroup.value.settleStatus }).then(res => {
+        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)), settleStatus: this.singleTimeGroup.value.settleStatus }).then(res => {
           this.drawerRef.close(true);
         }).catch( error=>  this.saveLoading = false);
       }

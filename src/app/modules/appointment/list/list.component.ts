@@ -39,7 +39,7 @@ export class ListComponent implements OnInit {
       label: '预约泳师',
       key: 'reserveTeacherId',
       type: 'select',
-      optionsUrl: 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers',
+      optionsUrl: '/yeqs/member/getStoreTeachers',
       isHide: true
     },
     {
@@ -53,7 +53,7 @@ export class ListComponent implements OnInit {
       label: '业务类型',
       key: 'categoryId',
       type: 'select',
-      optionsUrl: 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardBusinessManagement/getStoreCardTypeCategores',
+      optionsUrl: '/yeqs/cardBusinessManagement/getStoreCardTypeCategores',
       isHide: true
     },
     {

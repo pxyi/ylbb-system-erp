@@ -62,11 +62,11 @@ export class AdjustingComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectCondition', {}, false).then(res => { this.conditionList = res.result.list });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/getMemberCards', { memberId: this.id }, false).then(res => { this.followRecordGroup.patchValue({ memberName: res.result[0].memberName }); });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectMsg', { memberId: this.id }, false).then(res => { this.memberdetailTk = res.result.list; });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => { this.SyllabusAllList = res.result.list; });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => { this.dateList = res.result.list; });
+    this.http.post('/yeqs/scheduling/selectCondition', {}, false).then(res => { this.conditionList = res.result.list });
+    this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.id }, false).then(res => { this.followRecordGroup.patchValue({ memberName: res.result[0].memberName }); });
+    this.http.post('/yeqs/curriculum/selectMsg', { memberId: this.id }, false).then(res => { this.memberdetailTk = res.result.list; });
+    this.http.post('/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => { this.SyllabusAllList = res.result.list; });
+    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => { this.dateList = res.result.list; });
     this.nowDate();
     this.followRecordGroup = this.fb.group({
       memberName: [, [Validators.required]],
@@ -97,11 +97,11 @@ export class AdjustingComponent implements OnInit {
       }
     } else {
       this.isLoadingOne = true;
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/readyClass', { paramJson: JSON.stringify(this.followRecordGroup.value) }, false).then(ress => {
+      this.http.post('/yeqs/curriculum/readyClass', { paramJson: JSON.stringify(this.followRecordGroup.value) }, false).then(ress => {
         this.isLoadingOne = false;
         if (ress.code == 1000) {
           this.delectData = ress.result;
-          this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectMsg', { memberId: this.id }, false).then(res => {
+          this.http.post('/yeqs/curriculum/selectMsg', { memberId: this.id }, false).then(res => {
             res.result.list.cardNumber += ress.result.length;
             this.memberdetailTk = res.result.list;
           });
@@ -161,9 +161,9 @@ export class AdjustingComponent implements OnInit {
     });
     //this.isLoadingOne = true;
 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/deleteReadyClass', { paramJson: JSON.stringify({ reserveRecords: this.delectData }) }, false).then(ress => {
+    this.http.post('/yeqs/curriculum/deleteReadyClass', { paramJson: JSON.stringify({ reserveRecords: this.delectData }) }, false).then(ress => {
       if (ress.code == 1000) {
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/insertMemberRecord', { paramJson, flag: false }, false).then(res => {
+        this.http.post('/yeqs/curriculum/insertMemberRecord', { paramJson, flag: false }, false).then(res => {
           this.isLoadingOne = false;
           if (res.code == 1000) {
             this.current = 2;
@@ -279,7 +279,7 @@ export class AdjustingComponent implements OnInit {
       if (data.checked) {
         this.selectData = data;
         this.kcName.push(data);
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectIdRecord', { syllabusName: data.name, startDate: this.startDate, endDate: this.endDate }, false).then(res => {
+        this.http.post('/yeqs/curriculum/selectIdRecord', { syllabusName: data.name, startDate: this.startDate, endDate: this.endDate }, false).then(res => {
           if (res.code == 1000) {
             //let arr = this.RecordList.concat(res.result.list);
             this.RecordList = this.RecordList.concat(res.result.list);
@@ -369,7 +369,7 @@ export class AdjustingComponent implements OnInit {
   }
   selectclass() {
     let syllabusName = this.followRecordGroup.value.syllabusName;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/reserveTimeInterval', { syllabusName }, false).then(res => {
+    this.http.post('/yeqs/curriculum/reserveTimeInterval', { syllabusName }, false).then(res => {
       res.result.listTime.map(item => {
         item.label = item.startTime + '-' + item.endTime;
       })

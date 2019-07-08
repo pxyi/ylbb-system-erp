@@ -39,7 +39,7 @@ export class TimetableperiodComponent implements OnInit {
   }
 
   selectListData() {
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
       if (res.code == 1000) {
         this.data = res.result.list;
         console.log(this.data);
@@ -71,7 +71,7 @@ export class TimetableperiodComponent implements OnInit {
       endMinute: endMinute,
     });
     this.buttonLoading = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/insertScour', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/intelligent/insertScour', { paramJson }, false).then(res => {
       this.buttonLoading = false;
 
       if (res.code == 1000) {
@@ -91,7 +91,7 @@ export class TimetableperiodComponent implements OnInit {
   }
   isremoveTime() {
     let id = this.ListArray;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/deleteScour', { id: id }, false).then(res => {
+    this.http.post('/yeqs/intelligent/deleteScour', { id: id }, false).then(res => {
       if (res.code == 1000) {
         this.selectListData();
         this.message.create('success', '删除成功！');

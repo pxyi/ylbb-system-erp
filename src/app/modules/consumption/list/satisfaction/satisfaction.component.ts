@@ -44,6 +44,6 @@ export class UpdateSatisfactionComponent implements OnInit {
 
   }
 
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/modifySat') save: () => void;
+  @DrawerSave('/yeqs/customer/modifySat') save: () => void;
 
 }

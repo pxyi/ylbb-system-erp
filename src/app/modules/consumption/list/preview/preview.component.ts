@@ -26,7 +26,7 @@ export class PreviewComponent implements OnInit {
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder()
   ) { 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
+    this.http.post('/yeqs/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
     this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieList = res.result);
     this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
   }
@@ -79,7 +79,7 @@ export class PreviewComponent implements OnInit {
         resolve(false);
       } else {
         let params = Object.assign(this.baseFormGroup.value, this.recordInfo.commodityType == 0 ? this.timesCountGroup.value : this.singleTimeGroup.value);
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/updateConsumeRecord', {
+        this.http.post('/yeqs/customer/updateConsumeRecord', {
           paramJson: JSON.stringify(params)
         }).then(res => resolve(true)).catch(err => resolve(false));
       }

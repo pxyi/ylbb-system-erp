@@ -14,7 +14,7 @@ export class UpdateComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  @GetList('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/bonusSatisfaction/getTeacherRanks') teacherRankList: any;
+  @GetList('/yeqs/bonusSatisfaction/getTeacherRanks') teacherRankList: any;
 
   constructor(
     private http: HttpService,
@@ -48,7 +48,7 @@ export class UpdateComponent implements OnInit {
         rankId: this.formGroup.get('rankId').value,
         rank: [this.formGroup.get('rank1').value, this.formGroup.get('rank2').value, this.formGroup.get('rank3').value, this.formGroup.get('rank4').value]
       };
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/bonusSatisfaction/addBonusSatisfaction', {
+      this.http.post('/yeqs/bonusSatisfaction/addBonusSatisfaction', {
         paramJson: JSON.stringify(params)
       }).then(res => {
         this.saveLoading = false;

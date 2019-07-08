@@ -31,7 +31,7 @@ export class ClassroomComponent implements OnInit {
     let paramJson = JSON.stringify({
       name: this.name
     })
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectClassRoom', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectClassRoom', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.classroomList = res.result.list;
       } else {
@@ -40,7 +40,7 @@ export class ClassroomComponent implements OnInit {
     });
   }
   selectTeacher() {
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectEmployee', { name: this.name }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectEmployee', { name: this.name }, false).then(res => {
       if (res.code == 1000) {
         this.TeacherList = res.result.list;
       } else {
@@ -87,7 +87,7 @@ export class ClassroomComponent implements OnInit {
         galleryful: this.galleryful,
       });
 
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/insertScheduling', { paramJson }, false).then(res => {
+      this.http.post('/yeqs/scheduling/insertScheduling', { paramJson }, false).then(res => {
         if (res.code == 1000) {
           this.message.create('success', '添加成功！');
           this.addclassroom = false;
@@ -109,7 +109,7 @@ export class ClassroomComponent implements OnInit {
         id: this.roomId
       });
 
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/updateScheduling', { paramJson }, false).then(res => {
+      this.http.post('/yeqs/scheduling/updateScheduling', { paramJson }, false).then(res => {
         if (res.code == 1000) {
           this.message.create('success', '修改成功！');
           this.addclassroom = false;
@@ -127,7 +127,7 @@ export class ClassroomComponent implements OnInit {
   //修改教室
   Editingclassroom(id) {
     this.addclassroom = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectScheduling', { id: id }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectScheduling', { id: id }, false).then(res => {
       if (res.code == 1000) {
         this.roomName = res.result.list.roomName;
         this.roomCode = res.result.list.roomCode;
@@ -149,7 +149,7 @@ export class ClassroomComponent implements OnInit {
   }
   isdelectclassroom() {
 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/deleteScheduling', { id: this.roomId }, false).then(res => {
+    this.http.post('/yeqs/scheduling/deleteScheduling', { id: this.roomId }, false).then(res => {
       if (res.code == 1000) {
         this.message.create('success', '删除成功！');
         this.delectclassroom = false;

@@ -82,7 +82,7 @@ export class AdjustmentComponent implements OnInit {
   }
   selectEmployee() {
     let that = this;
-    that.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
+    that.http.post('/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
       if (res.code == 1000) {
         that.courseList = res.result.list;
       }
@@ -104,7 +104,7 @@ export class AdjustmentComponent implements OnInit {
       syllabusName: this.iscourse
       //syllabusName: '海马二阶'
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectReserveRecord', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectReserveRecord', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.data = res.result.list;
         this.removeId = [];
@@ -137,7 +137,7 @@ export class AdjustmentComponent implements OnInit {
       this.message.create('error', `已排课课程不能删除！`);
       return false;
     }
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/deleteReserve', { checkedId }, false).then(res => {
+    this.http.post('/yeqs/curriculum/deleteReserve', { checkedId }, false).then(res => {
       if (res.code == 1000) {
         this.message.create('success', `删除成功！`);
         this.isVisible = false;
@@ -177,7 +177,7 @@ export class AdjustmentComponent implements OnInit {
       this.message.create('error', `已排课课程不能调整进度！`);
       return false;
     }
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectAllReserve', { checkedId }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectAllReserve', { checkedId }, false).then(res => {
       if (res.code == 1000) {
         this.adjustmentList = res.result.list;
       }
@@ -195,7 +195,7 @@ export class AdjustmentComponent implements OnInit {
       item.currentDate = this.format.transform(item.currentDate, 'yyyy-MM-dd');
     })
     let paramJson: any = JSON.stringify(this.adjustmentList);
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/checkReserve', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/curriculum/checkReserve', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         if(res.result){
       
@@ -215,13 +215,13 @@ export class AdjustmentComponent implements OnInit {
   }
   //查询教室列表and 查询时间列表
   selectClassroom(){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSchedulingAll', { }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectSchedulingAll', { }, false).then(res => {
       if (res.code == 1000) {
         this.ClassroomList = res.result.list;
       }
     });   
 
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
     if (res.code == 1000) {
       this.selectScourList = res.result.list;
     }

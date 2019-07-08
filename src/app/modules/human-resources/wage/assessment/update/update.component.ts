@@ -34,7 +34,7 @@ export class UpdateComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/payrollCompConfig/savePayrollCompConfig') save: () => void;
+  @DrawerSave('/yeqs/payrollCompConfig/savePayrollCompConfig') save: () => void;
 
   @DrawerClose() close: () => void;
 

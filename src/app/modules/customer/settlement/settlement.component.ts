@@ -145,14 +145,14 @@ export class SettlementComponent implements OnInit {
    
   }
 seletdataList(){
-  this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectEmployee', {}, false).then(res => {
+  this.http.post('/yeqs/scheduling/selectEmployee', {}, false).then(res => {
     this.teacherList = res.result.list;
   });
-  this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
+  this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
     this.dateList = res.result.list;
   });  
   
-  this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSchedulingAll', {}, false).then(res => {
+  this.http.post('/yeqs/scheduling/selectSchedulingAll', {}, false).then(res => {
     this.classRoomList = res.result.list;
   });  
 }
@@ -164,7 +164,7 @@ selectquery(){
     startDate: this.startDate,
     endDate: this.endDate
   });
-  this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectCondition', { paramJson }, false).then(res => {
+  this.http.post('/yeqs/curriculum/selectCondition', { paramJson }, false).then(res => {
     this.tableList = res.result;
     this.tableList.map( (item,index)=>{
       item.sbnum = 0;
@@ -290,7 +290,7 @@ selectquery(){
   }
 
   memberUserDetails(memberId){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/memberIdMsg', {
+    this.http.post('/yeqs/curriculum/memberIdMsg', {
       memberId
     }, false).then(res => {
       this.isOkLoading = false;
@@ -314,7 +314,7 @@ selectquery(){
       employeeId: this.studentdata.employeeId,
       id: this.studentdata.id
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/meetCondition', {
+    this.http.post('/yeqs/curriculum/meetCondition', {
         paramJson,
         memberId
       
@@ -405,7 +405,7 @@ selectquery(){
       return false;
     }
     this.isOkLoading = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/insertMemberMsg', { 
+    this.http.post('/yeqs/curriculum/insertMemberMsg', { 
       paramJson,
       memberId: this.studentInformation.memberId,
       memberName: this.studentInformation.name,
@@ -434,7 +434,7 @@ selectquery(){
   }
 //预约时学员信息查询
   selectshowstudents(memberId){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/memberIdMsg', { memberId }, false).then(res => {
+    this.http.post('/yeqs/curriculum/memberIdMsg', { memberId }, false).then(res => {
       if(res.code==1000){
         if (res.result.length){
           res.result[0].havacard = res.result[0].havacard == 0 ? '体验' : '正式'; 
@@ -464,7 +464,7 @@ selectquery(){
   //延期弹框
   memberRecord(memberId, studentdata){
     this.showRecord = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/memberRecord', { memberId: memberId }, false).then(res => {
+    this.http.post('/yeqs/curriculum/memberRecord', { memberId: memberId }, false).then(res => {
       if (res.code == 1000) {
         this.memberdetail = res.result;
         this.memberdetail.courseName = studentdata.name;
@@ -495,7 +495,7 @@ selectquery(){
       endTime: this.memberdetail.endTime,
       memberId: this.memberdetail.memberId
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/postponedMemberRecord', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/curriculum/postponedMemberRecord', { paramJson }, false).then(res => {
       if (res.code == 1000) { 
         this.showmodelts = true;
         this.callcurrentDate = res.result.currentDate + ' ' + res.result.startTime + '-'+res.result.endTime;
@@ -521,7 +521,7 @@ selectquery(){
     
     this.memberdetailTks = studentdata;
     this.memberdetailTks.item = item;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectMsg', { memberId: memberId }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectMsg', { memberId: memberId }, false).then(res => {
       if (res.code == 1000) {
         this.memberdetailTk = res.result.list;
         console.log(this.memberdetailTk);
@@ -568,10 +568,10 @@ selectquery(){
       endTime: this.memberdetailTks.endTime,
       currentDate: this.memberdetailTks.currentDate
     });                
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/adjustDeleteRecord', { paramJson: paramJsonDelect }, false).then(res => {
+    this.http.post('/yeqs/curriculum/adjustDeleteRecord', { paramJson: paramJsonDelect }, false).then(res => {
       if (res.code == 1000) {
         //调课
-        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/adjustmentRecord', { paramJson }, false).then(res => {
+        this.http.post('/yeqs/curriculum/adjustmentRecord', { paramJson }, false).then(res => {
                 if (res.code == 1000) {
                   this.message.create('success', '调课成功！');
                       this.radioValue = '';
@@ -599,7 +599,7 @@ selectquery(){
   }
   //查询课程类别
   selectSyllabusAll(){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {  }, false).then(res => {
+    this.http.post('/yeqs/scheduling/selectSyllabusAll', {  }, false).then(res => {
       if (res.code == 1000) {
         this.SyllabusAllList =  res.result.list;
       } else {
@@ -610,7 +610,7 @@ selectquery(){
   
 //办卡选课中课表展示
   selectlabel(){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectIdRecord', { syllabusName: this.radioValue, startDate: this.tkstartDate, endDate: this.tkendDate }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectIdRecord', { syllabusName: this.radioValue, startDate: this.tkstartDate, endDate: this.tkendDate }, false).then(res => {
       if (res.code == 1000) {
         this.datalabelList = [];
         this.RecordList = res.result.list;
@@ -647,7 +647,7 @@ selectquery(){
   memberStopcard(memberId){
     this.stopcardMemberdetail = {};
     this.showStopcard = true;
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectMsg', { memberId: memberId }, false).then(res => {
+    this.http.post('/yeqs/curriculum/selectMsg', { memberId: memberId }, false).then(res => {
       if (res.code == 1000) {
         this.stopcardMemberdetail = res.result.list;
       } else {
@@ -670,7 +670,7 @@ selectquery(){
       id: this.stopcardMemberdetail.id,
       name: this.stopcardMemberdetail.name
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/pauseCard', { paramJson }, false).then(res => {
+    this.http.post('/yeqs/memberCard/pauseCard', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.message.create('success', '操作成功！');
         this.showStopcard = false;
@@ -780,7 +780,7 @@ selectquery(){
     this.passwindow = false;
   }
   isPasswindow(){
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/deleteSingle', { memberId: this.removeRecordData.memberId, reserveId: this.removeRecordData.id }, false).then(res => {
+    this.http.post('/yeqs/curriculum/deleteSingle', { memberId: this.removeRecordData.memberId, reserveId: this.removeRecordData.id }, false).then(res => {
         if(res.code == 1000){
           this.message.create('success', '取消成功！');
           this.passwindow = false;

@@ -37,6 +37,6 @@ export class NumberComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/replaceCard') save: () => void;
+  @DrawerSave('/yeqs/memberCard/replaceCard') save: () => void;
 
 }

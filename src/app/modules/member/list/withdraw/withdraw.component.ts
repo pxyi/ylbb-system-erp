@@ -65,7 +65,7 @@ export class WithdrawComponent implements OnInit {
 
   /* -------------------- 退卡请求 -------------------- */
   withdrawCard() {
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/withdrawCard', {
+    this.http.post('/yeqs/memberCard/withdrawCard', {
       paramJson: JSON.stringify(this.formGroup.value)
     }).then(res => this.drawerRef.close(true));
   }

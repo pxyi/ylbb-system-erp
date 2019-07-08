@@ -30,7 +30,7 @@ export class UpdateComponent implements OnInit {
       employeeId: [, [Validators.required]],
       comment: []
     });
-    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers').then(res => this.teacherList = res.result);
+    this.http.post('/yeqs/member/getStoreTeachers').then(res => this.teacherList = res.result);
   }
 
   ngOnInit() {
@@ -38,7 +38,7 @@ export class UpdateComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/department/saveDeptRecord') save: () => void;
+  @DrawerSave('/yeqs/department/saveDeptRecord') save: () => void;
   @DrawerClose() close: () => void;
 
   private positionAsyncValidator = (control: FormControl): any => {
@@ -47,7 +47,7 @@ export class UpdateComponent implements OnInit {
         id: this.formGroup.get('id').value,
         position: control.value
       };
-      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/department/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
+      this.http.post('/yeqs/department/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
         observer.next(res.result ? null : { error: true, duplicated: true });
         observer.complete();
       }, err => {
