@@ -42,6 +42,6 @@ export class SelfuseComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/commodity/saveStock') save: () => void;
+  @DrawerSave('/commodity/saveUse') save: () => void;
   @DrawerClose() close: () => void;
 }
