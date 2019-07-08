@@ -64,7 +64,7 @@
                       <nz-form-item>
                         <nz-form-control>  
                         <nz-form-label >上课日期</nz-form-label>
-                            <nz-range-picker style="width:300px" [(ngModel)]="dateRange"  [nzDisabledDate]="disabledDate"  (ngModelChange)="dateChange($event)" [nzFormat]="dateFormat"></nz-range-picker>
+                            <nz-range-picker style="width:300px" [(ngModel)]="dateRange"  [nzDisabledDate]="disabledDate"  (ngModelChange)="dateChange($event)"></nz-range-picker>
                         </nz-form-control>
                       </nz-form-item>
                     </div>
@@ -95,7 +95,7 @@
           <div class="success_icon"><img src="https://hcz-czg-image.oss-cn-beijing.aliyuncs.com/success201512251221.png" alt=""></div>
           <div class="success_text">操作成功</div>
           <div class="btn" >
-              <button class="nextBtn" nz-button  nzType="primary" routerLink="/home/customer/settlement">再次升班</button>
+              <button class="nextBtn" nz-button  nzType="primary" (click)="close()">再次升班</button>
             </div> 
         </div>
 

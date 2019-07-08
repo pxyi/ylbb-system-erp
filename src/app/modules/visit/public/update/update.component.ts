@@ -46,7 +46,7 @@ export class UpdateComponent implements OnInit {
     this._customerFormInit();
     if (this.id) {
       this._selectLoading = true;
-      this.http.post('/yeqs/customer/showCustomerInfo', { id: this.id }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/showCustomerInfo', { id: this.id }, false).then(res => {
         this._selectLoading = false;
         if (res.code == 1000) {
           res.result.member.birthday = res.result.member.birthday ? new Date(res.result.member.birthday) : '';
@@ -68,7 +68,7 @@ export class UpdateComponent implements OnInit {
     this.cache.get('/retrunVisit/getEmployeeList').subscribe(res => this.collectorList = res);
     this.cache.get('/common/recommenderList').subscribe(res => this.recommenderList = res);
     this.cache.get('/common/parentIdentityList').subscribe(res => this.parentIdentityList = res);
-    this.cache.get('/yeqs/member/communityList').subscribe(res => this.showCommunityList = res);
+    this.cache.get('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList').subscribe(res => this.showCommunityList = res);
   }
 
   _customerFormInit() {

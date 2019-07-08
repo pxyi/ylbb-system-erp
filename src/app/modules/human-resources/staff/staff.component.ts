@@ -70,7 +70,7 @@ export class StaffComponent implements OnInit {
         nzTitle: '<i>确定要重置该员工密码吗?</i>',
         nzContent: '<b>确定要重置该员工密码吗</b>',
         nzOnOk: () => {
-          this.http.post('/yeqs/employee/resetPassword', { id: this.checkedItems[0] }).then(res => { }).catch(err => { })
+          this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/resetPassword', { id: this.checkedItems[0] }).then(res => { }).catch(err => { })
         }
       });
     } else {
@@ -96,7 +96,7 @@ export class StaffComponent implements OnInit {
           onClick(componentInstance) {
             if (componentInstance.avatarUrl) {
               this.loading = true;
-              http.post('/yeqs/employee/uploadPhotoUrl', {
+              http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/uploadPhotoUrl', {
                 id: checkedItems[0],
                 photoUrl: componentInstance.avatarUrl
               }).then(res => {
@@ -115,8 +115,8 @@ export class StaffComponent implements OnInit {
     }
   }
   
-  @ModifyData('/yeqs/employee/disableEmployee') disable: (id: number) => void;
+  @ModifyData('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/disableEmployee') disable: (id: number) => void;
 
-  @ModifyData('/yeqs/employee/enableEmployee') enable: (id: number) => void;
+  @ModifyData('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/enableEmployee') enable: (id: number) => void;
 
 }

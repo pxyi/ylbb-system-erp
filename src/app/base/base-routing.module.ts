@@ -138,7 +138,7 @@ const routes: Routes = [
           },
           {
             path: 'cardbusiness',
-            data: { title: '卡类型管理' },
+            data: { title: '卡业务管理' },
             canLoad: [ AuthGuardService ],
             loadChildren: 'src/app/modules/member/card-business/card-business.module#CardBusinessModule'
           },

@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) { 
-    this.http.post('/yeqs/cardBusinessManagement/findList', {}, false).then(res => this.cardBusinessList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardBusinessManagement/findList', {}, false).then(res => this.cardBusinessList = res.result);
   }
 
   ngOnInit() {
@@ -40,14 +40,14 @@ export class AddComponent implements OnInit {
       balance: [this.cardTypeInfo.balance, [Validators.required]],
       openPoints: [this.cardTypeInfo.openPoints, [Validators.required]],
       tong: [this.cardTypeInfo.tong || false],
-      skillsStatus: [0,[Validators.required]],
+      skillsStatus: [0],
       withdrawAmount: [this.cardTypeInfo.withdrawAmount, [Validators.required]],
       comment: [this.cardTypeInfo.comment]
     });
   }
 
   saveLoading: boolean;
-  @DrawerSave('/yeqs/cardTypeManagement/modify') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/modify') save: () => void;
 
   @DrawerClose() close: () => void;
 

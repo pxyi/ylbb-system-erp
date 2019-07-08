@@ -41,6 +41,6 @@ export class AdjustmentComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/memberCard/modifyTongCard') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/modifyTongCard') save: () => void;
 
 }

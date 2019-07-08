@@ -24,8 +24,8 @@ export class UpdateComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef<string>
   ) {
-    this.http.post('/yeqs/humanInformation/getBands').then(res => this.bandList = res.result);
-    this.http.post('/yeqs/department/getDepartments').then(res => this.departmentList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/getBands').then(res => this.bandList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/department/getDepartments').then(res => this.departmentList = res.result);
   }
 
   ngOnInit() {
@@ -76,7 +76,7 @@ export class UpdateComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/yeqs/employee/saveEmployee') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/saveEmployee') save: () => void;
 
   @DrawerClose() close: () => void;
 

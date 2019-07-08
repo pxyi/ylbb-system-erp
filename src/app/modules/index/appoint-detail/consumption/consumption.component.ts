@@ -67,7 +67,7 @@ export class ConsumptionComponent implements OnInit {
 
     /* ------------------------- 消费服务、商品改变自动填写消费金额 ------------------------- */
     this.timesCountGroup.get('commodityId').valueChanges.subscribe(id => {
-      this.http.post('/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
         this.timesCountGroup.patchValue({ consumption: res.result.price });
       })
     });
@@ -79,27 +79,27 @@ export class ConsumptionComponent implements OnInit {
     /* ------------------------- 消费卡改变触发消费服务列表刷新 ------------------------- */
     this.timesCountGroup.get('cardId').valueChanges.subscribe(cardId => {
       this.timesCountGroup.patchValue({ commodityId: null, consumption: null });
-      this.http.post('/yeqs/customer/changeCommodity', { cardId }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/changeCommodity', { cardId }, false).then(res => {
         this.commoditieListjc = res.result;
         this.timesCountGroup.patchValue({ commodityId: res.result[0].id });
       });
     });
 
     /* ------------------------- 获取服务器时间 ------------------------- */
-    this.http.post('/yeqs/customer/getSystemDate').then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/getSystemDate').then(res => {
       this.timesCountGroup.patchValue({ consumeDate: res.result });
       this.singleTimeGroup.patchValue({ consumeDate: res.result });
     });
 
     /* -------------------- 获取下拉列表数据 -------------------- */
-    this.http.post('/yeqs/member/getStoreTeachers').then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers').then(res => {
       this.teacherList = res.result;
       this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
       this.singleTimeGroup.patchValue({ swimTeacherId: res.result[0].id });
     });
-    this.http.post('/yeqs/member/communityList').then(res => this.communityList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList').then(res => this.communityList = res.result);
     this.http.post('/swimRing/getStoreSwimRings').then(res => this.swimRingList = res.result);
-    this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
       this.memberCardList = res.result;
       res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
     });
@@ -127,7 +127,7 @@ export class ConsumptionComponent implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }).then(res => {
+        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }).then(res => {
           this.drawerRef.close(true);
         });
       }
@@ -139,7 +139,7 @@ export class ConsumptionComponent implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }).then(res => {
+        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }).then(res => {
           this.drawerRef.close(true);
         });
       }

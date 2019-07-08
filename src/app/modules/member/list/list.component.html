@@ -1,7 +1,7 @@
 <div class="container">
   <ea-list-page
     #listPage
-    url="/yeqs/memberCard/list"
+    url="http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/list"
     [queryNode]="queryNode"
     [paramsInit]="paramsInit"
     [tableThead]="['卡号', '卡类型', '会员', '月龄', '婴儿类型', '总次数(正价/赠送)', '剩余次数(正价/赠送)', '金额', '生效日期', '失效日期', '有效期', '状态', '业务类型', '停卡截止日期','成长顾问', '退卡单次价格', '协议号',  '备注']"
@@ -16,6 +16,7 @@
   <!-- </ea-list-page> -->
   <ng-template #EaBtns>
     <div class="ea-button-group" style="margin-bottom: 16px;">
+      <button nz-button [nzType]="'primary'" (click)="operation('appoint')">预约</button>
       <button nz-button [nzType]="'primary'" (click)="operation('change')">卡项变更</button>
       <button nz-button [nzType]="'primary'" (click)="operation('continued')">续卡</button>
       <button nz-button (click)="operation('consumption')">消费</button>

@@ -25,7 +25,7 @@
 </div>
 
 <!-- 新增弹框 -->
-<nz-modal [(nzVisible)]="addtime" nzTitle="新增上课时段" (nzOnCancel)="closeaddtime()" (nzOnOk)="isaddtime()">
+<nz-modal [(nzVisible)]="addtime" nzTitle="新增上课时段" (nzOnCancel)="closeaddtime()" (nzOnOk)="isaddtime()" [nzLoading]="buttonLoading"	>
   <p>
     <nz-form-label>开始时间</nz-form-label>
     <nz-time-picker [(ngModel)]="starttime" nzFormat="HH:mm" nzAllowEmpty='false' nzHideDisabledOptions="true">

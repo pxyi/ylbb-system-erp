@@ -6,7 +6,7 @@
   </div>
 
   <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [allowSpace]="false"
-    url="/yeqs/retrunVisit/customerList">
+    url="http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/retrunVisit/customerList">
     <ng-template let-data #EaTableTbodyTr>
       <td><a (click)="preview({id: data.id})">{{ data.nick }}</a></td>
       <td><a (click)="preview({id: data.id})">{{ data.name }}</a></td>

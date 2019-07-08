@@ -39,7 +39,7 @@ export class CardBusinessComponent implements OnInit {
   enterUpdate() {
     if (this.name) {
       this.updateLoading = true;
-      this.http.post('/yeqs/cardBusinessManagement/modify', {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardBusinessManagement/modify', {
         paramJson: JSON.stringify({ id: this.updateId, name: this.name })
       }, true).then(res => {
         this.updateLoading = false;
@@ -51,6 +51,6 @@ export class CardBusinessComponent implements OnInit {
     }
   }
 
-  @ModifyData('/yeqs/cardBusinessManagement/remove') delete: (id) => void;
+  @ModifyData('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardBusinessManagement/remove') delete: (id) => void;
 
 }

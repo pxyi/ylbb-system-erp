@@ -23,7 +23,7 @@ export class WarehousingComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef<boolean>
   ) {
-    this.http.post('/yeqs/member/getStoreTeachers').then(res => this.employeeList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers').then(res => this.employeeList = res.result);
   }
 
   ngOnInit() {

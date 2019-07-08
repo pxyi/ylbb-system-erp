@@ -33,14 +33,14 @@ export class AppointDetailComponent implements OnInit {
     /* -------------------- 获取泳圈型号 -------------------- */
     this.http.post('/swimRing/getStoreSwimRings').then(res => this.swimRingList = res.result);
     /* -------------------- 获取所有社区 -------------------- */
-    this.http.post('/yeqs/member/communityList').then(res => this.communityList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList').then(res => this.communityList = res.result);
     /* -------------------- 获取所有老师 -------------------- */
     this.http.post('/tongka/teacherList').then(res => this.teacherList = res.result);
   }
 
   ngOnInit() {
     if (this.appointInfo.haveCard) {
-      this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.appointInfo.memberId }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/getMemberCards', { memberId: this.appointInfo.memberId }, false).then(res => {
         this.cardList = res.result;
       });
     }

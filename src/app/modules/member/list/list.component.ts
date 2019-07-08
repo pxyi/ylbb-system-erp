@@ -131,7 +131,7 @@ export class ListComponent implements OnInit {
       label       : '卡类型',
       key         : 'cardTypeId',
       type        : 'select',
-      optionsUrl  : '/yeqs/cardTypeManagement/findList'
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList'
     },
     {
       label       : '卡状态',
@@ -190,7 +190,7 @@ export class ListComponent implements OnInit {
         });
       }
     });
-    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
         this.dateList = res.result.list;
     });
   }
@@ -283,7 +283,7 @@ export class ListComponent implements OnInit {
         this.listArr = [];
       this.listPage.eaTable.dataSet.map(res => {
         if (res.id == this.checkedItems[0]) {
-          this.http.post('/yeqs/curriculum/selectMsg', { memberId: res.memberId }, false).then(res => {
+          this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectMsg', { memberId: res.memberId }, false).then(res => {
             if (res.code == 1000) {
               this.memberdetailTk = res.result.list;
             } else {
@@ -365,7 +365,7 @@ export class ListComponent implements OnInit {
       memberId : this.memberdetailTk.memberId,
       list
     });
-    this.http.post('/yeqs/curriculum/insertMemberRecord', { paramJson, flag:true }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/insertMemberRecord', { paramJson, flag:true }, false).then(res => {
       this.isLoading = false;
       if (res.code == 1000) {
         this.message.create('success', '排课成功！');
@@ -389,7 +389,7 @@ export class ListComponent implements OnInit {
 
   //查询课程类别
   selectSyllabusAll() {
-    this.http.post('/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
       if (res.code == 1000) {
         this.SyllabusAllList = res.result.list;
       } else {
@@ -404,7 +404,7 @@ export class ListComponent implements OnInit {
     if (data.checked) {
       this.selectData = data;
       this.kcName.push(data);
-      this.http.post('/yeqs/curriculum/selectIdRecord', { syllabusName: data.name, startDate: this.startDate, endDate: this.endDate }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectIdRecord', { syllabusName: data.name, startDate: this.startDate, endDate: this.endDate }, false).then(res => {
         if (res.code == 1000) {
           //let arr = this.RecordList.concat(res.result.list);
           this.RecordList = this.RecordList.concat(res.result.list);
@@ -540,7 +540,7 @@ export class ListComponent implements OnInit {
     this.passArranging = false;
   }
   isPassArranging(){
-    this.http.post('/yeqs/curriculum/cancelReserve', { memberId: this.ItemsMemberId }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/cancelReserve', { memberId: this.ItemsMemberId }, false).then(res => {
       if (res.code == 1000) {
         this.message.create('success', '取消成功！');
         this.passArranging = false;

@@ -24,10 +24,10 @@ export class UpdateComponent implements OnInit {
     private drawerRef: NzDrawerRef
   ) {
     /* ----------------------- 获取该门店下所有小区 ----------------------- */
-    this.http.post('/yeqs/member/communityList', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList', {}, false).then(res => {
       this.communityList = res.result;
     });
-    this.http.post('/yeqs/management/selectSource', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/management/selectSource', {}, false).then(res => {
       this.sourceList = res.result;
       console.log(this.sourceList);
     });  
@@ -54,7 +54,7 @@ export class UpdateComponent implements OnInit {
     });
     /* -------------------------- 用户信息回显 -------------------------- */
     if (this.id) {
-      this.http.post('/yeqs/member/queryMemberById', { id: this.id }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/queryMemberById', { id: this.id }, false).then(res => {
         this.formGroup.patchValue(res.result);
       })
     }
@@ -62,7 +62,7 @@ export class UpdateComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/member/modifyMember') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/modifyMember') save: () => void;
 
 
   /* ------------ 宝宝生日禁止选择今天以后的日期 ------------ */

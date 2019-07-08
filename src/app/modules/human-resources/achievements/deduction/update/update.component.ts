@@ -17,8 +17,8 @@ export class UpdateComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  @GetList('/yeqs/member/getStoreTeachers') teacherList: any;
-  @GetList('/yeqs/payrollCompConfig/getPayrollCompConfigList') payrollList: any;
+  @GetList('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers') teacherList: any;
+  @GetList('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/payrollCompConfig/getPayrollCompConfigList') payrollList: any;
 
   constructor(
     private http: HttpService,
@@ -43,7 +43,7 @@ export class UpdateComponent implements OnInit {
 
 
   saveLoading: boolean;
-  @DrawerSave('/yeqs/employeePointsLog/saveEmployeePointsLog') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employeePointsLog/saveEmployeePointsLog') save: () => void;
 
   @DrawerClose() close: () => void;
 

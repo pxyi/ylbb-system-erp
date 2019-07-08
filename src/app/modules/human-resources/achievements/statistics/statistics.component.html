@@ -4,7 +4,7 @@
     url="/commission/listCommissionStatistics"
     [allowSpace]="false"
     [queryNode]="[
-      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/yeqs/employee/listEmployee' },
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/listEmployee' },
       { label: '月份', key: 'month', type: 'monthpicker' }
     ]"
     [tableThead]="['日期','姓名','职位','服务次数','满意度提成积分','满意度提成金额','线索数','线索提成金额','体验卡售卖数','体验卡提成金额','其他任务积分','其他任务提成金额']"

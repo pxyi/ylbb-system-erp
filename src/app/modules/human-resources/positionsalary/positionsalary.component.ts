@@ -44,7 +44,7 @@ export class PositionSalaryComponent implements OnInit {
       }
     } else {
       this.saveLoading = true;
-      let request = this.formGroup.get('id') ? '/yeqs/humanInformation/saveBandRecord' : '/yeqs/humanInformation/saveBandRecord';
+      let request = this.formGroup.get('id') ? 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/saveBandRecord' : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/saveBandRecord';
       this.http.post(request, { paramJson: JSON.stringify(this.formGroup.value) }).then(res => {
         this.table._request();
         this.showDrawer = false;
@@ -54,7 +54,7 @@ export class PositionSalaryComponent implements OnInit {
   }
   
   delete(id) {
-    this.http.post('/yeqs/humanInformation/removeBandRecord', { id }).then( res => this.table._request())
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/removeBandRecord', { id }).then( res => this.table._request())
   }
 
   update(data = { id: null, position: null, bandName: null, salary: null, bandRate: null, comment: null }) {
@@ -68,7 +68,7 @@ export class PositionSalaryComponent implements OnInit {
         id: this.formGroup.get('id').value,
         position: control.value
       };
-      this.http.post('/yeqs/humanInformation/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/humanInformation/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
         observer.next(res.result ? null : { error: true, duplicated: true });
         observer.complete();
       }, err => {

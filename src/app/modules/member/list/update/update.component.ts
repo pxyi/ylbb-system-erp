@@ -26,10 +26,10 @@ export class UpdateComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) { 
-    this.http.post('/yeqs/member/getStoreTeachers', {}, false).then(res => {  this.teacherList = res.result; });
-    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers', {}, false).then(res => {  this.teacherList = res.result; });
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList', {}, false).then(res => {
       res.result.map(item=>{
-          if(item.status == 0){
+          if(item.skillsStatus == 1){
               this.cardTypeList.push(item);
           }
       })
@@ -66,6 +66,6 @@ export class UpdateComponent implements OnInit {
   }
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/curriculum/MembershipUpgrade') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/MembershipUpgrade') save: () => void;
 
 }

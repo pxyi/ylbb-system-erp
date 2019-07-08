@@ -1,5 +1,6 @@
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzDrawerRef } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { differenceInCalendarDays } from 'date-fns';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -29,7 +30,8 @@ export class UpclassComponent implements OnInit {
     private message: NzMessageService,
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
-    private format: DatePipe
+    private format: DatePipe,
+    private drawerRef: NzDrawerRef
   ) { 
     this.followRecordGroup = this.fb.group({
       roomName: [],
@@ -43,8 +45,8 @@ export class UpclassComponent implements OnInit {
       flag: [false]
     });
     this.details = JSON.parse( window.localStorage.getItem('jsons'));
-    this.http.post('/yeqs/scheduling/selectCondition', {}, false).then(res => { this.classList = res.result.list; });
-    this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectCondition', {}, false).then(res => { this.classList = res.result.list; });
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
       res.result.list.map(item => {
         item.label = item.startTime + '-' + item.endTime;
         if(this.details.startTime == item.startTime&&this.details.endTime == item.endTime){
@@ -87,7 +89,7 @@ export class UpclassComponent implements OnInit {
     let paramJson: any = this.details;
     paramJson.startDate = this.startDate;
     paramJson.endDate = this.endDate;
-    this.http.post('/yeqs/curriculum/promotionClass', { paramJson: JSON.stringify(paramJson) }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/promotionClass', { paramJson: JSON.stringify(paramJson) }, false).then(res => {
       if (res.code == 1000) {
         this.current = 2;
     } else {
@@ -101,4 +103,6 @@ export class UpclassComponent implements OnInit {
   disabledDate = (current: Date): boolean => {
     return differenceInCalendarDays(current, this.today) < 0;
   };
+
+  @DrawerClose() close: () => void;
 }

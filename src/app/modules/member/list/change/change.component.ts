@@ -25,8 +25,8 @@ export class ChangeComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
-    this.http.post('/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
   }
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class ChangeComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/memberCard/changeCard') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/changeCard') save: () => void;
 
   minimumValueValidator(contrastKey: string): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {

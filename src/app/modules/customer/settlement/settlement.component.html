@@ -1,21 +1,20 @@
 <div class="container">
   <nz-form-item>
-    <div class="content">
     <span>
       <nz-form-label>授课老师</nz-form-label>
-      <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" [(ngModel)]="employeeId">
+      <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" nzAllowClear [(ngModel)]="employeeId">
         <nz-option *ngFor="let items of teacherList" [nzLabel]="items.name" [nzValue]="items.id"></nz-option>
       </nz-select>
     </span>
     <span>
       <nz-form-label>教室</nz-form-label>
-      <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="name" [(ngModel)]="roomId">
+      <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="name" nzAllowClear [(ngModel)]="roomId">
         <nz-option *ngFor="let items of classRoomList" [nzLabel]="items.roomName" [nzValue]="items.id"></nz-option>
       </nz-select>
     </span>
     <span>
       <nz-form-label>课程名称</nz-form-label>
-      <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="syllabusName" >
+      <input nz-input style="width: 200px;" placeholder="请输入" [(ngModel)]="syllabusName">
     </span>
     <button nz-button nzType="primary" (click)="selectquery()">查询</button>
     <div>
@@ -23,360 +22,469 @@
       <button nz-button nzType="primary" (click)="nowDate()">本周</button>
       <button nz-button nzType="default" (click)="nextDate()">下周</button>
     </div>
-  </div>
   </nz-form-item>
- 
+
 
   <div class="listTable">
     <div class="tableMain">
-        <div class="listHeader">
-              <div class="headerDate">
-                    <div class="header_line"></div>
-                    <span>日期</span>
-                    <span>时间</span>
-              </div>
-              <div class="navList">
-                <div>星期一</div>
-                <div> {{startDate}}</div>
-              </div>
-              <div class="navList">
-                <div>星期二</div>
-                <div>{{Tuesday}}</div>
-              </div>
-              <div class="navList">
-                <div>星期三</div>
-                <div>{{Wednesday}}</div>
-              </div>
-              <div class="navList">
-                <div>星期四</div>
-                <div>{{Thursday}}</div>
-              </div>
-              <div class="navList">
-                <div>星期五</div>
-                <div>{{Friday}}</div>
-              </div>
-              <div class="navList">
-                <div>星期六</div>
-                <div>{{Saturday}}</div>
-              </div>                                                        
-              <div class="navList">
-                <div>星期日</div>
-                <div>{{endDate}}</div>
-              </div> 
+      <div class="listHeader">
+        <div class="headerDate">
+          <div class="header_line"></div>
+          <span>日期</span>
+          <span>时间</span>
         </div>
-
-        <div class="table_smain">
-          <div class="list_sy"  id="slist" *ngFor="let data of dateList">
-            <div class="stime">{{data.startTime}} - {{data.endTime}}</div>
-            <!-- 星期一 -->
-            <div class="slist">
-              <ng-container *ngFor="let item of startDateList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"  [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                  <ng-container *ngIf="item.member.length" >
-                      <ng-container *ngFor="let items of item.member; let i = index" >
-                      <span  class="fspan"   [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                          {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
-                      </span>
-                    </ng-container>
-                    </ng-container>
-                    <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                    <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                    <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                    <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                  </div></div>
-                  <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-             </ng-container> 
-            </div>
-            <!-- 星期二-->
-            <div class="slist">
-              <ng-container *ngFor="let item of TuesdayList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"  [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                      <ng-container *ngIf="item.member.length" >
-                          <ng-container *ngFor="let items of item.member; let i = index" >
-                          <span  class="fspan"   [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                              {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}} 
-                          </span>
-                        </ng-container>
-                        </ng-container>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                      </div></div>
-                      <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-             </ng-container> 
-            </div>   
-            <!-- 星期三 -->
-            <div class="slist">
-              <ng-container *ngFor="let item of WednesdayList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                      <ng-container *ngIf="item.member.length" >
-                          <ng-container *ngFor="let items of item.member; let i = index" >
-                          <span  class="fspan"   [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                              {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}} 
-                          </span>
-                        </ng-container>
-                        </ng-container>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                      </div></div>
-                      <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-             </ng-container> 
-            </div> 
-            <!-- 星期四 -->
-            <div class="slist">
-              <ng-container *ngFor="let item of ThursdayList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                  <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                      <ng-container *ngIf="item.member.length" >
-                          <ng-container *ngFor="let items of item.member; let i = index" >
-                          <span  class="fspan"    [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                              {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}} 
-                          </span>
-                        </ng-container>
-                        </ng-container>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                      </div></div>
-                      <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-            </ng-container> 
-            </div> 
-            <!-- 星期五 -->
-            <div class="slist">
-              <ng-container *ngFor="let item of FridayList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                      <ng-container *ngIf="item.member.length" >
-                          <ng-container *ngFor="let items of item.member; let i = index" >
-                          <span  class="fspan"   [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                              {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}} 
-                          </span>
-                        </ng-container>
-                        </ng-container>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                      </div></div>
-                      <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-            </ng-container> 
-            </div> 
-            <!-- 星期六 -->
-            <div class="slist">
-              <ng-container *ngFor="let item of SaturdayList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                      <ng-container *ngIf="item.member.length" >
-                          <ng-container *ngFor="let items of item.member; let i = index" >
-                          <span  class="fspan"    [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                              {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}} 
-                          </span>
-                        </ng-container>
-                        </ng-container>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                      </div></div>
-                      <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-            </ng-container> 
-            </div> 
-            <!-- 星期日 -->
-            <div class="slist">
-              <ng-container *ngFor="let item of endDateList">
-              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime" [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
-                <div class="slistContent" [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
-                  <div class="sname">{{item.name}}</div>
-                  <div class="sname">教室：{{item.roomName}}</div>
-                  <div class="sname">主教：{{item.employeeName}}</div>
-                  <div class="sxy"><div>学员：</div>
-                  <div>
-                      <ng-container *ngIf="item.member.length" >
-                          <ng-container *ngFor="let items of item.member; let i = index" >
-                          <span  class="fspan"    [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" >
-                              {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}} 
-                          </span>
-                        </ng-container>
-                        </ng-container>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
-                        <span [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour" *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
-                      </div></div>
-                      <div class="sczt"><div class="scz" (click)="details(item)">操作</div></div>
-              </div>
-            </div>
-            </ng-container> 
-            </div> 
-
-
-          </div>  
-
-
+        <div class="navList">
+          <div>星期一</div>
+          <div> {{startDate}}</div>
         </div>
-
-
+        <div class="navList">
+          <div>星期二</div>
+          <div>{{Tuesday}}</div>
+        </div>
+        <div class="navList">
+          <div>星期三</div>
+          <div>{{Wednesday}}</div>
+        </div>
+        <div class="navList">
+          <div>星期四</div>
+          <div>{{Thursday}}</div>
+        </div>
+        <div class="navList">
+          <div>星期五</div>
+          <div>{{Friday}}</div>
+        </div>
+        <div class="navList">
+          <div>星期六</div>
+          <div>{{Saturday}}</div>
+        </div>
+        <div class="navList">
+          <div>星期日</div>
+          <div>{{endDate}}</div>
+        </div>
       </div>
+
+      <div class="table_smain">
+        <div class="list_sy" id="slist" *ngFor="let data of dateList">
+          <div class="stime">{{data.startTime}} - {{data.endTime}}</div>
+          <!-- 星期一 -->
+          <div class="slist">
+            <ng-container *ngFor="let item of startDateList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- 星期二-->
+          <div class="slist">
+            <ng-container *ngFor="let item of TuesdayList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- 星期三 -->
+          <div class="slist">
+            <ng-container *ngFor="let item of WednesdayList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- 星期四 -->
+          <div class="slist">
+            <ng-container *ngFor="let item of ThursdayList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- 星期五 -->
+          <div class="slist">
+            <ng-container *ngFor="let item of FridayList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- 星期六 -->
+          <div class="slist">
+            <ng-container *ngFor="let item of SaturdayList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- 星期日 -->
+          <div class="slist">
+            <ng-container *ngFor="let item of endDateList">
+              <div class="slistMain" id="slist" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime"
+                [style.background]="item.typefaceColour ? item.typefaceColour : '#3aeaff'">
+                <div class="slistContent"
+                  [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                  <div class="sname">{{item.name}}</div>
+                  <div class="sname">教室：{{item.roomName}}</div>
+                  <div class="sname">主教：{{item.employeeName}}</div>
+                  <div class="sxy">
+                    <div>学员：</div>
+                    <div>
+                      <ng-container *ngIf="item.member.length">
+                        <ng-container *ngFor="let items of item.member; let i = index">
+                          <span class="fspan"
+                            [style.color]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour">
+                            {{ items.reserveStatus==4 ? '(补)' : '' }}{{items.memberName}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>0" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>1" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>2" (click)="showstudents(item)">+</span>
+                      <span
+                        [style.background]="item.colour&&item.colour.indexOf('#')!=-1? item.colour : '#'+ item.colour"
+                        *ngIf="item.galleryful-item.sbnum>3" (click)="showstudents(item)">+</span>
+                    </div>
+                  </div>
+                  <div class="sczt">
+                    <div class="scz" (click)="details(item)">操作</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
 
   <div class="tc_form sem">
-    <nz-modal [(nzVisible)]="showstudentsForm" nzWidth="1100" nzTitle="查询" (nzOnCancel)="closestudentsForm()" (nzOnOk)="isstudentsForm()" [nzOkLoading]="isOkLoading">
+    <nz-modal [(nzVisible)]="showstudentsForm" nzWidth="1100" nzTitle="查询" (nzOnCancel)="closestudentsForm()"
+      (nzOnOk)="isstudentsForm()" [nzOkLoading]="isOkLoading">
       <div class="select_main">
-      <div class="select_left">
-              <p>
-                <input nz-input  placeholder="请输入搜索内容" [(ngModel)]="mobilePhone" (ngModelChange)="modelChange()">
-              </p>
-              <div class="select_list">
-                    <div class="select_tit">客户信息</div>
-                    <nz-table #basicTable nzShowPagination="false" [nzData]="memberList_b" [nzLoading]="loading_b">
-                      <thead>
-                        <tr>
-                          <th>姓名</th>
-                          <th>小名</th>
-                          <th>家长姓名</th>
-                          <th>手机号</th>
-                          <th>备注</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="shkem" *ngFor="let data of memberList_b" (click)="selectMemberList(data)">
-                          <td><span *ngIf="data.name"  [innerHTML]="data.name"></span></td>
-                          <td ><span *ngIf="data.mobile" [innerHTML]="data.nick"></span></td>
-                          <td ><span *ngIf="data.parentName" [innerHTML]="data.parentName"></span></td>
-                          <td ><span *ngIf="data.mobile" [innerHTML]="data.mobile"></span></td>
-                          <td><span *ngIf="data.comment" nz-tooltip [nzTitle]="data.comment" [innerHTML]="data.comment.length > 10 ? data.comment.substr(0, 10) + '...' : data.comment"></span></td>
-                        </tr>
-                      </tbody>
-                    </nz-table>
-                     <div style="text-align: right; margin-top: 20px">  <nz-pagination [(nzPageIndex)]="pageIndex_b" [nzTotal]="total_b" [nzSize]="'small'"  nzShowQuickJumper (nzPageIndexChange)="modelChange()" ></nz-pagination></div>
-              </div>
+        <div class="select_left">
+          <p>
+            <input nz-input placeholder="请输入搜索内容" [(ngModel)]="mobilePhone" (ngModelChange)="modelChange()">
+          </p>
+          <div class="select_list">
+            <div class="select_tit">客户信息</div>
+            <nz-table #basicTable nzShowPagination="false" [nzData]="memberList_b" [nzLoading]="loading_b">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>小名</th>
+                  <th>家长姓名</th>
+                  <th>手机号</th>
+                  <th>备注</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="shkem" *ngFor="let data of memberList_b" (click)="selectMemberList(data)">
+                  <td><span *ngIf="data.name" [innerHTML]="data.name"></span></td>
+                  <td><span *ngIf="data.mobile" [innerHTML]="data.nick"></span></td>
+                  <td><span *ngIf="data.parentName" [innerHTML]="data.parentName"></span></td>
+                  <td><span *ngIf="data.mobile" [innerHTML]="data.mobile"></span></td>
+                  <td><span *ngIf="data.comment" nz-tooltip [nzTitle]="data.comment"
+                      [innerHTML]="data.comment.length > 10 ? data.comment.substr(0, 10) + '...' : data.comment"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <div style="text-align: right; margin-top: 20px">
+              <nz-pagination [(nzPageIndex)]="pageIndex_b" [nzTotal]="total_b" [nzSize]="'small'" nzShowQuickJumper
+                (nzPageIndexChange)="modelChange()"></nz-pagination>
+            </div>
+          </div>
 
-      </div>
-      <div class="select_right">
+        </div>
+        <div class="select_right">
 
-      <div style="border-bottom: solid 1px #eee; padding-bottom: 10px; margin-bottom: 10px;">
-        <h3>学员基本信息</h3>
-        <p>
-          <span>
-            <nz-form-label>姓名</nz-form-label>
-            <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.name" disabled>
-          </span>
-          <span style="margin-left: 10px;">
-            <nz-form-label>小名</nz-form-label>
-            <input nz-input style="width: 120px;"  [(ngModel)]="studentInformation.nick" disabled>
-          </span>
-        </p>
-        <p>
-          <span>
-            <nz-form-label>生日</nz-form-label>
-            <input nz-input style="width: 120px;"  [(ngModel)]="studentInformation.birthday" disabled>
-          </span>
-          <span style="margin-left: 10px;">
-            <nz-form-label>性别</nz-form-label>
-            <input nz-input style="width: 120px;"  [(ngModel)]="studentInformation.sex" disabled>
-          </span>
-        </p>
-        <p>
-          <span>
-            <nz-form-label>状态</nz-form-label>
-            <input nz-input style="width: 120px;"  [(ngModel)]="studentInformation.havacard" disabled>
-          </span>
-          <span style="margin-left: 10px;">
-            <nz-form-label>家长电话</nz-form-label>
-            <input nz-input style="width: 120px;"  [(ngModel)]="studentInformation.mobilePhone" disabled>
-          </span>
-        </p>
-        <p>
-          <span>
-            <nz-form-label>是否补课</nz-form-label>
-            <nz-switch [(ngModel)]="buttonStatus" ></nz-switch>
-            
-          </span>
-        </p>
-        <p>
-          <span>
-            <nz-form-label>备注</nz-form-label>
-            <textarea rows="4" nz-input [(ngModel)]="studentInformation.remarks"></textarea>
-          </span>
-        </p>
+          <div style="border-bottom: solid 1px #eee; padding-bottom: 10px; margin-bottom: 10px;">
+            <h3>学员基本信息</h3>
+            <p>
+              <span>
+                <nz-form-label>姓名</nz-form-label>
+                <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.name" disabled>
+              </span>
+              <span style="margin-left: 10px;">
+                <nz-form-label>小名</nz-form-label>
+                <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.nick" disabled>
+              </span>
+            </p>
+            <p>
+              <span>
+                <nz-form-label>生日</nz-form-label>
+                <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.birthday" disabled>
+              </span>
+              <span style="margin-left: 10px;">
+                <nz-form-label>性别</nz-form-label>
+                <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.sex" disabled>
+              </span>
+            </p>
+            <p>
+              <span>
+                <nz-form-label>状态</nz-form-label>
+                <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.havacard" disabled>
+              </span>
+              <span style="margin-left: 10px;">
+                <nz-form-label>家长电话</nz-form-label>
+                <input nz-input style="width: 120px;" [(ngModel)]="studentInformation.mobilePhone" disabled>
+              </span>
+            </p>
+            <p>
+              <span>
+                <nz-form-label>是否补课</nz-form-label>
+                <nz-switch [(ngModel)]="buttonStatus"></nz-switch>
+
+              </span>
+            </p>
+            <p>
+              <span>
+                <nz-form-label>备注</nz-form-label>
+                <textarea rows="4" nz-input [(ngModel)]="studentInformation.remarks"></textarea>
+              </span>
+            </p>
+          </div>
+          <div>
+            <h3>课程信息</h3>
+            <p>课程名称：{{showName}}</p>
+            <p>教室：{{showroomName}}</p>
+            <p>主教老师：{{showemployeeName}}</p>
+          </div>
+        </div>
       </div>
-      <div>
-        <h3>课程信息</h3>
-        <p>课程名称：{{showName}}</p>
-        <p>教室：{{showroomName}}</p>
-        <p>主教老师：{{showemployeeName}}</p>
-      </div>
-     </div> 
-    </div>
     </nz-modal>
 
-    <nz-modal [(nzVisible)]="showListdetail" nzTitle="查询" (nzOnCancel)="closeListdetail()" (nzOnOk)="closeListdetail()" >
+    <nz-modal [(nzVisible)]="showListdetail" nzTitle="查询" (nzOnCancel)="closeListdetail()" (nzOnOk)="closeListdetail()">
       <div>
         <p>课程名称：{{studentdata.name}}</p>
         <p>教室：{{studentdata.roomName}}</p>
-        <p>主教老师：{{studentdata.employeeName}}&nbsp;&nbsp;&nbsp;<button nz-button (click)="upclass()" nzType="primary" nzSize="small">升班</button></p>
+        <p>主教老师：{{studentdata.employeeName}}&nbsp;&nbsp;&nbsp;<button nz-button (click)="upclass()" nzType="primary"
+            nzSize="small">升班</button></p>
         <div>
           <h3>学员</h3>
-        </div> 
+        </div>
         <div style="margin-top: 10px;" *ngFor="let item of studentdata.member">
-          <span  *ngIf="item.memberId == memberUserDetail.memberId"  class="users activitys"  (click)="memberUserDetails(item.memberId)" >{{item.memberName}}:</span>
-          <span  *ngIf="item.memberId != memberUserDetail.memberId"   class="users"  (click)="memberUserDetails(item.memberId)" >{{item.memberName}}:</span>
-          <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id" (click)="Adjust(item.memberId,item.memberName,item,studentdata)" [disabled]="item.reserveStatus==4">单次调课</button>
-          <button nz-button nzType="primary" nzSize="small" (click)="settlement(item)" [disabled]="item.reserveStatus!=0&&item.reserveStatus!=4">{{ item.reserveStatus==0?'结算': item.reserveStatus==4 ? '补课' : '已结算' }}</button>
-          <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id" (click)="memberStopcard(item.memberId)" [disabled]="item.reserveStatus==4">停卡</button>
-          <!-- <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id" (click)="memberRecord(item.memberId,studentdata)">延期</button> -->
-          <!-- <button nz-button nzType="primary" nzSize="small"  (click)="removeRecord(item.memberId,studentdata.id)">取消</button> -->
+          <span *ngIf="item.memberId == memberUserDetail.memberId" class="users activitys"
+            (click)="memberUserDetails(item.memberId)">{{item.memberName}}:</span>
+          <span *ngIf="item.memberId != memberUserDetail.memberId" class="users"
+            (click)="memberUserDetails(item.memberId)">{{item.memberName}}:</span>
+          <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id"
+            (click)="Adjust(item.memberId,item.memberName,item,studentdata)"
+            [disabled]="item.reserveStatus==4">单次调课</button>
+          <button nz-button nzType="primary" nzSize="small" (click)="settlement(item)"
+            [disabled]="item.reserveStatus!=0&&item.reserveStatus!=4">{{ item.reserveStatus==0?'结算': item.reserveStatus==4 ? '补课' : '已结算' }}</button>
+          <button nz-button nzType="primary" nzSize="small" [disabled]="!item.id"
+            (click)="memberStopcard(item.memberId)" [disabled]="item.reserveStatus==4">停卡</button>
         </div>
         <div class="memberDetail" *ngIf="memberUserDetail.memberId !=0 && memberUserDetail">
           <div>姓名：{{ memberUserDetail.name }}</div>
@@ -410,7 +518,7 @@
             <input nz-input style="width: 150px;" placeholder="请查询" [(ngModel)]="memberdetail.birthday" disabled>
           </span>
           <span style="margin-left: 10px;">
-            <nz-form-label>性别</nz-form-label> 
+            <nz-form-label>性别</nz-form-label>
             <input nz-input style="width: 150px;" placeholder="请查询" [(ngModel)]="memberdetail.sex" disabled>
           </span>
         </p>
@@ -441,10 +549,11 @@
 
     <!-- 取消弹框-->
     <nz-modal [(nzVisible)]="passwindow" nzTitle="确认取消排课？" (nzOnCancel)="noPasswindow()" (nzOnOk)="isPasswindow()">
-        <p>确认取消排课？</p>
+      <p>确认取消排课？</p>
     </nz-modal>
     <!-- 调课弹框 -->
-    <nz-modal nzWidth="95%" [(nzVisible)]="showAdjust" nzTitle="单次调课" [nzFooter]="tplFooter"  (nzOnCancel)="closeAdjust()">
+    <nz-modal nzWidth="95%" [(nzVisible)]="showAdjust" nzTitle="单次调课" [nzFooter]="tplFooter"
+      (nzOnCancel)="closeAdjust()">
       <p>学员姓名：{{memberdetailTk.name}}</p>
       <p>剩余卡次：{{memberdetailTk.cardNumber}}</p>
       <div>
@@ -463,7 +572,7 @@
             <tbody>
               <tr *ngFor="let data of SyllabusAllList">
                 <td>
-                  <label nz-radio [nzDisabled]="data.courseStatus!=0"  [nzValue]="data.name"></label>
+                  <label nz-radio [nzDisabled]="data.courseStatus!=0" [nzValue]="data.name"></label>
                 </td>
                 <td>{{data.name}}</td>
                 <td>{{data.lessonName}}</td>
@@ -476,160 +585,163 @@
       </div>
       <div>
         <h3 style="margin-top: 20px;">课程排期</h3>
-       <nz-radio-group style="width: 100%;" [(ngModel)]="courseNames" (ngModelChange)="datalabelChange()">            
-        <nz-table #basicTable [nzData]="dateList" nzShowPagination='false'>
-          <thead>
-            <tr>
-              <th>时段</th>
-              <th>星期一</th>
-              <th>星期二</th> 
-              <th>星期三</th>
-              <th>星期四</th>
-              <th>星期五</th>
-              <th>星期六</th>
-              <th>星期日</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of dateList">
-              <!-- RecordList -->
-              <td>{{item.startTime}}-{{item.endTime}}</td>
-              <td>
-                <ng-container *ngFor="let data of RecordList1">
-                      <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                            <p>课程：{{data.name}}</p>
-                            <p>教室：{{data.roomName}}</p>
-                            <p>主助教：{{data.employeeName}}</p>
-                            <p>日期：{{data.currentDate}}</p>
-                            <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                            <p *ngIf="data.galleryful-data.number>0">
-                              <!-- <label nz-checkbox [(ngModel)]="checked1" (ngModelChange)="datalabelChange(data,1)" style="color: #fff">选择该课程</label> -->
-                              <label nz-radio [(nzValue)]="data.id"  style="color: #fff">选择该课程</label>
-                            </p>
-                      </div>  
-                </ng-container>  
-              </td>
-              <td>
-                <ng-container *ngFor="let data of RecordList2">
-                  <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                    <p>课程：{{data.name}}</p>
-                    <p>教室：{{data.roomName}}</p>
-                    <p>主助教：{{data.employeeName}}</p>
-                    <p>日期：{{data.currentDate}}</p>
-                    <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                    <p *ngIf="data.galleryful-data.number>0">
-                    <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
-                    </p>
-                  </div>
-                </ng-container>
-              </td>
-              <td>
-                <ng-container *ngFor="let data of RecordList3">
-                  <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                    <p>课程：{{data.name}}</p>
-                    <p>教室：{{data.roomName}}</p>
-                    <p>主助教：{{data.employeeName}}</p>
-                    <p>日期：{{data.currentDate}}</p>
-                    <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                    <p *ngIf="data.galleryful-data.number>0">
-                      <label nz-radio [(nzValue)]="data.id"  style="color: #fff">选择该课程</label>
-                    </p>
-                  </div>
-                </ng-container>
-              </td>
-              <td>
-                <ng-container *ngFor="let data of RecordList4">
-                  <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                    <p>课程：{{data.name}}</p>
-                    <p>教室：{{data.roomName}}</p>
-                    <p>主助教：{{data.employeeName}}</p>
-                    <p>日期：{{data.currentDate}}</p>
-                    <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                    <p *ngIf="data.galleryful-data.number>0">
-                      <label nz-radio [(nzValue)]="data.id"  style="color: #fff">选择该课程</label>
-                    </p>
-                  </div>
-                </ng-container>
-              </td>
-              <td>
-                <ng-container *ngFor="let data of RecordList5">
-                  <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                    <p>课程：{{data.name}}</p>
-                    <p>教室：{{data.roomName}}</p>
-                    <p>主助教：{{data.employeeName}}</p>
-                    <p>日期：{{data.currentDate}}</p>
-                    <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                    <p *ngIf="data.galleryful-data.number>0">
-                      <label nz-radio [(nzValue)]="data.id"  style="color: #fff">选择该课程</label>
-                    </p>
-                  </div>
-                </ng-container>
-              </td>
-              <td>
-                <ng-container *ngFor="let data of RecordList6">
-                  <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                    <p>课程：{{data.name}}</p>
-                    <p>教室：{{data.roomName}}</p>
-                    <p>主助教：{{data.employeeName}}</p>
-                    <p>日期：{{data.currentDate}}</p>
-                    <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                    <p *ngIf="data.galleryful-data.number>0">
-                      <label nz-radio [(nzValue)]="data.id"  style="color: #fff">选择该课程</label>
-                    </p>
-                  </div>
-                </ng-container>
-              </td>
-              <td>
-                <ng-container *ngFor="let data of RecordList7">
-                  <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;" *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
-                    <p>课程：{{data.name}}</p>
-                    <p>教室：{{data.roomName}}</p>
-                    <p>主助教：{{data.employeeName}}</p>
-                    <p>日期：{{data.currentDate}}</p>
-                    <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
-                    <p *ngIf="data.galleryful-data.number>0">
-                      <label nz-radio [(nzValue)]="data.id"  style="color: #fff">选择该课程</label>
-                    </p>
-                  </div>
-                </ng-container>
-              </td>
-            </tr>
-            
-          </tbody>
-        </nz-table>
-      </nz-radio-group>
-      </div>
-        <ng-template #tplFooter>
-          <button nz-button (click)="closeAdjust()">取消</button>
-          <button  (click)="isAdjust()" nzType="primary" nz-button>确定</button>
+        <nz-radio-group style="width: 100%;" [(ngModel)]="courseNames" (ngModelChange)="datalabelChange()">
+          <nz-table #basicTable [nzData]="dateList" nzShowPagination='false'>
+            <thead>
+              <tr>
+                <th>时段</th>
+                <th>星期一</th>
+                <th>星期二</th>
+                <th>星期三</th>
+                <th>星期四</th>
+                <th>星期五</th>
+                <th>星期六</th>
+                <th>星期日</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dateList">
+                <!-- RecordList -->
+                <td>{{item.startTime}}-{{item.endTime}}</td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList1">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <!-- <label nz-checkbox [(ngModel)]="checked1" (ngModelChange)="datalabelChange(data,1)" style="color: #fff">选择该课程</label> -->
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList2">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList3">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList4">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList5">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList6">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngFor="let data of RecordList7">
+                    <div style="background: #ccc; margin-bottom: 10px; padding: 10px; background: #40a9ff; color: #fff;"
+                      *ngIf="data.startTime==item.startTime&&data.endTime==item.endTime">
+                      <p>课程：{{data.name}}</p>
+                      <p>教室：{{data.roomName}}</p>
+                      <p>主助教：{{data.employeeName}}</p>
+                      <p>日期：{{data.currentDate}}</p>
+                      <p>剩余可排课人数：{{data.galleryful-data.number }}</p>
+                      <p *ngIf="data.galleryful-data.number>0">
+                        <label nz-radio [(nzValue)]="data.id" style="color: #fff">选择该课程</label>
+                      </p>
+                    </div>
+                  </ng-container>
+                </td>
+              </tr>
 
-        </ng-template>
+            </tbody>
+          </nz-table>
+        </nz-radio-group>
+      </div>
+      <ng-template #tplFooter>
+        <button nz-button (click)="closeAdjust()">取消</button>
+        <button (click)="isAdjust()" nzType="primary" nz-button>确定</button>
+
+      </ng-template>
     </nz-modal>
     <!-- 停卡弹框 -->
-      <nz-modal [(nzVisible)]="showStopcard" nzTitle="停卡" (nzOnCancel)="closeStopcard()" (nzOnOk)="isStopcard()">
-        <div>
-          <p>卡号：{{stopcardMemberdetail.cardCode}}</p>
-          <p>会员：{{stopcardMemberdetail.name}}</p>
-          <p>停卡至：<nz-date-picker style="width: 200px;" nzFormat="yyyy-MM-dd" [(ngModel)]="stopcardMemberdetail.reopenDate" ></nz-date-picker></p> 
-        </div>
-      </nz-modal>
+    <nz-modal [(nzVisible)]="showStopcard" nzTitle="停卡" (nzOnCancel)="closeStopcard()" (nzOnOk)="isStopcard()">
+      <div>
+        <p>卡号：{{stopcardMemberdetail.cardCode}}</p>
+        <p>会员：{{stopcardMemberdetail.name}}</p>
+        <p>停卡至：<nz-date-picker style="width: 200px;" nzFormat="yyyy-MM-dd"
+            [(ngModel)]="stopcardMemberdetail.reopenDate"></nz-date-picker>
+        </p>
+      </div>
+    </nz-modal>
 
 
   </div>
 
-      <nz-modal
-      [(nzVisible)]="modal_visit"
-      nzTitle="提示"
-      nzOkText="确定"
-      nzCancelText="取消"
-      (nzOnOk)="visitOk()"
-      (nzOnCancel)="modal_visit = false"
-    >
-        <div *ngIf="insetStatus == 1">该学员卡次已约满，继续预约将删除最后一次预约记录</div>
-         <div *ngIf="insetStatus == 0" style="text-align:center">
-              <h2>临时约课成功</h2>
-              <div>{{ setNum }}S  后自动关闭页面</div>
-         </div>   
-    </nz-modal>
+  <nz-modal [(nzVisible)]="modal_visit" nzTitle="提示" nzOkText="确定" nzCancelText="取消" (nzOnOk)="visitOk()"
+    (nzOnCancel)="modal_visit = false">
+    <div *ngIf="insetStatus == 1">该学员卡次已约满，继续预约将删除最后一次预约记录</div>
+    <div *ngIf="insetStatus == 0" style="text-align:center">
+      <h2>临时约课成功</h2>
+      <div>{{ setNum }}S 后自动关闭页面</div>
+    </div>
+  </nz-modal>
 
 </div>

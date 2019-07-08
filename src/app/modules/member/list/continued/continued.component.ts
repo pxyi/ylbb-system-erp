@@ -26,8 +26,8 @@ export class ContinuedComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
-    this.http.post('/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
   }
 
   ngOnInit() {
@@ -46,6 +46,6 @@ export class ContinuedComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/memberCard/continueCard') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/continueCard') save: () => void;
 
 }

@@ -31,7 +31,7 @@ export class AddapointComponent implements OnInit {
     /* -------------------- 获取泳圈型号 -------------------- */
     this.http.post('/swimRing/getStoreSwimRings').then(res => this.swimRingList = res.result);
     /* -------------------- 获取所有社区 -------------------- */
-    this.http.post('/yeqs/member/communityList').then(res => this.communityList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList').then(res => this.communityList = res.result);
   }
 
   ngOnInit() {
@@ -73,7 +73,7 @@ export class AddapointComponent implements OnInit {
       this.http.post('/homePage/getMemberDetail', this.queryForm.value).then(res => {
         this.formGroup.patchValue(res.result);
         if (res.result.havacard) {
-          this.http.post('/yeqs/memberCard/getMemberCards', { memberId: res.result.memberId }, false).then(res => {
+          this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/getMemberCards', { memberId: res.result.memberId }, false).then(res => {
             this.cardList = res.result;
             res.result.length && this.formGroup.patchValue({ cardId: res.result[0].id });
           });

@@ -92,7 +92,7 @@ export class RevokeComponent implements OnInit {
       nzWidth: 700,
       nzContent: this.drawerTemplate
     });
-    this.http.post('/yeqs/customer/selectTeacher', { consumeId :  data.consumeId },false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/selectTeacher', { consumeId :  data.consumeId },false).then(res => {
       this.baseFormGroup.patchValue({consumeId:  data.consumeId});
       this.baseFormGroup.patchValue({swimTeacherId: res.result.teacher.teacherId});
       this.baseFormGroup.patchValue({assisTeacherId: res.result.assisTeacher.TeacherId});
@@ -109,7 +109,7 @@ export class RevokeComponent implements OnInit {
     }
   }else{
     this.saveLoading = true;
-    this.http.post('/yeqs/customer/updateTeacher', { paramJson: JSON.stringify(this.baseFormGroup.value) }).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/updateTeacher', { paramJson: JSON.stringify(this.baseFormGroup.value) }).then(res => {
       this.saveLoading = false;
       drawerRef.close();
       this.listPage.eaQuery._submit();

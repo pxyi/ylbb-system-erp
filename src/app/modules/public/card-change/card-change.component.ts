@@ -24,11 +24,11 @@ export class CardChangeComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/yeqs/employee/listEmployee').then(res => this.employeeList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/employee/listEmployee').then(res => this.employeeList = res.result);
   }
 
   ngOnInit() {
-    this.http.post('/yeqs/cardTypeManagement/findList', { type: this.memberCardInfo.type }, false).then(res => this.cardTypeList = res.result);
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList', { type: this.memberCardInfo.type }, false).then(res => this.cardTypeList = res.result);
 
     this.formGroup = this.fb.group({
       id: [this.id],
@@ -80,7 +80,7 @@ export class CardChangeComponent implements OnInit {
         this.formGroup.controls[i].updateValueAndValidity();
       }
     } else {
-      this.http.post(this.memberCardInfo.type == 0 ? '/yeqs/memberCard/changeCard' : '/yeqs/memberCard/changeValueCard', {
+      this.http.post(this.memberCardInfo.type == 0 ? 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/changeCard' : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/changeValueCard', {
         paramJson: JSON.stringify(this.formGroup.value)
       }, true).then(res => this.drawerRef.close(true));
     }

@@ -37,6 +37,6 @@ export class SupplementComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/memberCard/replaceCard') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/replaceCard') save: () => void;
 
 }

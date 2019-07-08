@@ -36,6 +36,6 @@ export class AddIntegralComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/member/saveMemberPoint') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/saveMemberPoint') save: () => void;
 
 }

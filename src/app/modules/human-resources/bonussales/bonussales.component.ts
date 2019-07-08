@@ -42,7 +42,7 @@ export class BonusSalesComponent implements OnInit {
       }
     } else {
       this.saveLoading = true;
-      let request = this.formGroup.get('id') ? '/yeqs/bonusSalesSetting/save' : '/yeqs/bonusSalesSetting/save';
+      let request = this.formGroup.get('id') ? 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/bonusSalesSetting/save' : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/bonusSalesSetting/save';
       this.http.post(request, { paramJson: JSON.stringify(this.formGroup.value) }).then(res => {
         this.table._request();
         this.showDrawer = false;
@@ -52,7 +52,7 @@ export class BonusSalesComponent implements OnInit {
   }
   
   delete(id) {
-    this.http.post('/yeqs/bonusSalesSetting/remove', { id }).then( res => this.table._request())
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/bonusSalesSetting/remove', { id }).then( res => this.table._request())
   }
 
   update(data = { id: null, role: null, minAmount: null, maxAmount: null, ratio: null, settleType: null }) {

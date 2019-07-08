@@ -49,7 +49,7 @@ export class ListComponent implements OnInit {
       label       : '服务泳师',
       key         : 'teacherId',
       type        : 'select',
-      optionsUrl  : '/yeqs/member/getStoreTeachers'
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers'
     },
     {
       label       : '儿童类型',
@@ -69,14 +69,14 @@ export class ListComponent implements OnInit {
       label       : '业务类型',
       key         : 'categoryId',
       type        : 'select',
-      optionsUrl  : '/yeqs/cardBusinessManagement/getStoreCardTypeCategores',
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardBusinessManagement/getStoreCardTypeCategores',
       isHide      : true
     },
     {
       label       : '卡类型',
       key         : 'cardTypeId',
       type        : 'select',
-      optionsUrl  : '/yeqs/cardTypeManagement/findList',
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/cardTypeManagement/findList',
       isHide      : true
     },
     {
@@ -209,7 +209,7 @@ export class ListComponent implements OnInit {
     }
   }else{
     this.saveLoadingx = true;
-    this.http.post('/yeqs/customer/updateTeacher', { paramJson: JSON.stringify(this.baseFormGroup.value) }).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/updateTeacher', { paramJson: JSON.stringify(this.baseFormGroup.value) }).then(res => {
       this.saveLoadingx = false;
       drawerRef.close();
       this.listPage.eaTable.request(this.getQueryParams);

@@ -72,7 +72,7 @@ export class ListComponent implements OnInit {
       label       : '所属社区',
       key         : 'communityId',
       type        : 'select',
-      optionsUrl  : '/yeqs/member/communityList',
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/communityList',
       isHide      : true
     },
     {
@@ -108,7 +108,7 @@ export class ListComponent implements OnInit {
       key         : 'customerSourceId',
       optionKey: { label: 'sourceName', value: 'sourceId' },
       type        : 'select',
-      optionsUrl  : '/yeqs/management/selectSource',
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/management/selectSource',
       isHide      : true
     }
   ]
@@ -173,7 +173,7 @@ export class ListComponent implements OnInit {
         this.listPage.eaQuery._queryForm.patchValue({ mobilePhone: res.params.phone })
       });
     });
-      this.http.post('/yeqs/intelligent/selectScour', {}, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/intelligent/selectScour', {}, false).then(res => {
           this.dateList = res.result.list;
       });  
   }
@@ -196,11 +196,13 @@ export class ListComponent implements OnInit {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
     } else if (type === 'queryCard') {
-      this.router.navigate(['/home/membercard/list'], {
-        queryParams: {
-          memberId: this.checkedItems[0]
-        }
-      });
+      setTimeout(() => {
+        this.router.navigate(['/home/member/list'], {
+          queryParams: {
+            memberId: this.checkedItems[0]
+          }
+        });
+      }, 300);
     } else if (type === 'consumptionLog') {
       setTimeout(() => {
         this.router.navigate(['/home/consumption/list'], {
@@ -213,10 +215,10 @@ export class ListComponent implements OnInit {
       this.modal.confirm({
         nzTitle: '<i>您确定要重置密吗?</i>',
         nzContent: '<b>您确定要重置密吗</b>',
-        nzOnOk: () => this.http.post('/yeqs/member/modifyPassword', { id: this.checkedItems[0] }).then(res => { })
+        nzOnOk: () => this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/modifyPassword', { id: this.checkedItems[0] }).then(res => { })
       });
     } else if (type === 'construction') {
-      this.http.post('/yeqs/member/checkMemberInfo', { id: this.checkedItems[0] }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/checkMemberInfo', { id: this.checkedItems[0] }, false).then(res => {
         if (res.code == 2053) {
           this.message.warning(res.info);
           this.openDrawer({ title: '编辑-请补全基本信息', component: UpdateComponent });
@@ -298,7 +300,7 @@ export class ListComponent implements OnInit {
       mobilePhone: this.memberdetailTk.mobilePhone
     });
         //排课
-        this.http.post('/yeqs/curriculum/insertMemberRecord', { paramJson }, false).then(res => {
+        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/insertMemberRecord', { paramJson }, false).then(res => {
           if (res.code == 1000) {
             this.message.create('success', '排课成功！');
             if (status == 0 && !this.isrepeat) {
@@ -318,7 +320,7 @@ export class ListComponent implements OnInit {
   }
   //查询课程类别
   selectSyllabusAll() {
-    this.http.post('/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/scheduling/selectSyllabusAll', {}, false).then(res => {
       if (res.code == 1000) {
         this.SyllabusAllList = res.result.list;
       } else {
@@ -328,7 +330,7 @@ export class ListComponent implements OnInit {
   }
   //办卡选课中课表展示
   selectlabel() {
-    this.http.post('/yeqs/curriculum/selectIdRecord', { syllabusName: this.radioValue }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/curriculum/selectIdRecord', { syllabusName: this.radioValue }, false).then(res => {
       if (res.code == 1000) {
         this.RecordList = res.result.list;
         this.RecordList1 = [];
@@ -389,7 +391,7 @@ export class ListComponent implements OnInit {
   }];
   scale = scale;
   previewCommunity(communityId) {
-    this.http.post('/yeqs/member/findCardFromCommunity', { communityId }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/findCardFromCommunity', { communityId }, false).then(res => {
       if (res.result) {
         this.showModal = true;
         const dv = new DataSet.View().source(res.result);

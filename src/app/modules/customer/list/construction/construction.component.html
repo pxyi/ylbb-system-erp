@@ -60,24 +60,7 @@
       </nz-form-item>
     </div>
   </div>
-  <div nz-row nzGutter="8">
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label>已使用次数</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="usedTimes" readonly placeholder="请输入已使用次数">
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label>总金额</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="balance" readonly placeholder="请输入总金额">
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
+
   <div nz-row nzGutter="8">
  
     <div nz-col nzSpan="12">
@@ -140,18 +123,32 @@
       </nz-form-item>
     </div>
   </div>
-
   <div nz-row nzGutter="8">
-      <div nz-col nzSpan="12">
-          <nz-form-item>
-            <nz-form-label>停卡限制</nz-form-label>
-            <nz-form-control>
-              <nz-switch formControlName="turnCard" nzCheckedChildren="限制停卡" nzUnCheckedChildren="不限制停卡"></nz-switch>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+    <!-- <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>已使用次数</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="usedTimes" readonly placeholder="请输入已使用次数">
+        </nz-form-control>
+      </nz-form-item>
+    </div> -->
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>总金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance" readonly placeholder="请输入总金额">
+        </nz-form-control>
+      </nz-form-item>
     </div>
-
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>停卡限制</nz-form-label>
+        <nz-form-control>
+          <nz-switch formControlName="turnCard" nzCheckedChildren="限制停卡" nzUnCheckedChildren="不限制停卡"></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">
       <nz-form-item>

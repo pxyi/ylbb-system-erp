@@ -72,7 +72,7 @@ export class ConsumptionComponent implements OnInit {
 
     /* ------------------------- 消费服务、商品改变自动填写消费金额 ------------------------- */
     this.timesCountGroup.get('commodityId').valueChanges.subscribe(id => {
-      this.http.post('/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
         this.timesCountGroup.patchValue({ consumption: res.result.price });
       })
     });
@@ -81,7 +81,7 @@ export class ConsumptionComponent implements OnInit {
     /* ------------------------- 消费卡改变触发消费服务列表刷新 ------------------------- */
     this.timesCountGroup.get('cardId').valueChanges.subscribe(cardId => {
       this.timesCountGroup.patchValue({ commodityId: null, consumption: null });
-      this.http.post('/yeqs/customer/changeCommodity', { cardId }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/changeCommodity', { cardId }, false).then(res => {
         this.commoditieListjc = res.result;
         this.timesCountGroup.patchValue({ commodityId: res.result[0].id });
       });
@@ -92,13 +92,13 @@ export class ConsumptionComponent implements OnInit {
     this.singleTimeGroup.get('commodityId').valueChanges.subscribe(commodityId => this.getCommodityPrice());
 
     /* ------------------------- 获取服务器时间 ------------------------- */
-    this.http.post('/yeqs/customer/getSystemDate').then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/getSystemDate').then(res => {
       this.timesCountGroup.patchValue({ consumeDate: res.result });
       this.singleTimeGroup.patchValue({ consumeDate: res.result });
     });
 
     /* -------------------- 获取下拉列表数据 -------------------- */
-    this.http.post('/yeqs/member/getStoreTeachers').then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/member/getStoreTeachers').then(res => {
       this.teacherList = res.result;
       if (!this.consumptionInfo.reserveDate) {
         this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
@@ -108,7 +108,7 @@ export class ConsumptionComponent implements OnInit {
 
     /* -------------------- 如果有会员卡则去请求 会员卡列表和泳圈型号 -------------------- */
     if (this.consumptionInfo.haveCard || this.consumptionInfo.cardCode) {
-      this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.consumptionInfo.memberId || this.consumptionInfo.id }, false).then(res => {
+      this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberCard/getMemberCards', { memberId: this.consumptionInfo.memberId || this.consumptionInfo.id }, false).then(res => {
         this.memberCardList = res.result;
         if (res.result.length) {
           this.timesCountGroup.patchValue({ cardId: res.result[0].id });
@@ -143,7 +143,7 @@ export class ConsumptionComponent implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }, true).then(res => {
+        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }, true).then(res => {
           this.drawerRef.close(true);
           res.result.id && this.showConsumptionDetail(res.result.id);
         });
@@ -156,7 +156,7 @@ export class ConsumptionComponent implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }, true).then(res => {
+        this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }, true).then(res => {
           this.drawerRef.close(true);
           res.result.id && this.showConsumptionDetail(res.result.id);
         });
@@ -165,7 +165,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   showConsumptionDetail(id) {
-    this.http.post('/yeqs/customer/viewCardDateils', { id }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/viewCardDateils', { id }, false).then(res => {
       if (res.code == 1000) {
         this.modal.create({
           nzTitle: '消费完成',
@@ -182,7 +182,7 @@ export class ConsumptionComponent implements OnInit {
   getCommodityPrice() {
     var cardId = this.singleTimeGroup.controls['cardId'].value;
     var commodityId = this.singleTimeGroup.controls['commodityId'].value;
-    this.http.post('/yeqs/customer/getCommodityPrice', { cardId, commodityId }, false).then(res => {
+    this.http.post('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/customer/getCommodityPrice', { cardId, commodityId }, false).then(res => {
       res.code == 1000 && this.singleTimeGroup.patchValue({ consumption: res.result.price });
     })
   }

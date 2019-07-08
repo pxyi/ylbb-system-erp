@@ -37,6 +37,6 @@ export class UpdateComponent implements OnInit {
 
   @DrawerClose() close: () => void;
   saveLoading: boolean;
-  @DrawerSave('/yeqs/memberLesson/editMemberLessonRecord') save: () => void;
+  @DrawerSave('http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/memberLesson/editMemberLessonRecord') save: () => void;
 
 }

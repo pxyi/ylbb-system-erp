@@ -25,7 +25,7 @@ export class MemberComponent implements OnInit {
       key         : 'customerSourceId',
       optionKey   : { label: 'sourceName', value: 'sourceId' },
       type        : 'select',
-      optionsUrl  : '/yeqs/management/selectSource'
+      optionsUrl  : 'http://qnewbss.beibeiyue.cn/schedule/schedule/yeqs/management/selectSource'
     },
     {
       label       : '家长姓名',
