@@ -56,13 +56,18 @@ export class UpdateComponent implements OnInit {
       this.formGroup.removeControl('price');
       this.formGroup.removeControl('inventory');
       this.formGroup.removeControl('commission');
-
+      this.formGroup.removeControl('barCode');    //商品条码
+      this.formGroup.removeControl('img');        //商品图片
+      this.formGroup.removeControl('warningValue');     //库存提醒值
 
     } else {
       this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo ? this.commodityInfo.stockPrice : null, [Validators.required]));
       this.formGroup.addControl('price', new FormControl(this.commodityInfo ? this.commodityInfo.price : null, [Validators.required]));
       this.formGroup.addControl('inventory', new FormControl(this.commodityInfo ? this.commodityInfo.inventory : true, [Validators.required]));
       this.formGroup.addControl('commission', new FormControl(this.commodityInfo ? this.commodityInfo.commission : true, [Validators.required]));
+      this.formGroup.addControl('barCode', new FormControl(this.commodityInfo ? this.commodityInfo.barCode : null, [], [this.barCodeAsyncValidator]));
+      this.formGroup.addControl('img', new FormControl(this.commodityInfo ? this.commodityInfo.img : null));
+      this.formGroup.addControl('warningValue', new FormControl(this.commodityInfo ? this.commodityInfo.warningValue : null, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]));
 
       this.formGroup.removeControl('categoryId');
       this.formGroup.removeControl('cardNum');
@@ -82,6 +87,18 @@ export class UpdateComponent implements OnInit {
         name: control.value
       };
       this.http.post('/commodity/checkUnique', { paramJson: JSON.stringify(params) }, false).then(res => {
+        observer.next(res.result.valid ? null : { error: true, duplicated: true });
+        observer.complete();
+      }, err => {
+        observer.next(null);
+        observer.complete();
+      })
+    })
+  };
+
+  barCodeAsyncValidator = (control: FormControl): any => {
+    return Observable.create(observer => {
+      this.http.post('/commodity/checkBarCode', { barCode: this.formGroup.get('barCode').value }, false).then(res => {
         observer.next(res.result.valid ? null : { error: true, duplicated: true });
         observer.complete();
       }, err => {

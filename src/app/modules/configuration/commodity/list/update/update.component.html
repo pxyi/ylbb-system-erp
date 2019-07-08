@@ -62,6 +62,26 @@
     <ng-container *ngIf="formGroup.get('type').value == 1">
       <div nz-col nzSpan="12">
         <nz-form-item>
+          <nz-form-label nzFor="barCode">商品条码</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请扫码或输入条码" formControlName="barCode">
+            <nz-form-explain *ngIf="formGroup.get('barCode').dirty && formGroup.get('barCode').hasError('duplicated')">该条码已存在</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('barCode').dirty && formGroup.get('barCode').pending">
+              <i nz-icon nzType="loading"></i>正在校验该条码是否存在...</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>商品图片</nz-form-label>
+          <nz-form-control>
+            <ea-upload-picture formControlName="img" [maxLength]="1"></ea-upload-picture>
+            <nz-form-explain *ngIf="formGroup.get('img').dirty && formGroup.get('img').hasError('required')">请上传照片！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
           <nz-form-label nzRequired nzFor="stockPrice">进货价</nz-form-label>
           <nz-form-control>
             <input nz-input placeholder="请输入进货价" formControlName="stockPrice" id="stockPrice">
@@ -97,6 +117,16 @@
               <nz-option nzLabel="支持" [nzValue]="true"></nz-option>
               <nz-option nzLabel="不支持" [nzValue]="false"></nz-option>
             </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>库存提醒值</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入库存提醒值" formControlName="warningValue" id="warningValue">
+            <nz-form-explain *ngIf="formGroup.get('warningValue').dirty && formGroup.get('warningValue').hasError('required')">请输入库存提醒值！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('warningValue').dirty && formGroup.get('warningValue').hasError('pattern')">请输入正确的库存提醒值！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
