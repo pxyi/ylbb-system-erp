@@ -730,6 +730,13 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
     this.startTime = undefined;
     this.endTime = undefined;
     this.isPay = false;
+    this.numberOftotal = 0; //数量
+    this.price = 0;         //合计
+    this.resultData = [];
+    this.listOfData = [];
+    this.price = 0;         //实收
+    this.payment = 0;       //实收
+    this.changePrice = 0;   //找零
   }
 
   /*---------------- 重置 ----------------*/
@@ -894,7 +901,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
       } else if (ev == 13) {
         //长度为13位 是商品
         if (this.code.length == 13) {
-
+          console.log(this.code);
           this.existCommodit = true;
           for (let item of this.listOfData){
             if (item.barCode == this.code) {
@@ -1011,6 +1018,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
           }
 
         } else if (this.code.length == 18) { //长度为18 是付款码
+          console.log(this.code);
           if (!this.isPay) {
             this.isPay = true;
             //现金支付和充值卡功能扫码无效
