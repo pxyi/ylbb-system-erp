@@ -82,7 +82,7 @@ export class AppointComponent implements OnInit {
     /* ------------------ 获取当前系统的预约时间 ------------------ */
     this.http.post('/reserve/getResetveDate').then(res => this.formGroup.patchValue({
       reserveHour: new Date(res.result),
-      reserveDate: new Date(res.result)
+      reserveDateChange: new Date(res.result)
     }));
 
     this.userInfo.reserveDate && (this.userInfo.reserveDateChange = this.userInfo.reserveDate)
