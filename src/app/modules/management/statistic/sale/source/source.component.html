@@ -1,0 +1,26 @@
+<nz-row [nzGutter]="24" [style.margin-top]="'30px'">
+  <nz-col [nzSpan]="12">
+    <ea-title>线索来源</ea-title>
+    <div>
+      <v-chart [forceFit]="true" [height]="400" [data]="sourceNumberData" [scale]="[{ dataKey: 'percent', min: 0, formatter: '.0%' }]">
+        <v-tooltip [showTitle]="false"></v-tooltip>
+        <v-axis></v-axis>
+        <v-pie position="percent" color="item" [style]="{ stroke: '#fff', lineWidth: 1 }" [label]="sourceNumberlabelConfig"></v-pie>
+        <v-coord type="theta" [radius]="0.75" [innerRadius]="0.6"></v-coord>
+        <v-legend dataKey="item"></v-legend>
+      </v-chart>
+    </div>
+  </nz-col>
+  <nz-col [nzSpan]="12">
+    <ea-title>渠道转化</ea-title>
+    <div>
+      <v-chart [forceFit]="true" [height]="400" [data]="sourceRateData" [scale]="[{ dataKey: 'percent', min: 0, formatter: '.0%' }]">
+        <v-tooltip [showTitle]="false"></v-tooltip>
+        <v-axis></v-axis>
+        <v-pie position="percent" color="item" [style]="{ stroke: '#fff', lineWidth: 1 }" [label]="sourceRatelabelConfig"></v-pie>
+        <v-coord type="theta" [radius]="0.75" [innerRadius]="0.6"></v-coord>
+        <v-legend dataKey="item"></v-legend>
+      </v-chart>
+    </div>
+  </nz-col>
+</nz-row>

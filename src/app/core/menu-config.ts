@@ -170,19 +170,25 @@ export const MenuConfig = [
         key   : '/home/consumption/curriculum',
         isLeaf: true
       },
-      // {
-      //   title : '福利消费列表',
-      //   key   : '/home/consumption/welfare',
-      //   isLeaf: true
-      // }
     ]
   },
   {
     title : '经营分析',
     brief : '经营',
-    key   : '/home/analysis/list',
+    key   : '/home/management',
     icon  : 'area-chart',
-    isLeaf: true
+    children : [
+      {
+        title : '经营分析', 
+        key   : '/home/management/analysis',
+        isLeaf: true
+      },
+      {
+        title : '数据概况', 
+        key   : '/home/management/statistic',
+        isLeaf: true
+      },
+    ]
   },
   {
     title : '消息管理',
@@ -191,7 +197,7 @@ export const MenuConfig = [
     icon  : 'message',
     children : [
       {
-        title : '短信发送',
+        title : '短信发送', 
         key   : '/home/message/sendout',
         isLeaf: true
       },
