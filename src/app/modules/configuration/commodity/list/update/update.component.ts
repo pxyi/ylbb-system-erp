@@ -98,13 +98,18 @@ export class UpdateComponent implements OnInit {
 
   barCodeAsyncValidator = (control: FormControl): any => {
     return Observable.create(observer => {
-      this.http.post('/commodity/checkBarCode', { barCode: this.formGroup.get('barCode').value }, false).then(res => {
-        observer.next(res.result.valid ? null : { error: true, duplicated: true });
-        observer.complete();
-      }, err => {
+      if (this.formGroup.get('barCode') && this.formGroup.get('barCode').value) {
+        this.http.post('/commodity/checkBarCode', { barCode: this.formGroup.get('barCode').value }, false).then(res => {
+          observer.next(res.result.valid ? null : { error: true, duplicated: true });
+          observer.complete();
+        }, err => {
+          observer.next(null);
+          observer.complete();
+        })
+      } else {
         observer.next(null);
         observer.complete();
-      })
+      }
     })
   };
 
