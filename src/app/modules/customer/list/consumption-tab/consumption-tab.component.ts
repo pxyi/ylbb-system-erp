@@ -730,6 +730,13 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
     this.startTime = undefined;
     this.endTime = undefined;
     this.isPay = false;
+    this.numberOftotal = 0; //数量
+    this.price = 0;         //合计
+    this.resultData = [];
+    this.listOfData = [];
+    this.price = 0;         //实收
+    this.payment = 0;       //实收
+    this.changePrice = 0;   //找零
   }
 
   /*---------------- 重置 ----------------*/
