@@ -1,0 +1,13 @@
+<nz-tabset>
+  <nz-tab nzTitle="商品">
+    <app-money #money [consumptionInfo]="consumptionInfo"></app-money>
+  </nz-tab>
+  <nz-tab nzTitle="耗卡" [nzDisabled]="!consumptionInfo.haveCard">
+    <app-card #card [consumptionInfo]="consumptionInfo"></app-card>
+  </nz-tab>
+</nz-tabset>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

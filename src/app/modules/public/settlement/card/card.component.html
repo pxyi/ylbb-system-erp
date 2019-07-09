@@ -1,0 +1,119 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>消费卡</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="cardId" nzPlaceHolder="请选择消费卡">
+            <nz-option *ngFor="let option of memberCardList" [nzLabel]="option.ctName" [nzValue]="option.id">
+            </nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="valid('cardId')">请选择消费卡！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>服务泳师</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="valid('swimTeacherId')">请选择服务泳师！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>消费服务</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="commodityId" nzPlaceHolder="请选择消费服务">
+            <nz-option *ngFor="let option of commoditieList" [nzValue]="option.id" [nzLabel]="option.name">
+            </nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="valid('commodityId')">请选择消费服务！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>消费金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="consumption" placeholder="请输入消费金额" readonly>
+          <nz-form-explain *ngIf="valid('consumption')">请输入消费金额！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>泳圈型号</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="ringId" nzPlaceHolder="请选择泳圈型号">
+            <nz-option *ngFor="let option of swimRingList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>游泳时长</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzAddOnAfter="分钟">
+            <input nz-input formControlName="swimDuration" placeholder="请输入游泳时长">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>身高</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzAddOnAfter="厘米">
+            <input nz-input formControlName="temperaturePost" placeholder="请输入身高">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>体重</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzAddOnAfter="公斤">
+            <input nz-input formControlName="weight" placeholder="请输入体重">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>体温</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzAddOnAfter="°C">
+            <input nz-input formControlName="temperature" placeholder="请输入体温">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>顾客满意度</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
+            <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+            <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+            <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+            <nz-option nzLabel="不好" nzValue="不好"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>消费时间</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="consumeDate" readonly placeholder="请输入消费时间">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

@@ -1,3 +1,4 @@
+import { SettlementComponent } from './../../public/settlement/settlement.component';
 import { ImportComponent } from './import/import.component';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
@@ -198,7 +199,6 @@ export class ListComponent implements OnInit {
             userInfo  : true
           }
           this.newDrawer(Object.assign(options, data));
-          // this.newDrawer(Object.assign(options, this.operationComponents[type]));
         }
       })
     } else if (type === 'album') {
