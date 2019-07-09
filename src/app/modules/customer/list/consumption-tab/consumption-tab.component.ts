@@ -394,7 +394,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
 
     this.existCom = true;
     for (let item of this.listOfData){
-      if (data.barCode == item.barCode) {
+      if (data.id == item.id) {
         this.existCom = false;
       }
     }
@@ -441,7 +441,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
     } else {
       // 先遍历当前商品列表 判断是否需要进行数据合并
       for(let item of this.listOfData){
-        if (data.barCode == item.barCode) {
+        if (data.id == item.id) {
           var num = Number(item.num) + 1;
           this.http.post('/commodity/checkStock', {id : data.id, count : num}).then(res => {
             if (res.code == 1000) {
