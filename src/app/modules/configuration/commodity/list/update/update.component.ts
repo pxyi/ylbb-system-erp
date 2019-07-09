@@ -66,8 +66,7 @@ export class UpdateComponent implements OnInit {
       this.formGroup.addControl('price', new FormControl(this.commodityInfo ? this.commodityInfo.price : null, [Validators.required]));
       this.formGroup.addControl('inventory', new FormControl(this.commodityInfo ? this.commodityInfo.inventory : true, [Validators.required]));
       this.formGroup.addControl('commission', new FormControl(this.commodityInfo ? this.commodityInfo.commission : true, [Validators.required]));
-      // this.formGroup.addControl('barCode', new FormControl(this.commodityInfo ? this.commodityInfo.barCode : null, [], [this.barCodeAsyncValidator]));
-      this.formGroup.addControl('barCode', new FormControl(this.commodityInfo ? this.commodityInfo.barCode : null, []));
+      this.formGroup.addControl('barCode', new FormControl(this.commodityInfo ? this.commodityInfo.barCode : null, [], [this.barCodeAsyncValidator]));
       this.formGroup.addControl('img', new FormControl(this.commodityInfo ? this.commodityInfo.img : null));
 
       this.formGroup.removeControl('categoryId');
