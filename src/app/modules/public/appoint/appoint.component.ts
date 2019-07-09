@@ -15,7 +15,7 @@ export class AppointComponent implements OnInit {
 
   @Input() id;
 
-  @Input() userInfo;
+  @Input() userInfo: any = {};
 
   formGroup: FormGroup;
 
@@ -44,6 +44,7 @@ export class AppointComponent implements OnInit {
       communityId: [this.userInfo.communityId, [Validators.required]],
       cardId: [],
       spec: [0],
+      reserveDateChange: [, [Validators.required]],
       reserveDate: [, [Validators.required]],
       reserveHour: [, [Validators.required]],
       rHour: [],
@@ -52,7 +53,6 @@ export class AppointComponent implements OnInit {
       ringId: [],
       comment: []
     });
-    this.formGroup.patchValue(this.userInfo);
     this.http.post('/member/communityList').then(res => this.communityList = res.result);
     this.http.post('/memberCard/getMemberCards', { memberId: this.userInfo.memberId || this.id }, false).then(res => {
       this.cardList = res.result;
@@ -67,6 +67,9 @@ export class AppointComponent implements OnInit {
     this.http.post('/swimRing/getStoreSwimRings').then(res => this.swimRingList = res.result);
 
     /* ------------------ 监听预约时间段变化 ------------------ */
+    this.formGroup.get('reserveDateChange').valueChanges.subscribe(e => {
+      this.formGroup.patchValue({ reserveDate: this.format.transform(e, 'yyyy-MM-dd') });
+    })
     this.formGroup.get('reserveHour').valueChanges.subscribe(e => {
       if (e) {
         let newHour = this.format.transform(e, 'yyyy-MM-dd HH:mm').split(' ')[1];
@@ -81,6 +84,9 @@ export class AppointComponent implements OnInit {
       reserveHour: new Date(res.result),
       reserveDate: new Date(res.result)
     }));
+
+    this.userInfo.reserveDate && (this.userInfo.reserveDateChange = this.userInfo.reserveDate)
+    this.formGroup.patchValue(this.userInfo);
   }
 
   @DrawerClose() close: () => void;

@@ -4,13 +4,19 @@
     url="/commodity/getStoreCommoditielist"
     [allowSpace]="false"
     [queryNode]="queryNode"
-    [tableThead]="[ '名称', '进货价', '销售价','消费价格', '是否参与折扣', '计费方式', '提成', '库存', '当前库存', '累计销量', '累计进货', '累计自用', '计积分', '是否默认', '业务类型', '状态', '卡次', '操作' ]"
+    [tableThead]="['图标', '名称', '进货价', '销售价','消费价格', '是否参与折扣', '计费方式', '提成', '库存', '当前库存', '累计销量', '累计进货', '累计自用', '计积分', '是否默认', '业务类型', '状态', '卡次', '操作' ]"
     [EaTableTbodyTr]="EaTableTbodyTr"
     [EaBtns]="EaBtns">
     <ng-template #EaBtns>
       <button nz-button nzType="primary" (click)="update()">新增商品</button>
     </ng-template>
     <ng-template let-data #EaTableTbodyTr>
+      <td>
+        <nz-avatar *ngIf="data.img" nzShape="square" [nzOverlayStyle]="{padding: '0 !important'}" nzPlacement="rightBottom" [nzSrc]="data.img" nz-tooltip [nzTitle]="titleTemplate"></nz-avatar>
+        <ng-template #titleTemplate>
+          <img [src]="data.img" [ngStyle]="{'max-width': '226px', 'max-height': '400px', 'transform': 'scale(1.1)'}">
+        </ng-template>
+      </td>
       <td>{{ data.name }}</td>
       <td>{{ data.stockPrice | currency: '￥' }}</td>
       <td>{{ data.price | currency: '￥' }}</td>
