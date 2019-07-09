@@ -1,5 +1,5 @@
 import { HttpService } from 'src/app/ng-relax/services/http.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
@@ -13,6 +13,8 @@ import { AppState } from 'src/app/core/reducers/reducers-config';
   styleUrls: ['./update.component.less']
 })
 export class UpdateComponent implements OnInit {
+
+  @Input() templateInfo: any = {};
 
   formGroup: FormGroup;
 
@@ -32,6 +34,7 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formGroup.patchValue(this.templateInfo);
     this.store.select('userInfoState').subscribe(res => this.formGroup.patchValue({ prefix: `【${res.store.shopBrand.brandName}】` }))
   }
 
