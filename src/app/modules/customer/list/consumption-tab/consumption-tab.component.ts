@@ -426,9 +426,17 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
           }
 
           this.payment = this.price;//实收金额默认值
+          //清空
+          this.code = '';
+          this.startTime = undefined;
+          this.endTime = undefined;
           this.memberCard();
           //tab取消禁用
           this.isSubmitShopCard = true;
+          setTimeout(() => {
+            this.searchInput.nativeElement.focus();
+            this.searchInput.nativeElement.blur();
+          },500)
         } else {
           this.message.create('warning', res.info);
           //清空
@@ -466,9 +474,17 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
               }
 
               this.payment = this.price;//实收金额默认值
+              //清空
+              this.code = '';
+              this.startTime = undefined;
+              this.endTime = undefined;
               this.memberCard();
               //tab取消禁用
               this.isSubmitShopCard = true;
+              setTimeout(() => {
+                this.searchInput.nativeElement.focus();
+                this.searchInput.nativeElement.blur();
+              },500)
             } else {
               this.message.create('warning', res.info);
               //清空
@@ -891,6 +907,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
   }
 
   keypressEvent = (even) => {
+      
       var ev = even.which;
       this.endTime = new Date().getTime();
       if (this.startTime == undefined) {
@@ -901,7 +918,6 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
       } else if (ev == 13) {
         //长度为13位 是商品
         if (this.code.length == 13) {
-          console.log(this.code);
           this.existCommodit = true;
           for (let item of this.listOfData){
             if (item.barCode == this.code) {
@@ -916,14 +932,12 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
                 var data = res.result;
                 this.http.post('/commodity/checkStock', {id : res.result[0].id, count: 1}).then(res => {
                   if (res.code == 1000) {
-
                     for(let item of data){
                       //计算数量和总价
                       item.num = 1;
                       item.subtotal = item.num * item.changePrice;
                     }
                     this.data = data[0];
-                    this.data.barCode = this.code;
                     this.listOfData.push(this.data);
                     //清空操作
                     this.data = {};//清空
@@ -1018,7 +1032,6 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
           }
 
         } else if (this.code.length == 18) { //长度为18 是付款码
-          console.log(this.code);
           if (!this.isPay) {
             this.isPay = true;
             //现金支付和充值卡功能扫码无效
