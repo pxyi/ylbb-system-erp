@@ -13,7 +13,7 @@ import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator'
 })
 export class UpdateComponent implements OnInit {
 
-  @Input() commodityInfo;
+  @Input() commodityInfo: any = {};
 
   formGroup: FormGroup;
 
@@ -44,7 +44,6 @@ export class UpdateComponent implements OnInit {
 
     this.commodityInfo && this.formGroup.patchValue(this.commodityInfo);
   }
-
   formTypeChange(val) {
     this.formGroup.patchValue({ chargeType: val });
     if (val == 0) {
