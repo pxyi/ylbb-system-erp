@@ -131,46 +131,46 @@ export class ConsumptionComponent implements OnInit {
 
   saveLoading: boolean;
   saveDrawer() {
-    
-    //库存校验
-    this.http.post('/commodity/checkStock', {id : this.singleTimeGroup.controls['commodityId'].value, count : 1}).then(res => {
-      if (res.code == 1000) {
-        let baseValue = {};
-        Object.keys(this.baseFormGroup.controls).map(key => {
-          baseValue[key] = this.baseFormGroup.controls[key].value;
-        })
-        if (this.consumptionType === 0) {
-          if (this.timesCountGroup.invalid) {
-            for (let i in this.timesCountGroup.controls) {
-              this.timesCountGroup.controls[i].markAsDirty();
-              this.timesCountGroup.controls[i].updateValueAndValidity();
-            }
-          } else {
-            this.saveLoading = true;
-            this.http.post('/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }, true).then(res => {
-              this.drawerRef.close(true);
-              res.result.id && this.showConsumptionDetail(res.result.id);
-            });
-          }
-        } else {
-          if (this.singleTimeGroup.invalid) {
-            for (let i in this.singleTimeGroup.controls) {
-              this.singleTimeGroup.controls[i].markAsDirty();
-              this.singleTimeGroup.controls[i].updateValueAndValidity();
-            }
-          } else {
+
+    let baseValue = {};
+    Object.keys(this.baseFormGroup.controls).map(key => {
+      baseValue[key] = this.baseFormGroup.controls[key].value;
+    })
+    if (this.consumptionType === 0) {
+      if (this.timesCountGroup.invalid) {
+        for (let i in this.timesCountGroup.controls) {
+          this.timesCountGroup.controls[i].markAsDirty();
+          this.timesCountGroup.controls[i].updateValueAndValidity();
+        }
+      } else {
+        this.saveLoading = true;
+        this.http.post('/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }, true).then(res => {
+          this.drawerRef.close(true);
+          res.result.id && this.showConsumptionDetail(res.result.id);
+        });
+      }
+    } else {
+      
+      if (this.singleTimeGroup.invalid) {
+        for (let i in this.singleTimeGroup.controls) {
+          this.singleTimeGroup.controls[i].markAsDirty();
+          this.singleTimeGroup.controls[i].updateValueAndValidity();
+        }
+      } else {
+        //库存校验
+        this.http.post('/commodity/checkStock', {id : this.singleTimeGroup.controls['commodityId'].value, count : 1}).then(res => {
+          if (res.code == 1000) {
             this.saveLoading = true;
             this.http.post('/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }, true).then(res => {
               this.drawerRef.close(true);
               res.result.id && this.showConsumptionDetail(res.result.id);
             });
+          } else {
+            this.message.create('warning', res.info);
           }
-        }
-      } else {
-        this.message.create('warning', res.info);
+        })
       }
-    })
-
+    }
   }
 
   showConsumptionDetail(id) {

@@ -5,7 +5,7 @@
         <nz-form-label nzRequired>卡属性</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="attributeId" nzPlaceHolder="请选择卡属性">
-            <nz-option *ngFor="let option of cardAttribuiteList" [nzLabel]="option.attributeName" [nzValue]="option.id"></nz-option>
+            <nz-option *ngFor="let option of cardAttribuiteList" [nzLabel]="option.attributeName" [nzValue]="option.type"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('attributeId').dirty && formGroup.get('attributeId').hasError('required')">请选择卡属性！</nz-form-explain>
         </nz-form-control>
@@ -47,15 +47,15 @@
         <nz-form-label nzRequired>计费方式</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="feeType" nzPlaceHolder="请选择计费方式">
-            <nz-option *ngIf="formGroup.controls['attributeId'].value == 1" nzLabel="按次" [nzValue]="0"></nz-option>
-            <nz-option *ngIf="formGroup.controls['attributeId'].value == 2" nzLabel="按金额" [nzValue]="1"></nz-option>
+            <nz-option *ngIf="formGroup.controls['attributeId'].value == 0" nzLabel="按次" [nzValue]="0"></nz-option>
+            <nz-option *ngIf="formGroup.controls['attributeId'].value == 1" nzLabel="按金额" [nzValue]="1"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('feeType').dirty && formGroup.get('feeType').hasError('required')">请选择计费方式！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
     <!-- 计次卡 -->
-    <ng-container *ngIf="formGroup.controls['attributeId'].value == 1">
+    <ng-container *ngIf="formGroup.controls['attributeId'].value == 0">
       <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label nzRequired nzFor="times">正价次数</nz-form-label>
@@ -76,7 +76,7 @@
       </div>
     </ng-container>
     <!-- 储值卡 -->
-    <ng-container *ngIf="formGroup.controls['attributeId'].value == 2">
+    <ng-container *ngIf="formGroup.controls['attributeId'].value == 1">
       <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label nzRequired nzFor="amount">充值金额</nz-form-label>
@@ -117,7 +117,7 @@
       </nz-form-item>
     </div>
     
-    <ng-container *ngIf="formGroup.controls['attributeId'].value == 2">
+    <ng-container *ngIf="formGroup.controls['attributeId'].value == 1">
       <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzRequired>商品折扣</nz-form-label>

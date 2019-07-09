@@ -10,7 +10,8 @@ import { CurriculumComponent } from './curriculum/curriculum.component';
 import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { serialize } from 'src/app/core/http.intercept';
 
 @Component({
   selector: 'app-order',
@@ -37,7 +38,41 @@ export class OrderComponent implements OnInit {
       //订单撤销
       this.http.post('/consumeOrder/cancel', { orderNo: this.basicTable[0].orderNo, causesRevocation: this.formGroup.get('causesRevocation').value }).then(res => {
         this.isVisible = false;
-        this.tlModal.nzAfterClose.subscribe(res => this._request());
+        if (res.code == 1000) {
+          //更改数据
+          this.loading = true;
+          this.http.post('/consumeOrder/list', {pageNum: this.nzPageIndex, pageSize: this.nzPageSize}).then(res => {
+            if (res.code == 1000) {
+              this.listOfData = res.result.list;     //数据
+              this.nzPageIndex = res.result.pageNum; //第几页
+              this.nzPageSize = res.result.pageSize; //每页展示多少
+              this.nzTotal = res.result.totalPage;   //数据总条数
+              for(let item of this.listOfData){
+                item.isShow = false;
+                switch(item.paymentType) {
+                  case 1:
+                    item.paymentType = '现金支付';
+                    break;
+                  case 2:
+                    item.paymentType = '微信';
+                    break;
+                  case 3:
+                    item.paymentType = '支付宝';
+                    break;
+                  case 4:
+                    item.paymentType = '储值卡';
+                    break;
+                }
+              }
+              this.loading = false;
+              this.tlModal.nzAfterClose.subscribe(res => this._request());
+            } else {
+              this.message.create('warning', res.info);
+            }
+          })
+        } else {
+          this.message.create('warning', res.info);
+        }
       })
     }
   }
@@ -235,11 +270,25 @@ export class OrderComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.loading = false;
     })
-
-    /*-------------- 获取消费订单列表 --------------*/
-    this._request();
 
     /* 表格测试数据开始 */
     for (let i = 0; i < 3; ++i) {
@@ -285,8 +334,8 @@ export class OrderComponent implements OnInit {
   revokeOne(data,id) {
     //只有状态为正常时点击生效
     for(let item of data.consumeRecordVOS){
-      if(item.id == id){
-        if(item.status == 0){
+      if(item.crId == id){
+        if(item.crStatus == 0){
           let recordInfo = data;
           recordInfo.id = id;
           const drawer = this.drawer.create({
@@ -314,6 +363,7 @@ export class OrderComponent implements OnInit {
           this.basicTable.push(item);
         }
       }
+
     } else {
       let recordInfo = this.listOfData.filter(res => res.orderNo == this.checkedItems[0])[0];
       // let recordInfo = this.listPage.eaTable.dataSet.filter(res => res.id === this.checkedItems[0])[0];
@@ -337,7 +387,25 @@ export class OrderComponent implements OnInit {
       for(let item of temp){
         item.isChecked = false;
       }
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.listOfData = temp;
+      
       // console.log('subscribe---listOfData', this.listOfData);
     });
   }
@@ -351,6 +419,23 @@ export class OrderComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.loading = false;
     })
   }
@@ -364,29 +449,81 @@ export class OrderComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.loading = false;
     })
   }
 
-  request() {
+  /*---------------- 展开页面 ----------------*/
+  showCommodity(data) {
+    for (let item of this.listOfData) {
+      if (item.orderNo == data.orderNo) {
+        //根据订单号查询商品
+        this.http.post('/consumeOrder/getConsumeListByOrderNo', {orderNo : data.orderNo}).then(res => {
+          if (res.code == 1000) {
+            item.isShow = !item.isShow;
+            item.consumeRecordVOS = res.result;
+          } else {
+            this.message.create('warning', res.info);
+          }
+        })
+      }
+    }
+  }
 
-    this.httpSubscribe.post<any>('/consumeOrder/list', Object.assign(this.queryParams, this._pageInfo), {
+  queryParams = {};
+  query(e) {
+    this.queryParams = e;
+    this._pageInfo.pageNo = 1;
+    this.request();
+  }
+
+  request() {
+    var params = {
+      paramJson: JSON.stringify(this.queryParams)
+    }
+    this.httpSubscribe.post<any>('/consumeOrder/list', serialize(params), {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
       var temp = res.result.list;
       for(let item of temp){
         item.isChecked = false;
       }
+      for(let item of this.listOfData){
+        item.isShow = false;
+        switch(item.paymentType) {
+          case 1:
+            item.paymentType = '现金支付';
+            break;
+          case 2:
+            item.paymentType = '微信';
+            break;
+          case 3:
+            item.paymentType = '支付宝';
+            break;
+          case 4:
+            item.paymentType = '储值卡';
+            break;
+        }
+      }
       this.listOfData = temp;
     });
-  }
-
-  queryParams = {};
-  query(e) {
-    console.log(e);
-    this.queryParams = e;
-    this._pageInfo.pageNo = 1;
-    this._request();
   }
 
 }

@@ -47,7 +47,7 @@ export class UpdateComponent implements OnInit {
     this.formGroup.patchValue(this.cardTypeInfo)
   }
   attribuiteIdChange(val) {
-    if (val == 1) {
+    if (val == 0) {
       this.formGroup.addControl('times', this.fb.control(this.cardTypeInfo.id ? this.cardTypeInfo.times : null, [Validators.required]));
       this.formGroup.addControl('freeTimes', this.fb.control(this.cardTypeInfo.id ? this.cardTypeInfo.freeTimes : null, [Validators.required]));
 

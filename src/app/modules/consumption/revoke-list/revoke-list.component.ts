@@ -210,6 +210,13 @@ export class RevokeListComponent implements OnInit {
 
   checkedItems: any[] = [];
 
+  _pageInfo = {
+    loading: false,
+    pageSize: 10,
+    pageNo: 1,
+    totalPage: 0
+  };
+
   constructor(
     private message: NzMessageService,
     private drawer: NzDrawerService,
@@ -227,11 +234,11 @@ export class RevokeListComponent implements OnInit {
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
       this.nzTotal = res.result.totalPage;   //数据总条数
+      for(let item of this.listOfData){
+        item.isShow = false;
+      }
       this.loading = false;
     })
-
-    /*-------------- 获取消费订单列表 --------------*/
-    this._request();
 
     /* 表格测试数据开始 */
     for (let i = 0; i < 3; ++i) {
@@ -277,8 +284,8 @@ export class RevokeListComponent implements OnInit {
   revokeOne(data,id) {
     //只有状态为正常时点击生效
     for(let item of data.consumeRecordVOS){
-      if(item.id == id){
-        if(item.status == 0){
+      if(item.crId == id){
+        if(item.crStatus == 0){
           let recordInfo = data;
           recordInfo.id = id;
           const drawer = this.drawer.create({
@@ -357,6 +364,46 @@ export class RevokeListComponent implements OnInit {
       this.nzTotal = res.result.totalPage;   //数据总条数
       this.loading = false;
     })
+  }
+
+  /*---------------- 展开页面 ----------------*/
+  showCommodity(data) {
+    for (let item of this.listOfData) {
+      if (item.orderNo == data.orderNo) {
+        //根据订单号查询商品
+        this.http.post('/consumeOrder/getConsumeListByOrderNo', {orderNo : data.orderNo}).then(res => {
+          if (res.code == 1000) {
+            item.isShow = !item.isShow;
+            item.consumeRecordVOS = res.result;
+          } else {
+            this.message.create('warning', res.info);
+          }
+        })
+      }
+    }
+  }
+
+  queryParams = {};
+  query(e) {
+    this.queryParams = e;
+    this._pageInfo.pageNo = 1;
+    this.request();
+  }
+
+  request() {
+    var params = {
+      status: 5,
+      paramJson: JSON.stringify(this.queryParams)
+    }
+    this.httpSubscribe.post<any>('/consumeOrder/list', serialize(params), {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    }).subscribe(res => {
+      var temp = res.result.list;
+      for(let item of temp){
+        item.isChecked = false;
+      }
+      this.listOfData = temp;
+    });
   }
 
 }

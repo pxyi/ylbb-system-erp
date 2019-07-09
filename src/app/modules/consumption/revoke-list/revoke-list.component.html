@@ -1,8 +1,7 @@
 <div class="container">
 
   <!-- 查询条件 -->
-  <ea-query [node]="queryNode"></ea-query>
-  <!-- <ea-query #EaQuery [node]="queryNode" (onSubmit)="EaTable.request($event)" [EaQueryBtns]="EaQueryBtns" *ngIf="queryNode.length"></ea-query> -->
+  <ea-query #EaQuery [node]="queryNode" (onSubmit)="query($event)"></ea-query>
 
   <!-- 按钮组 -->
   <div style="margin-bottom: 10px;" class="ea-button-group">
@@ -74,16 +73,16 @@
     <tbody>
       <ng-template ngFor let-data [ngForOf]="listOfData">
       <!-- <ng-template ngFor let-data [ngForOf]="rowSelectionTable.data"> -->
-        <tr>
-          <td class="ttd" [nzShowExpand]="false" nzShowCheckbox nzShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
+        <tr (click)="showCommodity(data)">
+          <td class="ttd" [nzShowExpand]="false" nzShowCheckbox [(nzExpand)]="data.expand" [(nzChecked)]="data.isChecked" (nzCheckedChange)="refreshStatus(data.orderNo)"></td>
           <!-- <td class="ttd" nzShowCheckbox nzShowExpand [(nzExpand)]="data.expand" [(nzChecked)]="mapOfCheckedId[data.key]" (nzCheckedChange)="refreshStatus(data.id)"></td> -->
-          <td>{{ data.payTime}}  {{ data.orderNo }}</td>
+          <td>{{ data.payTime}}  {{ data.orderNo }}   商品数:{{ data.count }}</td>
           <td>{{ data.memberName }} {{ data.memberNickstring }}<br>卡号：{{ data.cardCode }}<br>卡类型：{{ data.cartTypeName }}</td>
           <td>¥{{ data.payment }}</td>
           <td>服务泳师：{{ data.employeeName }}<br>满意程度：{{ data.satisfaction }}</td>
-          <td>备注：{{ data.comment }}</td>
+          <td>备注：{{ data.causesRevocation }}</td>
         </tr>
-        <tr [nzExpand]="true">
+        <tr [nzExpand]="data.isShow">
           <td></td>
           <td colspan="5">
             <nz-table #innerTable [nzData]="data.consumeRecordVOS" nzSize="middle" [nzShowPagination]="false">
@@ -99,7 +98,7 @@
                   <td>{{ item.commodityName }}</td>
                   <td>{{ item.commodityTotal }}</td>
                   <!-- <td><a (click)="revokeOne(data,item.id)">撤销消费</a></td> -->
-                  <td><nz-tag [nzColor]="item.status == 0 ? '#2db7f5' : '#f50'"(click)="revokeOne(data,item.id)">{{ item.status == 0 ? '撤销消费' : '已撤销' }}</nz-tag></td>
+                  <td><nz-tag [nzColor]="item.crStatus == 0 ? '#2db7f5' : '#f50'"(click)="revokeOne(data,item.crId)">{{ item.crStatus == 0 ? '撤销消费' : '已撤销' }}</nz-tag></td>
                 </tr>
               </tbody>
             </nz-table>
@@ -109,5 +108,5 @@
     </tbody>
   </nz-table>
   <nz-pagination class="nz-pagination" (nzPageIndexChange)="nzPageIndexChange($event)" (nzPageSizeChange)="nzPageSizeChange($event)" [nzPageIndex]="nzPageIndex" [nzTotal]="nzTotal" nzShowSizeChanger [nzPageSize]="nzPageSize"></nz-pagination>
-
+  <span class="nz-pagination-des">从{{ nzPageIndex*nzPageSize-nzPageSize+1 }}到{{ nzPageIndex*nzPageSize < nzTotal ? nzPageIndex*nzPageSize : nzTotal }}条记录/共{{ nzTotal }}条记录</span>
 </div>
