@@ -155,6 +155,18 @@ const routes: Routes = [
         data: { noReuse: true },
         children: [
           {
+            path: 'order',
+            data: { title: '订单列表' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/consumption/order/order.module#OrderModule'
+          },
+          {
+            path: 'revokelist',
+            data: { title: '订单撤销列表' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/consumption/revoke-list/revoke-list.module#RevokeListModule'
+          },
+          {
             path: 'list',
             data: { title: '消费列表' },
             canLoad: [ AuthGuardService ],
@@ -431,6 +443,12 @@ const routes: Routes = [
                 canLoad: [ AuthGuardService ],
                 loadChildren: 'src/app/modules/configuration/account/log/log.module#LogModule'
               },
+              {
+                path: 'payapply',
+                data: { title: '支付申请' },
+                canLoad: [ AuthGuardService ],
+                loadChildren: 'src/app/modules/configuration/pay-apply/pay-apply.module#PayApplyModule'
+              }
             ]
           },
         ]

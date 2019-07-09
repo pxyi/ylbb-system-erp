@@ -1,0 +1,16 @@
+<nz-card nzTitle="支付对接说明">
+
+  <p>支付对接流程<button style="float: right;" nz-button nzType="default" (click)="createTplModal(tplTitle, tplContent, tplFooter)">申请说明</button></p>
+
+  <ng-template #tplTitle>
+    <span>支付对接流程说明</span>
+  </ng-template>
+  <ng-template #tplContent>
+    <p style="text-indent:24px;">由于对接微信/支付宝扫码付款，根据第三方要求，您需向我们提供您公司的营业执照、法人身份证（正面、方面拍照），对公账户（打款验证需要），认证公函等材料。因材料过于敏感，所以请联系我们专业的支付专员，支付专员会全程指导您申请与对接。</p>
+    <p>有任何问题请联系支付专员（微信号：hyq384115189）</p>
+  </ng-template>
+  <ng-template #tplFooter>
+    <button nz-button nzType="primary" (click)="destroyTplModal()">我知道了</button>
+  </ng-template>
+
+</nz-card>

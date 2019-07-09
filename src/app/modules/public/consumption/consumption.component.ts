@@ -131,6 +131,7 @@ export class ConsumptionComponent implements OnInit {
 
   saveLoading: boolean;
   saveDrawer() {
+
     let baseValue = {};
     Object.keys(this.baseFormGroup.controls).map(key => {
       baseValue[key] = this.baseFormGroup.controls[key].value;
@@ -149,17 +150,25 @@ export class ConsumptionComponent implements OnInit {
         });
       }
     } else {
+      
       if (this.singleTimeGroup.invalid) {
         for (let i in this.singleTimeGroup.controls) {
           this.singleTimeGroup.controls[i].markAsDirty();
           this.singleTimeGroup.controls[i].updateValueAndValidity();
         }
       } else {
-        this.saveLoading = true;
-        this.http.post('/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }, true).then(res => {
-          this.drawerRef.close(true);
-          res.result.id && this.showConsumptionDetail(res.result.id);
-        });
+        //库存校验
+        this.http.post('/commodity/checkStock', {id : this.singleTimeGroup.controls['commodityId'].value, count : 1}).then(res => {
+          if (res.code == 1000) {
+            this.saveLoading = true;
+            this.http.post('/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }, true).then(res => {
+              this.drawerRef.close(true);
+              res.result.id && this.showConsumptionDetail(res.result.id);
+            });
+          } else {
+            this.message.create('warning', res.info);
+          }
+        })
       }
     }
   }
