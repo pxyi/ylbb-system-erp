@@ -53,7 +53,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
   //搜索框value
   searchData:string;
   //每次扫码的数字
-  code:any = "";
+  code:string = "";
   //扫码临时存储数据
   data:any = {};
   resultData = [];//处理后的数据数组
@@ -267,18 +267,16 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    document.removeEventListener('keypress',()=>{},false)
+    document.removeEventListener('keypress',this.keypressEvent,false)
   }
 
   /* ---------------- 找零更改 ---------------- */
   giveChange(ev) {
     this.payment = ev;
-    if ((ev - this.price) < 0) {
-      this.message.create('warning', '实收不能小于应收');
-      return;
-    }
     this.changePrice = this.payment - this.price;
     this.code = '';
+    this.startTime = undefined;
+    this.endTime = undefined;
   }
 
   /* ---------------- 耗卡start ---------------- */
@@ -866,11 +864,6 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
   closeDrawer() {
     this.drawerRef.close();
   }
-
-  // ngOnDestory() {
-  //   console.log('ngOnDestory')
-  //   removeEventListener('keypress', this.keypressEvent);
-  // }
 
   /*---------------- 会员卡 ----------------*/
   memberCard() {
