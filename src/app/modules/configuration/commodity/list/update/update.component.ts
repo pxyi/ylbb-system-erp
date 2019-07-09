@@ -13,7 +13,7 @@ import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator'
 })
 export class UpdateComponent implements OnInit {
 
-  @Input() commodityInfo;
+  @Input() commodityInfo:any = {};
 
   formGroup: FormGroup;
 
@@ -56,9 +56,9 @@ export class UpdateComponent implements OnInit {
       this.formGroup.removeControl('price');
       this.formGroup.removeControl('inventory');
       this.formGroup.removeControl('commission');
-      this.formGroup.removeControl('barCode');    //商品条码
-      this.formGroup.removeControl('img');        //商品图片
-      this.formGroup.removeControl('warningValue');     //库存提醒值
+      this.formGroup.removeControl('barCode');       //商品条码
+      this.formGroup.removeControl('img');           //商品图片
+      this.formGroup.removeControl('warningValue');  //库存提醒值
 
     } else {
       this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo ? this.commodityInfo.stockPrice : null, [Validators.required]));
@@ -98,8 +98,9 @@ export class UpdateComponent implements OnInit {
 
   barCodeAsyncValidator = (control: FormControl): any => {
     return Observable.create(observer => {
+      let id = this.formGroup.get('id').value;
       if (this.formGroup.get('barCode') && this.formGroup.get('barCode').value) {
-        this.http.post('/commodity/checkBarCode', { barCode: this.formGroup.get('barCode').value }, false).then(res => {
+        this.http.post('/commodity/checkBarCode', { id: id, barCode: this.formGroup.get('barCode').value }, false).then(res => {
           observer.next(res.result.valid ? null : { error: true, duplicated: true });
           observer.complete();
         }, err => {
