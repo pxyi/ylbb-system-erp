@@ -5,6 +5,7 @@ import { PromotionComponent } from './promotion.component';
 import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { RouterModule } from '@angular/router';
+import { QRCodeModule } from 'angular2-qrcode';
 
 @NgModule({
   declarations: [PromotionComponent],
@@ -16,7 +17,8 @@ import { RouterModule } from '@angular/router';
       path: '',
       component: PromotionComponent
     }]),
-    CreateModule
+    CreateModule,
+    QRCodeModule
   ]
 })
 export class PromotionModule { }

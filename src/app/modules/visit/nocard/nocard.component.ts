@@ -84,69 +84,7 @@ export class NocardComponent implements OnInit {
       isHide      : true
     },
   ];
-  tableNode = [
-    {
-      name  : '宝宝昵称',
-      width : '120px',
-      left  : 0
-    },
-    {
-      name  : '宝宝姓名',
-      width : '100px'
-    },
-    {
-      name  : '宝宝生日',
-      width : '100px'
-    },
-    {
-      name  : '性别',
-      width : '60px'
-    },
-    {
-      name  : '月龄',
-      width : '60px'
-    },
-    {
-      name  : '家长姓名',
-      width : '100px'
-    },
-    {
-      name  : '家长电话',
-      width : '100px'
-    },
-    {
-      name  : '所属小区',
-      width : '140px'
-    }, 
-    {
-      name  : '体验时间',
-      width : '140px'
-    },
-    {
-      name  : '下次跟进时间',
-      width : '140px'
-    },
-    {
-      name  : '最后跟进时间',
-      width : '140px'
-    },
-    {
-      name  : '来源',
-      width : '80px'
-    },
-    {
-      name  : '客户状态',
-      width : '80px'
-    },
-    {
-      name  : '跟进阶段',
-      width : '120px'
-    },
-    {
-      name  : '收集者',
-      width : '120px'
-    }
-  ]
+  tableNode = ['宝宝昵称','宝宝姓名','宝宝生日','性别','月龄','家长姓名','家长电话','所属小区','体验时间','下次跟进时间','最后跟进时间','来源','客户状态','跟进阶段','收集者']
 
   constructor(
     private drawer: NzDrawerService,

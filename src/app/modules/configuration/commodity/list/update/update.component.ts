@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { NzDrawerRef, NzMessageService, UploadFile } from 'ng-zorro-antd';
+import { NzDrawerRef } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
@@ -22,8 +22,7 @@ export class UpdateComponent implements OnInit {
   constructor(
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef<boolean>,
-    private http: HttpService,
-    private msg: NzMessageService
+    private http: HttpService
   ) {
     this.http.post('/cardBusinessManagement/getStoreCardTypeCategores').then(res => this.cardTypeList = res.result);
   }
@@ -31,15 +30,14 @@ export class UpdateComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.fb.group({
       id: [],
-      name: [, [Validators.required], [this.nameAsyncValidator]],                  // 商品名称
-      status: [0, [Validators.required]],                                          // 商品状态 0:’启用’,1:’禁用’
-      chargeType: [0, [Validators.required]],                                      // 是否计次消费 0:’是’,1:’否’
-      type: [1, [Validators.required]],                                            //	商品类型
-      integral: [0, [Validators.required]],                                        // 是否积分 计积分 0:’不记积分’,1:’记积分’
-      defaultTag: [0, [Validators.required]],                                      // 是否设置为默认 是否默认 0:’否’,1:’是’
-      introduction: [],                                                            //	商品说明
-      discountFlag: [0, [Validators.required]],                                    //是否参与折扣
-      warningValue: [, [Validators.required], [Validators.pattern(/^[1-9]\d*$/)]]  //库存提醒值
+      name: [, [Validators.required], [this.nameAsyncValidator]],                  //	商品名称
+      status: [0, [Validators.required]],                  // 商品状态 0:’启用’,1:’禁用’
+      chargeType: [0, [Validators.required]],                 // 是否计次消费 0:’是’,1:’否’
+      type: [1, [Validators.required]],                  //	商品类型
+      integral: [0, [Validators.required]],                  // 是否积分 计积分 0:’不记积分’,1:’记积分’
+      defaultTag: [0, [Validators.required]],                  // 是否设置为默认 是否默认 0:’否’,1:’是’
+      introduction: [],                                        //	商品说明
+      discountFlag: [0, [Validators.required]],               //是否参与折扣
     });
     this.formTypeChange(this.formGroup.get('type').value);
     this.formGroup.get('type').valueChanges.subscribe(val => this.formTypeChange(val));
@@ -60,6 +58,7 @@ export class UpdateComponent implements OnInit {
       this.formGroup.removeControl('commission');
       this.formGroup.removeControl('barCode');    //商品条码
       this.formGroup.removeControl('img');        //商品图片
+      this.formGroup.removeControl('warningValue');     //库存提醒值
 
     } else {
       this.formGroup.addControl('stockPrice', new FormControl(this.commodityInfo ? this.commodityInfo.stockPrice : null, [Validators.required]));
@@ -68,11 +67,11 @@ export class UpdateComponent implements OnInit {
       this.formGroup.addControl('commission', new FormControl(this.commodityInfo ? this.commodityInfo.commission : true, [Validators.required]));
       this.formGroup.addControl('barCode', new FormControl(this.commodityInfo ? this.commodityInfo.barCode : null, [], [this.barCodeAsyncValidator]));
       this.formGroup.addControl('img', new FormControl(this.commodityInfo ? this.commodityInfo.img : null));
+      this.formGroup.addControl('warningValue', new FormControl(this.commodityInfo ? this.commodityInfo.warningValue : null, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]));
 
       this.formGroup.removeControl('categoryId');
       this.formGroup.removeControl('cardNum');
       this.formGroup.removeControl('cardAmount');
-
     }
   }
 

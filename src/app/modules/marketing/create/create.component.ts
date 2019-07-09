@@ -7,19 +7,21 @@ import { Router } from '@angular/router';
 
 declare const window: any;
 
-enum TemplateType {
-  '体验卡售卖' = 1,
-  '老带新' = 2,
-  '拼团' = 3,
-  '招聘' = 4,
-  '生日' = 6
-}
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.less']
 })
 export class CreateComponent implements OnInit {
+
+  templateType = new Map([
+    ['体验卡', 1],
+    ['老带新',2],
+    ['拼团',3],
+    ['招聘',4],
+    ['生日',6],
+    ['返利',7]
+  ])
 
   @Input() activityInfo: any = {};
 
@@ -175,13 +177,13 @@ export class CreateComponent implements OnInit {
    * 根据活动类型 初始化响应式表单
    */
   private _templateTypeAddFormGroup = new Map([
-    [TemplateType['体验卡售卖'], () => {
+    [this.templateType.get('体验卡'), () => {
       this.formGroup.addControl('promotionPrice', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), this._promotionPriceValidator({ isFormGroup: true, control: 'orgPrice' })]));
       this.formGroup.addControl('orgPrice', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.addControl('needPay', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.controls['orgPrice'].valueChanges.subscribe(res => this.formGroup.controls['promotionPrice'].updateValueAndValidity());
     }],
-    [TemplateType['老带新'], () => {
+    [this.templateType.get('老带新'), () => {
       let expirationDate = this.activityId && this.activityInfo.activityPrizes[0].expirationDate ? new Date(this.activityInfo.activityPrizes[0].expirationDate) : null;
       this.formGroup.addControl('expirationDate', this.fb.control(expirationDate, [this._endTimeValidator()]));
       this.formGroup.addControl('activityPrizes', this.fb.array([]));
@@ -197,7 +199,7 @@ export class CreateComponent implements OnInit {
         expirationDate: [this.activityId ? this.activityInfo.activityVouchers[0].expirationDate : null, [this._endTimeValidator()]],
       }));
     }],
-    [TemplateType['拼团'], () => {
+    [this.templateType.get('拼团'), () => {
       this.formGroup.addControl('activityGroupRule', this.fb.group({
         totalNum: [{ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
         duration: [{ value: null, disabled: !!this.activityId }, [Validators.required]],
@@ -209,7 +211,7 @@ export class CreateComponent implements OnInit {
       }));
       this.formGroup.controls['activityGroupRule']['controls']['orgPrice'].valueChanges.subscribe(res => this.formGroup.controls['activityGroupRule']['controls']['promotionPrice'].updateValueAndValidity())
     }],
-    [TemplateType['招聘'], () => {
+    [this.templateType.get('招聘'), () => {
       this.formGroup.removeControl('time');
       this.formGroup.removeControl('startTime');
       this.formGroup.removeControl('endTime');
@@ -221,13 +223,23 @@ export class CreateComponent implements OnInit {
       this.formGroup.addControl('positionInfos', this.fb.array([]));
       this.activityId ? this.activityInfo.positionInfos.map(positionInfo => this.addPositionInfos(positionInfo)) : this.addPositionInfos({});
     }],
-    [TemplateType['生日'], () => {
+    [this.templateType.get('生日'), () => {
       this.formGroup.removeControl('activityRole');
       this.formGroup.addControl('consumerType', this.fb.control(2, [Validators.required]));
       this.formGroup.addControl('invitationLanguage', this.fb.control(null, [Validators.required]));
       this.formGroup.addControl('birthdayLanguage', this.fb.control(null, [Validators.required, Validators.maxLength(45)]));
       this.formGroup.addControl('banquetProcess', this.fb.control(null, [Validators.required]));
       this.formGroup.addControl('activityImgs', this.fb.control(null, [Validators.required]));
+    }],
+    [this.templateType.get('返利'), () => {
+      this.formGroup.removeControl('activityRole');
+      this.formGroup.addControl('consumerType', this.fb.control(2, [Validators.required]));
+      this.formGroup.addControl('cuePhrases', this.fb.control(null, [Validators.required]));
+      this.formGroup.addControl('activityImgs', this.fb.control(null, [Validators.required]));
+      this.formGroup.addControl('storeImgs', this.fb.control(null, [Validators.required]));
+      this.formGroup.addControl('productName', this.fb.control(null, [Validators.required]));
+      this.formGroup.addControl('promotionPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
+      this.formGroup.addControl('rebateRatio', this.fb.control(null, [Validators.required, Validators.pattern(/^(?:0|[1-9]\d?)$/)]));
     }]
   ]);
 
@@ -235,20 +247,23 @@ export class CreateComponent implements OnInit {
    * 根据活动类型 设置保存参数
    */
   private _templateTypeSave = new Map([
-    [TemplateType['体验卡售卖'], (params) => {
+    [this.templateType.get('体验卡'), (params) => {
       return params;
     }],
-    [TemplateType['老带新'], (params) => {
+    [this.templateType.get('老带新'), (params) => {
       params.activityPrizes.map(prize => prize.expirationDate = params.expirationDate ? this.format.transform(params.expirationDate, 'yyyy-MM-dd') : null);
       return params;
     }],
-    [TemplateType['拼团'], (params) => {
+    [this.templateType.get('拼团'), (params) => {
       return params;
     }],
-    [TemplateType['招聘'], (params) => {
+    [this.templateType.get('招聘'), (params) => {
       return params;
     }],
-    [TemplateType['生日'], (params) => {
+    [this.templateType.get('生日'), (params) => {
+      return params;
+    }],
+    [this.templateType.get('返利'), (params) => {
       return params;
     }]
   ])
@@ -266,8 +281,8 @@ export class CreateComponent implements OnInit {
         otherContent[key].updateValueAndValidity();
       });
     }],
-    [TemplateType['体验卡售卖'], () => { }],
-    [TemplateType['老带新'], () => {
+    [this.templateType.get('体验卡'), () => { }],
+    [this.templateType.get('老带新'), () => {
       let activityVouchers = this.activityVouchers.controls;
       Object.keys(activityVouchers).map(key => {
         activityVouchers[key].markAsDirty();
@@ -281,14 +296,14 @@ export class CreateComponent implements OnInit {
         });
       });
     }],
-    [TemplateType['拼团'], () => {
+    [this.templateType.get('拼团'), () => {
       let activityGroupRule = this.activityGroupRule.controls;
       Object.keys(activityGroupRule).map(key => {
         activityGroupRule[key].markAsDirty();
         activityGroupRule[key].updateValueAndValidity();
       });
     }],
-    [TemplateType['招聘'], () => {
+    [this.templateType.get('招聘'), () => {
       let positionInfos = this.positionInfos.controls;
       positionInfos.map(position => {
         Object.keys(position['controls']).map(c => {
@@ -297,7 +312,8 @@ export class CreateComponent implements OnInit {
         });
       });
     }],
-    [TemplateType['生日'], () => { }],
+    [this.templateType.get('生日'), () => { }],
+    [this.templateType.get('返利'), () => { }],
   ]);
 
   /* ----------- 新增 老带新奖项设置 ----------- */

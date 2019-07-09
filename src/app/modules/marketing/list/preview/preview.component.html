@@ -1,151 +1,195 @@
 <nz-tabset>
-  <nz-tab nzTitle="用户数据">
-    <ea-list-page-simp url="/activity/getStatisticData" [paramsDefault]="{ activityId: activityInfo.id }" [tableThead]="tableThead"
-      [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr">
-      <ng-template #EaTableTbodyTr let-item>
-        <ng-container *ngIf="activityInfo.templateType != 4 && activityInfo.templateType != 6">
+  <ng-container *ngIf="activityInfo.templateType == 7; else elseTemplate">
+    <nz-tab nzTitle="浏览数据">
+      <ea-list-page-simp url="/activity/getJoinData" [paramsDefault]="{ activityId: activityInfo.id }"
+        [tableThead]="tableThead" [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr">
+        <ng-template #EaTableTbodyTr let-item>
           <td>{{ item.nickName }}</td>
-          <td>{{ item.babyName }}</td>
-          <td>{{ item.birthday }}</td>
-          <td>{{ item.teacherName }}</td>
+          <td>{{ item.shareName }}</td>
           <td>{{ item.phoneNum }}</td>
+          <td>{{ item.createTime }}</td>
+          <td>
+            <a nz-popover nzTitle="分享列表" [(nzVisible)]="item.showShareList" nzTrigger="click" [nzContent]="shareTmpt" nzPlacement="bottomRight">{{ item.realNumber }}</a>
+            <ng-template #shareTmpt>
+              <ea-table size="small" url="/activity/getJoinData" [showPage]="false" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1, sharerOpenId: item.openid }" [thead]="['微信昵称', '电话']" [EaTableTbodyTr]="rmdTr">
+                <ng-template #rmdTr let-data>
+                  <td>{{ data.nickName }}</td>
+                  <td>{{ data.phoneNum }}</td>
+                </ng-template>
+              </ea-table>
+            </ng-template>
+          </td>
+        </ng-template>
+      </ea-list-page-simp>
+    </nz-tab>
+    <nz-tab nzTitle="购买记录">
+      <ea-list-page-simp url="/activity/getJoinData" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1 }" [tableThead]="['微信昵称', '收集老师', '分享用户', '联系方式', '授权时间', '支付时间', '支付金额', '商品名称', '有效分享数']" [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr1">
+        <ng-template #EaTableTbodyTr1 let-item>
+          <td>{{ item.nickName }}</td>
+          <td>{{ item.teacherName }}</td>
+          <td>{{ item.shareName }}</td>
+          <td>{{ item.phoneNum }}</td>
+          <td>{{ item.createTime }}</td>
           <td>{{ item.entryTime }}</td>
-        </ng-container>
-        
-        <ng-container *ngIf="activityInfo.templateType == 4">
-          <td>{{ item.nickName }}</td>
-          <td>{{ item.babyName }}</td>
-          <td>{{ item.phoneNum }}</td>
+          <td>{{ item.payAmount }}</td>
           <td>{{ item.productName }}</td>
-        </ng-container>
-        
-        <ng-container *ngIf="activityInfo.templateType == 6">
-          <td>{{ item.nickName }}</td>
-          <td>{{ item.babyName }}</td>
-          <td>{{ item.joinNum }}</td>
-          <td>{{ item.teacherName }}</td>
-          <td>{{ item.phoneNum }}</td>
-        </ng-container>
-        
-        
-        
-        <ng-container [ngSwitch]="activityInfo.templateType">
-          <ng-container *ngSwitchCase="1">
-            <ng-container *ngIf="activityInfo.needPay == 1">
+          <td>
+            <a nz-popover nzTitle="分享列表" [(nzVisible)]="item.showShareList" nzTrigger="click" [nzContent]="shareTmpt1" nzPlacement="bottomRight">{{ item.realNumber }}</a>
+            <ng-template #shareTmpt1>
+              <ea-table size="small" url="/activity/getJoinData" [showPage]="false" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1, sharerOpenId: item.openid }" [thead]="['微信昵称', '电话']" [EaTableTbodyTr]="rmdTr">
+                <ng-template #rmdTr let-data>
+                  <td>{{ data.nickName }}</td>
+                  <td>{{ data.phoneNum }}</td>
+                </ng-template>
+              </ea-table>
+            </ng-template>
+          </td>
+        </ng-template>
+      </ea-list-page-simp>
+    </nz-tab>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <nz-tab nzTitle="用户数据">
+      <ea-list-page-simp url="/activity/getStatisticData" [paramsDefault]="{ activityId: activityInfo.id }"
+        [tableThead]="tableThead" [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr">
+        <ng-template #EaTableTbodyTr let-item>
+          <ng-container *ngIf="activityInfo.templateType != 4 && activityInfo.templateType != 6">
+            <td>{{ item.nickName }}</td>
+            <td>{{ item.babyName }}</td>
+            <td>{{ item.birthday }}</td>
+            <td>{{ item.teacherName }}</td>
+            <td>{{ item.phoneNum }}</td>
+            <td>{{ item.entryTime }}</td>
+          </ng-container>
+    
+          <ng-container *ngIf="activityInfo.templateType == 4">
+            <td>{{ item.nickName }}</td>
+            <td>{{ item.babyName }}</td>
+            <td>{{ item.phoneNum }}</td>
+            <td>{{ item.productName }}</td>
+          </ng-container>
+    
+          <ng-container *ngIf="activityInfo.templateType == 6">
+            <td>{{ item.nickName }}</td>
+            <td>{{ item.babyName }}</td>
+            <td>{{ item.joinNum }}</td>
+            <td>{{ item.teacherName }}</td>
+            <td>{{ item.phoneNum }}</td>
+          </ng-container>
+    
+          <ng-container [ngSwitch]="activityInfo.templateType">
+            <ng-container *ngSwitchCase="1">
+              <ng-container *ngIf="activityInfo.needPay == 1">
+                <td>{{ item.payAmount | currency: '￥' }}</td>
+                <td>{{ item.cashingStatus == 0 ? '待核销' : '已核销' }}</td>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+              <td>{{ item.shareName }}</td>
+              <td>
+                <a nz-popover nzTitle="推荐人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1" nzPlacement="bottomRight">{{ item.rmdNumber }}</a>
+                <ng-template #contentTemplate1>
+                  <ea-table size="small" url="/activity/getShareRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+                    <ng-template #rmdTr let-data>
+                      <td>{{ data.babyName }}</td>
+                      <td>{{ data.birthday }}</td>
+                      <td>{{ data.phoneNum }}</td>
+                      <td>{{ data.entryTime }}</td>
+                    </ng-template>
+                  </ea-table>
+                </ng-template>
+              </td>
+              <td>
+                <a nz-popover nzTitle="到店人列表" [(nzVisible)]="item.show2" nzTrigger="click" [nzContent]="contentTemplate2" nzPlacement="bottomRight">{{ item.realNumber }}</a>
+                <ng-template #contentTemplate2>
+                  <ea-table size="small" url="/activity/getArrivedRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+                    <ng-template #rmdTr let-data>
+                      <td>{{ data.babyName }}</td>
+                      <td>{{ data.birthday }}</td>
+                      <td>{{ data.phoneNum }}</td>
+                      <td>{{ data.entryTime }}</td>
+                    </ng-template>
+                  </ea-table>
+                </ng-template>
+              </td>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+              <td>{{ item.groupStatus == 0 ? '等待成团' : item.groupStatus == 1 ? '虚拟成团' : '真实成团' }}</td>
               <td>{{ item.payAmount | currency: '￥' }}</td>
+              <td>{{ item.productName }}</td>
+              <td>
+                <a nz-popover nzTitle="同团人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1"
+                  nzPlacement="bottomRight">{{ item.currentNum }}</a>
+                <ng-template #contentTemplate1>
+                  <ea-table size="small" url="/activity/getGroupInfo" [showPage]="false" [isParamJson]="false"
+                    [paramsDefault]="{groupId: item.groupId}" [thead]="['', '昵称', '电话']" [EaTableTbodyTr]="rmdTr">
+                    <ng-template #rmdTr let-data>
+              <td>{{ data.colonel ==  0 ? '团员' : data.colonel == 1 ? '团长' : data.colonel }}</td>
+              <td>{{ data.nickName }}</td>
+              <td>{{ data.phoneNum }}</td>
+              </ng-template>
+              </ea-table>
+              </ng-template>
+              </td>
               <td>{{ item.cashingStatus == 0 ? '待核销' : '已核销' }}</td>
             </ng-container>
+            <ng-container *ngSwitchDefault></ng-container>
           </ng-container>
-          <ng-container *ngSwitchCase="2">
-            <td>{{ item.shareName }}</td>
-            <td>
-              <a nz-popover nzTitle="推荐人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1" nzPlacement="bottomRight">{{ item.rmdNumber }}</a>
-              <ng-template #contentTemplate1>
-                <ea-table size="small" url="/activity/getShareRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
-                  <ng-template #rmdTr let-data>
-                    <td>{{ data.babyName }}</td>
-                    <td>{{ data.birthday }}</td>
-                    <td>{{ data.phoneNum }}</td>
-                    <td>{{ data.entryTime }}</td>
-                  </ng-template>
-                </ea-table>
-              </ng-template>
-            </td>
-            <td>
-              <a nz-popover nzTitle="到店人列表" [(nzVisible)]="item.show2" nzTrigger="click" [nzContent]="contentTemplate2" nzPlacement="bottomRight">{{ item.realNumber }}</a>
-              <ng-template #contentTemplate2>
-                <ea-table size="small" url="/activity/getArrivedRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
-                  <ng-template #rmdTr let-data>
-                    <td>{{ data.babyName }}</td>
-                    <td>{{ data.birthday }}</td>
-                    <td>{{ data.phoneNum }}</td>
-                    <td>{{ data.entryTime }}</td>
-                  </ng-template>
-                </ea-table>
-              </ng-template>
-            </td>
-          </ng-container>
-          <ng-container *ngSwitchCase="3">
-            <td>{{ item.groupStatus == 0 ? '等待成团' : item.groupStatus == 1 ? '虚拟成团' : '真实成团' }}</td>
-            <td>{{ item.payAmount | currency: '￥' }}</td>
-            <td>{{ item.productName }}</td>
-            <td>
-              <a nz-popover nzTitle="同团人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1"
-                nzPlacement="bottomRight">{{ item.currentNum }}</a>
-              <ng-template #contentTemplate1>
-                <ea-table size="small" url="/activity/getGroupInfo" [showPage]="false" [isParamJson]="false"
-                  [paramsDefault]="{groupId: item.groupId}" [thead]="['', '昵称', '电话']" [EaTableTbodyTr]="rmdTr">
-                  <ng-template #rmdTr let-data>
-                    <td>{{ data.colonel ==  0 ? '团员' : data.colonel == 1 ? '团长' : data.colonel }}</td>
-                    <td>{{ data.nickName }}</td>
-                    <td>{{ data.phoneNum }}</td>
-                  </ng-template>
-                </ea-table>
-              </ng-template>
-            </td>
-            <td>{{ item.cashingStatus == 0 ? '待核销' : '已核销' }}</td>
-          </ng-container>
-          <ng-container *ngSwitchDefault>
-    
-          </ng-container>
-        </ng-container>
-      </ng-template>
-    </ea-list-page-simp>
-  </nz-tab>
-  <nz-tab nzTitle="中奖信息" *ngIf="activityInfo.templateType == 2">
-    <ea-list-page-simp 
-      #listPage
-      url="/activity/getCashingRecord" 
-      [paramsDefault]="{ activityId: activityInfo.id, code: 1 }" 
-      [tableThead]="['宝宝昵称', '联系方式', '推荐人数', '到店人数', '状态', '奖品名称']"
-      (dataChange)="dataChange($event)"
-      [queryNode]="[{ label: '手机号码', type: 'input', key: 'phoneNum' }, { label: '状态', type: 'radio', key: 'code', options: [{name: '未领取', id: 1}, {name: '已领取', id: 2}], default: 1 }]" 
-      [EaTableTbodyTr]="EaTableTbodyTr">
-      <ng-template #EaTableTbodyTr let-item>
-        <td>{{ item.babyName }}</td>
-        <td>{{ item.phoneNum }}</td>
-        <td>
-          <a nz-popover nzTitle="推荐人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1" nzPlacement="bottomRight">{{ item.rmdNumber }}</a>
-          <ng-template #contentTemplate1>
-            <ea-table size="small" url="/activity/getShareRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
-              <ng-template #rmdTr let-data>
-                <td>{{ data.babyName }}</td>
-                <td>{{ data.birthday }}</td>
-                <td>{{ data.phoneNum }}</td>
-                <td>{{ data.entryTime }}</td>
-              </ng-template>
-            </ea-table>
-          </ng-template>
-        </td>
-        <td>
-          <a nz-popover nzTitle="到店人列表" [(nzVisible)]="item.show2" nzTrigger="click" [nzContent]="contentTemplate2" nzPlacement="bottomRight">{{ item.realNumber }}</a>
-          <ng-template #contentTemplate2>
-            <ea-table size="small" url="/activity/getArrivedRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
-              <ng-template #rmdTr let-data>
-                <td>{{ data.babyName }}</td>
-                <td>{{ data.birthday }}</td>
-                <td>{{ data.phoneNum }}</td>
-                <td>{{ data.entryTime }}</td>
-              </ng-template>
-            </ea-table>
-          </ng-template>
-        </td>
-        <td>
-          <button 
-            nz-popover nzTitle="选择奖品" [(nzVisible)]="item.show" [nzContent]="contentTemplate" nzPlacement="bottomRight" nzTrigger="click"
-            nz-button nzType="primary" nzSize="small" [disabled]="item.cashingStatus == 1">{{ item.cashingStatus == 1 ? '已领取' : '领取' }}</button>
-          <ng-template #contentTemplate>
-            <ea-table #table size="small" url="/activity/getEligiblePrizes" [showPage]="false" [isParamJson]="false" [checked]="true" [isRadio]="true" [(checkedItems)]="item.checkedItems" [paramsDefault]="{id: item.id}" [thead]="['封面图', '奖品']" [EaTableTbodyTr]="prizeTr">
-              <ng-template #prizeTr let-data>
-                <td><img [src]="data.prizeImg" style="height: 32px"></td>
-                <td>{{ data.prizeName }}</td>
-              </ng-template>
-            </ea-table>
-            <button nz-button nzBlock style="margin-top: 18px" (click)="cashingPrize(item.id, item.checkedItems[0], listPage)" *ngIf="item.checkedItems.length">确定领取</button>
-          </ng-template>
+        </ng-template>
+      </ea-list-page-simp>
+    </nz-tab>
+    <nz-tab nzTitle="中奖信息" *ngIf="activityInfo.templateType == 2">
+      <ea-list-page-simp #listPage url="/activity/getCashingRecord"
+        [paramsDefault]="{ activityId: activityInfo.id, code: 1 }"
+        [tableThead]="['宝宝昵称', '联系方式', '推荐人数', '到店人数', '状态', '奖品名称']" (dataChange)="dataChange($event)"
+        [queryNode]="[{ label: '手机号码', type: 'input', key: 'phoneNum' }, { label: '状态', type: 'radio', key: 'code', options: [{name: '未领取', id: 1}, {name: '已领取', id: 2}], default: 1 }]"
+        [EaTableTbodyTr]="EaTableTbodyTr">
+        <ng-template #EaTableTbodyTr let-item>
+          <td>{{ item.babyName }}</td>
+          <td>{{ item.phoneNum }}</td>
+          <td>
+            <a nz-popover nzTitle="推荐人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1" nzPlacement="bottomRight">{{ item.rmdNumber }}</a>
+            <ng-template #contentTemplate1>
+              <ea-table size="small" url="/activity/getShareRecord" [showPage]="false" [isParamJson]="false"
+                [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+                <ng-template #rmdTr let-data>
+                  <td>{{ data.babyName }}</td>
+                  <td>{{ data.birthday }}</td>
+                  <td>{{ data.phoneNum }}</td>
+                  <td>{{ data.entryTime }}</td>
+                </ng-template>
+              </ea-table>
+            </ng-template>
           </td>
-        <td>{{ item.prizeName }}</td>
-      </ng-template>
-    </ea-list-page-simp>
-  </nz-tab>
+          <td>
+            <a nz-popover nzTitle="到店人列表" [(nzVisible)]="item.show2" nzTrigger="click" [nzContent]="contentTemplate2" nzPlacement="bottomRight">{{ item.realNumber }}</a>
+            <ng-template #contentTemplate2>
+              <ea-table size="small" url="/activity/getArrivedRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+                <ng-template #rmdTr let-data>
+                  <td>{{ data.babyName }}</td>
+                  <td>{{ data.birthday }}</td>
+                  <td>{{ data.phoneNum }}</td>
+                  <td>{{ data.entryTime }}</td>
+                </ng-template>
+              </ea-table>
+            </ng-template>
+          </td>
+          <td>
+            <button nz-popover nzTitle="选择奖品" [(nzVisible)]="item.show" [nzContent]="contentTemplate" nzPlacement="bottomRight" nzTrigger="click" nz-button nzType="primary" nzSize="small" [disabled]="item.cashingStatus == 1">{{ item.cashingStatus == 1 ? '已领取' : '领取' }}</button>
+            <ng-template #contentTemplate>
+              <ea-table #table size="small" url="/activity/getEligiblePrizes" [showPage]="false" [isParamJson]="false" [checked]="true" [isRadio]="true" [(checkedItems)]="item.checkedItems" [paramsDefault]="{id: item.id}" [thead]="['封面图', '奖品']" [EaTableTbodyTr]="prizeTr">
+                <ng-template #prizeTr let-data>
+                  <td><img [src]="data.prizeImg" style="height: 32px"></td>
+                  <td>{{ data.prizeName }}</td>
+                </ng-template>
+              </ea-table>
+              <button nz-button nzBlock style="margin-top: 18px" (click)="cashingPrize(item.id, item.checkedItems[0], listPage)" *ngIf="item.checkedItems.length">确定领取</button>
+            </ng-template>
+          </td>
+          <td>{{ item.prizeName }}</td>
+        </ng-template>
+      </ea-list-page-simp>
+    </nz-tab>
+  </ng-template>
+  
 </nz-tabset>

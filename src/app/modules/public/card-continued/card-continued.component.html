@@ -1,0 +1,115 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>卡号</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="cardCode">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员名称</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有正价卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input  formControlName="times">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>现有赠送卡次</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="freeTimes">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>收入金额</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="balance">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>失效日期</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="expireDate">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>续卡类型</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="changeCardType" nzPlaceHolder="请选择续卡类型">
+            <nz-option *ngFor="let option of cardTypeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('changeCardType').dirty && formGroup.get('changeCardType').hasError('required')">请请选择续卡类型！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired >销售</nz-form-label>
+          <nz-form-control>          
+            <nz-select formControlName="employeeId" [nzShowSearch]="true" nzPlaceHolder="请选择销售">
+              <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择销售！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+  <ng-container *ngIf="formGroup.get('type').value == 1 && formGroup.get('changeCardType').value">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label >需充值金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="amount" readonly>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label >赠送金额</nz-form-label>         
+          <nz-form-control>
+            <input nz-input formControlName="freeAmount" readonly>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>折扣</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="discount" readonly>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+</form>
+
+<div class="drawer-footer">
+  <button nz-button (click)="close()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="save()">保存</button>
+</div>

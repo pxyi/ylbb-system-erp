@@ -4,7 +4,7 @@
     <div class="login-ico">
       <img src="./assets/images/login/login-ico.png" alt="ico">
     </div>
-    <div class="login-logo" *ngIf="hostname">
+    <div class="login-logo" *ngIf="hostname && hostname !== 'baobaoyouyong'">
       <img [src]="'./assets/images/login/login-logo-footer-'+ hostname +'.png'">
     </div>
   </div>

@@ -115,7 +115,7 @@
         <div class="tab-payment" style="margin-left: 20px;margin-top:10px;border:1px solid #e8e8e8;height: 420px;">
           <nz-tabset nzTabBarGutter='0' nzShowPagination="false">
             <nz-tab nzTitle="微信" (nzSelect)="selectPayType(2)" [nzDisabled]="!isSubmitShopCard">
-              <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
+              <img style="display:block;width:150px;margin:0 auto;" src="./assets/images/sweepcode.png" alt="付款码">
               <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
                 margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
               >请输入付款码</div> -->
@@ -131,7 +131,7 @@
               </nz-form-item>
             </nz-tab>
             <nz-tab nzTitle="支付宝" (nzSelect)="selectPayType(3)" [nzDisabled]="!isSubmitShopCard">
-              <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/sweepcode.png" alt="付款码">
+              <img style="display:block;width:150px;margin:0 auto;" src="./assets/images/sweepcode.png" alt="付款码">
               <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
                 margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
               >请输入付款码</div> -->
@@ -147,7 +147,7 @@
               </nz-form-item>
             </nz-tab>
             <nz-tab nzTitle="现金支付" (nzSelect)="selectPayType(1)" [nzDisabled]="!isSubmitShopCard">
-              <img style="display:block;width:150px;margin:0 auto;" src="../../../../assets/images/cash.png" alt="现金">
+              <img style="display:block;width:150px;margin:0 auto;" src="./assets/images/cash.png" alt="现金">
               <nz-form-item style="margin-top:10px;">
                 <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
@@ -164,7 +164,7 @@
               </nz-form-item>
               <button style="display:block;width:90%;margin:0 auto;" nz-button nzType="primary" (click)="settlement()">确定结算</button>
             </nz-tab>
-            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard || !memberInfo.isHaveCard || !feeType">
+            <nz-tab nzTitle="充值卡" (nzSelect)="selectPayType(4)" [nzDisabled]="!isSubmitShopCard || !memberInfo.isHaveCard || !consumptionInfo.feeType">
               <div class="vip-card">
                 <div class="vip-card-one">
                   <span class="vip-text">VIP</span>
@@ -445,7 +445,7 @@
           <span style="display:block;-webkit-transform:scale(0.9);">{{ payment }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ changePrice || 0 }}</span>
+          <span style="display:block;-webkit-transform:scale(0.9);">{{ paymentType == 1 ? changePrice : 0 }}</span>
         </p>
         <p style="line-height: 24px;">
           <span style="display:block;-webkit-transform:scale(0.9);">{{ generalDiscount }}</span>
@@ -485,7 +485,7 @@
     <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">姓名：{{ username }}</p>
     <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">会员卡：{{ cardInfo }}</p>
     <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">电话：{{ phoneNumber }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">剩余{{ remainAmount ? '金额' : '次数' }}：{{ remainAmount || remainTimes }}</p>
+    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">剩余{{ consumptionInfo.feeType==0 ? '次数' : '金额' }}：{{ consumptionInfo.feeType==0 ? remainTimes : remainAmount }}</p>
     <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">过期时间：<br>{{ expireDate }}</p>
     <div style="width:190px;height:1px;border-top:1px dashed #000; margin-top:11px;"></div>
   
@@ -495,8 +495,8 @@
         <span style="line-height: 26px;display:block;">{{ serviceName }}</span>
       </div>
       <div style="width: 55%;float:left;">
-        <span style="line-height: 26px;display:block;margin-left:3px;">消费{{ feeType==0 ? '次数' : '金额' }}</span>
-        <span style="line-height: 26px;display:block;margin-left:3px;">{{ feeType==0 ? deductionTimes : consumption }}</span>
+        <span style="line-height: 26px;display:block;margin-left:3px;">消费{{ consumptionInfo.feeType==0 ? '次数' : '金额' }}</span>
+        <span style="line-height: 26px;display:block;margin-left:3px;">{{ consumptionInfo.feeType==0 ? deductionTimes : consumption }}</span>
       </div>
       <div style="clear:both;"></div>
     </div>
