@@ -119,6 +119,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
 
   //扫码判断列表中有无该商品
   existCommodity = true;
+  existCommodit = true;
   existCom = true;
 
   residualAmount:any; //卡剩余金额
@@ -894,15 +895,15 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
         //长度为13位 是商品
         if (this.code.length == 13) {
 
-          this.existCommodity = true;
+          this.existCommodit = true;
           for (let item of this.listOfData){
             if (item.barCode == this.code) {
-              this.existCommodity = false;
+              this.existCommodit = false;
             }
           }
-
+          
           //listOfData为空或者listOfData中没有此条码的时候走接口
-          if(this.listOfData.length == 0 || this.existCommodity){
+          if(this.listOfData.length == 0 || this.existCommodit){
             this.http.post('/commodity/getCommodities', { cardId : this.consumptionInfo.id, barCode : this.code }).then(res => {
               if(res.result[0] && res.result[0].changePrice){
                 var data = res.result;
@@ -1041,6 +1042,11 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
             this.pay();
           }
 
+        } else if (this.code.length > 18) {
+          //长度大于18位清空code
+          this.code = '';
+          this.startTime = undefined;
+          this.endTime = undefined;
         }
 
       }

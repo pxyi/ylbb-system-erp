@@ -53,7 +53,7 @@ export class ConsumptionTabComponent implements OnInit {
   //搜索框value
   searchData:string;
   //每次扫码的数字
-  code:any = "";
+  code:string = "";
   //扫码临时存储数据
   data:any = {};
   resultData = [];//处理后的数据数组
@@ -119,6 +119,7 @@ export class ConsumptionTabComponent implements OnInit {
 
   //扫码判断列表中有无该商品
   existCommodity = true;
+  existCommodit = true;
   existCom = true;
 
   residualAmount:any; //卡剩余金额
@@ -267,18 +268,16 @@ export class ConsumptionTabComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    document.removeEventListener('keypress',()=>{},false)
+    document.removeEventListener('keypress',this.keypressEvent,false)
   }
 
   /* ---------------- 找零更改 ---------------- */
   giveChange(ev) {
     this.payment = ev;
-    if ((ev - this.price) < 0) {
-      this.message.create('warning', '实收不能小于应收');
-      return;
-    }
     this.changePrice = this.payment - this.price;
     this.code = '';
+    this.startTime = undefined;
+    this.endTime = undefined;
   }
 
   /* ---------------- 耗卡start ---------------- */
@@ -867,11 +866,6 @@ export class ConsumptionTabComponent implements OnInit {
     this.drawerRef.close();
   }
 
-  // ngOnDestory() {
-  //   console.log('ngOnDestory')
-  //   removeEventListener('keypress', this.keypressEvent);
-  // }
-
   /*---------------- 会员卡 ----------------*/
   memberCard() {
     if (this.consumptionInfo.haveCard != 0) {
@@ -901,15 +895,15 @@ export class ConsumptionTabComponent implements OnInit {
         //长度为13位 是商品
         if (this.code.length == 13) {
 
-          this.existCommodity = true;
+          this.existCommodit = true;
           for (let item of this.listOfData){
             if (item.barCode == this.code) {
-              this.existCommodity = false;
+              this.existCommodit = false;
             }
           }
-
+          
           //listOfData为空或者listOfData中没有此条码的时候走接口
-          if(this.listOfData.length == 0 || this.existCommodity){
+          if(this.listOfData.length == 0 || this.existCommodit){
             this.http.post('/commodity/getCommodities', { cardId : this.consumptionInfo.id, barCode : this.code }).then(res => {
               if(res.result[0] && res.result[0].changePrice){
                 var data = res.result;
@@ -1048,6 +1042,11 @@ export class ConsumptionTabComponent implements OnInit {
             this.pay();
           }
 
+        } else if (this.code.length > 18) {
+          //长度大于18位清空code
+          this.code = '';
+          this.startTime = undefined;
+          this.endTime = undefined;
         }
 
       }
