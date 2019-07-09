@@ -95,10 +95,10 @@
         <nz-form-label nzRequired>预约日期</nz-form-label>
         <nz-form-control>
           <nz-input-group nzCompact>
-            <nz-date-picker formControlName="reserveDate" nzPlaceHolder="请选择预约日期" [nzDisabledDate]="_disabledDate"></nz-date-picker>
+            <nz-date-picker formControlName="reserveDateChange" nzPlaceHolder="请选择预约日期" [nzDisabledDate]="_disabledDate"></nz-date-picker>
             <nz-time-picker [ngClass]="{'has-error': formGroup.get('reserveHour').dirty && formGroup.get('reserveHour').hasError('required')}" formControlName="reserveHour" nzFormat="HH:mm" [nzMinuteStep]="15" [nzDisabledHours]="_disabledHours"></nz-time-picker>
           </nz-input-group>
-          <nz-form-explain style="color: #f5222d;" *ngIf="(formGroup.get('reserveDate').dirty && formGroup.get('reserveDate').hasError('required')) || (formGroup.get('reserveHour').dirty && formGroup.get('reserveHour').hasError('required'))">请选择预约日期和时间！</nz-form-explain>
+          <nz-form-explain style="color: #f5222d;" *ngIf="(formGroup.get('reserveDateChange').dirty && formGroup.get('reserveDateChange').hasError('required')) || (formGroup.get('reserveHour').dirty && formGroup.get('reserveHour').hasError('required'))">请选择预约日期和时间！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
