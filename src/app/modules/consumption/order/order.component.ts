@@ -502,7 +502,7 @@ export class OrderComponent implements OnInit {
       for(let item of temp){
         item.isChecked = false;
       }
-      for(let item of this.listOfData){
+      for(let item of temp){
         item.isShow = false;
         switch(item.paymentType) {
           case 1:
