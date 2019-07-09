@@ -274,7 +274,7 @@ export class ConsumptionTabComponent implements OnInit {
   /* ---------------- 找零更改 ---------------- */
   giveChange(ev) {
     this.payment = ev;
-    this.changePrice = this.payment - this.price;
+    this.changePrice = this.keepTwoDecimalFull(this.payment - this.price);
     this.code = '';
     this.startTime = undefined;
     this.endTime = undefined;
