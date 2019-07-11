@@ -5,6 +5,7 @@ import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator'
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { ActivatedRoute } from '@angular/router';
 import { DetailComponent } from 'src/app/modules/public/consumption/detail/detail.component';
+import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 
 @Component({
   selector: 'app-consumption-tab',
@@ -33,6 +34,8 @@ export class ConsumptionTabComponent implements OnInit {
   @ViewChild('el') el;
 
   @ViewChild('service') service;
+
+  @ViewChild('listPage') listPage: ListPageComponent;
 
   @Input() consumptionInfo;
 
@@ -888,7 +891,7 @@ export class ConsumptionTabComponent implements OnInit {
 
   /*---------------- 关闭抽屉 ----------------*/
   closeDrawer() {
-    this.drawerRef.close();
+    this.drawerRef.close(true);
   }
 
   /*---------------- 会员卡 ----------------*/
