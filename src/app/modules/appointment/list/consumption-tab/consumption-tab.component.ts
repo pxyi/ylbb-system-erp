@@ -639,7 +639,7 @@ export class ConsumptionTabComponent implements OnInit {
             price         : this.price,                                        //应收金额
             changePrice   : this.changePrice,                                  //找零
             paymentType   : this.paymentType,                                  //支付方式
-            memberId      : this.consumptionInfo.id,                           //会员id
+            memberId      : this.consumptionInfo.memberId,                           //会员id
             cardId        : this.consumptionInfo.cardId,                       //会员卡id
             satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
             swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
