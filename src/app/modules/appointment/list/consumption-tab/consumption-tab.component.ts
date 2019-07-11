@@ -140,6 +140,7 @@ export class ConsumptionTabComponent implements OnInit {
   }
 
   ngOnInit() {
+
     //非会员 禁用耗卡
     if (this.consumptionInfo.haveCard == 0) {
       this.nzDisabled.card = true;
@@ -644,7 +645,8 @@ export class ConsumptionTabComponent implements OnInit {
             satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
             swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
             comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-            cardPos       : []                                                 //购物车
+            cardPos       : [],                                                //购物车
+            reserveId     : this.consumptionInfo.id                            //预约列表id
           }
           //购物车列表放到cardPos中
           for (let item of this.resultData) {
@@ -670,7 +672,7 @@ export class ConsumptionTabComponent implements OnInit {
               this.message.create('success', '操作成功,请结算或展示付款码');
 
               /*---------------- 确定结算 ----------------*/
-              this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType}).then(res => { //orderNo 订单号 payType支付方式
+              this.http.post('/customer/payOrder', {orderNo: this.orderNo, payType: this.paymentType, reserveId: this.consumptionInfo.id}).then(res => { //orderNo 订单号 payType支付方式
                 if(res.code == 1000){
                   this.message.create('success', '支付成功');
                   this.isPay = false;
@@ -1080,12 +1082,13 @@ export class ConsumptionTabComponent implements OnInit {
       price         : this.price,                                        //应收金额
       changePrice   : this.changePrice,                                  //找零
       paymentType   : this.paymentType,                                  //支付方式
-      memberId      : this.consumptionInfo.id,                           //会员id
+      memberId      : this.consumptionInfo.memberId,                     //会员id
       cardId        : this.consumptionInfo.cardId,                       //会员卡id
       satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
       swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
       comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-      cardPos       : []                                                 //购物车
+      cardPos       : [],                                                //购物车
+      reserveId     : this.consumptionInfo.id                            //预约列表id
     }
     //购物车列表放到cardPos中
     for (let item of this.resultData) {
@@ -1111,9 +1114,10 @@ export class ConsumptionTabComponent implements OnInit {
 
         /*---------------- 确定结算 ----------------*/
         this.http.post('/customer/payOrder', {
-          payBarCode : this.code,        //付款码
-          orderNo    : this.orderNo,     //订单号
-          payType    : this.paymentType  //支付方式
+          payBarCode : this.code,                 //付款码
+          orderNo    : this.orderNo,              //订单号
+          payType    : this.paymentType,          //支付方式
+          reserveId     : this.consumptionInfo.id //预约列表id
         }).then(res => {
           if (res.code == 1000) {
             this.message.create('success','付款成功');
