@@ -599,7 +599,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
         return;
       }
       //请输入实收
-      if (!this.payment) {
+      if (!this.payment && this.payment != 0) {
         this.message.create('warning', '请输入实收金额');
         //清空
         this.code = '';
@@ -1050,7 +1050,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
               return;
             }
             //请输入实收
-            if (!this.payment) {
+            if (!this.payment && this.payment != 0) {
               this.message.create('warning', '请输入实收金额');
               this.isPay = false;
               return;
