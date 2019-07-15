@@ -1,0 +1,35 @@
+<div class="container">
+  <div nz-row>
+    <div nz-col nzSpan="4" nzOffset="18">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="请输入客户来源" [(ngModel)]="searchValue" (keyup.enter)="searchList()" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+    <button style="margin-left: 20px;" (click)="searchList()" nzSpan="2" nz-button nzType="primary">查询</button>
+  </div>
+  <button style="display:block;width:100%;margin-top:20px;" nz-button nzType="dashed" (click)="addSource()"><i nz-icon nzType="plus" nzTheme="outline"></i>新增来源</button>
+
+  <nz-table style="margin-top:20px;" #basicTable [nzLoading] = "loading" [nzData]="listOfData" nzBordered [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th style="width: 50%;" nzAlign="center">客户来源</th>
+        <th nzAlign="center">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of listOfData">
+        <td nzAlign="center">{{ data.name }}</td>
+        <td nzAlign="center">
+          <a (click)="edit(data)">编辑</a>
+          <nz-divider nzType="vertical">|</nz-divider>
+          <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete(data.id)">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-pagination class="nz-pagination" (nzPageIndexChange)="nzPageIndexChange($event)" (nzPageSizeChange)="nzPageSizeChange($event)" [nzPageIndex]="nzPageIndex" [nzTotal]="nzTotal" nzShowSizeChanger [nzPageSize]="nzPageSize"></nz-pagination>
+  <span class="nz-pagination-des">从{{ nzPageIndex*nzPageSize-nzPageSize+1 }}到{{ nzPageIndex*nzPageSize < nzTotal ? nzPageIndex*nzPageSize : nzTotal }}条记录/共{{ nzTotal }}条记录</span>
+</div>

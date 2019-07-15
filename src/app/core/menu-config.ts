@@ -373,6 +373,11 @@ export const MenuConfig = [
         title : '支付申请',
         key   : '/home/configuration/account/payapply',
         isLeaf: true
+      },
+      {
+        title : '客户来源',
+        key   : '/home/configuration/account/customersource',
+        isLeaf: true
       }
     ]
   }

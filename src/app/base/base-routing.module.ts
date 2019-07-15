@@ -448,6 +448,12 @@ const routes: Routes = [
                 data: { title: '支付申请' },
                 canLoad: [ AuthGuardService ],
                 loadChildren: 'src/app/modules/configuration/pay-apply/pay-apply.module#PayApplyModule'
+              },
+              {
+                path: 'customersource',
+                data: { title: '客户来源' },
+                canLoad: [ AuthGuardService ],
+                loadChildren: 'src/app/modules/configuration/customer-source/customer-source.module#CustomerSourceModule'
               }
             ]
           },
