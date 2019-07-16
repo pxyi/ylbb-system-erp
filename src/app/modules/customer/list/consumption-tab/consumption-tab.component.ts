@@ -140,6 +140,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     //非会员 禁用耗卡
     if (this.consumptionInfo.haveCard == 0) {
       this.nzDisabled.card = true;
@@ -598,7 +599,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
         return;
       }
       //请输入实收
-      if (!this.payment) {
+      if (!this.payment && this.payment != 0) {
         this.message.create('warning', '请输入实收金额');
         //清空
         this.code = '';
@@ -644,7 +645,8 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
             satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
             swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
             comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-            cardPos       : []                                                 //购物车
+            cardPos       : [],                                                //购物车
+            reserveId     : null                                               //预约id
           }
           //购物车列表放到cardPos中
           for (let item of this.resultData) {
@@ -1048,7 +1050,7 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
               return;
             }
             //请输入实收
-            if (!this.payment) {
+            if (!this.payment && this.payment != 0) {
               this.message.create('warning', '请输入实收金额');
               this.isPay = false;
               return;
@@ -1085,7 +1087,8 @@ export class ConsumptionTabComponent implements OnInit, OnDestroy {
       satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
       swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
       comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-      cardPos       : []                                                 //购物车
+      cardPos       : [],                                                //购物车
+      reserveId     : null                                               //预约id
     }
     //购物车列表放到cardPos中
     for (let item of this.resultData) {

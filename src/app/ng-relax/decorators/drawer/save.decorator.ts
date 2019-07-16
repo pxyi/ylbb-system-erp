@@ -15,11 +15,6 @@ export function DrawerSave(requestPath) {
       } else {
         this.saveLoading = true;
         let params = JSON.parse(JSON.stringify(this.formGroup.value));
-        Object.keys(params).map(res => {
-          // if (new Date(`${params[res]}`).toString() !== 'Invalid Date') {
-          //  params[res] = formatTime(new Date(params[res]));
-          // }
-        });
         this.http.post(requestPath, {
           paramJson: JSON.stringify(params)
         }, true).then(res => {

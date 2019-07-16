@@ -106,6 +106,6 @@ export class CardComponent implements OnInit {
     })
   }
 
-  @ControlValid() valid: (key: string, type: string) => boolean;
+  @ControlValid() valid: (key: string, type?: string) => boolean;
 
 }

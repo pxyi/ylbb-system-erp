@@ -382,12 +382,11 @@ export class OrderComponent implements OnInit {
     this.httpSubscribe.post<any>('/consumeOrder/list', {}, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     }).subscribe(res => {
-      // console.log(res);
       var temp = res.result.list;
       for(let item of temp){
         item.isChecked = false;
       }
-      for(let item of this.listOfData){
+      for(let item of temp){
         item.isShow = false;
         switch(item.paymentType) {
           case 1:
@@ -405,8 +404,6 @@ export class OrderComponent implements OnInit {
         }
       }
       this.listOfData = temp;
-      
-      // console.log('subscribe---listOfData', this.listOfData);
     });
   }
 
@@ -505,7 +502,7 @@ export class OrderComponent implements OnInit {
       for(let item of temp){
         item.isChecked = false;
       }
-      for(let item of this.listOfData){
+      for(let item of temp){
         item.isShow = false;
         switch(item.paymentType) {
           case 1:

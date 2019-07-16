@@ -22,7 +22,7 @@ export class TodayComponent implements OnInit{
   ) {
     this.http.post('/dataAnalysis/serviceGeneralSituation').then(res => {
       let sourceData = [];
-      for (let i = 0; i < 24; i++) {
+      for (let i = res.result.startHour; i <= 23; i++) {
         sourceData.push({
           hour: `${i}`,
           '今日': res.result.todayData[`${i}`] >= 0 ? res.result.todayData[`${i}`] : null,

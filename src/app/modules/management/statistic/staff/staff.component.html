@@ -65,6 +65,14 @@
 <ea-query-simp [node]="[{ label: '时间', key: 'time', valueKey: ['startDate', 'endDate'], type: 'rangepicker' }, { label: '类型', key: 'orderBy', type: 'radio', options: [{ name: '服务数', id: 1 }, { name: '好评数', id: 2 }, { name: '好评率', id: 3 }], default: 1 }]" (onSubmit)="getPmData($event)"></ea-query-simp>
 
 <div class="runking">
+  <ul>
+    <li>
+      <div>排名</div>
+      <div>名称</div>
+      <div>好评率</div>
+      <div>（好评数）/（服务数）</div>
+    </li>
+  </ul>
   <ol>
     <li *ngFor="let item of dataSet; let idx = index">
       <div>{{ idx + 1 }}</div>
