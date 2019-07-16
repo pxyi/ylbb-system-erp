@@ -23,11 +23,18 @@ const routes: Routes = [
         data: { noReuse: true },
         children: [
           {
+            path: 'qstable',
+            data: { title: '技能课预约列表' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/appointment/qstable/listqs.module#ListqsModule'
+          },
+          {
             path: 'list',
-            data: { title: '预约列表' },
+            data: { title: '戏水预约列表' },
             canLoad: [ AuthGuardService ],
             loadChildren: 'src/app/modules/appointment/list/list.module#ListModule'
           },
+      
           {
             path: 'setting',
             data: { title: '预约设置' },
@@ -111,12 +118,6 @@ const routes: Routes = [
             data: { title: '会员卡列表' },
             canLoad: [ AuthGuardService ],
             loadChildren: 'src/app/modules/member/list/list.module#ListModule'
-          },
-          {
-            path: 'intelligent',
-            data: { title: '智能排课' },
-            canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/consumption/intelligent/intelligent.module#IntelligentModule'
           },
           {
             path: 'changelog',
@@ -241,19 +242,25 @@ const routes: Routes = [
             path: 'positionsalary',
             data: { title: '职位管理' },
             canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/human-resources/positionsalary/positionsalary.module#PositionsalaryModule'
+            loadChildren: 'src/app/modules/humanresources/positionsalary/positionsalary.module#PositionsalaryModule'
           },
           {
             path: 'department',
             data: { title: '部门管理' },
             canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/human-resources/department/department.module#DepartmentModule'
+            loadChildren: 'src/app/modules/humanresources/department/department.module#DepartmentModule'
           },
           {
             path: 'staff',
             data: { title: '员工管理' },
+            canLoad: [ AuthGuardService ], 
+            loadChildren: 'src/app/modules/humanresources/staff/staff.module#StaffModule'
+          },
+          {
+            path: 'bonussales',
+            data: { title: '销售提成' },
             canLoad: [ AuthGuardService ],
-            loadChildren: 'src/app/modules/human-resources/staff/staff.module#StaffModule'
+            loadChildren: 'src/app/modules/humanresources/bonussales/bonussales.module#BonussalesModule'
           },
           {
             path: 'achievements',
@@ -263,48 +270,37 @@ const routes: Routes = [
                 path: 'checkwork',
                 data: { title: '考勤情况' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/achievements/checkwork/checkwork.module#CheckworkModule'
+                loadChildren: 'src/app/modules/humanresources/achievements/checkwork/checkwork.module#CheckworkModule'
               },
               {
                 path: 'deduction',
                 data: { title: '扣分管理' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/achievements/deduction/deduction.module#DeductionModule'
+                loadChildren: 'src/app/modules/humanresources/achievements/deduction/deduction.module#DeductionModule'
               },
               {
                 path: 'extract',
                 data: { title: '提成明细' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/achievements/extract/extract.module#ExtractModule'
+                loadChildren: 'src/app/modules/humanresources/achievements/extract/extract.module#ExtractModule'
               },
               {
                 path: 'statistics',
                 data: { title: '提成统计' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/achievements/statistics/statistics.module#StatisticsModule'
-              },
-              {
-                path: 'target',
-                data: { title: '业绩目标' },
-                loadChildren: 'src/app/modules/human-resources/achievements/target/target.module#TargetModule'
+                loadChildren: 'src/app/modules/humanresources/achievements/statistics/statistics.module#StatisticsModule'
               },
               {
                 path: 'satisfaction',
                 data: { title: '满意度管理' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/achievements/satisfaction/satisfaction.module#SatisfactionModule'
-              },
-              {
-                path: 'bonussales',
-                data: { title: '销售提成设置' },
-                canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/bonussales/bonussales.module#BonussalesModule'
+                loadChildren: 'src/app/modules/humanresources/achievements/satisfaction/satisfaction.module#SatisfactionModule'
               },
               {
                 path: 'commission',
                 data: { title: '提成阶梯管理' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/achievements/commission/commission.module#CommissionModule'
+                loadChildren: 'src/app/modules/humanresources/achievements/commission/commission.module#CommissionModule'
               }
             ]
           },
@@ -316,19 +312,19 @@ const routes: Routes = [
                 path: 'assessment',
                 data: { title: '考核项目配置' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/wage/assessment/assessment.module#AssessmentModule'
+                loadChildren: 'src/app/modules/humanresources/wage/assessment/assessment.module#AssessmentModule'
               },
               {
                 path: 'adjustment',
                 data: { title: '单月手动调整' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/wage/adjustment/adjustment.module#AdjustmentModule'
+                loadChildren: 'src/app/modules/humanresources/wage/adjustment/adjustment.module#AdjustmentModule'
               },
               {
                 path: 'inquire',
                 data: { title: '单月工资查询' },
                 canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/human-resources/wage/inquire/inquire.module#InquireModule'
+                loadChildren: 'src/app/modules/humanresources/wage/inquire/inquire.module#InquireModule'
               }
             ]
           }
@@ -379,6 +375,12 @@ const routes: Routes = [
             data: { title: '课程类别设置' },
             canLoad: [ AuthGuardService ],
             loadChildren: 'src/app/modules/coursemanagement/currcategory/currcategory.module#CurrcategoryModule'
+          },
+          {
+            path: 'intelligent',
+            data: { title: '智能排课' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/consumption/intelligent/intelligent.module#IntelligentModule'
           },
           {
             path: 'teacher',

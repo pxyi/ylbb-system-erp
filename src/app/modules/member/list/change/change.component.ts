@@ -25,7 +25,13 @@ export class ChangeComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private drawerRef: NzDrawerRef
   ) {
-    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => {
+        res.result.map( item => {
+          if( this.memberCardInfo.skillsStatus == item.skillsStatus ){
+            this.cardTypeList.push( item );
+          }
+        })
+    });
     this.http.post('/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
   }
 

@@ -17,17 +17,29 @@ export class ConstructionComponent implements OnInit {
   @Input() userInfo;
 
   formGroup: FormGroup;
-
+  isContractNo: boolean = false;
   cardTypeList: any[] = [];
   salesList: any[] = [];
-
+  skillsStatus: number = 0;
+  contractNoText: string;
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
     private modal: NzModalService,
     private drawerRef: NzDrawerRef
   ) { 
-    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => this.cardTypeList = res.result);
+    this.http.post('/yeqs/cardTypeManagement/findList', {}, false).then(res => {
+      this.cardTypeList = [];
+      res.result.map( item => {
+          if(this.userInfo.skillsStatus || this.userInfo.skillsStatus==0){
+              if(item.skillsStatus == this.userInfo.skillsStatus ){
+                this.cardTypeList.push(item);
+              }
+          }else{
+            this.cardTypeList = res.result;
+          }
+      })      
+    });
     this.http.post('/yeqs/member/getStoreSales', {}, false).then(res => this.salesList = res.result);
   }
 
@@ -50,17 +62,29 @@ export class ConstructionComponent implements OnInit {
       turnCard: [],
       withdrawAmount: [],
       salesId:  [, [Validators.required]],
-      contractNo:  [, [Validators.required]],
-      comment: []
+      contractNo:  [],
+      comment: [],
+      skillsStatus:[]
     }
     if (!this.userInfo.memberCard) {
       formControls.serialNumber = [];
     }
     this.formGroup = this.fb.group(formControls);
     this.formGroup.get('cardTypeId').valueChanges.subscribe(id => {
+      this.cardTypeList.map( item => {
+          if(item.id == id){
+              this.skillsStatus = item.skillsStatus;
+              this.formGroup.patchValue({ skillsStatus: item.skillsStatus || null});
+          }
+      })
       this.http.post('/yeqs/cardTypeManagement/getCardType', { id }, false).then(res => {
         this.formGroup.patchValue(res.result);
       })
+    })
+
+
+    this.formGroup.get('contractNo').valueChanges.subscribe(text => {
+          this.contractNoText = text;
     })
   }
 
@@ -68,12 +92,19 @@ export class ConstructionComponent implements OnInit {
   @DrawerClose() close: () => void;
   saveLoading: boolean;
   save() {
+      
       if (this.formGroup.invalid) {
         for (let i in this.formGroup.controls) {
           this.formGroup.controls[i].markAsDirty();
           this.formGroup.controls[i].updateValueAndValidity();
         }
+        if(this.skillsStatus == 1){
+          this.isContractNo = true;
+        }else{
+          this.isContractNo = false;
+        }        
       } else {
+        if(!(this.skillsStatus == 1 && !this.formGroup.value.contractNo)){
         if (!this.userInfo.memberCard && !this.formGroup.value.serialNumber) {
           this.modal.confirm({
             nzTitle: '<i>您确定要建卡吗?</i>',
@@ -84,6 +115,9 @@ export class ConstructionComponent implements OnInit {
         } else {
           this.createCard();
         }
+      }
+        
+    
       }
   }
 

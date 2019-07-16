@@ -64,7 +64,7 @@ export class SatisfactionComponent implements OnInit {
   @ViewChild('drawerTemplate') drawerTemplate: TemplateRef<any>;
   teacherDetail(data){
     this.drawer.create({
-      nzTitle: '授课老师',
+      nzTitle: '服务泳师',
       nzWidth: 700,
       nzContent: this.drawerTemplate
     });

@@ -1,0 +1,36 @@
+<div class="container">
+  <ea-list-page-simp 
+    #listPage
+    url="/payrollRecord/getPayrollRecords"
+    [queryNode]="[
+      { label: '员工', key: 'employeeId', type: 'select', optionsUrl: '/member/getStoreTeachers' },
+      { label: '月份', key: 'month', type: 'monthpicker' }
+    ]"
+    [tableThead]="['员工姓名','月份','级别','基本工资','提成','调整','合计','操作']"
+    [EaBtns]="eaBtns"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.month }}</td>
+      <td>{{ data.level }}</td>
+      <td>{{ data.basicWage }}</td>
+      <td>{{ data.commission }}</td>
+      <td>{{ data.other }}</td>
+      <td>{{ data.total }}</td>
+      <td>
+        <a (click)="preview({dataInfo: data})">查看详情</a>
+      </td>
+    </ng-template>
+    <ng-template #eaBtns>
+      <button nz-button nzType="primary" nz-popover nzTrigger="click" [(nzVisible)]="showPopover"
+        nzTitle="请选择月份" [nzContent]="contentTemplate" nzPlacement="bottomLeft">为本店所有员工生成工资</button>
+      <ng-template #contentTemplate>
+        <div>
+          <nz-month-picker [(ngModel)]="generateMonth" nzFormat="yyyy-MM" style="width: 300px;" [nzDisabledDate]="_disabledDate"></nz-month-picker>
+          <button nz-button nzType="primary" nzGhost style="display: block; width: 300px; margin-top: 16px;" [disabled]="!generateMonth"
+            [nzLoading]="generateLoading" (click)="generate()">确定执行</button>
+        </div>
+      </ng-template>
+    </ng-template>
+  </ea-list-page-simp>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+  <ea-list-page
+    #listPage
+    url="/employee/getEmployeeList"
+    [queryNode]="queryNode"
+    [tableThead]="[ '照片', '姓名', '英文名', '性别', '手机', 'QQ', '身份证', '部门', '年龄', '生日', '职位', '状态', '泳师', '是否提成', '服务区域', '网约', '操作' ]"
+    [checked]="true"
+    [isRadio]="true"
+    [(checkedItems)]="checkedItems"
+    [allowSpace]="false"
+    [EaBtns]="EaBtns"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+  </ea-list-page>
+
+  <ng-template #EaBtns>
+    <div class="ea-button-group" style="margin-bottom: 16px;">
+      <button nz-button [nzType]="'primary'" (click)="showUpdate()">新增员工</button>
+      <button nz-button (click)="update()">编辑员工</button>
+      <button nz-button (click)="reset()">重置密码</button>
+      <button nz-button (click)="upload()">上传头像</button>
+    </div>
+  </ng-template>
+
+  <ng-template let-data #EaTableTbodyTr>
+    <td>
+      <nz-avatar [nzSrc]="data.img" nz-tooltip [nzTitle]="titleTemplate" nzOverlayClassName="img" *ngIf="data.img"></nz-avatar>
+      <ng-template #titleTemplate>
+        <img [src]="data.img" [ngStyle]="{'max-width': '200px', 'max-height': '200px'}">
+      </ng-template>
+    </td>
+    <td>{{ data.name }}</td>
+    <td>{{ data.nameEn }}</td>
+    <td><i class="iconfont" [ngClass]="[data.sex == 0 ? 'icon-nan' : 'icon-nv']"></i></td>
+    <td>{{ data.mobile }}</td>
+    <td>{{ data.qq }}</td>
+    <td>{{ data.idCardNo }}</td>
+    <td>{{ data.departmentName }}</td>
+    <td>{{ data.age }}</td>
+    <td>{{ data.birthday }}</td>
+    <td>{{ data.position }}</td>
+    <td>{{ data.state }}</td>
+    <td>{{ data.teacher == 1 ? '是' : '否' }}</td>
+    <td>{{ data.notStatistics ? '是' : '否' }}</td>
+    <td>{{ data.serviceArea == 1 ? '泳区' : data.serviceArea == 2 ? '体适能区' : '兼顾' }}</td>
+    <td>{{ data.online == 1 ? '可以' : '不可以' }}</td>
+    <td>
+      <button (click)="enable(data.id)" nz-button nzSize="small" nzType="primary" *ngIf="data.status == -1">启用</button>
+      <button nz-popconfirm nzTitle="确认禁用该泳师吗?" (nzOnConfirm)="disable(data.id)" nz-button nzSize="small" nzType="danger" *ngIf="data.status != -1  && data.name != '到店安排'">禁用</button>
+    </td>
+  </ng-template>
+</div>

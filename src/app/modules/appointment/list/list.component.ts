@@ -9,6 +9,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConsumptionComponent } from '../../public/consumption/consumption.component';
 import { DrawerCreate } from 'src/app/ng-relax/decorators/drawer/create.decorator';
 
+import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -39,7 +41,7 @@ export class ListComponent implements OnInit {
       label: '预约泳师',
       key: 'reserveTeacherId',
       type: 'select',
-      optionsUrl: '/yeqs/member/getStoreTeachers',
+      optionsUrl: '/member/getStoreTeachers',
       isHide: true
     },
     {
@@ -53,7 +55,7 @@ export class ListComponent implements OnInit {
       label: '业务类型',
       key: 'categoryId',
       type: 'select',
-      optionsUrl: '/yeqs/cardBusinessManagement/getStoreCardTypeCategores',
+      optionsUrl: '/cardBusinessManagement/getStoreCardTypeCategores',
       isHide: true
     },
     {
@@ -219,7 +221,8 @@ export class ListComponent implements OnInit {
   }
 
   /* ------------------- 结算预约 ------------------- */
-  @DrawerCreate({ title: '添加消费', content: ConsumptionComponent }) consumption: ({ consumptionInfo: object }) => void;
+  @DrawerCreate({ title: '添加消费', width: 1300, content: ConsumptionTabComponent }) consumption: ({ consumptionInfo: object }) => void;
+  // @DrawerCreate({ title: '添加消费', content: ConsumptionComponent }) consumption: ({ consumptionInfo: object }) => void;
 
 
   /* ------------------- 撤销预约 ------------------- */

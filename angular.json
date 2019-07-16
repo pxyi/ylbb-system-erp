@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ylbb-system-erp": {
+    "ylbb-system-qserp": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ylbb-system-erp",
+            "outputPath": "dist/ylbb-system-qserp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -111,18 +111,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ylbb-system-erp:build"
+            "browserTarget": "ylbb-system-qserp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ylbb-system-erp:build:production"
+              "browserTarget": "ylbb-system-qserp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ylbb-system-erp:build"
+            "browserTarget": "ylbb-system-qserp:build"
           }
         },
         "test": {
@@ -165,11 +165,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ylbb-system-erp:serve"
+            "devServerTarget": "ylbb-system-qserp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ylbb-system-erp:serve:production"
+              "devServerTarget": "ylbb-system-qserp:serve:production"
             }
           }
         },
@@ -185,5 +185,5 @@
       }
     }
   },
-  "defaultProject": "ylbb-system-erp"
+  "defaultProject": "ylbb-system-qserp"
 }

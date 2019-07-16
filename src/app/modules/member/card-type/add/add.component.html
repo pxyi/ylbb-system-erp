@@ -1,5 +1,17 @@
 <form nz-form [formGroup]="formGroup">
   <div nz-row nzGutter="8">
+  <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzFor="comment">是否技能课卡</nz-form-label>
+        <nz-form-control>
+            <nz-select formControlName="skillsStatus" nzPlaceHolder="请选择">
+                <nz-option nzLabel="否" [nzValue]="0" ></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1" ></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="formGroup.get('skillsStatus').dirty && formGroup.get('skillsStatus').hasError('required')">是否技能课卡！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="name">卡类型名称</nz-form-label>
@@ -9,7 +21,10 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+
+  </div>
+  <div nz-row nzGutter="8">
+  <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label nzRequired>卡业务类型</nz-form-label>
         <nz-form-control>
@@ -20,8 +35,6 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="effectMonth">有效时长</nz-form-label>
@@ -33,19 +46,20 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label nzRequired>计费方式</nz-form-label>
-        <nz-form-control>
-          <nz-select formControlName="feeType" nzPlaceHolder="请选择计费方式">
-            <nz-option nzLabel="按次" [nzValue]="0"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('feeType').dirty && formGroup.get('feeType').hasError('required')">请选择计费方式！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+
   </div>
   <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>计费方式</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="feeType" nzPlaceHolder="请选择计费方式">
+                <nz-option nzLabel="按次" [nzValue]="0"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="formGroup.get('feeType').dirty && formGroup.get('feeType').hasError('required')">请选择计费方式！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="times">正价次数</nz-form-label>
@@ -55,17 +69,18 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label nzRequired nzFor="freeTimes">赠送次数</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="freeTimes" id="freeTimes" placeholder="请输入赠送次数">
-          <nz-form-explain *ngIf="formGroup.get('freeTimes').dirty && formGroup.get('freeTimes').hasError('required')">请输入赠送次数！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+
   </div>
   <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="freeTimes">赠送次数</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="freeTimes" id="freeTimes" placeholder="请输入赠送次数">
+            <nz-form-explain *ngIf="formGroup.get('freeTimes').dirty && formGroup.get('freeTimes').hasError('required')">请输入赠送次数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div> 
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="balance">金额</nz-form-label>
@@ -75,18 +90,19 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label nzRequired nzFor="openPoints">开卡送积分</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="openPoints" id="openPoints" placeholder="请输入开卡送积分">
-          <nz-form-explain *ngIf="formGroup.get('openPoints').dirty && formGroup.get('openPoints').hasError('required')">请输入开卡送积分！</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+
   </div>
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="openPoints">开卡送积分</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="openPoints" id="openPoints" placeholder="请输入开卡送积分">
+            <nz-form-explain *ngIf="formGroup.get('openPoints').dirty && formGroup.get('openPoints').hasError('required')">请输入开卡送积分！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    <div nz-col nzSpan="12" *ngIf="skillsStatus == 1">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="balance">退卡单次金额</nz-form-label>
         <nz-form-control>
@@ -95,28 +111,9 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label nzFor="comment">是否技能课卡</nz-form-label>
-          <nz-form-control>
-              <nz-select formControlName="skillsStatus" nzPlaceHolder="请选择">
-                  <nz-option nzLabel="否" nzValue="0" ></nz-option>
-                  <nz-option nzLabel="是" nzValue="1" ></nz-option>
-                </nz-select>
-                <nz-form-explain *ngIf="formGroup.get('skillsStatus').dirty && formGroup.get('skillsStatus').hasError('required')">是否技能课卡！</nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
+
   </div>
-  <div nz-row nzGutter="8">
-    <div nz-col nzSpan="24">
-      <nz-form-label nzRequired>跨店消费</nz-form-label>
-      <nz-form-control>
-        <nz-switch formControlName="tong" nzCheckedChildren="可以跨店消费" nzUnCheckedChildren="不可以跨店消费"></nz-switch>
-        <nz-form-text style="margin-left: 16px; color: #f5222d">选择是:则该类型下的所有卡的通卡次数会变为总次数50%!</nz-form-text>
-      </nz-form-control>
-    </div>
-  </div>
+
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="24">
       <nz-form-item>

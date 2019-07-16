@@ -1,0 +1,72 @@
+<div class="container">
+  <ea-query-simp [node]="[{label: '部门名称', key: 'name', type: 'input'}]" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="update()"><i class="anticon anticon-plus"></i>新增部门</button>
+
+  <ea-table 
+    #table 
+    url="/department/getDepartmentList" 
+    [allowSpace]="false" 
+    [thead]="['部门名称','部门主管','部门描述','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data.employeeName }}</td>
+      <td>{{ data.comment }}</td>
+      <td>
+        <a (click)="update(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确认删除此部门吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
+
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  nzTitle="部门信息" 
+  (nzOnClose)="showDrawer = false">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="name">部门名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入部门名称" formControlName="name" id="name">
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('required')">请输入部门名称！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').hasError('duplicated')">该部门名称已存在</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('name').dirty && formGroup.get('name').pending">
+              <i class="anticon anticon-spin anticon-loading"></i>正在校验部门名称是否存在...</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>部门主管</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="employeeId" nzPlaceHolder="请选择部门主管">
+              <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="formGroup.get('employeeId').dirty && formGroup.get('employeeId').hasError('required')">请选择部门主管！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzFor="comment">部门描述</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input placeholder="请输入部门描述" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
+  </div>
+</nz-drawer>

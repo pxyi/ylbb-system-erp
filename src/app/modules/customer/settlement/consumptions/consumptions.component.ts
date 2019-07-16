@@ -92,20 +92,20 @@ export class ConsumptionsComponents implements OnInit {
 
     this.http.post('/yeqs/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
     this.http.post('/yeqs/member/communityList', {}, false).then(res => this.communityList = res.result);
-    this.http.post('/yeqs/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+    this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
     this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.appointmentInfo.memberId }, false).then(res => {
       this.memberCardList = res.result;
       res.result.length && this.timesCountGroup.patchValue({ cardId: res.result[0].id });
     });
-    this.http.post('/yeqs/commodity/getCardCommodities', {}, false).then(res => this.commoditieList = res.result);
-    this.http.post('/yeqs/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
+    this.http.post('/commodity/getCardCommodities', {}, false).then(res => this.commoditieList = res.result);
+    this.http.post('/commodity/getCommonCommodities', {}, false).then(res => this.commodityList = res.result);
   }                        
 
 
   saveLoading: boolean;
   saveDrawer() {
     let baseValue = {};
-    Object.keys(this.baseFormGroup.controls).map(key => {
+    Object.keys(this.baseFormGroup.controls).map(key => { 
       baseValue[key] = this.baseFormGroup.controls[key].value;
     })
     if (this.consumptionType === 0) {

@@ -1,0 +1,16 @@
+<div class="container">
+  <ea-query #eaQuery [node]="queryNode" (onSubmit)="getData($event)"></ea-query>
+
+  <nz-table #basicTable [nzShowPagination]="false" [nzLoading]="loading" [nzData]="dataSet.content">
+    <thead>
+      <tr>
+        <th *ngFor="let th of dataSet.header">{{ th }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td *ngFor="let item of data">{{ item }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

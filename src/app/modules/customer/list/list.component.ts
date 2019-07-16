@@ -1,7 +1,9 @@
 import { ImportComponent } from './import/import.component';
 import { ListPageComponent } from './../../../ng-relax/components/list-page/list-page.component';
 import { ExchangeComponent } from './exchange/exchange.component';
-import { ConsumptionComponent } from './consumption/consumption.component';
+import { ConsumptionsComponent } from './consumption/consumption.component';
+import { ConsumptionComponent } from '../../public/consumption/consumption.component';
+
 import { AppointComponent } from './appoint/appoint.component';
 import { NzMessageService, NzModalService, NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
@@ -76,10 +78,10 @@ export class ListComponent implements OnInit {
       isHide      : true
     },
     {
-      label       : '儿童类型',
+      label       : '婴儿类型',
       key         : 'babyType',
       type        : 'select',
-      options     : [{ name: '0-3岁', id: '0-3岁' }, { name: '3-6岁', id: '3-6岁' }, { name: '6-12岁', id: '6-12岁' } ],
+      options     : [{ name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' }],
       isHide      : true
     },
     {
@@ -123,6 +125,11 @@ export class ListComponent implements OnInit {
       userInfo  : true
     },
     consumption: {
+      title     : '消费',
+      component : ConsumptionsComponent,
+      userInfo  : true
+    },
+    consumptionerp: {
       title     : '消费',
       component : ConsumptionComponent,
       userInfo  : true
@@ -242,7 +249,27 @@ export class ListComponent implements OnInit {
           }
         }
       })
-    } else if (this.operationComponents[type].component) {
+    }  else if (type === 'appoint') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+            if(res.skillsStatus == 1){
+              this.message.warning('技能课会员不支持预约！');
+            }else{
+              this.openDrawer(this.operationComponents[type]);
+            }
+        }
+      })
+    }  else if (type === 'consumption') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+            if(res.skillsStatus == 0){
+              this.openDrawer(this.operationComponents['consumptionerp']);
+            }else{
+              this.openDrawer(this.operationComponents[type]);  
+            }
+        }
+      })
+    }else if (this.operationComponents[type].component) {
       this.openDrawer(this.operationComponents[type]);
     }
   }

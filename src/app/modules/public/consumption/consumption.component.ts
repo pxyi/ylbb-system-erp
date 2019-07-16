@@ -12,8 +12,9 @@ import { DetailComponent } from './detail/detail.component';
 })
 export class ConsumptionComponent implements OnInit {
 
+  @Input() memberCardInfo;
+  @Input() userInfo;
   @Input() consumptionInfo;
-
   baseFormGroup: FormGroup;
   timesCountGroup: FormGroup;
   singleTimeGroup: FormGroup;
@@ -33,24 +34,27 @@ export class ConsumptionComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private message: NzMessageService,
     private modal: NzModalService
-  ) { }
+  ) { 
+   
+  }
 
   ngOnInit() {
+    this.memberCardInfo = this.memberCardInfo || this.userInfo || this.consumptionInfo;
     /* ---------------- 根据有无会员卡选择消费方式 ---------------- */
-    this.consumptionType = this.consumptionInfo.haveCard == 1 || this.consumptionInfo.cardCode ? 0 : 1;
-
+    this.consumptionType = this.memberCardInfo.haveCard == 1 || this.memberCardInfo.cardCode ? 0 : 1;
+    
     this.baseFormGroup = this.fb.group({
-      reserveId: [this.consumptionInfo.reserveDate ? this.consumptionInfo.id : null],
-      memberId: [this.consumptionInfo.memberId || this.consumptionInfo.id],
-      name: [{ value: this.consumptionInfo.name, disabled: true }],
-      nick: [{ value: this.consumptionInfo.nick, disabled: true }],
-      sex: [{ value: this.consumptionInfo.sex, disabled: true }],
-      monthAge: [{ value: this.consumptionInfo.monthAge, disabled: true }],
+      reserveId: [this.memberCardInfo.reserveDate ? this.memberCardInfo.id : null],
+      memberId: [this.memberCardInfo.memberId || this.memberCardInfo.id],
+      name: [{ value: this.memberCardInfo.name, disabled: true }],
+      nick: [{ value: this.memberCardInfo.nick, disabled: true }],
+      sex: [{ value: this.memberCardInfo.sex, disabled: true }],
+      monthAge: [{ value: this.memberCardInfo.monthAge, disabled: true }],
       comment: []
     });
     this.timesCountGroup = this.fb.group({
       cardId: [, [Validators.required]],
-      swimTeacherId: [this.consumptionInfo.swimTeacherId, [Validators.required]],
+      swimTeacherId: [this.memberCardInfo.swimTeacherId, [Validators.required]],
       commodityId: [, [Validators.required]],
       consumption: [, [Validators.required]],
       ringId: [],
@@ -65,7 +69,7 @@ export class ConsumptionComponent implements OnInit {
       cardId: [],
       commodityId: [, [Validators.required]],
       consumption: [, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-      swimTeacherId: [this.consumptionInfo.swimTeacherId, [Validators.required]],
+      swimTeacherId: [this.memberCardInfo.swimTeacherId, [Validators.required]],
       satisfaction: ['一般'],
       consumeDate: [{ value: null, disabled: true }]
     });
@@ -73,7 +77,11 @@ export class ConsumptionComponent implements OnInit {
     /* ------------------------- 消费服务、商品改变自动填写消费金额 ------------------------- */
     this.timesCountGroup.get('commodityId').valueChanges.subscribe(id => {
       this.http.post('/yeqs/customer/price', { id, cardId: this.timesCountGroup.get('cardId').value }, false).then(res => {
-        this.timesCountGroup.patchValue({ consumption: res.result.price });
+        if(res.code == 1000){
+          this.timesCountGroup.patchValue({ consumption: res.result.price });
+        }else{
+          this.message.create('warning', res.info);
+        }
       })
     });
 
@@ -100,15 +108,15 @@ export class ConsumptionComponent implements OnInit {
     /* -------------------- 获取下拉列表数据 -------------------- */
     this.http.post('/yeqs/member/getStoreTeachers').then(res => {
       this.teacherList = res.result;
-      if (!this.consumptionInfo.reserveDate) {
+      if (!this.memberCardInfo.reserveDate) {
         this.timesCountGroup.patchValue({ swimTeacherId: res.result[0].id });
         this.singleTimeGroup.patchValue({ swimTeacherId: res.result[0].id });
       }
     });
 
     /* -------------------- 如果有会员卡则去请求 会员卡列表和泳圈型号 -------------------- */
-    if (this.consumptionInfo.haveCard || this.consumptionInfo.cardCode) {
-      this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.consumptionInfo.memberId || this.consumptionInfo.id }, false).then(res => {
+    if (this.memberCardInfo.haveCard || this.memberCardInfo.cardCode) {
+      this.http.post('/yeqs/memberCard/getMemberCards', { memberId: this.memberCardInfo.memberId || this.memberCardInfo.id }, false).then(res => {
         this.memberCardList = res.result;
         if (res.result.length) {
           this.timesCountGroup.patchValue({ cardId: res.result[0].id });
@@ -143,7 +151,7 @@ export class ConsumptionComponent implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)) }, true).then(res => {
+        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.timesCountGroup.value)), settleStatus: 0 }, true).then(res => {
           this.drawerRef.close(true);
           res.result.id && this.showConsumptionDetail(res.result.id);
         });
@@ -156,7 +164,7 @@ export class ConsumptionComponent implements OnInit {
         }
       } else {
         this.saveLoading = true;
-        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)) }, true).then(res => {
+        this.http.post('/yeqs/customer/create', { paramJson: JSON.stringify(Object.assign(baseValue, this.singleTimeGroup.value)), settleStatus: 0 }, true).then(res => {
           this.drawerRef.close(true);
           res.result.id && this.showConsumptionDetail(res.result.id);
         });
@@ -182,7 +190,7 @@ export class ConsumptionComponent implements OnInit {
   getCommodityPrice() {
     var cardId = this.singleTimeGroup.controls['cardId'].value;
     var commodityId = this.singleTimeGroup.controls['commodityId'].value;
-    this.http.post('/yeqs/customer/getCommodityPrice', { cardId, commodityId }, false).then(res => {
+    this.http.post('/customer/getCommodityPrice', { cardId, commodityId }, false).then(res => {
       res.code == 1000 && this.singleTimeGroup.patchValue({ consumption: res.result.price });
     })
   }

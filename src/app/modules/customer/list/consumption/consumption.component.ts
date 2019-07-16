@@ -8,7 +8,7 @@ import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator'
   templateUrl: './consumption.component.html',
   styleUrls: ['./consumption.component.scss']
 })
-export class ConsumptionComponent implements OnInit, OnDestroy {
+export class ConsumptionsComponent implements OnInit, OnDestroy {
 
   @Input() id;
 

@@ -1,0 +1,107 @@
+<div class="container">
+  <ea-query-simp [node]="[{label: '职位名称', key: 'position', type: 'input'}]" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="update()"><i class="anticon anticon-plus"></i>新增职位</button>
+
+  <ea-table 
+    #table 
+    url="/humanInformation/getBandList" 
+    [allowSpace]="false" 
+    [thead]="['职位','级别','底薪','提成倍数','员工角色','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.position }}</td>
+      <td>{{ data.bandName }}</td>
+      <td>{{ data.salary }}</td>
+      <td>{{ data.bandRate }}</td>
+      <td>{{ data.role == 1 ? '店长' : data.role == 2 ? '销售' : data.role == 3 ? '主管': data.role == 4 ? '水育师' : '--' }}</td>
+      <td>
+        <a (click)="update(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确认删除此职位吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
+
+<nz-drawer 
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+  [nzWidth]="720" 
+  [nzVisible]="showDrawer" 
+  nzTitle="职位信息" 
+  (nzOnClose)="showDrawer = false">
+  <form nz-form [formGroup]="formGroup">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="position">职位名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入职位名称" formControlName="position" id="position">
+            <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').hasError('required')">请输入职位名称！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').hasError('duplicated')">该职位名称已存在</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('position').dirty && formGroup.get('position').pending">
+              <i class="anticon anticon-spin anticon-loading"></i>正在校验职位名称是否存在...</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="bandName">级别</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入级别" formControlName="bandName" id="bandName">
+            <nz-form-explain *ngIf="formGroup.get('bandName').dirty && formGroup.get('bandName').hasError('required')">请输入级别！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="salary">底薪</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入底薪" formControlName="salary" id="salary">
+            <nz-form-explain *ngIf="formGroup.get('salary').dirty && formGroup.get('salary').hasError('required')">请输入底薪！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="bandRate">提成倍数</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入提成倍数" formControlName="bandRate" id="bandRate">
+            <nz-form-explain *ngIf="formGroup.get('bandRate').dirty && formGroup.get('bandRate').hasError('required')">请输入提成倍数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>员工角色</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="role" nzPlaceHolder="请选择角色">
+              <nz-option nzLabel="店长" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="销售" [nzValue]="2"></nz-option>
+              <nz-option nzLabel="主管" [nzValue]="3"></nz-option>
+              <nz-option nzLabel="水育师" [nzValue]="4"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzFor="comment">职位描述</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input placeholder="请输入职位描述" formControlName="comment" id="comment" [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button nz-button (click)="showDrawer = false">取消</button>
+    <button nz-button nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
+  </div>
+</nz-drawer>

@@ -6,6 +6,7 @@ import { ListPageComponent } from './../../../ng-relax/components/list-page/list
 import { ContinuedComponent } from './continued/continued.component';
 import { ChangeComponent } from './change/change.component';
 import { UpdateComponent } from './update/update.component';
+import { ConsumptionComponent } from '../../public/consumption/consumption.component';
 
 import { AdjustmentComponent } from './adjustment/adjustment.component';
 import { QueryNode } from './../../../ng-relax/components/query/query.component';
@@ -14,7 +15,7 @@ import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { OpenComponent } from './open/open.component';
 import { NumberComponent } from './number/number.component';
 import { AppointComponent } from './appoint/appoint.component';
-import { ConsumptionComponent } from './consumption/consumption.component';
+import { ConsumptionsComponent } from './consumption/consumption.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 
@@ -86,6 +87,11 @@ export class ListComponent implements OnInit {
     },
     consumption: {
       title     : '消费',
+      component : ConsumptionsComponent,
+      userInfo  : true
+    },
+    consumptionerp: { 
+      title     : '消费',
       component : ConsumptionComponent,
       userInfo  : true
     },
@@ -140,10 +146,10 @@ export class ListComponent implements OnInit {
       options     : [ { name: '正常', id: '0' }, { name: '停卡', id: '1' }, { name: '过期', id: '2' } ]
     },
     {
-      label       : '儿童类型',
+      label       : '婴儿类型',
       key         : 'babyType',
       type        : 'select',
-      options     : [{ name: '0-3岁', id: '0-3岁' }, { name: '3-6岁', id: '3-6岁' }, { name: '6-12岁', id: '6-12岁' } ],
+      options     : [{ name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' }],
       isHide      : true
     },
     {
@@ -176,17 +182,27 @@ export class ListComponent implements OnInit {
     private drawer: NzDrawerService
   ) { 
     this.nowDate();
-    this.activatedRoute.queryParamMap.subscribe((res: any) => {
-      if (res.params.type) {
+    // this.activatedRoute.queryParamMap.subscribe((res: any) => {
+    //   if (res.params.type) {
+    //     this.type = res.params.type;
+    //     this.paramsInit.cardCode = res.params.code;
+    //     setTimeout(() => {
+    //       this.listPage.eaQuery._queryForm.patchValue({ cardCode: res.params.code })
+    //     });
+    //   } else if (res.params.memberId) {
+    //     this.paramsInit = { memberId: res.params.memberId };
+    //     setTimeout(() => {
+    //       this.listPage.eaQuery._queryForm.patchValue({ memberId: res.params.memberId });
+    //     });
+    //   }
+    // });
+    this.activatedRoute.queryParamMap.subscribe((res: any) => { 
+      if (res.params.memberId) {
         this.type = res.params.type;
-        this.paramsInit.cardCode = res.params.code;
+        this.paramsInit.memberId = res.params.memberId;
         setTimeout(() => {
-          this.listPage.eaQuery._queryForm.patchValue({ cardCode: res.params.code })
-        });
-      } else if (res.params.memberId) {
-        this.paramsInit = { memberId: res.params.memberId };
-        setTimeout(() => {
-          this.listPage.eaQuery._queryForm.patchValue({ memberId: res.params.memberId });
+          this.listPage.eaQuery._queryForm.patchValue({ memberId: res.params.memberId })
+          this.listPage.eaQuery._submit();
         });
       }
     });
@@ -246,19 +262,51 @@ export class ListComponent implements OnInit {
     } else if (type === 'withdraw') {
       this.listPage.eaTable.dataSet.map(res => {
         if (res.id == this.checkedItems[0]) {
-          if (res.runningState != '退卡') {
-            this.openDrawer(this.operationComponents[type]);
-          } else {
-            this.message.warning('该卡已退卡！');
+          if(res.skillsStatus != 1){
+            this.message.warning('非技能课会员，不可操作！');
+          }else{
+            if (res.runningState != '退卡') {
+              this.openDrawer(this.operationComponents[type]);
+            } else {
+              this.message.warning('该卡已退卡！');
+            }
           }
         }
       })
-    } else if (this.operationComponents[type]) {
+    } else if (type === 'update') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+            if(res.skillsStatus == 1){
+              this.message.warning('技能课卡不能再次升级！');
+            }else{
+              this.openDrawer(this.operationComponents[type]);
+            }
+        }
+      })
+    } else if (type === 'appoint') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+            if(res.skillsStatus == 1){
+              this.message.warning('技能课会员不支持预约！');
+            }else{
+              this.openDrawer(this.operationComponents[type]);
+            }
+        }
+      })
+    } else if (type === 'consumption') {
+      this.listPage.eaTable.dataSet.map(res => {
+        if (res.id == this.checkedItems[0]) {
+            if(res.skillsStatus != 1){
+              this.openDrawer(this.operationComponents['consumptionerp']);
+            }else{
+              this.openDrawer(this.operationComponents[type]);  
+            }
+        }
+      })
+    }else if (this.operationComponents[type]) {
       this.openDrawer(this.operationComponents[type]);
     }
   }
-
-
   @ViewChild('listPage') listPage: ListPageComponent;
   // 排课
   arranging() {
@@ -266,23 +314,26 @@ export class ListComponent implements OnInit {
     if (!this.checkedItems.length) {
       this.message.warning('请选择一条数据进行操作');
     } else {
-        this.selectSyllabusAll();
-        this.RecordList = [];
-        this.RecordList1 = [];
-        this.RecordList2 = [];
-        this.RecordList3 = [];
-        this.RecordList4 = [];
-        this.RecordList5 = [];
-        this.RecordList6 = [];
-        this.RecordList7 = [];      
-        this.showAdjust = true;
-        this.radioValue = [];
-        this.RecordList = [];
-        this.datalabelList = [];
-        this.kcName = [];
-        this.listArr = [];
       this.listPage.eaTable.dataSet.map(res => {
         if (res.id == this.checkedItems[0]) {
+          if (res.skillsStatus != 1) {
+            this.message.warning('只有技能课卡会员才能排课！');
+          } else {
+          this.selectSyllabusAll();
+          this.RecordList = [];
+          this.RecordList1 = [];
+          this.RecordList2 = [];
+          this.RecordList3 = [];
+          this.RecordList4 = [];
+          this.RecordList5 = [];
+          this.RecordList6 = [];
+          this.RecordList7 = [];      
+          this.radioValue = [];
+          this.RecordList = [];
+          this.datalabelList = [];
+          this.kcName = [];
+          this.listArr = [];
+          this.showAdjust = true;
           this.http.post('/yeqs/curriculum/selectMsg', { memberId: res.memberId }, false).then(res => {
             if (res.code == 1000) {
               this.memberdetailTk = res.result.list;
@@ -291,6 +342,7 @@ export class ListComponent implements OnInit {
             }
           });
           this.memberData = res;
+         }
         }
       })
      
@@ -500,16 +552,22 @@ export class ListComponent implements OnInit {
     let memberId: number;
     this.listPage.eaTable.dataSet.map(res => {
       if (res.id == this.checkedItems[0]) {
-        memberId = res.memberId;
+        if(res.skillsStatus != 1){
+          this.message.warning('该会员卡不支持调课！');
+        }else{
+          memberId = res.memberId;
+          this.drawer.create({
+            nzTitle: '会员调课',
+            nzWidth: 960,
+            nzContent: AdjustingComponent,
+            nzContentParams: { id: memberId }
+          })
+        }
+        
       }
     })
     // this.router.navigateByUrl(`/home/membercard/adjusting/${ memberId }`);
-    this.drawer.create({
-      nzTitle: '会员调课',
-      nzWidth: 960,
-      nzContent: AdjustingComponent,
-      nzContentParams: { id: memberId }
-    })
+
   }
   //选择课程
   datalabelChange(data) {
@@ -554,14 +612,17 @@ export class ListComponent implements OnInit {
   }
   noArranging(){
     if (!this.checkedItems.length) {
-
       this.message.warning('请选择一条数据进行操作');
-
     } else {
-      this.passArranging = true;
       this.listPage.eaTable.dataSet.map(res => {
         if (res.id == this.checkedItems[0]) {
-          this.ItemsMemberId = res.memberId;  
+          if (res.skillsStatus != 1) {
+            this.message.warning('只有技能课卡会员才能取消排课！');
+          } else {
+            this.ItemsMemberId = res.memberId;  
+            this.passArranging = true;
+          }
+          
         }
       })
     } 

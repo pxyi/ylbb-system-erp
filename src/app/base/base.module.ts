@@ -10,7 +10,6 @@ import { NgRelaxModule } from './../ng-relax/ng-relax.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BaseRoutingModule } from './base-routing.module';
 import { BaseComponent } from './base.component';
 import { ContentComponent } from './content/content.component';
 import { HeaderComponent } from './header/header.component';
@@ -19,7 +18,7 @@ import { FooterComponent } from './footer/footer.component';
 import { MemberComponent } from './header/member/member.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CardChangeModule } from '../modules/public/card-change/card-change.module';
-
+import { BaseRoutingModule } from './base-routing.module'
 @NgModule({
   declarations: [BaseComponent, ContentComponent, HeaderComponent, MenuComponent, FooterComponent, MemberComponent],
   imports: [

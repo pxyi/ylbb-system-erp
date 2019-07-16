@@ -1,0 +1,122 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>姓名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="name" placeholder="未记录姓名">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>小名</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="nick" placeholder="未记录小名">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>性别</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="sex" placeholder="未记录性别">
+            <nz-option nzValue="男" nzLabel="男"></nz-option>
+            <nz-option nzValue="女" nzLabel="女"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>月龄</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="monthAge" name="monthAge" placeholder="未记录月龄">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>婴儿类型</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="babyType" placeholder="未记录婴儿类型">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>会员卡</nz-form-label>
+        <nz-form-control>
+          <input nz-input disabled placeholder="该会员无会员卡" *ngIf="!memberCardList.length">
+          <nz-select formControlName="cardId" *ngIf="memberCardList.length">
+            <nz-option *ngFor="let option of memberCardList" [nzValue]="option.id" [nzLabel]="option.ctName"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>特殊标记</nz-form-label>
+        <nz-form-control>
+          <nz-select  disabled  formControlName="spec" nzPlaceHolder="未记录特殊标记">
+            <nz-option [nzValue]="1" nzLabel="是"></nz-option>
+            <nz-option [nzValue]="0" nzLabel="否"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约日期</nz-form-label>
+        <nz-form-control>
+          <nz-date-picker disabled nzFormat="yyyy-MM-dd" formControlName="currentDate" nzPlaceHolder="请选择预约日期"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约时间</nz-form-label>
+        <nz-form-control>
+            <input disabled nz-input formControlName="startTime" placeholder="">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>预约泳师</nz-form-label>
+        <nz-form-control>
+          <input nz-input disabled formControlName="teacherName" placeholder="未记录预约泳师">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="12">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input disabled formControlName="remarks" name="remarks" [nzAutosize]="{ minRows: 4, maxRows: 4 }" placeholder="未记录备注"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<!-- <div class="footer" *ngIf="appointmentInfo.startTime == 0"> -->
+  <!-- <div class="footer" *ngIf="appointmentInfo.startTime == 0">
+  <button nz-button (click)="closeDrawer()">取消</button>
+  <button nz-button nzType="primary" [nzLoading]="saveLoading" (click)="saveDrawer()">保存</button>
+</div> -->

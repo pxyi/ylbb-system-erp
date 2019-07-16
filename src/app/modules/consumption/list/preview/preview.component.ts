@@ -1,11 +1,13 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { NzDrawerRef } from 'ng-zorro-antd';
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+  styleUrls: ['./preview.component.less']
 })
 export class PreviewComponent implements OnInit {
 
@@ -24,11 +26,12 @@ export class PreviewComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private fb: FormBuilder = new FormBuilder()
+    private fb: FormBuilder = new FormBuilder(),
+    private drawerRef: NzDrawerRef
   ) { 
-    this.http.post('/yeqs/member/getStoreTeachers', {}, false).then(res => this.teacherList = res.result);
-    this.http.post('/commodity/getStoreCommodities', {}, false).then(res => this.commoditieList = res.result);
-    this.http.post('/swimRing/getStoreSwimRings', {}, false).then(res => this.swimRingList = res.result);
+    this.http.post('/member/getStoreTeachers').then(res => this.teacherList = res.result);
+    this.http.post('/commodity/getStoreCommodities').then(res => this.commoditieList = res.result);
+    this.http.post('/swimRing/getStoreSwimRings').then(res => this.swimRingList = res.result);
   }
 
   ngOnInit() {
@@ -62,28 +65,26 @@ export class PreviewComponent implements OnInit {
     })
   }
 
-  save(): Promise<boolean> {
-    return new Promise(resolve => {
-      resolve(true)
+  saveLoading: boolean;
+  save() {
       if (this.recordInfo.commodityType == 0 && this.timesCountGroup.invalid) {
         for (let i in this.timesCountGroup.controls) {
           this.timesCountGroup.controls[i].markAsDirty();
           this.timesCountGroup.controls[i].updateValueAndValidity();
         }
-        resolve(false);
       } else if (this.recordInfo.commodityType == 1 && this.singleTimeGroup.invalid) {
         for (let i in this.singleTimeGroup.controls) {
           this.singleTimeGroup.controls[i].markAsDirty();
           this.singleTimeGroup.controls[i].updateValueAndValidity();
         }
-        resolve(false);
       } else {
         let params = Object.assign(this.baseFormGroup.value, this.recordInfo.commodityType == 0 ? this.timesCountGroup.value : this.singleTimeGroup.value);
-        this.http.post('/yeqs/customer/updateConsumeRecord', {
+        this.http.post('/customer/updateConsumeRecord', {
           paramJson: JSON.stringify(params)
-        }).then(res => resolve(true)).catch(err => resolve(false));
+        }).then(res => this.drawerRef.close(true));
       }
-    });
   }
+
+  @DrawerClose() close: () => void;
 
 }

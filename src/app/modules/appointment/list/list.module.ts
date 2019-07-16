@@ -7,11 +7,10 @@ import { CommonModule } from '@angular/common';
 import { ListComponent } from './list.component';
 import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
 import { PreviewComponent } from './preview/preview.component';
-import { ConsumptionComponent } from './consumption/consumption.component';
-
+import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
 
 @NgModule({
-  declarations: [ListComponent, PreviewComponent, ConsumptionComponent],
+  declarations: [ListComponent, PreviewComponent, ConsumptionTabComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -24,6 +23,6 @@ import { ConsumptionComponent } from './consumption/consumption.component';
     NgZorroAntdModule,
     ConsumptionModule
   ],
-  entryComponents: [PreviewComponent]
+  entryComponents: [PreviewComponent, ConsumptionTabComponent]
 })
 export class ListModule { }

@@ -1,0 +1,10 @@
+<nz-upload class="avatar-uploader"
+    nzListType="picture-card"
+    [nzShowUploadList]="false"
+    [nzBeforeUpload]="beforeUpload">
+    <ng-container *ngIf="!avatarUrl">
+      <i class="anticon anticon-plus"></i>
+      <div class="ant-upload-text">选择图片</div>
+    </ng-container>
+    <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" style="width: 122px; height: 122px;">
+  </nz-upload>

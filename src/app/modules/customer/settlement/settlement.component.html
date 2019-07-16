@@ -1,7 +1,7 @@
 <div class="container">
   <nz-form-item>
     <span>
-      <nz-form-label>授课老师</nz-form-label>
+      <nz-form-label>服务泳师</nz-form-label>
       <nz-select style="width: 200px;" nzPlaceHolder="请选择" name="courseName" nzAllowClear [(ngModel)]="employeeId">
         <nz-option *ngFor="let items of teacherList" [nzLabel]="items.name" [nzValue]="items.id"></nz-option>
       </nz-select>

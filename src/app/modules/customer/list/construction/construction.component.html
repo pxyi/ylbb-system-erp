@@ -105,9 +105,11 @@
 <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired >协议号</nz-form-label>
+        <nz-form-label nzRequired *ngIf="skillsStatus == 1"> 协议号</nz-form-label>
+        <nz-form-label  *ngIf="skillsStatus != 1"> 协议号</nz-form-label>
         <nz-form-control>
           <input nz-input formControlName="contractNo" id="contractNo" maxlength="11" placeholder="数字+字母（可大小写）">
+          <nz-form-explain  *ngIf="skillsStatus == 1 && isContractNo && !contractNoText" style="color: #f5222d;">请输入协议号！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

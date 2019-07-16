@@ -39,7 +39,7 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit() {
     if((this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)%3 != 0){
-      this.showErrText = `会员卡升级失败，卡次剩余${ (this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)%3 }次,请变更后重试`;
+      this.showErrText = `技能卡升级失败，卡次未用尽，剩余${ (this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)%3 }次,请增加${ 3-((this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)%3)}次重试`;
       this.showSave = true;
     }
 
@@ -49,10 +49,10 @@ export class UpdateComponent implements OnInit {
       cardCode: [this.memberCardInfo.cardCode],//卡号
       name: [{ value: this.memberCardInfo.name || this.memberCardInfo.memberName, disabled: true }], //姓名
       heNum: [{ value: this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes, disabled: true }], //剩余卡次
-      orgTypeId: [{ value: this.memberCardInfo.cardTypeId }], //原卡类型id,
+      orgTypeId: [this.memberCardInfo.cardTypeId], //原卡类型id,
       newTypeId: [ ,[Validators.required]],//新卡类型id
       orgTimes: [this.memberCardInfo.remainTimes],//原正价卡次
-      newTimes: [(this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)%3 == 0 ? this.memberCardInfo.remainTimes: null],//现正价卡次
+      newTimes: [(this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)%3 == 0 ? (this.memberCardInfo.remainTimes + this.memberCardInfo.remainFreeTimes)/3: null],//现正价卡次
       orgFreeTimes: [this.memberCardInfo.remainFreeTimes,],//原赠送卡次
       newFreeTimes: [, [Validators.required]],//现赠送卡次
       orgExpireDate: [{ value: this.memberCardInfo.expireDate, disabled: true }],//原停卡日期

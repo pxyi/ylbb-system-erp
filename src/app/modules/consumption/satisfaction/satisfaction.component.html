@@ -4,7 +4,7 @@
     url="/yeqs/consumeSatisfaction/getSatisfactionRecordList"
     [allowSpace]="false"
     [queryNode]="queryNode"
-    [tableThead]="[ '消费ID', '会员卡号', '会员姓名', '消费金额', '消费时间', '消费商品','结算方式' ,'主教老师', '操作人', '第几次', '修改时间', '改前', '改后', '修改原因' ]"
+    [tableThead]="[ '消费ID', '会员卡号', '会员姓名', '消费金额', '消费时间', '消费商品','结算方式' , '操作人', '第几次', '修改时间', '改前', '改后', '修改原因' ]"
     [EaTableTbodyTr]="EaTableTbodyTr">
     <ng-template let-data #EaTableTbodyTr>
       <td>{{ data.consumeId }}</td>
@@ -14,8 +14,6 @@
       <td>{{ data.consumeDate }}</td>
       <td>{{ data.commodityName }}</td>
       <td>{{ data.leaveStatus == 0 ? '正常结算' : data.leaveStatus == 1 ? '缺课结算' :  data.leaveStatus == 2 ? '补课结算' : data.leaveStatus == 3 ? '补课缺课' : ''}}</td>
-      <td><button nz-button nzType="primary" nzSize="small" (click)="teacherDetail(data)"><i
-        class="anticon anticon-eye-o"></i>认领</button></td>
       <td>{{ data.operatorName }}</td>
       <td>{{ data.times }}</td>
       <td>{{ data.createTime }}</td>
@@ -30,14 +28,14 @@
       <div nz-row nzGutter="8">
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label nzRequired>授课老师</nz-form-label>
+            <nz-form-label nzRequired>服务泳师</nz-form-label>
             <nz-form-control>
-              <nz-select formControlName="swimTeacherId" nzDisabled nzPlaceHolder="请选择授课老师">
+              <nz-select formControlName="swimTeacherId" nzDisabled nzPlaceHolder="请选择服务泳师">
                 <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
               </nz-select>
               <nz-form-explain
                 *ngIf="baseFormGroup.get('swimTeacherId').dirty && baseFormGroup.get('swimTeacherId').hasError('required')">
-                请选择授课老师！</nz-form-explain>
+                请选择服务泳师！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -51,7 +49,7 @@
               </nz-select>
               <nz-form-explain
                 *ngIf="baseFormGroup.get('assisTeacherId').dirty && baseFormGroup.get('assisTeacherId').hasError('required')">
-                请选择授课老师！</nz-form-explain>
+                请选择服务泳师！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>

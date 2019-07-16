@@ -2,7 +2,7 @@ import { AddIntegralComponent } from './add-integral/add-integral.component';
 import { AlbumComponent } from './album/album.component';
 import { AppointComponent } from './appoint/appoint.component';
 import { ConstructionComponent } from './construction/construction.component';
-import { ConsumptionComponent } from './consumption/consumption.component';
+import { ConsumptionsComponent } from './consumption/consumption.component';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { ListComponent } from './list.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 import { ViserModule } from 'viser-ng';
 
 @NgModule({
-  declarations: [ListComponent, UpdateComponent, ImportComponent, ExchangeComponent, ConsumptionComponent, ConstructionComponent, AppointComponent, AlbumComponent, AddIntegralComponent],
+  declarations: [ListComponent, UpdateComponent, ImportComponent, ExchangeComponent, ConsumptionsComponent, ConstructionComponent, AppointComponent, AlbumComponent, AddIntegralComponent],
   imports: [
     CommonModule,
     NgRelaxModule,
@@ -26,6 +26,6 @@ import { ViserModule } from 'viser-ng';
     }]),
     ViserModule
   ],
-  entryComponents: [UpdateComponent, ImportComponent, ExchangeComponent, ConsumptionComponent, ConstructionComponent, AppointComponent, AlbumComponent, AddIntegralComponent]
+  entryComponents: [UpdateComponent, ImportComponent, ExchangeComponent, ConsumptionsComponent, ConstructionComponent, AppointComponent, AlbumComponent, AddIntegralComponent]
 })
 export class ListModule { }

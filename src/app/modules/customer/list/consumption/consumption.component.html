@@ -60,12 +60,12 @@
         </div>
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label nzRequired>授课老师</nz-form-label>
+            <nz-form-label nzRequired>服务泳师</nz-form-label>
             <nz-form-control>
-              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择授课老师">
+              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
                 <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
               </nz-select>
-              <nz-form-explain *ngIf="timesCountGroup.get('swimTeacherId').dirty && timesCountGroup.get('swimTeacherId').hasError('required')">请选择授课老师！</nz-form-explain>
+              <nz-form-explain *ngIf="timesCountGroup.get('swimTeacherId').dirty && timesCountGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -232,12 +232,12 @@
         </div>
         <div nz-col nzSpan="12">
           <nz-form-item>
-            <nz-form-label nzRequired>授课老师</nz-form-label>
+            <nz-form-label nzRequired>服务泳师</nz-form-label>
             <nz-form-control>
-              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择授课老师">
+              <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
                 <nz-option *ngFor="let option of teacherList" [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
               </nz-select>
-              <nz-form-explain *ngIf="singleTimeGroup.get('swimTeacherId').dirty && singleTimeGroup.get('swimTeacherId').hasError('required')">请选择授课老师！</nz-form-explain>
+              <nz-form-explain *ngIf="singleTimeGroup.get('swimTeacherId').dirty && singleTimeGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>

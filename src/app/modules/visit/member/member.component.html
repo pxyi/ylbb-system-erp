@@ -1,11 +1,6 @@
 <div class="container">
   <ea-query [node]="queryNode" (onSubmit)="EaTable.request($event)"></ea-query>
 
-
-  <div class="ea-button-group">
-    <button nz-button [nzType]="'primary'" (click)="visitList()">今日已回访列表</button>
-  </div>
-
   <ea-table #EaTable [thead]="tableNode" [EaTableTbodyTr]="EaTableTbodyTr" [allowSpace]="false"
     url="/retrunVisit/memberList">
     <ng-template let-data #EaTableTbodyTr>
@@ -27,5 +22,6 @@
       <td>{{ data.sourceName || '--' }}</td>
     </ng-template>
   </ea-table>
-  
+
+  <router-outlet name="aux"></router-outlet>
 </div>

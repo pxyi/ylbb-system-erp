@@ -17,7 +17,7 @@ export class NoopInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     /* ----------- 如不是完整URL路径则拼接开发环境配置的主域名 ----------- */
     if (req.url.substr(0, 4) !== 'http') {
-      if (req.url.indexOf('yeqs') == -1) {
+      if (req.url.indexOf('yeqs') == -1 && req.url.indexOf('qinshuiList') == -1 ) {
       req = req.clone({
         url: environment.domain + req.url,
         withCredentials: true,

@@ -1,0 +1,76 @@
+<form nz-form>
+  <div nz-row nzGutter="8">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">会员姓名</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.name }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">会员小名</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.nick }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">宝宝月龄</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.monthAge }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">所属社区</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.communityName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">会员卡</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.cardInfo }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">卡总次数</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.totalTimes }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">剩余次数</nz-form-label>
+        <nz-form-control [nzSpan]="18" [ngStyle]="{'color': '#f00', 'font-size': '14px', 'font-weight': 'bold'}">
+          {{ memberInfo.remainTimes }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">过期时间</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.expireDate }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">联系方式</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          {{ memberInfo.mobilePhone }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

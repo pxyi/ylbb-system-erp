@@ -2,10 +2,30 @@
   <h3>请选择需要调整课程</h3>
   <nz-form-item>
     <nz-form-control>
-      <nz-form-label>课程名称</nz-form-label>
-      <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="iscourse">
-        <nz-option *ngFor="let items of courseList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
-      </nz-select>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>课程名称</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="forms.syllabusName">
+          <nz-option *ngFor="let items of courseList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+        </nz-select>
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>星期</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="forms.week" [nzAllowClear]="true">
+          <nz-option *ngFor="let items of weekList" [nzLabel]="items.name" [nzValue]="items.name"></nz-option>
+        </nz-select>
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>时间段</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="forms.scourId" [nzAllowClear]="true">
+          <nz-option *ngFor="let items of scourList" [nzLabel]="items.label" [nzValue]="items.id"></nz-option>
+        </nz-select>
+      </span>
+      <span style="margin:0 15px 10px 0; display: inline-block">
+        <nz-form-label>老师</nz-form-label>
+        <nz-select style="width: 200px;" nzPlaceHolder="请选择" [(ngModel)]="forms.employeeId" [nzAllowClear]="true">
+          <nz-option *ngFor="let items of employeeList" [nzLabel]="items.name" [nzValue]="items.id"></nz-option>
+        </nz-select>
+      </span>
     </nz-form-control>
     <nz-form-control>
       <nz-form-label>排课日期</nz-form-label>

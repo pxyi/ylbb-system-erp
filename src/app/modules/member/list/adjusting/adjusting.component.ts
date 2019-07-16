@@ -163,7 +163,7 @@ export class AdjustingComponent implements OnInit {
 
     this.http.post('/yeqs/curriculum/deleteReadyClass', { paramJson: JSON.stringify({ reserveRecords: this.delectData }) }, false).then(ress => {
       if (ress.code == 1000) {
-        this.http.post('/yeqs/curriculum/insertMemberRecord', { paramJson, flag: false }, false).then(res => {
+        this.http.post('/yeqs/curriculum/insertMemberRecord', { paramJson, reserveId: ress.result  ,flag: false }, false).then(res => {
           this.isLoadingOne = false;
           if (res.code == 1000) {
             this.current = 2;

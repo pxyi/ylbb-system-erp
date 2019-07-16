@@ -17,7 +17,7 @@ export class AddComponent implements OnInit {
   @Input() cardTypeInfo: any = {};
 
   formGroup: FormGroup;
-
+  skillsStatus: number;
   cardBusinessList: any[] = [];
 
   constructor(
@@ -29,6 +29,7 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.formGroup = this.fb.group({
       id: [this.id],
       name: [this.cardTypeInfo.name, [Validators.required]],
@@ -39,11 +40,25 @@ export class AddComponent implements OnInit {
       freeTimes: [this.cardTypeInfo.freeTimes, [Validators.required]],
       balance: [this.cardTypeInfo.balance, [Validators.required]],
       openPoints: [this.cardTypeInfo.openPoints, [Validators.required]],
-      tong: [this.cardTypeInfo.tong || false],
-      skillsStatus: [0],
-      withdrawAmount: [this.cardTypeInfo.withdrawAmount, [Validators.required]],
+      skillsStatus: [this.cardTypeInfo.skillsStatus || 0],
+      withdrawAmount: [this.cardTypeInfo.withdrawAmount || 0, [Validators.required]],
       comment: [this.cardTypeInfo.comment]
     });
+    if(this.cardTypeInfo.skillsStatus){
+      if(this.cardTypeInfo.skillsStatus == 1){
+      }else{
+        this.formGroup.patchValue({ withdrawAmount: 0 });
+      }
+      this.skillsStatus = this.cardTypeInfo.skillsStatus;
+    }
+    this.formGroup.get('skillsStatus').valueChanges.subscribe(text => {
+      if(text == 1){
+        this.formGroup.patchValue({ withdrawAmount: '' });
+      }else{
+        this.formGroup.patchValue({ withdrawAmount: 0 });
+      }
+      this.skillsStatus = text;
+    })
   }
 
   saveLoading: boolean;

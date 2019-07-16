@@ -27,10 +27,10 @@ export class RevokeComponent implements OnInit {
       type        : 'input'
     },
     {
-      label       : '儿童类型',
+      label       : '婴儿类型',
       key         : 'babyType',
       type        : 'select',
-      options: [{ name: '0-3岁', id: '0-3岁' }, { name: '3-6岁', id: '3-6岁' }, { name: '6-12岁', id: '6-12岁' }],    
+      options: [{ name: '婴儿', id: '婴儿' }, { name: '幼儿', id: '幼儿' }],    
     },
     {
       label       : '消费商品',
@@ -88,7 +88,7 @@ export class RevokeComponent implements OnInit {
   @ViewChild('drawerTemplate') drawerTemplate: TemplateRef<any>;
   teacherDetail(data){
     this.drawer.create({
-      nzTitle: '授课老师',
+      nzTitle: '服务泳师',
       nzWidth: 700,
       nzContent: this.drawerTemplate
     });

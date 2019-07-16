@@ -3,7 +3,6 @@ import { PreviewComponent } from '../public/preview/preview.component';
 import { NzDrawerService } from 'ng-zorro-antd';
 import { DatePipe } from '@angular/common';
 import { DrawerCreate } from 'src/app/ng-relax/decorators/drawer/create.decorator';
-import { VisitComponent } from '../public/visit/visit.component';
 @Component({
   selector: 'app-nocard',
   templateUrl: './nocard.component.html',
@@ -21,10 +20,10 @@ export class NocardComponent implements OnInit {
     },
     {
       label       : '来源',
-      key         : 'customerSourceId',
-      optionKey   : { label: 'sourceName', value: 'sourceId' },
+      key         : 'sourceId',
       type        : 'select',
-      optionsUrl  : '/yeqs/management/selectSource'
+      optionsUrl  : '/activity/getActivitySource',
+      optionKey   : { label: 'activityHeadline', value: 'id' }
     },
     {
       label       : '家长姓名',
@@ -96,7 +95,4 @@ export class NocardComponent implements OnInit {
   }
 
   @DrawerCreate({ width: 860, closable: false,  content: PreviewComponent, params: { followStageId: 3 } }) preview: ({ id: number} ) => void;
-
-  @DrawerCreate({ title: '今日已回访列表', content: VisitComponent, params: { followStageId: 3, status: 1 } }) visitList: () => void;
-  
 }

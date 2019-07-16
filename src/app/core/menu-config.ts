@@ -14,10 +14,17 @@ export const MenuConfig = [
     icon  : 'calendar',
     children : [
       {
-        title : '预约列表',
+        title : '技能课预约',
+        key   : '/home/appointment/qstable',
+        isLeaf: true
+      },
+      {
+        title : '戏水预约',
         key   : '/home/appointment/list',
         isLeaf: true
       },
+   
+      
       {
         title : '预约设置',
         key   : '/home/appointment/setting',
@@ -98,11 +105,6 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
-        title : '智能排课',
-        key   : '/home/member/intelligent',
-        isLeaf: true
-      },
-      {
         title : '卡变更日志',
         key   : '/home/member/changelog',
         isLeaf: true
@@ -165,11 +167,11 @@ export const MenuConfig = [
         key   : '/home/consumption/satisfaction',
         isLeaf: true
       },
-      {
-        title : '会员课程进度',
-        key   : '/home/consumption/curriculum',
-        isLeaf: true
-      },
+      // {
+      //   title : '会员课程进度',
+      //   key   : '/home/consumption/curriculum',
+      //   isLeaf: true
+      // },
       // {
       //   title : '福利消费列表',
       //   key   : '/home/consumption/welfare',
@@ -224,6 +226,11 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
+        title : '智能排课',
+        key   : '/home/coursemanagement/intelligent',
+        isLeaf: true
+      },
+      {
         title : '教师学员课表',
         key   : '/home/coursemanagement/teacher',
         isLeaf: true
@@ -266,6 +273,11 @@ export const MenuConfig = [
         key   : '/home/humanresources/staff',
         isLeaf: true
       },
+      // {
+      //   title : '销售提成',
+      //   key   : '/home/humanresources/bonussales',
+      //   isLeaf: true
+      // },
       {
         title : '考勤情况',
         key   : '/home/humanresources/achievements/checkwork',
@@ -287,25 +299,10 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
-        title : '业绩目标',
-        key   : '/home/humanresources/achievements/target',
-        isLeaf: true
-      },
-      {
         title : '满意度管理',
         key   : '/home/humanresources/achievements/satisfaction',
         isLeaf: true
       },
-      {
-        title : '销售提成设置',
-        key   : '/home/humanresources/achievements/bonussales',
-        isLeaf: true
-      },
-      // {
-      //   title : '提成阶梯管理',
-      //   key   : '/home/humanresources/achievements/commission',
-      //   isLeaf: true
-      // },
       {
         title : '考核项目配置',
         key   : '/home/humanresources/wage/assessment',

@@ -44,14 +44,13 @@
   <div nz-row nzGutter="8">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>儿童类型</nz-form-label>
+        <nz-form-label nzRequired>婴儿类型</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="babyType" nzPlaceHolder="请选择儿童类型">
-            <nz-option nzLabel="0-3岁" nzValue="0-3岁"></nz-option>
-            <nz-option nzLabel="3-6岁" nzValue="3-6岁"></nz-option>
-            <nz-option nzLabel="6-12岁" nzValue="6-12岁"></nz-option>
+          <nz-select formControlName="babyType" nzPlaceHolder="请选择婴儿类型">
+            <nz-option nzLabel="婴儿" nzValue="婴儿"></nz-option>
+            <nz-option nzLabel="幼儿" nzValue="幼儿"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('babyType').dirty && formGroup.get('babyType').hasError('required')">请选择儿童类型！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('babyType').dirty && formGroup.get('babyType').hasError('required')">请选择婴儿类型！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -106,12 +105,12 @@
     </div>
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label nzRequired>授课老师</nz-form-label>
+        <nz-form-label nzRequired>服务泳师</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择授课老师">
+          <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
             <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('swimTeacherId').dirty && formGroup.get('swimTeacherId').hasError('required')">请选择授课老师！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('swimTeacherId').dirty && formGroup.get('swimTeacherId').hasError('required')">请选择服务泳师！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>
