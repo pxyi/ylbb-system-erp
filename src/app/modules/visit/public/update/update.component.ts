@@ -30,6 +30,7 @@ export class UpdateComponent implements OnInit {
   recommenderList: any[] = [];
   parentIdentityList: any[] = [];
   showCommunityList: any[] = [];
+  sourceList: any[] = [];
 
   constructor(
     private fb: FormBuilder = new FormBuilder(),
@@ -40,7 +41,9 @@ export class UpdateComponent implements OnInit {
     private monthDiff: MonthdiffPipe,
     private cache: CacheService,
     private drawerRef: NzDrawerRef
-  ) { }
+  ) {
+    this.http.post('/memberSource/getList').then(res => this.sourceList = res.result);
+  }
 
   ngOnInit() {
     this._customerFormInit();
@@ -88,7 +91,7 @@ export class UpdateComponent implements OnInit {
       parentRelationShipId: [],                                                        // 家长身份
       parentWeChat: [, [Validators.pattern(/^[A-Za-z0-9]{6,30}/)]],                                   // 家长QQ或者微信
 
-      source: [, [Validators.required]],                                                        // 来源
+      sourceId: [, [Validators.required]],                                                        // 来源
       recommendedId: [],                                                                               // 推荐人
       collectorId: [],                                                                               // 收集人
     });
