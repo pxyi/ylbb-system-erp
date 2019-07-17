@@ -13,12 +13,14 @@ import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 export class UpdateComponent implements OnInit {
 
   @Input() id: number;
+  @Input() sourceId: number;
 
   formGroup: FormGroup;
 
   communityList: any = [];
   recommenderList: any[] = [];
   collectorList: any[] = [];
+  sourceList: any[] = [];
 
   constructor(
     private http: HttpService,
@@ -50,11 +52,13 @@ export class UpdateComponent implements OnInit {
       allergieHistory: [0, [Validators.required]],
       babyType: ['婴儿', [Validators.required]],
       babyNumber: [1],
-      source: [, [Validators.required]],
+      sourceId: [, [Validators.required]],
       recommendedId: [],
       collectorId: [],
       comment: []
     });
+    /* ------------------------- 客户来源回显 ------------------------- */
+    this.http.post('/memberSource/getList').then(res => this.sourceList = res.result);
     /* -------------------------- 用户信息回显 -------------------------- */
     if (this.id) {
       this.http.post('/member/queryMemberById', { id: this.id }, false).then(res => {
