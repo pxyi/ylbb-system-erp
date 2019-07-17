@@ -1,0 +1,16 @@
+<div class="container">
+  <ea-query-simp [node]="[{label: '客户来源', key: 'name', type: 'input'}]" title="社区管理" (onSubmit)="table.request($event)"></ea-query-simp>
+
+  <button nz-button nzType="primary" style="margin-bottom: 24px;" (click)="update()">新增来源</button>
+
+  <ea-table #table url="/memberSource/list" [thead]="['客户来源','操 作']" [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>
+        <a (click)="update({ sourceInfo: data })">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzTitle="确定要删除吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>

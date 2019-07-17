@@ -131,21 +131,10 @@
       <nz-form-item>
         <nz-form-label nzRequired>客户来源</nz-form-label>
         <nz-form-control>
-          <nz-select formControlName="source" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
-            <nz-option nzLabel="灯箱路牌" nzValue="灯箱路牌"></nz-option>
-            <nz-option nzLabel="朋友推荐" nzValue="朋友推荐"></nz-option>
-            <nz-option nzLabel="网络推广" nzValue="网络推广"></nz-option>
-            <nz-option nzLabel="社区宣传" nzValue="社区宣传"></nz-option>
-            <nz-option nzLabel="合作机构" nzValue="合作机构"></nz-option>
-            <nz-option nzLabel="自然到店" nzValue="自然到店"></nz-option>
-            <nz-option nzLabel="美团大众点评" nzValue="美团大众点评"></nz-option>
-            <nz-option nzLabel="体验卡" nzValue="体验卡"></nz-option>
-            <nz-option nzLabel="门店地推" nzValue="门店地推"></nz-option>
-            <nz-option nzLabel="总部线索" nzValue="总部线索"></nz-option>
-            <nz-option nzLabel="门店线上活动" nzValue="门店线上活动"></nz-option>
-            <nz-option nzLabel="其他" nzValue="其他"></nz-option>
+          <nz-select formControlName="sourceId" [nzAllowClear]="true" nzPlaceHolder="请选择客户来源">
+            <nz-option *ngFor="let data of sourceList" [nzLabel]="data.name" [nzValue]="data.id"></nz-option>
           </nz-select>
-          <nz-form-explain *ngIf="formGroup.get('source').dirty && formGroup.get('source').hasError('required')">请选择客户来源！</nz-form-explain>
+          <nz-form-explain *ngIf="formGroup.get('sourceId').dirty && formGroup.get('sourceId').hasError('required')">请选择客户来源！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </div>

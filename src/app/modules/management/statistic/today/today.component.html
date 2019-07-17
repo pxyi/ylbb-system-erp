@@ -13,7 +13,8 @@
 </ea-quote>
 <nz-row [nzGutter]="24">
   <nz-col [nzSpan]=12 style="height: 330px; overflow: hidden;">
-    <v-chart [forceFit]="true" [height]="350" [data]="viserData" [scale]="[{ dataKey: 'hour', min: 0, max: 1 }]">
+    <div style="text-indent: 42px">今日服务宝宝数</div>
+    <v-chart [forceFit]="true" [height]="320" [data]="viserData" [scale]="[{ dataKey: 'hour', min: 0, max: 1 }]">
       <v-tooltip></v-tooltip>
       <v-axis></v-axis>
       <v-legend></v-legend>
@@ -27,25 +28,25 @@
       <nz-row [nzGutter]="16">
         <nz-col [nzSpan]="12" [style.margin-bottom]="'16px'">
           <nz-card>
-            <nz-statistic [nzValue]="visitDataNumber.todayClueCount" [nzTitle]="'新增线索数'"></nz-statistic>
+            <nz-statistic [nzValue]="visitDataNumber.todayClueCount" [nzTitle]="'今日新增线索数'"></nz-statistic>
             <div style="color: #999">昨日 {{ visitDataNumber.yesterdayClueCount }}</div>
           </nz-card>
         </nz-col>
         <nz-col [nzSpan]="12" [style.margin-bottom]="'16px'">
           <nz-card>
-            <nz-statistic [nzValue]="visitDataNumber.todayArriveCount" [nzTitle]="'到店客户数量'"></nz-statistic>
+            <nz-statistic [nzValue]="visitDataNumber.todayArriveCount" [nzTitle]="'今日到店客户数量'"></nz-statistic>
             <div style="color: #999">昨日 {{ visitDataNumber.yesterdayArriveCount }}</div>
           </nz-card>
         </nz-col>
         <nz-col [nzSpan]="12">
           <nz-card>
-            <nz-statistic [nzValue]="visitDataNumber.todayExperienceCount" [nzTitle]="'新增体验人数'"></nz-statistic>
+            <nz-statistic [nzValue]="visitDataNumber.todayExperienceCount" [nzTitle]="'今日新增消费人数'"></nz-statistic>
             <div style="color: #999">昨日 {{ visitDataNumber.yesterdayExperienceCount }}</div>
           </nz-card>
         </nz-col>
         <nz-col [nzSpan]="12">
           <nz-card>
-            <nz-statistic [nzValue]="visitDataNumber.todayMemberCount" [nzTitle]="'新增会员数'"></nz-statistic>
+            <nz-statistic [nzValue]="visitDataNumber.todayMemberCount" [nzTitle]="'今日新增会员数'"></nz-statistic>
             <div style="color: #999">昨日 {{ visitDataNumber.yesterdayMemberCount }}</div>
           </nz-card>
         </nz-col>

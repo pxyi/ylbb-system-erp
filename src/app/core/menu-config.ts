@@ -136,16 +136,6 @@ export const MenuConfig = [
     icon  : 'red-envelope',
     children : [
       {
-        title : '订单列表',
-        key   : '/home/consumption/order',
-        isLeaf: true
-      },
-      {
-        title : '订单撤销列表',
-        key   : '/home/consumption/revokelist',
-        isLeaf: true
-      },
-      {
         title : '消费列表',
         key   : '/home/consumption/list',
         isLeaf: true
@@ -170,6 +160,16 @@ export const MenuConfig = [
         key   : '/home/consumption/curriculum',
         isLeaf: true
       },
+      {
+        title : '订单列表',
+        key   : '/home/consumption/order',
+        isLeaf: true
+      },
+      {
+        title : '订单撤销列表',
+        key   : '/home/consumption/revokelist',
+        isLeaf: true
+      }
     ]
   },
   {
@@ -378,6 +378,11 @@ export const MenuConfig = [
       {
         title : '支付申请',
         key   : '/home/configuration/account/payapply',
+        isLeaf: true
+      },
+      {
+        title : '客户来源',
+        key   : '/home/configuration/source',
         isLeaf: true
       }
     ]
