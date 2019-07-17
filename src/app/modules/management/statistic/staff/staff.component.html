@@ -26,10 +26,10 @@
   <div nz-row>
     <div nz-col [nzSpan]="6" class="target">
       <nz-progress
-        [nzPercent]="managementInfo.actualCallBackClueNum / managementInfo.incomeGogal?.expectClueNum * 100 | math: 'ceil'"
+        [nzPercent]="managementInfo.actualClueNum / managementInfo.incomeGogal?.expectClueNum * 100 | math: 'ceil'"
         [nzWidth]="80" nzType="circle"></nz-progress>
       <p>新增线索</p>
-      <h2>{{ managementInfo.actualCallBackClueNum }}/{{ managementInfo.incomeGogal?.expectClueNum }}<span>条线索</span>
+      <h2>{{ managementInfo.actualClueNum }}/{{ managementInfo.incomeGogal?.expectClueNum }}<span>条线索</span>
       </h2>
     </div>
     <div nz-col [nzSpan]="6" class="target">
@@ -68,9 +68,9 @@
   <ul>
     <li>
       <div>排名</div>
-      <div>名称</div>
+      <div>老师</div>
       <div>好评率</div>
-      <div>（好评数）/（服务数）</div>
+      <div>(好评数/服务数)</div>
     </li>
   </ul>
   <ol>

@@ -38,7 +38,6 @@
         <button nz-button (click)="import()">导入客户</button>
         <button nz-button (click)="operation('appoint')">预约</button>
         <button nz-button (click)="operation('consumption')">消费</button>
-        <!-- <button nz-button (click)="operation('consumption')">消费</button> -->
         <nz-dropdown>
           <button nz-button nz-dropdown>更多操作<i nz-icon nzType="down"></i></button>
           <ul nz-menu>
@@ -52,6 +51,7 @@
             <li nz-menu-item><a (click)="operation('album')">成长相册</a></li>
           </ul>
         </nz-dropdown>
+        <!-- <nz-switch style="margin-left:10px;" [(ngModel)]="nzSwitch" (ngModelChange)="changeSwitchValue($event)" nzCheckedChildren="新版" nzUnCheckedChildren="老版"></nz-switch> -->
       </div>
     </ng-template>
   </ea-list-page>

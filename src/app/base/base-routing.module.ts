@@ -464,6 +464,12 @@ const routes: Routes = [
               }
             ]
           },
+          {
+            path: 'source',
+            data: { title: '客户来源' },
+            canLoad: [AuthGuardService],
+            loadChildren: 'src/app/modules/configuration/source/source.module#SourceModule'
+          }
         ]
       }
     ]
