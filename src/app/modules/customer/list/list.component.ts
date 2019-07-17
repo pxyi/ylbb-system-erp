@@ -26,6 +26,8 @@ export class ListComponent implements OnInit {
   
   @ViewChild('listPage') listPage: ListPageComponent;
 
+  nzSwitch:boolean = true;
+
   /* ------------ 操作按钮对应的抽屉组件 ------------ */
   operationComponents = {
     appoint: {
@@ -197,8 +199,11 @@ export class ListComponent implements OnInit {
             component : ConsumptionTabComponent,
             userInfo  : true
           }
-          this.newDrawer(Object.assign(options, data));
-          // this.newDrawer(Object.assign(options, this.operationComponents[type]));
+          if (this.nzSwitch) {
+            this.newDrawer(Object.assign(options, data));
+          } else {
+            this.openDrawer(Object.assign(options, this.operationComponents[type]));
+          }
         }
       })
     } else if (type === 'album') {
@@ -282,6 +287,10 @@ export class ListComponent implements OnInit {
         this.message.warning('暂无社区信息');
       }
     })
+  }
+
+  changeSwitchValue(event) {
+    this.nzSwitch = event;
   }
 
 }

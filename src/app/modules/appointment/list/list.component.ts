@@ -221,8 +221,8 @@ export class ListComponent implements OnInit {
   }
 
   /* ------------------- 结算预约 ------------------- */
-  @DrawerCreate({ title: '添加消费', width: 1300, content: ConsumptionTabComponent }) consumption: ({ consumptionInfo: object }) => void;
-  // @DrawerCreate({ title: '添加消费', content: ConsumptionComponent }) consumption: ({ consumptionInfo: object }) => void;
+  // @DrawerCreate({ title: '添加消费', width: 1300, content: ConsumptionTabComponent }) consumption: ({ consumptionInfo: object }) => void;
+  @DrawerCreate({ title: '添加消费', content: ConsumptionComponent }) consumption: ({ consumptionInfo: object }) => void;
 
 
   /* ------------------- 撤销预约 ------------------- */
