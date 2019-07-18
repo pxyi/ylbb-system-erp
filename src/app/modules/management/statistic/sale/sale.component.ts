@@ -13,6 +13,13 @@ export class SaleComponent implements OnInit {
 
   viserData: any;
 
+  label = {
+    formatter: function formatter(val) {
+      return val + '元';
+    }
+  }
+
+
   constructor(
     private http: HttpService
   ) {
