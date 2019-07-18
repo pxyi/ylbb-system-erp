@@ -13,7 +13,6 @@ import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 export class UpdateComponent implements OnInit {
 
   @Input() id: number;
-  @Input() sourceId: number;
 
   formGroup: FormGroup;
 
@@ -52,7 +51,7 @@ export class UpdateComponent implements OnInit {
       allergieHistory: [0, [Validators.required]],
       babyType: ['婴儿', [Validators.required]],
       babyNumber: [1],
-      sourceId: [this.sourceId, [Validators.required]],
+      sourceId: [, [Validators.required]],
       recommendedId: [],
       collectorId: [],
       comment: []

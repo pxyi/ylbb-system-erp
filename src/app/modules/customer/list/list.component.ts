@@ -228,12 +228,11 @@ export class ListComponent implements OnInit {
   openDrawer(options) {
     let dataSet = JSON.parse(JSON.stringify(this.listPage.eaTable.dataSet));
     let userInfo = options.userInfo ? dataSet.filter(res => res.id == this.checkedItems[0])[0] : {};
-    var sourceId = this.listPage.eaTable.dataSet.filter(res => res.id == this.checkedItems[0])[0].sourceId;
     const drawer = this.drawer.create({
       nzWidth: 720,
       nzTitle: options.title || null,
       nzContent: options.component,
-      nzContentParams: options.params || { id: this.checkedItems[0], userInfo, sourceId }
+      nzContentParams: options.params || { id: this.checkedItems[0], userInfo }
     });
     drawer.afterClose.subscribe(res => res && this.listPage.eaTable._request());
   }
