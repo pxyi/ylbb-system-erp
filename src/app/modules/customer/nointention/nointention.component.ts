@@ -25,6 +25,7 @@ export class NointentionComponent implements OnInit {
       key         : 'sourceId',
       type        : 'select',
       optionsUrl  : '/memberSource/getList',
+      optionKey: { label: 'name', value: 'id' }
     },
     {
       label       : '家长姓名',
