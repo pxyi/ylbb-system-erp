@@ -33,7 +33,7 @@ export class CustomerSourceComponent implements OnInit {
   nzPageIndexChange(event) {
     //更改数据
     this.loading = true;
-    this.http.post('/memberSource/list', {pageNum: event, pageSize: this.nzPageSize}).then(res => {
+    this.http.post('/memberSource/list', {name: this.searchValue, pageNum: event, pageSize: this.nzPageSize}).then(res => {
       this.listOfData = res.result.list;     //数据
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
@@ -46,7 +46,7 @@ export class CustomerSourceComponent implements OnInit {
   nzPageSizeChange(event) {
     //更改数据
     this.loading = true;
-    this.http.post('/memberSource/list', {pageNum: this.nzPageIndex, pageSize: event}).then(res => {
+    this.http.post('/memberSource/list', {name: this.searchValue, pageNum: this.nzPageIndex, pageSize: event}).then(res => {
       this.listOfData = res.result.list;     //数据
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少
@@ -58,7 +58,7 @@ export class CustomerSourceComponent implements OnInit {
   /*---------------- 查询 ----------------*/
   searchList() {
     this.loading = true;
-    this.http.post('/memberSource/list', {name: this.searchValue}).then(res => {
+    this.http.post('/memberSource/list', {name: this.searchValue, pageNum: this.nzPageIndex, pageSize: this.nzPageSize}).then(res => {
       this.listOfData = res.result.list;     //数据
       this.nzPageIndex = res.result.pageNum; //第几页
       this.nzPageSize = res.result.pageSize; //每页展示多少

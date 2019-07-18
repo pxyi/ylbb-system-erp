@@ -52,7 +52,7 @@ export class UpdateComponent implements OnInit {
       allergieHistory: [0, [Validators.required]],
       babyType: ['婴儿', [Validators.required]],
       babyNumber: [1],
-      sourceId: [, [Validators.required]],
+      sourceId: [this.sourceId, [Validators.required]],
       recommendedId: [],
       collectorId: [],
       comment: []
