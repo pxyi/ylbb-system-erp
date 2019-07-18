@@ -1,0 +1,8 @@
+<ea-table [thead]="['条码', '名称', '价格', '添加']" [dataSet]="commodityList" [showPage]="false" [EaTableTbodyTr]="tr">
+  <ng-template #tr let-data>
+    <td>{{ data.barCode || '-' }}</td>
+    <td>{{ data.name }}</td>
+    <td>{{ data.price | currency: '￥' }}</td>
+    <td><a (click)="add(data)">添加</a></td>
+  </ng-template>
+</ea-table>

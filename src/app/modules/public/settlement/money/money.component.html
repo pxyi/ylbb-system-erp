@@ -1,3 +1,124 @@
-<p>
-  money works!
-</p>
+<nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+  <input type="text" nz-input placeholder="服务名称、商品名称" #searchText />
+  <ng-template #suffixIconButton>
+    <button nz-button nzType="primary" nzSearch (click)="searchCommodity(searchText.value)">查找商品</button>
+  </ng-template>
+</nz-input-group>
+
+<form nz-form [formGroup]="formGroup">
+  
+  <nz-table [nzData]="cardPos.value" [style.margin]="'24px 0 12px'" [nzShowPagination]="false" [nzFooter]="cardPos.value.length ? footer : null" [nzBordered]="true">
+    <thead><tr><th>商品条码</th><th>商品名称</th><th>数量</th><th>售价</th><th>折后价</th><th>小计</th><th>操作</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let data of cardPos.controls; let idx = index" [formGroup]="data">
+        <td>{{ cardPos.controls[idx].controls['barCode'].value || '-' }}</td>
+        <td>{{ cardPos.controls[idx].controls['name'].value }}</td>
+        <td><nz-input-number (ngModelChange)="data.patchValue({ subtotal: $event * cardPos.controls[idx].controls['discountPrice'].value })" formControlName="count" [nzMin]="1" [nzMax]="999" [nzStep]="1"></nz-input-number></td>
+        <td>{{ cardPos.controls[idx].controls['price'].value | currency: '￥' }}</td>
+        <td>{{ cardPos.controls[idx].controls['discountPrice'].value | currency: '￥' }}</td>
+        <td>{{ cardPos.controls[idx].controls['subtotal'].value | currency: '￥' }}</td>
+        <td><a (click)="cardPos.removeAt(idx)">删除</a></td>
+      </tr>
+    </tbody>
+    <ng-template #footer>
+      <div style="height: 30px; line-height: 30px; color: #666;">
+        <span>共计 {{ cardPos.value.length }} 条商品</span>
+        <button nz-button nzType="primary" nzSize="small" [style.float]="'right'" (click)="clearCardPos()">清空</button>
+      </div>
+    </ng-template>
+  </nz-table>
+
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>服务泳师</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="swimTeacherId" nzPlaceHolder="请选择服务泳师">
+            <nz-option *ngFor="let option of teacherList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="valid('swimTeacherId')">请选择服务泳师！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired>顾客满意度</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="satisfaction" nzPlaceHolder="请选择顾客满意度">
+            <nz-option nzLabel="一般" nzValue="一般"></nz-option>
+            <nz-option nzLabel="满意" nzValue="满意"></nz-option>
+            <nz-option nzLabel="表扬" nzValue="表扬"></nz-option>
+            <nz-option nzLabel="不好" nzValue="不好"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>备注</nz-form-label>
+        <nz-form-control>
+          <textarea nz-input formControlName="comment" placeholder="请输入备注"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <ng-container *ngIf="cardPos.length">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-radio-group formControlName="paymentType" [nzButtonStyle]="'solid'" [style.width]="'100%'">
+              <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="2">微信</label>
+              <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="3">支付宝</label>
+              <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="1">现金支付</label>
+              <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="4" [nzDisabled]="!consumptionInfo.haveCard || consumptionInfo.feeType == 0">充值卡</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24" *ngIf="formGroup.controls['paymentType'].value == 2 || formGroup.controls['paymentType'].value == 3"><ea-tip>请扫码用户支付码，完成交易</ea-tip></div>
+
+
+      <div class="card-vip" *ngIf="formGroup.controls['paymentType'].value == 4">
+        <nz-col [nzSpan]="8">
+          <h5>本次消费金额</h5>
+          {{ 1 }}
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <h5>本次剩余金额</h5>
+          {{ 1 }}
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <h5>本次优惠金额</h5>
+          {{ 1 }}
+        </nz-col>
+      </div>
+
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>应收金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="price" readonly />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>实收金额</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="payment" [readonly]="formGroup.controls['paymentType'].value != 1" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" *ngIf="formGroup.controls['paymentType'].value == 1">
+        <nz-form-item>
+          <nz-form-label>找零</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="changePrice" readonly />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </ng-container>
+  </div>
+
+</form>

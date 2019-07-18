@@ -13,6 +13,7 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { AlbumComponent } from './album/album.component';
 import { AppointComponent } from '../../public/appoint/appoint.component';
 import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
+import { SettlementComponent } from '../../public/settlement/settlement.component';
 
 declare const require: any;
 const DataSet = require('@antv/data-set');
@@ -196,7 +197,7 @@ export class ListComponent implements OnInit {
           }
           var data = {
             title     : '消费',
-            component : ConsumptionTabComponent,
+            component : SettlementComponent,
             userInfo  : true
           }
           if (this.nzSwitch) {
@@ -242,8 +243,9 @@ export class ListComponent implements OnInit {
     let dataSet = JSON.parse(JSON.stringify(this.listPage.eaTable.dataSet));
     let userInfo = options.userInfo ? dataSet.filter(res => res.id == this.checkedItems[0])[0] : {};
     const drawer = this.drawer.create({
-      nzWidth: 1300,
-      nzTitle: options.title || null,
+      nzWidth: 720,
+      nzClosable: false,
+      nzTitle: null,
       nzContent: options.component,
       nzContentParams: options.params || { id: this.checkedItems[0], userInfo },
       nzWrapClassName: 'drawerRef'
