@@ -1,0 +1,16 @@
+<ea-title>核心指标</ea-title>
+
+<div>
+  <v-chart [forceFit]="true" [height]="400" [data]="viserData" [scale]="[{ dataKey: 'day' }]">
+    <v-tooltip></v-tooltip>
+    <v-axis></v-axis>
+    <v-legend></v-legend>
+    <v-line position="day*temperature" color="city"></v-line>
+    <v-point position="day*temperature" color="city" [size]="4" [style]="{ stroke: '#fff', lineWidth: 1 }" shape="circle"></v-point>
+  </v-chart>
+</div>
+
+<ea-title>数据看板</ea-title>
+<app-kanban></app-kanban>
+
+<app-source></app-source>

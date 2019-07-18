@@ -23,7 +23,6 @@ export class UpdateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.curriculumInfo);
     this.formGroup = this.fb.group({
       id: [],
       cardCode: [],

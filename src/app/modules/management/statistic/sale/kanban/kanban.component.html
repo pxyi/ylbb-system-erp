@@ -1,0 +1,46 @@
+<nz-row [nzGutter]="24">
+  <nz-col [nzSpan]="14">
+    <v-chart [forceFit]="true" [height]="400" [padding]="[20, 120, 95]" [data]="viserData" [scale]="{ dataKey: 'percent', nice: false }">
+      <v-tooltip [showTitle]="false" [itemTpl]="itemTpl"></v-tooltip>
+      <v-legend></v-legend>
+      <v-coord type="rect" direction="LT"></v-coord>
+      <v-pyramid [position]="funnelOpts.position" [color]="funnelOpts.color" [label]="funnelOpts.label"
+        [tooltip]="funnelOpts.tooltip"></v-pyramid>
+      <v-guide *ngFor="let obj of viserData" type="text" [top]="true">
+      </v-guide>
+    </v-chart>
+  </nz-col>
+  <nz-col [nzSpan]="10" class="cell">
+    <nz-table [nzData]="[1]" [nzShowPagination]="false">
+      <thead><tr><th>体验会员转化率</th><th>办卡会员转化率</th><th>办卡率</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ kanbanData.experienceMemberConvert }}%</td>
+          <td>{{ kanbanData.createCardMemberConvert }}%</td>
+          <td>{{ kanbanData.createCardConvert }}%</td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div>体验会员转化率=体验数/客户数</div>
+    <div>办卡会员转化率=办卡数/体验数</div>
+    <div>办卡率=办卡数/客户数</div>
+  </nz-col>
+</nz-row>
+
+<ea-title><span [style.margin-right]="'12px'">月度办卡成功率</span> <nz-month-picker [(ngModel)]="monthChecked" (ngModelChange)="monthChange($event)" nzPlaceHolder="请选择月份" [nzSize]="'small'" [style.width]="'120px'"></nz-month-picker></ea-title>
+
+<ea-table #table url="/dataAnalysis/createCardSuccessRate" [isParamJson]="false" [paramsInit]="paramsInit" [thead]="['月份', '建卡总数', '新来店总数', '体未办', '新建卡总收入', '续卡总数', '办卡成功率', '咨未达', '合计', '新建卡客单价']" [EaTableTbodyTr]="tr">
+  <ng-template let-data #tr>
+    <td>{{ data['MONTH'] }}</td>
+    <td>{{ data['CARD_TOTAL'] }}</td>
+    <td>{{ data['COME_TOTAL'] }}</td>
+    <td>{{ data['EXP'] }}</td>
+    <td>{{ data['INCOME_TOTAL'] }}</td>
+    <td>{{ data['RENEWAL'] }}</td>
+    <td>{{ data['SUCCESS_RATE'] }}</td>
+    <td>{{ data['TEL'] }}</td>
+    <td>{{ data['TOTAL'] }}</td>
+    <td>{{ data['UNIT_PRICE'] }}</td>
+  </ng-template>
+</ea-table>

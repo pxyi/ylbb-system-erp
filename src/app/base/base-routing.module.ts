@@ -229,9 +229,22 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'analysis',
-        data: { title: '经营分析', noReuse: true },
-        loadChildren: 'src/app/modules/analysis/analysis.module#AnalysisModule'
+        path: 'management',
+        data: { noReuse: true },
+        children: [
+          {
+            path: 'analysis',
+            data: { title: '经营分析' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/management/analysis/analysis.module#AnalysisModule'
+          },
+          {
+            path: 'statistic',
+            data: { title: '数据概况' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/management/statistic/statistic.module#StatisticModule'
+          },
+        ]
       },
       {
         path: 'humanresources',
@@ -448,15 +461,15 @@ const routes: Routes = [
                 data: { title: '支付申请' },
                 canLoad: [ AuthGuardService ],
                 loadChildren: 'src/app/modules/configuration/pay-apply/pay-apply.module#PayApplyModule'
-              },
-              {
-                path: 'customersource',
-                data: { title: '客户来源' },
-                canLoad: [ AuthGuardService ],
-                loadChildren: 'src/app/modules/configuration/customer-source/customer-source.module#CustomerSourceModule'
               }
             ]
           },
+          {
+            path: 'source',
+            data: { title: '客户来源' },
+            canLoad: [AuthGuardService],
+            loadChildren: 'src/app/modules/configuration/source/source.module#SourceModule'
+          }
         ]
       }
     ]

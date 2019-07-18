@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { CustomerSourceComponent } from './customer-source.component';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { SourceComponent } from './source.component';
 import { NgRelaxModule } from 'src/app/ng-relax/ng-relax.module';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { RouterModule } from '@angular/router';
 import { UpdateComponent } from './update/update.component';
 
 @NgModule({
-  declarations: [CustomerSourceComponent, UpdateComponent],
+  declarations: [SourceComponent, UpdateComponent],
   imports: [
     CommonModule,
-    NgZorroAntdModule,
     NgRelaxModule,
+    NgZorroAntdModule,
     RouterModule.forChild([
       {
         path: '',
-        component: CustomerSourceComponent
+        component: SourceComponent
       }
     ])
   ],
   entryComponents: [UpdateComponent]
 })
-export class CustomerSourceModule { }
+export class SourceModule { }

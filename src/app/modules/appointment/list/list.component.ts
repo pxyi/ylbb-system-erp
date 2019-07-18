@@ -1,15 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { PreviewComponent } from './preview/preview.component';
-import { HttpService } from './../../../ng-relax/services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { QueryNode } from './../../../ng-relax/components/query/query.component';
-import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
+import { NzDrawerService } from 'ng-zorro-antd';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConsumptionComponent } from '../../public/consumption/consumption.component';
 import { DrawerCreate } from 'src/app/ng-relax/decorators/drawer/create.decorator';
 
 import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
+import { ModifyData } from 'src/app/ng-relax/decorators/list/modify.decorator';
 
 @Component({
   selector: 'app-list',
@@ -135,13 +136,6 @@ export class ListComponent implements OnInit {
       type: 'select',
       options: [{ name: '预约中', id: 0 }, { name: '已撤销', id: 1 }, { name: '已完成', id: 2 }]
     },
-    // {
-    //   label       : '只看跨店',
-    //   key         : 'babyType',
-    //   type        : 'radio',
-    //   options     : [ { name: '是', id: 1 }, { name: '否', id: 0 } ],
-    //   isHide      : true
-    // },
     {
       label: '当天预约',
       key: 'overdue',
@@ -160,8 +154,7 @@ export class ListComponent implements OnInit {
     private http: HttpService,
     private drawer: NzDrawerService,
     private format: DatePipe,
-    private fb: FormBuilder = new FormBuilder(),
-    private modal: NzModalService
+    private fb: FormBuilder = new FormBuilder()
   ) {
     this.paramsInit = {
       startDate: this.format.transform(new Date(), 'yyyy-MM-dd'),
@@ -226,8 +219,6 @@ export class ListComponent implements OnInit {
 
 
   /* ------------------- 撤销预约 ------------------- */
-  reserveCancel(id) {
-    this.http.post('/reserve/cancel', { id }).then(res => this.listPage.eaTable._request());
-  }
+  @ModifyData('/reserve/cancel') reserveCancel: (id: number) => void;
 
 }

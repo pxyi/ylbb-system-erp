@@ -136,16 +136,6 @@ export const MenuConfig = [
     icon  : 'red-envelope',
     children : [
       {
-        title : '订单列表',
-        key   : '/home/consumption/order',
-        isLeaf: true
-      },
-      {
-        title : '订单撤销列表',
-        key   : '/home/consumption/revokelist',
-        isLeaf: true
-      },
-      {
         title : '消费列表',
         key   : '/home/consumption/list',
         isLeaf: true
@@ -170,19 +160,35 @@ export const MenuConfig = [
         key   : '/home/consumption/curriculum',
         isLeaf: true
       },
-      // {
-      //   title : '福利消费列表',
-      //   key   : '/home/consumption/welfare',
-      //   isLeaf: true
-      // }
+      {
+        title : '订单列表',
+        key   : '/home/consumption/order',
+        isLeaf: true
+      },
+      {
+        title : '订单撤销列表',
+        key   : '/home/consumption/revokelist',
+        isLeaf: true
+      }
     ]
   },
   {
     title : '经营分析',
     brief : '经营',
-    key   : '/home/analysis/list',
+    key   : '/home/management',
     icon  : 'area-chart',
-    isLeaf: true
+    children : [
+      {
+        title : '经营分析', 
+        key   : '/home/management/analysis',
+        isLeaf: true
+      },
+      {
+        title : '数据概况', 
+        key   : '/home/management/statistic',
+        isLeaf: true
+      },
+    ]
   },
   {
     title : '消息管理',
@@ -191,7 +197,7 @@ export const MenuConfig = [
     icon  : 'message',
     children : [
       {
-        title : '短信发送',
+        title : '短信发送', 
         key   : '/home/message/sendout',
         isLeaf: true
       },
@@ -376,7 +382,7 @@ export const MenuConfig = [
       },
       {
         title : '客户来源',
-        key   : '/home/configuration/account/customersource',
+        key   : '/home/configuration/source',
         isLeaf: true
       }
     ]

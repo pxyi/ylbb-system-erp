@@ -1,3 +1,4 @@
+import { SettlementModule } from './../../public/settlement/settlement.module';
 import { ViserModule } from 'viser-ng';
 import { AppointModule } from './../../public/appoint/appoint.module';
 import { RouterModule } from '@angular/router';
@@ -26,6 +27,7 @@ import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.compo
     ConsumptionModule,
     AppointModule,
     QRCodeModule,
+    SettlementModule,
     RouterModule.forChild([{
       path: '',
       component: ListComponent

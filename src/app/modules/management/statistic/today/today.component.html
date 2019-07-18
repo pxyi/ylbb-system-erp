@@ -1,0 +1,81 @@
+<ea-quote>
+  <span class="title">今日服务<i nz-icon nzType="question-circle" nz-popover [nzContent]="tooltipHTML" nzPlacement="rightTop"></i></span>
+  <ng-template #tooltipHTML>
+    <div class="tooltip-template">
+      <p>今日实时数据的统计时间均为今日开业时间截至当前更新时间</p>
+      <p>服务宝宝数：会员数量与非会员数量之和</p>
+      <p>新增线索数：营业开始时间截至当前时间，门店新录入的线索数</p>
+      <p>到店客户数量：营业开始时间截至当前时间，在门店产生消费和办卡的人数总量</p>
+      <p>新增体验数：营业开始时间截至当前时间，新增到店体验人员</p>
+      <p>新增会员数：营业开始时间截至当前时间，会员办卡数量</p>
+    </div>
+  </ng-template>
+</ea-quote>
+<nz-row [nzGutter]="24">
+  <nz-col [nzSpan]=12 style="height: 330px; overflow: hidden;">
+    <div style="text-indent: 42px">今日服务宝宝数</div>
+    <v-chart [forceFit]="true" [height]="320" [data]="viserData" [scale]="[{ dataKey: 'hour', min: 0, max: 1 }]">
+      <v-tooltip></v-tooltip>
+      <v-axis></v-axis>
+      <v-legend></v-legend>
+      <v-line position="hour*temperature" color="city"></v-line>
+      <v-point position="hour*temperature" color="city" [size]="4" [style]="{ stroke: '#fff', lineWidth: 1 }" shape="circle"></v-point>
+    </v-chart>
+  </nz-col>
+
+  <nz-col [nzSpan]="12">
+    <div style="background: #ECECEC; padding: 16px;">
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="12" [style.margin-bottom]="'16px'">
+          <nz-card>
+            <nz-statistic [nzValue]="visitDataNumber.todayClueCount" [nzTitle]="'今日新增线索数'"></nz-statistic>
+            <div style="color: #999">昨日 {{ visitDataNumber.yesterdayClueCount }}</div>
+          </nz-card>
+        </nz-col>
+        <nz-col [nzSpan]="12" [style.margin-bottom]="'16px'">
+          <nz-card>
+            <nz-statistic [nzValue]="visitDataNumber.todayArriveCount" [nzTitle]="'今日到店客户数量'"></nz-statistic>
+            <div style="color: #999">昨日 {{ visitDataNumber.yesterdayArriveCount }}</div>
+          </nz-card>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-card>
+            <nz-statistic [nzValue]="visitDataNumber.todayExperienceCount" [nzTitle]="'今日新增消费人数'"></nz-statistic>
+            <div style="color: #999">昨日 {{ visitDataNumber.yesterdayExperienceCount }}</div>
+          </nz-card>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-card>
+            <nz-statistic [nzValue]="visitDataNumber.todayMemberCount" [nzTitle]="'今日新增会员数'"></nz-statistic>
+            <div style="color: #999">昨日 {{ visitDataNumber.yesterdayMemberCount }}</div>
+          </nz-card>
+        </nz-col>
+      </nz-row>
+    </div>
+  </nz-col>
+
+  <nz-col [nzSpan]="24" style="margin-bottom: 20px;">
+    <nz-card class="flex">
+      <div nz-card-grid>
+        <nz-statistic [nzValue]="flexDataNumber.todayAmountIncome" [nzTitle]="'今日收入'" [nzSuffix]="'￥'"></nz-statistic>
+        <div class="yesterday">昨日 {{ flexDataNumber.yesterdayAmountIncome }} <span [ngClass]="{reduce: flexDataNumber.amountIncomeGap < 0}"><i nz-icon [nzType]="flexDataNumber.amountIncomeGap < 0 ? 'arrow-down' : 'arrow-up'"></i>{{ flexDataNumber.amountIncomeGap }}%</span></div>
+      </div>
+      <div nz-card-grid>
+        <nz-statistic [nzValue]="flexDataNumber.todayCreateCardAmount" [nzTitle]="'办卡金额'" [nzSuffix]="'￥'"></nz-statistic>
+        <div class="yesterday">昨日 {{ flexDataNumber.yesterdayCreateCardAmount }} <span [ngClass]="{reduce: flexDataNumber.createCardAmountIncomeGap < 0}"><i nz-icon [nzType]="flexDataNumber.createCardAmountIncomeGap < 0 ? 'arrow-down' : 'arrow-up'"></i>{{ flexDataNumber.createCardAmountIncomeGap }}%</span></div>
+      </div>
+      <div nz-card-grid>
+        <nz-statistic [nzValue]="flexDataNumber.todayChangeCardAmount" [nzTitle]="'卡项变更金额'" [nzSuffix]="'￥'"></nz-statistic>
+        <div class="yesterday">昨日 {{ flexDataNumber.yesterdayChangeCardAmount }} <span [ngClass]="{reduce: flexDataNumber.changeCardAmountIncomeGap < 0}"><i nz-icon [nzType]="flexDataNumber.changeCardAmountIncomeGap < 0 ? 'arrow-down' : 'arrow-up'"></i>{{ flexDataNumber.changeCardAmountIncomeGap }}%</span></div>
+      </div>
+      <div nz-card-grid>
+        <nz-statistic [nzValue]="flexDataNumber.todayCommodityAmount" [nzTitle]="'商品收入金额'" [nzSuffix]="'￥'"></nz-statistic>
+        <div class="yesterday">昨日 {{ flexDataNumber.yesterdayCommodityAmount }} <span [ngClass]="{reduce: flexDataNumber.commodityAmountIncomeGap < 0}"><i nz-icon [nzType]="flexDataNumber.commodityAmountIncomeGap < 0 ? 'arrow-down' : 'arrow-up'"></i>{{ flexDataNumber.commodityAmountIncomeGap }}%</span></div>
+      </div>
+      <div nz-card-grid>
+        <nz-statistic [nzValue]="flexDataNumber.todayContinuationCardAmount" [nzTitle]="'续卡金额'" [nzSuffix]="'￥'"></nz-statistic>
+        <div class="yesterday">昨日 {{ flexDataNumber.yesterdayContinuationCardAmount }} <span [ngClass]="{reduce: flexDataNumber.continuationCardAmountIncomeGap < 0}"><i nz-icon [nzType]="flexDataNumber.continuationCardAmountIncomeGap < 0 ? 'arrow-down' : 'arrow-up'"></i>{{ flexDataNumber.continuationCardAmountIncomeGap }}%</span></div>
+      </div>
+    </nz-card>
+  </nz-col>
+</nz-row>
