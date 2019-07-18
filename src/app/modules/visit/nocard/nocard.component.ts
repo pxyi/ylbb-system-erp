@@ -22,8 +22,8 @@ export class NocardComponent implements OnInit {
       label       : '来源',
       key         : 'sourceId',
       type        : 'select',
-      optionsUrl  : '/activity/getActivitySource',
-      optionKey   : { label: 'activityHeadline', value: 'id' }
+      optionsUrl: '/memberSource/getList',
+      optionKey: { label: 'name', value: 'id' }
     },
     {
       label       : '家长姓名',
