@@ -42,11 +42,11 @@
   </thead>
 
   <tbody>
-    <ng-template ngFor let-data [ngForOf]="dataSet">
+    <ng-template ngFor let-data let-idx="index" [ngForOf]="dataSet">
       <tr (click)="isRadio && isChecked(!data.checked, data)" [ngClass]="{'ea-checked': data.checked}">
         <td (click)="$event.stopPropagation()" nzShowCheckbox *ngIf="checked" [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="isChecked($event, data)"></td>
         <td nzShowExpand [(nzExpand)]="data.expand" *ngIf="showExpand"></td>
-        <ng-container *ngTemplateOutlet="EaTableTbodyTr; context: { $implicit: data }"></ng-container>
+        <ng-container *ngTemplateOutlet="EaTableTbodyTr; context: { $implicit: data, index: idx }"></ng-container>
       </tr>
       <tr [nzExpand]="data.expand">
         <ng-container *ngTemplateOutlet="EaTableTbodyExpand; context: { $implicit: data }"></ng-container>

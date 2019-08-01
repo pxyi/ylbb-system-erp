@@ -54,7 +54,8 @@
 
     <nz-form-item *ngIf="activityInfo.templateType != templateType.get('招聘') && 
       activityInfo.templateType != templateType.get('生日') && 
-      activityInfo.templateType != templateType.get('返利')">
+      activityInfo.templateType != templateType.get('返利') && 
+      activityInfo.templateType != templateType.get('团购返利')">
       <nz-form-label nzRequired nzSpan="4">活动规则</nz-form-label>
       <nz-form-control nzSpan="20">
         <textarea nz-input formControlName="activityRole" [nzAutosize]="{ minRows: 4, maxRows: 6 }" placeholder="请输入活动规则"></textarea>
@@ -426,8 +427,116 @@
       </nz-form-item>
     </ng-container>
 
-    <ea-title>分享设置</ea-title>
+    <ng-container *ngIf="activityInfo.templateType == templateType.get('团购返利')">
+      <ea-title>活动设置</ea-title>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">参与用户类型</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <nz-checkbox-wrapper>
+            <nz-radio-group formControlName="consumerType">
+              <label nz-radio [nzValue]="0">仅限非会员</label>
+              <label nz-radio [nzValue]="1">仅限会员</label>
+              <label nz-radio [nzValue]="2">均可参与</label>
+            </nz-radio-group>
+          </nz-checkbox-wrapper>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">提示语</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <input nz-input formControlName="cuePhrases" placeholder="请输入提示语">
+          <nz-form-explain *ngIf="formControlError('cuePhrases')">请输入提示语！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">门店图片</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <ea-upload-picture formControlName="storeImgs" [maxLength]="9"></ea-upload-picture>
+          <nz-form-explain *ngIf="formControlError('storeImgs')">请选择门店图片！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <ea-title>商品设置</ea-title>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">商品原价</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <input nz-input formControlName="orgPrice" placeholder="请输入商品原价">
+          <nz-form-explain *ngIf="formControlError('orgPrice')">请输入商品原价！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('orgPrice', 'pattern')">请输入正确的价格！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">商品活动价</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <input nz-input formControlName="promotionPrice" placeholder="请输入商品活动价">
+          <nz-form-explain *ngIf="formControlError('promotionPrice')">请输入商品活动价！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('promotionPrice', 'pattern')">请输入正确的价格！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <div [formGroup]="activityGroupRule">
+        <nz-form-item>
+          <nz-form-label nzRequired nzSpan="4">商品名称</nz-form-label>
+          <nz-form-control nzSpan="20">
+            <input nz-input formControlName="productName" placeholder="请输入商品名称">
+            <nz-form-explain *ngIf="activityGroupRuleError('productName')">请输入商品名称！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzSpan="4">一级返利比例</nz-form-label>
+          <nz-form-control nzSpan="20">
+            <nz-input-group nzAddOnAfter="%">
+              <input nz-input formControlName="rebateRatioOne" placeholder="请输入一级返利比例">
+            </nz-input-group>
+            <nz-form-explain *ngIf="activityGroupRuleError('rebateRatioOne')">请输入一级返利比例！</nz-form-explain>
+            <nz-form-explain *ngIf="activityGroupRuleError('rebateRatioOne', 'pattern')">请输入正确的比例！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzSpan="4">二级返利比例</nz-form-label>
+          <nz-form-control nzSpan="20">
+            <nz-input-group nzAddOnAfter="%">
+              <input nz-input formControlName="rebateRatioTwo" placeholder="请输入二级返利比例">
+            </nz-input-group>
+            <nz-form-explain *ngIf="activityGroupRuleError('rebateRatioTwo')">请输入二级返利比例！</nz-form-explain>
+            <nz-form-explain *ngIf="activityGroupRuleError('rebateRatioTwo', 'pattern')">请输入正确的比例！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzSpan="4">商品描述</nz-form-label>
+          <nz-form-control nzSpan="20">
+            <textarea nz-input formControlName="productDesc" [nzAutosize]="{ minRows: 2, maxRows: 4 }" placeholder="请输入商品描述"></textarea>
+            <nz-form-explain *ngIf="activityGroupRuleError('productDesc')">请输入商品描述！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
 
+        <ea-title>拼团说明</ea-title>
+        <nz-form-item>
+          <nz-form-control>
+            <ea-editor formControlName="groupRule" placeholder="请输入拼团说明"></ea-editor>
+            <nz-form-explain *ngIf="activityGroupRuleError('groupRule')">请输入拼团说明！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <ea-title>抽奖说明</ea-title>
+        <nz-form-item>
+          <nz-form-label nzRequired nzSpan="4">每轮抽奖人数</nz-form-label>
+          <nz-form-control nzSpan="20">
+            <input nz-input formControlName="luckyNumber" placeholder="请输入每轮抽奖人数">
+            <nz-form-explain *ngIf="activityGroupRuleError('luckyNumber')">请输入每轮抽奖人数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <ea-editor formControlName="lotteryExplain" placeholder="请输入抽奖描述"></ea-editor>
+            <nz-form-explain *ngIf="activityGroupRuleError('lotteryExplain')">请输入抽奖描述</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+
+      
+    </ng-container>
+
+    <ea-title>分享设置</ea-title>
     <nz-form-item>
       <nz-form-label nzRequired nzSpan="4">标题</nz-form-label>
       <nz-form-control nzSpan="20">

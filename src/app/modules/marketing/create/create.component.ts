@@ -1,3 +1,4 @@
+import { AliOssClientService } from './../../../ng-relax/services/alioss-client.service';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
@@ -20,7 +21,8 @@ export class CreateComponent implements OnInit {
     ['拼团',3],
     ['招聘',4],
     ['生日',6],
-    ['返利',7]
+    ['返利',7],
+    ['团购返利', 8]
   ])
 
   @Input() activityInfo: any = {};
@@ -36,7 +38,8 @@ export class CreateComponent implements OnInit {
     private fb: FormBuilder = new FormBuilder(),
     private format: DatePipe,
     private drawerRef: NzDrawerRef,
-    private router: Router
+    private router: Router,
+    private alioss: AliOssClientService
   ) {
     this.formGroup = this.fb.group({
       activityHeadline: [, [Validators.required, Validators.maxLength(30)]],
@@ -91,34 +94,6 @@ export class CreateComponent implements OnInit {
   get positionInfos() { return this.formGroup.controls['positionInfos'] as FormArray; }
   positionInfosError(key, i, type = 'required') {
     return this.positionInfos.controls[i]['controls'][key].dirty && this.positionInfos.controls[i]['controls'][key].hasError(type);
-  }
-
-  saveLoading: boolean;
-  save() {
-    if (this.formGroup.invalid) {
-      this._templateTypeValidator.get(0)();
-      this._templateTypeValidator.get(this.activityInfo.templateType)();
-    } else {
-      this.saveLoading = true;
-      let params = this.formGroup.value;
-      if (this.activityId) {
-        params.id = this.activityId;
-        params.templateId = this.activityInfo.templateId;
-      } else {
-        params.templateId = this.activityInfo.id;
-      }
-      params.otherContent = JSON.stringify(params.otherContent);
-      let requestBody = this._templateTypeSave.get(this.activityInfo.templateType)(params);
-      this.http.post('/activity/savePromotionActivity', { paramJson: JSON.stringify(requestBody) }).then(res => {
-        this.saveLoading = false;
-        if (this.activityId) {
-          this.drawerRef.close(true)
-        } else {
-          this.drawerRef.close();
-          this.router.navigateByUrl('/home/marketing/list');
-        }
-      }).catch(err => this.saveLoading = false)
-    }
   }
 
   @ViewChild('preview') preview;
@@ -240,8 +215,54 @@ export class CreateComponent implements OnInit {
       this.formGroup.addControl('productName', this.fb.control(null, [Validators.required]));
       this.formGroup.addControl('promotionPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.addControl('rebateRatio', this.fb.control(null, [Validators.required, Validators.pattern(/^(?:0|[1-9]\d?)$/)]));
+    }],
+    [this.templateType.get('团购返利'), () => {
+      this.formGroup.removeControl('activityRole');
+      this.formGroup.addControl('cuePhrases', this.fb.control(null, [Validators.required]));
+      this.formGroup.addControl('consumerType', this.fb.control(2, [Validators.required]));
+      this.formGroup.addControl('storeImgs', this.fb.control(null, [Validators.required]));
+      this.formGroup.addControl('orgPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
+      this.formGroup.addControl('promotionPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
+      this.formGroup.addControl('activityGroupRule', this.fb.group({
+        productName: [, [Validators.required]],
+        productDesc: [, [Validators.required]],
+        rebateRatioOne: [, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
+        rebateRatioTwo: [, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
+        luckyNumber: [, [Validators.required]],
+        groupRule: [, [Validators.required]],
+        lotteryExplain: [, [Validators.required]]
+      }))
     }]
   ]);
+
+
+  saveLoading: boolean;
+  save() {
+    if (this.formGroup.invalid) {
+      this._templateTypeValidator.get(0)();
+      this._templateTypeValidator.get(this.activityInfo.templateType)();
+    } else {
+      this.saveLoading = true;
+      let params = this.formGroup.value;
+      if (this.activityId) {
+        params.id = this.activityId;
+        params.templateId = this.activityInfo.templateId;
+      } else {
+        params.templateId = this.activityInfo.id;
+      }
+      params.otherContent = JSON.stringify(params.otherContent);
+      let requestBody = this._templateTypeSave.get(this.activityInfo.templateType)(params);
+      this.http.post('/activity/savePromotionActivity', { paramJson: JSON.stringify(requestBody) }).then(res => {
+        this.saveLoading = false;
+        if (this.activityId) {
+          this.drawerRef.close(true)
+        } else {
+          this.drawerRef.close();
+          this.router.navigateByUrl('/home/marketing/list');
+        }
+      }).catch(err => this.saveLoading = false)
+    }
+  }
 
   /**
    * 根据活动类型 设置保存参数
@@ -264,6 +285,9 @@ export class CreateComponent implements OnInit {
       return params;
     }],
     [this.templateType.get('返利'), (params) => {
+      return params;
+    }],
+    [this.templateType.get('团购返利'), (params) => {
       return params;
     }]
   ])
@@ -314,6 +338,13 @@ export class CreateComponent implements OnInit {
     }],
     [this.templateType.get('生日'), () => { }],
     [this.templateType.get('返利'), () => { }],
+    [this.templateType.get('团购返利'), () => {
+      let activityGroupRule = this.activityGroupRule.controls;
+      Object.keys(activityGroupRule).map(key => {
+        activityGroupRule[key].markAsDirty();
+        activityGroupRule[key].updateValueAndValidity();
+      });
+    }],
   ]);
 
   /* ----------- 新增 老带新奖项设置 ----------- */
@@ -377,5 +408,6 @@ export class CreateComponent implements OnInit {
       }
     };
   }
+
 
 }
