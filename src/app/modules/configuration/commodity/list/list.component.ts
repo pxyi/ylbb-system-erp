@@ -64,11 +64,11 @@ export class ListComponent implements OnInit {
   @ModifyData('/commodity/removeCommodity') delete: (id: number) => void;
   
   changeStatus(id, status) {
-    this.http.post('/commodity/setStatus', { id, status }).then(res => this.listPage.eaTable._request())
+    this.http.post('/commodity/setStatus', { id, status }, true).then(res => this.listPage.eaTable._request())
   }
 
   changeDafulat(id, defaultTag) {
-    this.http.post('/commodity/setDefaultTag', { id, defaultTag }).then(res => this.listPage.eaTable._request())
+    this.http.post('/commodity/setDefaultTag', { id, defaultTag }, true).then(res => this.listPage.eaTable._request())
   }
 
 }

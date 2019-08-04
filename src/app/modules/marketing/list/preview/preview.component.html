@@ -12,7 +12,7 @@
           <td>
             <a nz-popover nzTitle="分享列表" [(nzVisible)]="item.showShareList" nzTrigger="click" [nzContent]="shareTmpt" nzPlacement="bottomRight">{{ item.realNumber }}</a>
             <ng-template #shareTmpt>
-              <ea-table size="small" url="/activity/getJoinData" [showPage]="false" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1, sharerOpenId: item.openid }" [thead]="['微信昵称', '电话']" [EaTableTbodyTr]="rmdTr">
+              <ea-table size="small" url="/activity/getJoinData" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1, sharerOpenId: item.openid }" [thead]="['微信昵称', '电话']" [EaTableTbodyTr]="rmdTr">
                 <ng-template #rmdTr let-data>
                   <td>{{ data.nickName }}</td>
                   <td>{{ data.phoneNum }}</td>
@@ -38,7 +38,7 @@
           <td>
             <a nz-popover nzTitle="分享列表" [(nzVisible)]="item.showShareList" nzTrigger="click" [nzContent]="shareTmpt1" nzPlacement="bottomRight">{{ item.realNumber }}</a>
             <ng-template #shareTmpt1>
-              <ea-table size="small" url="/activity/getJoinData" [showPage]="false" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1, sharerOpenId: item.openid }" [thead]="['微信昵称', '电话']" [EaTableTbodyTr]="rmdTr">
+              <ea-table size="small" url="/activity/getJoinData" [paramsDefault]="{ activityId: activityInfo.id, payStatus: 1, sharerOpenId: item.openid }" [thead]="['微信昵称', '电话']" [EaTableTbodyTr]="rmdTr">
                 <ng-template #rmdTr let-data>
                   <td>{{ data.nickName }}</td>
                   <td>{{ data.phoneNum }}</td>
@@ -91,7 +91,7 @@
               <td>
                 <a nz-popover nzTitle="推荐人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1" nzPlacement="bottomRight">{{ item.rmdNumber }}</a>
                 <ng-template #contentTemplate1>
-                  <ea-table size="small" url="/activity/getShareRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+                  <ea-table size="small" url="/activity/getShareRecord" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
                     <ng-template #rmdTr let-data>
                       <td>{{ data.babyName }}</td>
                       <td>{{ data.birthday }}</td>
@@ -104,7 +104,7 @@
               <td>
                 <a nz-popover nzTitle="到店人列表" [(nzVisible)]="item.show2" nzTrigger="click" [nzContent]="contentTemplate2" nzPlacement="bottomRight">{{ item.realNumber }}</a>
                 <ng-template #contentTemplate2>
-                  <ea-table size="small" url="/activity/getArrivedRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+                  <ea-table size="small" url="/activity/getArrivedRecord" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
                     <ng-template #rmdTr let-data>
                       <td>{{ data.babyName }}</td>
                       <td>{{ data.birthday }}</td>
@@ -170,7 +170,7 @@
           <td>
             <a nz-popover nzTitle="推荐人列表" [(nzVisible)]="item.show1" nzTrigger="click" [nzContent]="contentTemplate1" nzPlacement="bottomRight">{{ item.rmdNumber }}</a>
             <ng-template #contentTemplate1>
-              <ea-table size="small" url="/activity/getShareRecord" [showPage]="false" [isParamJson]="false"
+              <ea-table size="small" url="/activity/getShareRecord" [isParamJson]="false"
                 [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
                 <ng-template #rmdTr let-data>
                   <td>{{ data.babyName }}</td>
@@ -184,7 +184,7 @@
           <td>
             <a nz-popover nzTitle="到店人列表" [(nzVisible)]="item.show2" nzTrigger="click" [nzContent]="contentTemplate2" nzPlacement="bottomRight">{{ item.realNumber }}</a>
             <ng-template #contentTemplate2>
-              <ea-table size="small" url="/activity/getArrivedRecord" [showPage]="false" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
+              <ea-table size="small" url="/activity/getArrivedRecord" [isParamJson]="false" [paramsDefault]="{id: item.id}" [thead]="['姓名', '生日', '电话', '报名时间']" [EaTableTbodyTr]="rmdTr">
                 <ng-template #rmdTr let-data>
                   <td>{{ data.babyName }}</td>
                   <td>{{ data.birthday }}</td>
