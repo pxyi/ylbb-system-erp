@@ -196,9 +196,9 @@
 </form>
 
 
-<form nz-form [formGroup]="excitationFormGroup">
+<form nz-form [formGroup]="excitationFormGroup" [style.width]="'985px'">
   <h2>工作激励机制</h2>
-  <div nz-row nzGutter="8" [style.width]="'985px'">
+  <div nz-row nzGutter="8">
     <div nz-col [nzSpan]="24">
       <nz-form-item>
         <nz-form-label [nzSpan]="4">适用对象</nz-form-label>
@@ -287,8 +287,8 @@
           <nz-form-label [nzSpan]="23">二星提成系数/次（分）</nz-form-label>
         </nz-form-item>
       </div>
-      <ng-container formArrayName="level1">
-        <div nz-col [nzSpan]="5" *ngFor="let group of level1.controls; let i = index"  [formGroup]="group">
+      <ng-container formArrayName="level2">
+        <div nz-col [nzSpan]="5" *ngFor="let group of level2.controls; let i = index"  [formGroup]="group">
           <nz-form-item>
             <nz-form-control>
               <input nz-input placeholder="二星提成系数/次（分）" formControlName="score" (blur)="scoreChange(group, 1)">
@@ -303,8 +303,8 @@
           <nz-form-label [nzSpan]="23">三星提成系数/次（分）</nz-form-label>
         </nz-form-item>
       </div>
-      <ng-container formArrayName="level1">
-        <div nz-col [nzSpan]="5" *ngFor="let group of level1.controls; let i = index"  [formGroup]="group">
+      <ng-container formArrayName="level3">
+        <div nz-col [nzSpan]="5" *ngFor="let group of level3.controls; let i = index"  [formGroup]="group">
           <nz-form-item>
             <nz-form-control>
               <input nz-input placeholder="三星提成系数/次（分）" formControlName="score" (blur)="scoreChange(group, 1)">
