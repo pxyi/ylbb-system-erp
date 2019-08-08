@@ -7,9 +7,10 @@ import { RouterModule } from '@angular/router';
 import { QRCodeModule } from 'angular2-qrcode';
 import { CreateModule } from '../create/create.module';
 import { PreviewComponent } from './preview/preview.component';
+import { JSONStringifyPipe } from './json-stringify.pipe';
 
 @NgModule({
-  declarations: [ListComponent, PreviewComponent],
+  declarations: [ListComponent, PreviewComponent, JSONStringifyPipe],
   imports: [
     CommonModule,
     NgRelaxModule,

@@ -11,7 +11,10 @@
         <nz-avatar style="position: absolute; top: 18px; left: 8px;" nzShape="square" [nzSrc]="item.templateImg"></nz-avatar>
         <a style="float: left; line-height: 32px; margin-left: 8px;" nz-tooltip [nzTitle]="item.activityHeadline">{{ item.activityHeadline.length > 16 ? item.activityHeadline.substr(0, 16) + '...' : item.activityHeadline }}</a>
         <i nz-popover [nzContent]="qrcode" style="line-height: 32px;position: absolute; top: 20px; right: 8px;" nz-icon type="qrcode" theme="outline"></i>
-        <ng-template #qrcode><qr-code [value]="item.templateUrl + '?activityId=' + item.id + '&templateId='+ item.templateId + '&storeId=' + item.storeId" [size]="150"></qr-code></ng-template>
+        <ng-template #qrcode>
+          <qr-code *ngIf="item.templateType < 8" [value]="item.templateUrl + '?activityId=' + item.id + '&templateId='+ item.templateId + '&storeId=' + item.storeId" [size]="150"></qr-code>
+          <qr-code *ngIf="item.templateType > 7" [value]="item.templateUrl + ({activityId: item.id, templateId: item.templateId, storeId: item.storeId, source: 'collage'} | JSONStringify)" [size]="150"></qr-code>
+        </ng-template>
       </td>
       <td>{{ item.templateHeadline }}</td>
       <td><nz-badge [nzStatus]="item.status == 0 ? 'processing' : 'default'" [nzText]="item.status == 0 ? '已上架' : '已下架'"></nz-badge></td>
@@ -24,24 +27,12 @@
       <td>{{ item.createTime }}</td>
       <td>
         <a *ngIf="item.status == 0" (click)="update(item.id)">编辑</a>
-
-        <!-- <nz-divider *ngIf="item.status == 0" nzType="vertical"></nz-divider>
-        <a *ngIf="item.status == 0" (click)="item.showShortUrlModal = true" nz-popover nzTitle="短连接" [(nzVisible)]="item.showShortUrlModal" nzTrigger="click"
-          [nzContent]="contentTemplate" nzPlacement="bottomRight">查看短连接</a>
-        <ng-template #contentTemplate>
-          <nz-input-group [nzSuffix]="suffixIconSearch">
-            <input type="text" nz-input [ngModel]="item.shortUrl" readonly #shortUrl />
-          </nz-input-group>
-          <ng-template #suffixIconSearch>
-            <i nz-icon type="copy" (click)="copyShortUrl(shortUrl)"></i>
-          </ng-template>
-        </ng-template> -->
         
         <nz-divider *ngIf="item.status == 0" nzType="vertical"></nz-divider>
         <nz-dropdown *ngIf="item.status == 0" nzPlacement="bottomRight">
           <a nz-dropdown>更多<i nz-icon type="down"></i></a>
           <ul nz-menu>
-            <li nz-menu-item><a (click)="activityId = item.id; templateId = item.templateId; showCreateQrcode = true; templateUrl = item.templateUrl; storeId = item.storeId">生成老师推广码</a></li>
+            <li nz-menu-item><a (click)="activityId = item.id; templateId = item.templateId; showCreateQrcode = true; templateUrl = item.templateUrl; storeId = item.storeId; templateType = item.templateType">生成老师推广码</a></li>
             <li nz-menu-item><a nz-popconfirm nzTitle="下架后无法编辑和再次上架，是否确认下架操作？" (nzOnConfirm)="setSoldOut(item.id)">下架</a></li>
           </ul>
         </nz-dropdown>
@@ -55,7 +46,8 @@
     <nz-card nzHoverable [nzCover]="coverTemplate" *ngFor="let teacher of teacherList" [nzBodyStyle]="{padding: '12px', 'text-align': 'center'}">
       <nz-card-meta [nzTitle]="teacher.name"></nz-card-meta>
       <ng-template #coverTemplate>
-        <qr-code [value]="templateUrl + '?activityId=' + activityId + '&templateId='+ templateId +'&teacherId=' + teacher.id + '&storeId=' + storeId" [size]="150"></qr-code>
+        <qr-code *ngIf="templateType < 8" [value]="templateUrl + '?activityId=' + activityId + '&templateId='+ templateId +'&teacherId=' + teacher.id + '&storeId=' + storeId" [size]="150"></qr-code>
+        <qr-code *ngIf="templateType > 7" [value]="templateUrl + ({activityId: activityId, templateId: templateId, storeId: storeId, teacherId: teacher.id, source: 'collage'} | JSONStringify)" [size]="150"></qr-code>
       </ng-template>
     </nz-card>
   </div>

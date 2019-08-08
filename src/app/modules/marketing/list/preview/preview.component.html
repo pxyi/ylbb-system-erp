@@ -52,7 +52,7 @@
   </ng-container>
   <ng-template #elseTemplate>
     <nz-tab nzTitle="用户数据">
-      <ea-list-page-simp url="/activity/getStatisticData" [paramsDefault]="{ activityId: activityInfo.id }"
+      <ea-list-page-simp [url]="activityInfo.templateType == 8 ? '/activity/getActivityViewRecord' : '/activity/getStatisticData'" [paramsDefault]="{ activityId: activityInfo.id }"
         [tableThead]="tableThead" [queryNode]="queryNode" [EaTableTbodyTr]="EaTableTbodyTr">
         <ng-template #EaTableTbodyTr let-item>
           <ng-container *ngIf="activityInfo.templateType != 4 && activityInfo.templateType != 6 && activityInfo.templateType != 8">

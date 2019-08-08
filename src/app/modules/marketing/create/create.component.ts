@@ -224,14 +224,24 @@ export class CreateComponent implements OnInit {
       this.formGroup.addControl('orgPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.addControl('promotionPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.addControl('activityGroupRule', this.fb.group({
+        drawSwitch: [{ value: 1, disabled: !!this.activityId}, [Validators.required]],
         productName: [, [Validators.required]],
         productDesc: [, [Validators.required]],
-        rebateRatioOne: [, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
-        rebateRatioTwo: [, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
-        luckyNumber: [, [Validators.required]],
+        rebateRatioOne: [{ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
+        rebateRatioTwo: [{ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
         groupRule: [, [Validators.required]],
+        luckyNumber: [, [Validators.required]],
         lotteryExplain: [, [Validators.required]]
       }))
+      this.formGroup.controls['activityGroupRule']['controls']['drawSwitch'].valueChanges.subscribe(res => {
+        if (res) {
+          this.formGroup.controls['activityGroupRule']['addControl']('luckyNumber', this.fb.control(null, [Validators.required]));
+          this.formGroup.controls['activityGroupRule']['addControl']('lotteryExplain', this.fb.control(null, [Validators.required]));
+        } else {
+          this.formGroup.controls['activityGroupRule']['removeControl']('luckyNumber');
+          this.formGroup.controls['activityGroupRule']['removeControl']('lotteryExplain');
+        }
+      })
     }]
   ]);
 

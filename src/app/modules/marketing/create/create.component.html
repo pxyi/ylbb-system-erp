@@ -472,6 +472,7 @@
           <nz-form-explain *ngIf="formControlError('promotionPrice', 'pattern')">请输入正确的价格！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
+
       <div [formGroup]="activityGroupRule">
         <nz-form-item>
           <nz-form-label nzRequired nzSpan="4">商品名称</nz-form-label>
@@ -508,28 +509,43 @@
           </nz-form-control>
         </nz-form-item>
 
-        <ea-title>拼团说明</ea-title>
+        <ea-title>活动介绍</ea-title>
         <nz-form-item>
           <nz-form-control>
-            <ea-editor formControlName="groupRule" placeholder="请输入拼团说明"></ea-editor>
-            <nz-form-explain *ngIf="activityGroupRuleError('groupRule')">请输入拼团说明！</nz-form-explain>
+            <ea-editor formControlName="groupRule" placeholder="请输入活动介绍"></ea-editor>
+            <nz-form-explain *ngIf="activityGroupRuleError('groupRule')">请输入活动介绍！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
 
-        <ea-title>抽奖说明</ea-title>
+
         <nz-form-item>
-          <nz-form-label nzRequired nzSpan="4">每轮抽奖人数</nz-form-label>
+          <nz-form-label nzRequired nzSpan="4">开启抽奖</nz-form-label>
           <nz-form-control nzSpan="20">
-            <input nz-input formControlName="luckyNumber" placeholder="请输入每轮抽奖人数">
-            <nz-form-explain *ngIf="activityGroupRuleError('luckyNumber')">请输入每轮抽奖人数！</nz-form-explain>
+            <nz-radio-group formControlName="drawSwitch" [nzButtonStyle]="'solid'">
+              <label nz-radio-button [nzValue]="1">开启</label>
+              <label nz-radio-button [nzValue]="0">关闭</label>
+            </nz-radio-group>
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-control>
-            <ea-editor formControlName="lotteryExplain" placeholder="请输入抽奖描述"></ea-editor>
-            <nz-form-explain *ngIf="activityGroupRuleError('lotteryExplain')">请输入抽奖描述</nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
+
+
+        <ng-container *ngIf="formGroup.get('activityGroupRule').get('drawSwitch').value">
+          <ea-title>抽奖说明</ea-title>
+          <nz-form-item>
+            <nz-form-label nzRequired nzSpan="4">每轮抽奖人数</nz-form-label>
+            <nz-form-control nzSpan="20">
+              <input nz-input formControlName="luckyNumber" placeholder="请输入每轮抽奖人数">
+              <nz-form-explain *ngIf="activityGroupRuleError('luckyNumber')">请输入每轮抽奖人数！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control>
+              <ea-editor formControlName="lotteryExplain" placeholder="请输入抽奖描述"></ea-editor>
+              <nz-form-explain *ngIf="activityGroupRuleError('lotteryExplain')">请输入抽奖描述</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+
       </div>
 
 
