@@ -7,7 +7,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConsumptionComponent } from '../../public/consumption/consumption.component';
 import { DrawerCreate } from 'src/app/ng-relax/decorators/drawer/create.decorator';
 
-import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { ModifyData } from 'src/app/ng-relax/decorators/list/modify.decorator';

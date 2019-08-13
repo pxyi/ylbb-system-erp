@@ -14,13 +14,14 @@ export class SettlementComponent implements OnInit {
 
   constructor() { }
 
-
   ngOnInit() {
   }
 
   @ViewChild('money') moneyComponent: MoneyComponent;
   selectChange() {
-    this.moneyComponent.addKeypressEventListener(this.selectIndex == 0);
+    this.moneyComponent.addKeypressEventListener(this.selectIndex == 0 ? 'add' : 'remove');
   }
+
+  
 
 }

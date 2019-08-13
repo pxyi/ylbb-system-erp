@@ -6,3 +6,118 @@
     <app-card [consumptionInfo]="consumptionInfo"></app-card>
   </nz-tab>
 </nz-tabset>
+
+<!-- <ng-template #card>
+  <div style="margin-bottom:18px;text-align:center;">
+    <span style="float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">{{ shopName }}</span>
+  </div>
+  
+  <p style="line-height: 24px;">
+    <span
+      style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">地址：{{ shopAddress }}</span>
+  </p>
+  <p style="line-height: 24px;">
+    <span
+      style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">预约电话：{{ shopTel }}</span>
+  </p>
+  <p style="line-height: 24px;">
+    <span
+      style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">时间：{{ time }}</span>
+  </p>
+  <p style="clear:both;"></p>
+  <div style="height:1px;border-top:1px dashed #000; margin-bottom:11px;"></div>
+  
+  <p style="line-height: 24px;">
+    <span
+      style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">姓名：{{ username }}</span>
+    <span
+      style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">电话：{{ phoneNumber }}</span>
+  </p>
+  <p style="clear:both;"></p>
+  <div style="height:1px;border-top:1px dashed #000; margin-top:11px;"></div>
+  
+  <div style="font-size:8px;">
+    <div>
+      <p style="width:27%;float:left;">
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">商品名称</span>
+      </p>
+      <p style="width:27%;float:left;">
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">消费金额</span>
+      </p>
+      <p style="width:25%;float:left;">
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">折后价</span>
+      </p>
+      <p style="width:21%;float:left;">
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">优惠</span>
+      </p>
+    </div>
+    <div style="clear:both;"></div>
+    <div *ngFor="let data of resultData">
+      <p style="width:27%;float:left;line-height: 24px;">
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.name }}</span>
+      </p>
+      <p style="width:27%;float:left;line-height: 24px;">
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.price }}x{{ data.num }}</span>
+      </p>
+      <p style="width:25%;float:left;line-height: 24px;">
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.subtotal }}</span>
+      </p>
+      <p style="width:21%;float:left;line-height: 24px;">
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.discount }}</span>
+      </p>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+  <div style="height:1px;border-top:1px dashed #000; margin-top:12px;margin-bottom:13px;"></div>
+  
+  <div style="font-size:8px;">
+    <div style="width:45%;float:left;">
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">原价</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">总数</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">现价</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">支付</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">实收</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">找零</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">优惠</span>
+      </p>
+    </div>
+    <div style="width: 55%;float:left;">
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ price }}</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ numberOftotal }}</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ price }}</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ paymentTypeText }}</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ payment }}</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ paymentType == 1 ? changePrice : 0 }}</span>
+      </p>
+      <p style="line-height: 24px;">
+        <span style="display:block;transform:scale(0.9);">{{ generalDiscount }}</span>
+      </p>
+    </div>
+    <div style="clear:both;"></div>
+  </div>
+  <div style="height:1px;border-top:1px dashed #000; margin-top:12px;margin-bottom:13px;"></div>
+</ng-template> -->

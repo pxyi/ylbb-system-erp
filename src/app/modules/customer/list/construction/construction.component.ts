@@ -62,10 +62,10 @@ export class ConstructionComponent implements OnInit {
     });
 
 
-    this.formGroup.get('attributeId').valueChanges.subscribe(type => {
-      this.cardTypeList.map(item => item.type === type && (this.feeType = item.feeType));
+    this.formGroup.get('attributeId').valueChanges.subscribe(id => {
+      this.cardTypeList.map(item => item.type == id && (this.feeType = item.feeType));
       this.formTypeChange(this.feeType)
-      this.http.post('/cardTypeManagement/findList', { type }, false).then(res => {
+      this.http.post('/cardTypeManagement/findList', { type: this.feeType }, false).then(res => {
         this.cardTypeList = res.result;
       });
     });

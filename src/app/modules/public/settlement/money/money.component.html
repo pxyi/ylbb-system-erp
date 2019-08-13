@@ -69,35 +69,35 @@
               <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="2">微信</label>
               <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="3">支付宝</label>
               <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="1">现金支付</label>
-              <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="4" [nzDisabled]="!consumptionInfo.haveCard || consumptionInfo.feeType == 0">充值卡</label>
+              <label nz-radio-button [ngStyle]="{width: '25%', 'text-align': 'center'}" [nzValue]="4" [nzDisabled]="!storeCardList.length">储值卡</label>
             </nz-radio-group>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col nzSpan="24" *ngIf="formGroup.controls['paymentType'].value == 2 || formGroup.controls['paymentType'].value == 3"><ea-tip>请扫码用户支付码，完成交易</ea-tip></div>
 
-
       <div class="card-vip" *ngIf="formGroup.controls['paymentType'].value == 4">
         <nz-col [nzSpan]="8">
           <h5>本次消费金额</h5>
-          {{ 1 }}
+          <p>{{ formGroup.get('price').value | currency: '￥' }}</p>
         </nz-col>
         <nz-col [nzSpan]="8">
           <h5>本次剩余金额</h5>
-          {{ 1 }}
+          <p>{{ (selectCardInfo.amount + selectCardInfo.freeAmount - selectCardInfo.usedAmount - selectCardInfo.usedFreeAmount - formGroup.get('price').value) | currency: '￥' }}</p>
         </nz-col>
         <nz-col [nzSpan]="8">
           <h5>本次优惠金额</h5>
-          {{ 1 }}
+          <p>{{ formGroup.get('discountPrice').value | currency: '￥' }}</p>
         </nz-col>
       </div>
-
 
       <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label>应收金额</nz-form-label>
           <nz-form-control>
-            <input nz-input formControlName="price" readonly />
+            <nz-input-group nzAddOnAfter="元">
+              <input nz-input formControlName="price" readonly />
+            </nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -105,19 +105,44 @@
         <nz-form-item>
           <nz-form-label>实收金额</nz-form-label>
           <nz-form-control>
-            <input nz-input formControlName="payment" [readonly]="formGroup.controls['paymentType'].value != 1" />
+            <nz-input-group nzAddOnAfter="元">
+              <input nz-input formControlName="payment" [readonly]="formGroup.controls['paymentType'].value != 1" />
+            </nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col nzSpan="12" *ngIf="formGroup.controls['paymentType'].value == 1">
+      <ng-container *ngIf="formGroup.controls['paymentType'].value == 1">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label>找零</nz-form-label>
+            <nz-form-control>
+              <nz-input-group nzAddOnAfter="元">
+                <input nz-input formControlName="changePrice" readonly />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </ng-container>
+      <div nz-col nzSpan="12" *ngIf="formGroup.controls['paymentType'].value == 4">
         <nz-form-item>
-          <nz-form-label>找零</nz-form-label>
+          <nz-form-label nzRequired>储值卡</nz-form-label>
           <nz-form-control>
-            <input nz-input formControlName="changePrice" readonly />
+            <nz-select formControlName="cardId" nzPlaceHolder="请选择储值卡">
+              <nz-option *ngFor="let option of storeCardList" [nzLabel]="option.ctName" [nzValue]="option.id"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
-
+      <ng-container *ngIf="formGroup.controls['paymentType'].value == 1 || formGroup.controls['paymentType'].value == 4">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label style="opacity: 0"></nz-form-label>
+            <nz-form-control>
+              <button nz-button nzType="primary" nzBlock (click)="payment(null)" [disabled]="(formGroup.controls['paymentType'].value == 1 && formGroup.get('payment').value < formGroup.get('price').value) || (formGroup.controls['paymentType'].value == 4 && (selectCardInfo.amount + selectCardInfo.freeAmount - selectCardInfo.usedAmount - selectCardInfo.usedFreeAmount - formGroup.get('price').value) < 0)">确认收款</button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </ng-container>
     </ng-container>
   </div>
 

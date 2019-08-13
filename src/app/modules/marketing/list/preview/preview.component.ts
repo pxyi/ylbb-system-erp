@@ -1,7 +1,8 @@
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { TableComponent } from 'src/app/ng-relax/components/table/table.component';
 
 @Component({
   selector: 'app-preview',
@@ -48,7 +49,11 @@ export class PreviewComponent implements OnInit {
     }],
     [7, () => {
       this.queryNode = [...this.queryNode];
-      this.tableThead = ['微信昵称', '分享者', '联系方式', '浏览时间', '有效分享数']
+      this.tableThead = ['微信昵称', '宝宝昵称', '分享者', '联系方式', '浏览时间', '有效分享数']
+    }],
+    [8, () => {
+      this.queryNode = [...this.queryNode];
+      this.tableThead = ['微信昵称', '上级', '上上级', '联系方式', '浏览时间', '有效分享数']
     }]
   ]);
 
@@ -58,6 +63,19 @@ export class PreviewComponent implements OnInit {
 
   cashingPrize(id, prizeId, listPage: ListPageComponent) {
     this.http.post('/activity/cashingPrize', { id, prizeId }).then(res => listPage.eaTable._request());
+  }
+
+
+  /* ----------- 设置中奖人 ----------- */
+  showLotteryModal: boolean;
+  participantList: any[] = [];
+  setLottery(list: any[]) {
+    this.showLotteryModal = true;
+    this.participantList = list;
+  }
+  @ViewChild('lotteryTable') lotteryTable: TableComponent;
+  enterLottery(id) {
+    this.http.post('/activity/setWinner', { id }, true).then(res => { this.showLotteryModal = false; this.lotteryTable._request()});
   }
 
 }

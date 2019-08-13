@@ -1,4 +1,4 @@
-<!--消费商品、卡次-->
+
 <div nz-row style="margin-bottom: 20px;">
   <div nz-col nzSpan="13" nzOffset="4">
     <nz-input-group nzSearch nzSize="default" [nzAddOnAfter]="suffixButton">
@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<!--搜索弹窗-->
+
 <ng-template #tplTitle>
   <span>商品内容</span>
 </ng-template>
@@ -116,9 +116,7 @@
           <nz-tabset nzTabBarGutter='0' nzShowPagination="false">
             <nz-tab nzTitle="微信" (nzSelect)="selectPayType(2)" [nzDisabled]="!isSubmitShopCard">
               <img style="display:block;width:150px;margin:0 auto;" src="./assets/images/sweepcode.png" alt="付款码">
-              <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
-                margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
-              >请输入付款码</div> -->
+              
               <nz-form-item style="margin-top:30px;">
                 <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
@@ -132,9 +130,7 @@
             </nz-tab>
             <nz-tab nzTitle="支付宝" (nzSelect)="selectPayType(3)" [nzDisabled]="!isSubmitShopCard">
               <img style="display:block;width:150px;margin:0 auto;" src="./assets/images/sweepcode.png" alt="付款码">
-              <!-- <div style="width:90%;background:#F4F5F7;height:60px;line-height:60px;
-                margin:20px auto 20px;color:#508CFF;font-size:14px;text-align:center;"
-              >请输入付款码</div> -->
+              
               <nz-form-item style="margin-top:30px;">
                 <nz-form-label [nzSm]="5" [nzXs]="24">应收</nz-form-label>
                 <nz-form-control [nzSm]="16" [nzXs]="24">
@@ -345,27 +341,27 @@
   </nz-tab>
 </nz-tabset>
 
-<!--商品小票打印-->
+
 <div style="display: none;" #el>
   <div style="margin-bottom:18px;text-align:center;">
-    <span style="float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">{{ shopName }}</span>
+    <span style="float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">{{ shopName }}</span>
   </div>
 
   <p style="line-height: 24px;">
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">地址：{{ shopAddress }}</span>
+    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">地址：{{ shopAddress }}</span>
   </p>
   <p style="line-height: 24px;">
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">预约电话：{{ shopTel }}</span>
+    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">预约电话：{{ shopTel }}</span>
   </p>
   <p style="line-height: 24px;">
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">时间：{{ time }}</span>
+    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">时间：{{ time }}</span>
   </p>
   <p style="clear:both;"></p>
   <div style="height:1px;border-top:1px dashed #000; margin-bottom:11px;"></div>
 
   <p style="line-height: 24px;">
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">姓名：{{ username }}</span>
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">电话：{{ phoneNumber }}</span>
+    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">姓名：{{ username }}</span>
+    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;transform:scale(0.9);">电话：{{ phoneNumber }}</span>
   </p>
   <p style="clear:both;"></p>
   <div style="height:1px;border-top:1px dashed #000; margin-top:11px;"></div>
@@ -373,31 +369,31 @@
   <div style="font-size:8px;">
     <div>
       <p style="width:27%;float:left;">
-        <span style="display:block;line-height: 24px;-webkit-transform:scale(0.9);">商品名称</span>
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">商品名称</span>
       </p>
       <p style="width:27%;float:left;">
-        <span style="display:block;line-height: 24px;-webkit-transform:scale(0.9);">消费金额</span>
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">消费金额</span>
       </p>
       <p style="width:25%;float:left;">
-        <span style="display:block;line-height: 24px;-webkit-transform:scale(0.9);">折后价</span>
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">折后价</span>
       </p>
       <p style="width:21%;float:left;">
-        <span style="display:block;line-height: 24px;-webkit-transform:scale(0.9);">优惠</span>
+        <span style="display:block;line-height: 24px;transform:scale(0.9);">优惠</span>
       </p>
     </div>
     <div style="clear:both;"></div>
     <div *ngFor="let data of resultData">
       <p style="width:27%;float:left;line-height: 24px;">
-        <span style="display:block;font-size:8px;-webkit-transform:scale(0.9);">{{ data.name }}</span>
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.name }}</span>
       </p>
       <p style="width:27%;float:left;line-height: 24px;">
-        <span style="display:block;font-size:8px;-webkit-transform:scale(0.9);">{{ data.price }}x{{ data.num }}</span>
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.price }}x{{ data.num }}</span>
       </p>
       <p style="width:25%;float:left;line-height: 24px;">
-        <span style="display:block;font-size:8px;-webkit-transform:scale(0.9);">{{ data.subtotal }}</span>
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.subtotal }}</span>
       </p>
       <p style="width:21%;float:left;line-height: 24px;">
-        <span style="display:block;font-size:8px;-webkit-transform:scale(0.9);">{{ data.discount }}</span>
+        <span style="display:block;font-size:8px;transform:scale(0.9);">{{ data.discount }}</span>
       </p>
       <div style="clear:both;"></div>
     </div>
@@ -407,89 +403,80 @@
   <div style="font-size:8px;">
     <div style="width:45%;float:left;">
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">原价</span>
+        <span style="display:block;transform:scale(0.9);">原价</span>
       </p>
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">总数</span>
+        <span style="display:block;transform:scale(0.9);">总数</span>
       </p>
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">现价</span>
+        <span style="display:block;transform:scale(0.9);">现价</span>
       </p>
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">支付</span>
+        <span style="display:block;transform:scale(0.9);">支付</span>
       </p>
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">实收</span>
+        <span style="display:block;transform:scale(0.9);">实收</span>
       </p>
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">找零</span>
+        <span style="display:block;transform:scale(0.9);">找零</span>
       </p>
       <p style="line-height: 24px;">
-        <span style="display:block;-webkit-transform:scale(0.9);">优惠</span>
+        <span style="display:block;transform:scale(0.9);">优惠</span>
       </p>
     </div>
     <div style="width: 55%;float:left;">
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ price }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ price }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ numberOftotal }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ numberOftotal }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ price }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ price }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ paymentTypeText }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ paymentTypeText }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ payment }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ payment }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ paymentType == 1 ? changePrice : 0 }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ paymentType == 1 ? changePrice : 0 }}</span>
         </p>
         <p style="line-height: 24px;">
-          <span style="display:block;-webkit-transform:scale(0.9);">{{ generalDiscount }}</span>
+          <span style="display:block;transform:scale(0.9);">{{ generalDiscount }}</span>
         </p>
     </div>
     <div style="clear:both;"></div>
   </div>
   <div style="height:1px;border-top:1px dashed #000; margin-top:12px;margin-bottom:13px;"></div>
-  <!--二维码暂时为空-->
-  <!-- <p style="line-height: 24px;">
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">门店公众号</span>
-  </p>
-  <p style="line-height: 24px; ">
-    <span style="position:relative;left:-7px;float:left;display:block;width:100%;font-size:8px;-webkit-transform:scale(0.9);">扫码关注</span>
-  </p>
-  <div style="text-align:center;">
-    <qr-code value="https://www.baidu.com" [size]="150"></qr-code>
-  </div> -->
-
-
-
-
-
-
-
-
-
-  <!--服务小票打印-->
-  <div style="display:none;" #service>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);margin-top:23px;margin-bottom:17px;margin-left:14px;">{{ shopName }}</p>
   
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">地址：{{ shopAddress }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">预约电话：{{ shopTel }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">时间：{{ time }}</p>
+</div>
+
+
+
+
+
+
+
+
+  
+  <div style="display:none;" #service>
+    <p style="font-size:8px;transform:scale(0.9);margin-top:23px;margin-bottom:17px;margin-left:14px;">{{ shopName }}</p>
+  
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">地址：{{ shopAddress }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">预约电话：{{ shopTel }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">时间：{{ time }}</p>
     <div style="width:190px;height:1px;border-top:1px dashed #000; margin-bottom:11px;"></div>
   
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">姓名：{{ username }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">会员卡：{{ cardInfo }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">电话：{{ phoneNumber }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">剩余{{ consumptionInfo.feeType==0 ? '次数' : '金额' }}：{{ consumptionInfo.feeType==0 ? remainTimes : remainAmount }}</p>
-    <p style="font-size:8px;-webkit-transform:scale(0.9);line-height: 26px;">过期时间：<br>{{ expireDate }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">姓名：{{ username }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">会员卡：{{ cardInfo }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">电话：{{ phoneNumber }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">剩余{{ consumptionInfo.feeType==0 ? '次数' : '金额' }}：{{ consumptionInfo.feeType==0 ? remainTimes : remainAmount }}</p>
+    <p style="font-size:8px;transform:scale(0.9);line-height: 26px;">过期时间：<br>{{ expireDate }}</p>
     <div style="width:190px;height:1px;border-top:1px dashed #000; margin-top:11px;"></div>
   
-    <div style="width:190px; font-size:8px;-webkit-transform:scale(0.9);">
+    <div style="width:190px; font-size:8px;transform:scale(0.9);">
       <div style="width:45%;float:left;">
         <span style="line-height: 26px;display:block;">商品名称</span>
         <span style="line-height: 26px;display:block;">{{ serviceName }}</span>
@@ -501,31 +488,5 @@
       <div style="clear:both;"></div>
     </div>
     <div style="width:190px;height:1px;border-top:1px dashed #000; margin-top:12px;margin-bottom:13px;"></div>
-  
-    <!-- <div style="width:200px; font-size:8px;-webkit-transform:scale(0.9);">
-      <div style="width:45%;float:left;">
-        <span style="line-height: 26px;display:block;">原价</span>
-        <span style="line-height: 26px;display:block;">总数</span>
-        <span style="line-height: 26px;display:block;">现价</span>
-        <span style="line-height: 26px;display:block;">支付</span>
-        <span style="line-height: 26px;display:block;">实收</span>
-        <span style="line-height: 26px;display:block;">找零</span>
-      </div>
-      <div style="width: 55%;float:left;">
-        <span style="line-height: 26px;display:block;margin-left:3px;">168</span>
-        <span style="line-height: 26px;display:block;margin-left:3px;">1</span>
-        <span style="line-height: 26px;display:block;margin-left:3px;">168</span>
-        <span style="line-height: 26px;display:block;margin-left:3px;">支付宝</span>
-        <span style="line-height: 26px;display:block;margin-left:3px;">168</span>
-        <span style="line-height: 26px;display:block;margin-left:3px;">0</span>
-      </div>
-      <div style="clear:both;"></div>
   </div>
-  <div style="width:190px;height:1px;border-top:1px dashed #000; margin-top:12px;margin-bottom:13px;"></div> -->
 
-  <!--二维码暂时为空-->
-  <!-- <p style="font-size:14px;line-height: 26px; ">门店公众号</p>
-  <p style="font-size:14px;line-height: 26px; ">扫码关注</p>
-  <div style="text-align:center;">
-    <qr-code value="https://www.baidu.com" [size]="150"></qr-code>
-  </div> -->

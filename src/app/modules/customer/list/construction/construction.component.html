@@ -26,7 +26,7 @@
         <nz-form-label nzRequired>卡属性</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="attributeId" [nzShowSearch]="true" nzPlaceHolder="请选择卡属性" >
-            <nz-option *ngFor="let option of cardAttribuiteList" [nzLabel]="option.attributeName" [nzValue]="option.type"></nz-option>
+            <nz-option *ngFor="let option of cardAttribuiteList" [nzLabel]="option.attributeName" [nzValue]="option.id"></nz-option>
           </nz-select>
           <nz-form-explain *ngIf="formGroup.get('attributeId').dirty && formGroup.get('attributeId').hasError('required')">请选择卡属性！</nz-form-explain>
         </nz-form-control>

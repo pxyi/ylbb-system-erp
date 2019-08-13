@@ -3,7 +3,7 @@
 <div>
   <v-chart [forceFit]="true" [height]="400" [data]="viserData" [scale]="[{ dataKey: 'day' }]">
     <v-tooltip></v-tooltip>
-    <v-axis></v-axis>
+    <v-axis [label]="label"></v-axis>
     <v-legend></v-legend>
     <v-line position="day*temperature" color="city"></v-line>
     <v-point position="day*temperature" color="city" [size]="4" [style]="{ stroke: '#fff', lineWidth: 1 }" shape="circle"></v-point>

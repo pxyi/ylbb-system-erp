@@ -53,6 +53,7 @@ export class ListComponent implements OnInit {
   templateId: number;
   templateUrl: string;
   storeId: number;
+  templateType: number;
 
   copyShortUrl(e) {
     e.select();

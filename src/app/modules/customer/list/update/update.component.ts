@@ -13,7 +13,6 @@ import { DrawerSave } from 'src/app/ng-relax/decorators/drawer/save.decorator';
 export class UpdateComponent implements OnInit {
 
   @Input() id: number;
-  @Input() sourceId: number;
 
   formGroup: FormGroup;
 

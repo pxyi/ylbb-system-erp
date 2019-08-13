@@ -1,9 +1,11 @@
-import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
+import { NzMessageService, NzDrawerService, NzDrawerRef } from 'ng-zorro-antd';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { HttpService } from './../../../../ng-relax/services/http.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ControlValid } from 'src/app/ng-relax/decorators/form/valid.decorator';
 import { CommodityComponent } from './commodity/commodity.component';
+import { format } from 'date-fns';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { sub, mul } from 'src/app/public/operation';
 
 @Component({
   selector: 'app-money',
@@ -18,6 +20,7 @@ export class MoneyComponent implements OnInit, OnDestroy {
   private keypressEventTime: number[] = [];
 
   teacherList: any[] = [];
+  storeCardList: any[] = [];
 
   formGroup: FormGroup;
 
@@ -25,22 +28,40 @@ export class MoneyComponent implements OnInit, OnDestroy {
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
     private message: NzMessageService,
-    private drawer: NzDrawerService
-  ) { 
-    this.formGroup = this.fb.group({
-      satisfaction: ['一般'],
-      swimTeacherId: [],
-      comment: [],
-      cardPos: this.fb.array([]),
-
-      paymentType: [2],
-      price: [],
-      payment: [, [Validators.required]],
-    });
+    private drawer: NzDrawerService,
+    private drawerRef: NzDrawerRef
+  ) {
     /* -------------------- 获取下拉列表数据 -------------------- */
     this.http.post('/member/getStoreTeachers').then(res => {
       this.teacherList = res.result;
       this.formGroup.patchValue({ swimTeacherId: res.result[0].id });
+    });
+  }
+
+  selectCardInfo: any = {};
+  ngOnInit() {
+    this.consumptionInfo.haveCard && this.http.post('/memberCard/getMemberCards', { memberId: this.consumptionInfo.memberId || this.consumptionInfo.id }).then(res => {
+      this.storeCardList = res.result.filter(c => c.feeType == 1);
+      if (this.storeCardList.length) {
+        this.formGroup.patchValue({ cardId: this.storeCardList[0].id });
+        this.selectCardInfo = this.storeCardList[0];
+      }
+    });
+
+    this.addKeypressEventListener('add');
+
+    this.formGroup = this.fb.group({
+      memberId: [this.consumptionInfo.memberId || this.consumptionInfo.id],
+      cardId: [this.consumptionInfo.cardCode || this.consumptionInfo.memberCard],
+      satisfaction: ['一般'],
+      swimTeacherId: [],
+      comment: [],
+      cardPos: this.fb.array([]),
+      discountPrice: [],
+
+      paymentType: [2],
+      price: [],
+      payment: [, [Validators.required]],
     });
 
     /* -------------------- 是否显示找零 -------------------- */
@@ -54,14 +75,14 @@ export class MoneyComponent implements OnInit, OnDestroy {
 
     /* -------------------- 监听商品变更，计算应收金额 -------------------- */
     this.cardPos.valueChanges.subscribe(s => {
-      let price = 0;
-      s.map(c => price += c.count * c.discountPrice);
-      
-      this.formGroup.patchValue({ price, payment: price });
+      let price = 0, discountPrice = 0;
+      s.map(c => { price += mul(c.count, c.discountPrice); discountPrice += mul(c.count, (c.price - c.discountPrice)) });
+
+      this.formGroup.patchValue({ price, payment: price, discountPrice });
     });
     /* -------------------- 监听实收金额变动 -------------------- */
     this.formGroup.controls['payment'].valueChanges.subscribe(v => {
-      this.formGroup.patchValue({ changePrice: (Number(v) - this.formGroup.controls['price'].value || 0) });
+      this.formGroup.patchValue({ changePrice: sub(Number(v), this.formGroup.controls['price'].value || 0) });
     });
   }
 
@@ -79,12 +100,8 @@ export class MoneyComponent implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnInit() {
-    this.addKeypressEventListener(true);
-  }
-
-  addKeypressEventListener(isAdd?: boolean/* 添加/删除监听键盘时间 */) {
-    document[isAdd ? 'addEventListener' : 'removeEventListener']('keypress', this.keypressEvent);
+  addKeypressEventListener(event: 'add' | 'remove'/* 添加/删除监听键盘时间 */) {
+    document[`${event}EventListener`]('keypress', this.keypressEvent);
   }
   private keypressEvent = (even) => {
     var ev = even.which;
@@ -110,9 +127,10 @@ export class MoneyComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.addKeypressEventListener();
+    this.addKeypressEventListener('remove');
   }
 
+  /* ------------ 根据文字搜索商品 ------------ */
   searchCommodity(name: string) {
     this.http.post('/commodity/getCommodities', { name, cardId: this.consumptionInfo.cardId }).then(res => {
       if (res.result.length) {
@@ -133,7 +151,7 @@ export class MoneyComponent implements OnInit, OnDestroy {
       if (res.result.length) {
         const isHave = this.cardPos.value.every(s => s.id === res.result[0].id);
         if (isHave && this.cardPos.value.length) {
-          this.cardPos.value.map((s, i) => s.id === res.result[0].id && this.cardPos.controls[i].patchValue({ count: this.cardPos.value[i].count + 1, subtotal: this.cardPos.value[i].discountPrice * (this.cardPos.value[i].count + 1) })  );  
+          this.cardPos.value.map((s, i) => s.id === res.result[0].id && this.cardPos.controls[i].patchValue({ count: this.cardPos.value[i].count + 1, subtotal: mul(this.cardPos.value[i].discountPrice, (this.cardPos.value[i].count + 1)) })  );  
         } else {
           this.addCardPos(res.result[0]);
         }
@@ -141,85 +159,38 @@ export class MoneyComponent implements OnInit, OnDestroy {
     })
   }
 
-  payment(sweepCode: string) {
-    console.log('触发提交表单事件：', sweepCode)
-    if (this.cardPos.length) {
+  get paymentType() { return this.formGroup.controls['paymentType'].value; }
 
+  async payment(sweepCode: string) {
+    if (this.cardPos.length) {
+      const orderResult = await this.http.post('/customer/commodityConsumer', { paramJson: JSON.stringify(Object.assign({}, this.formGroup.value)) });
+
+      const orderNo = orderResult.result.orderNo;
+      const payResult = await this.http.post('/customer/payOrder', { payBarCode: sweepCode, orderNo, payType: this.formGroup.controls.paymentType.value });
+      if (payResult.code == 1000) {
+        this.message.success('交易成功！');
+        this.print();
+      } else {
+        this.message.warning(payResult.info);
+      }
     } else {
       this.message.warning('请选择需要结算的商品！');
     }
+  }
 
-    // this.changePrice = this.payment - this.price; //计算找零
-    // var paramJson = {
-    //   payment       : this.payment,                                      //实收金额
-    //   price         : this.price,                                        //应收金额
-    //   changePrice   : this.changePrice,                                  //找零
-    //   paymentType   : this.paymentType,                                  //支付方式
-    //   memberId      : this.consumptionInfo.id,                           //会员id
-    //   cardId        : this.consumptionInfo.cardId,                       //会员卡id
-    //   satisfaction  : this.singleTimeGroup.get('satisfaction').value,    //满意度
-    //   swimTeacherId : this.singleTimeGroup.get('swimTeacherId').value,   //服务泳师
-    //   comment       : this.singleTimeGroup.get('remarks').value || null, //备注
-    //   cardPos       : []                                                 //购物车
-    // }
-    // //购物车列表放到cardPos中
-    // for (let item of this.resultData) {
-    //   var data={};
-    //   data['id']            = item.id;          //商品id
-    //   data['count']         = item.num;         //商品数量
-    //   data['price']         = item.price;       //商品售价
-    //   data['discountPrice'] = item.changePrice; //商品折扣价
-    //   data['subtotal']      = item.subtotal;    //总价
-    //   paramJson.cardPos.push(data);
-    // }
+  /* ------------- 打印 ------------- */
+  async print() {
+    this.drawerRef.close(true);
+    const shopInfo = (await this.http.post('/activity/getBasicConfig')).result;
 
-    //haveCard等于1为会员
-    // if (this.consumptionInfo.haveCard != 1) {
-    //   delete paramJson.cardId;
-    // }
-    // // console.log(paramJson);
-    // this.http.post('/customer/commodityConsumer', { paramJson: JSON.stringify(paramJson) }).then(res => {
-    //   if (res.code == 1000) {
-    //     this.orderNo = res.result.orderNo;
-    //     //获取消费剩余金额
-    //     this.preferential = res.result.preferential;//本次优惠
-    //     this.message.create('success', '操作成功,请结算或展示付款码');
+    const nowDate = format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+    if (this.paymentType == 4) {
+      /* ---- 如果为储值卡支付 ---- */
+      const amount = (await this.http.post('/memberCard/getMemberCardInfo', { id: this.consumptionInfo.cardId })).result.amount;
+      
+    } else {
 
-    //     /*---------------- 确定结算 ----------------*/
-    //     this.http.post('/customer/payOrder', {
-    //       payBarCode: this.code,        //付款码
-    //       orderNo: this.orderNo,     //订单号
-    //       payType: this.paymentType  //支付方式
-    //     }).then(res => {
-    //       if (res.code == 1000) {
-    //         this.message.create('success', '付款成功');
-    //         //清空
-    //         this.code = '';
-    //         this.startTime = undefined;
-    //         this.endTime = undefined;
-    //         this.isPay = false;
-    //         //打印
-    //         this.printTest();
-    //       } else {
-    //         this.message.create('warning', res.info);
-    //         //清空
-    //         this.code = '';
-    //         this.startTime = undefined;
-    //         this.endTime = undefined;
-    //         this.isPay = false;
-    //       }
-    //     })
-
-    //   } else {
-    //     this.message.create('warning', res.info);
-    //     //清空
-    //     this.code = '';
-    //     this.startTime = undefined;
-    //     this.endTime = undefined;
-    //     this.isPay = false;
-    //   }
-
-    // })
+    }
   }
 
 
