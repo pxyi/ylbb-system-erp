@@ -15,7 +15,7 @@ export class WebsocketService {
   createObservableSocket(url: string): Observable<any> {
     this.ws = new WebSocket(url);
     this.interval = setInterval(_ => {
-      this.ws.send('土豆土豆，我是地瓜，我是地瓜，收到请回答！收到请回答！！');
+      this.ws.send('保持连接~！');
     }, 10 * 1000)
     return new Observable( observer => {
       this.ws.onmessage = (event) => observer.next(JSON.parse(event.data));
