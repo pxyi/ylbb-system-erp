@@ -53,22 +53,26 @@ export class ConstructionComponent implements OnInit {
       attributeId: [, [Validators.required]]
     }
     this.formGroup = this.fb.group(formControls);
-    this.formGroup.get('cardTypeId').valueChanges.subscribe(id => {
-      this.cardTypeList.map(item => item.id === id && (this.feeType = item.feeType));
+
+    this.formGroup.get('attributeId').valueChanges.subscribe(id => {
+      this.cardAttribuiteList.map(item => item.id === id && (this.feeType = item.type));
       this.formTypeChange(this.feeType)
+      this.http.post('/cardTypeManagement/findList', { type: this.feeType }, false).then(res => {
+        this.cardTypeList = res.result;
+      });
+
+      this.formGroup.controls['cardTypeId'].reset();
+      this.formGroup.controls['balance'].reset();
+      this.formGroup.controls['openPoints'].reset();
+      this.formGroup.controls['effectDate'].reset();
+      this.formGroup.controls['expireDate'].reset();
+    });
+    this.formGroup.get('cardTypeId').valueChanges.subscribe(id => {
       this.http.post('/cardTypeManagement/getCardType', { id }, false).then(res => {
         res.result && this.formGroup.patchValue(res.result);
       });
     });
 
-
-    this.formGroup.get('attributeId').valueChanges.subscribe(id => {
-      this.cardTypeList.map(item => item.type == id && (this.feeType = item.feeType));
-      this.formTypeChange(this.feeType)
-      this.http.post('/cardTypeManagement/findList', { type: this.feeType }, false).then(res => {
-        this.cardTypeList = res.result;
-      });
-    });
     
   }
 
