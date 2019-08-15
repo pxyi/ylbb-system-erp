@@ -1,10 +1,11 @@
-import { AliOssClientService } from './../../../ng-relax/services/alioss-client.service';
+import { AppState } from 'src/app/core/reducers/reducers-config';
 import { NzDrawerRef } from 'ng-zorro-antd';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 declare const window: any;
 
@@ -39,7 +40,7 @@ export class CreateComponent implements OnInit {
     private format: DatePipe,
     private drawerRef: NzDrawerRef,
     private router: Router,
-    private alioss: AliOssClientService
+    private store: Store<AppState>
   ) {
     this.formGroup = this.fb.group({
       activityHeadline: [, [Validators.required, Validators.maxLength(30)]],
@@ -99,12 +100,14 @@ export class CreateComponent implements OnInit {
   @ViewChild('preview') preview;
   private _templateInit() {
     /* ------------------- 预览H5活动 ------------------- */
+    let storeId: number;
+    this.store.select('userInfoState').subscribe(res => storeId = res.store.id);
     let iframe = document.createElement('iframe');
     iframe.width = '375';
     iframe.height = '602';
     iframe.frameBorder = '0';
     iframe.scrolling = 'no';
-    iframe.src = `${this.activityInfo.templateUrl}?preview=true`;
+    iframe.src = `${this.activityInfo.templateUrl}?preview=true&storeId=${storeId}`;
     this.preview.nativeElement.appendChild(iframe);
 
     /* ------------------- 获取活动自定义字段 ------------------- */

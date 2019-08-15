@@ -31,7 +31,7 @@
           <ng-template #coverTemplate>
             <div class="card-img">
               <img [src]="item.templateImg" />
-              <div class="qrcode"><qr-code [value]="item.templateUrl + '?preview=true&title=' + encodeURIComponent(item.templateHeadline)" [size]="150"></qr-code></div>
+              <div class="qrcode"><qr-code [value]="item.templateUrl + '?preview=true&title=' + encodeURIComponent(item.templateHeadline) + '&storeId=' + storeId" [size]="150"></qr-code></div>
             </div>
           </ng-template>
           <ng-template #actionSetting>

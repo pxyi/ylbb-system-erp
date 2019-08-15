@@ -1,3 +1,5 @@
+import { AppState } from './../../../core/reducers/reducers-config';
+import { Store } from '@ngrx/store';
 import { NzDrawerService } from 'ng-zorro-antd';
 import { HttpService } from './../../../ng-relax/services/http.service';
 import { Component, OnInit } from '@angular/core';
@@ -28,13 +30,16 @@ export class ActivityComponent implements OnInit {
   constructor(
     private http: HttpService,
     private drawer: NzDrawerService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {
     this.http.post('/activity/getActivityTypes').then(res => this.templateTypeList = [{ templateLabel: '全部', templateType: null }, ...res.result]);
   }
 
+  storeId: number;
   ngOnInit() {
     this.searchSubmit();
+    this.store.select('userInfoState').subscribe(res => this.storeId = res.store.id);
   }
 
   /* --------------------- 获取活动列表 --------------------- */
