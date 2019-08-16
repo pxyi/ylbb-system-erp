@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
     private drawer: NzDrawerService,
     private es: EsService
   ) {
-    // this.openWs();
+    this.openWs();
 
     this.router.events.pipe(
       filter(event => { return event instanceof NavigationEnd }),

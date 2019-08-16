@@ -1,7 +1,5 @@
-import { CardComponent } from './card/card.component';
-import { NzDrawerRef } from 'ng-zorro-antd';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { MoneyComponent } from './money/money.component';
 
 @Component({
   selector: 'app-settlement',
@@ -12,22 +10,19 @@ export class SettlementComponent implements OnInit {
 
   @Input() consumptionInfo: any = {};
 
-  constructor(
-    private drawerRef: NzDrawerRef
-  ) { }
+  selectIndex = 0;
+
+  constructor() { }
 
   ngOnInit() {
-    console.log(this.consumptionInfo);
+    this.selectIndex = this.consumptionInfo.haveCard ? 0 : 1;
   }
 
-  @DrawerClose() close: (bool?) => void;
-
-  @ViewChild('card') cardComponent: CardComponent;
-  saveLoading: boolean;
-  save() {
-    this.cardComponent.save().then(res => {
-      res ? this.close(true) : (this.saveLoading = false);
-    });
+  @ViewChild('money') moneyComponent: MoneyComponent;
+  selectChange() {
+    this.moneyComponent.addKeypressEventListener(this.selectIndex == 1 ? 'add' : 'remove');
   }
+
+  
 
 }

@@ -1,8 +1,9 @@
-import { NzMessageService } from 'ng-zorro-antd';
-import { ControlValid } from './../../../../ng-relax/decorators/form/valid.decorator';
-import { HttpService } from './../../../../ng-relax/services/http.service';
+import { NzMessageService, NzDrawerRef } from 'ng-zorro-antd';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
+import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { ControlValid } from 'src/app/ng-relax/decorators/form/valid.decorator';
 
 @Component({
   selector: 'app-card',
@@ -27,11 +28,19 @@ export class CardComponent implements OnInit {
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
-    private message: NzMessageService
+    private message: NzMessageService,
+    private drawerRef: NzDrawerRef
   ) { }
 
   ngOnInit() {
     this.formGroup = this.fb.group({
+      reserveId: [this.consumptionInfo.reserveDate ? this.consumptionInfo.id : null],
+      memberId: [this.consumptionInfo.memberId || this.consumptionInfo.id],
+      name: [this.consumptionInfo.name],
+      nick: [this.consumptionInfo.nick],
+      sex: [this.consumptionInfo.sex],
+      monthAge: [this.consumptionInfo.monthAge],
+
       cardId: [, [Validators.required]],
       swimTeacherId: [this.consumptionInfo.swimTeacherId, [Validators.required]],
       commodityId: [, [Validators.required]],
@@ -88,24 +97,24 @@ export class CardComponent implements OnInit {
     }
   }
 
-
-  save(): Promise<boolean> {
-    return new Promise((resolve) => {
-
-      if (this.formGroup.invalid) {
-        Object.keys(this.formGroup.controls).map(key => { this.formGroup.controls[key].markAsDirty(); this.formGroup.controls[key].updateValueAndValidity(); });
-        resolve(false);
-      } else {
-        this.http.post('/customer/create', { paramJson: JSON.stringify(this.formGroup.value) }, true).then(res => {
-          resolve(res.result == 1000);
-          /**
-           * @throws 需要做消费成功剩余卡次提醒
-           */
-        }).catch(e => resolve(false))
-      }
-    })
-  }
-
   @ControlValid() valid: (key: string, type?: string) => boolean;
+
+  @DrawerClose() close: (bool?) => void;
+  saveLoading: boolean;
+
+  save() {
+    if (this.formGroup.invalid) {
+      Object.keys(this.formGroup.controls).map(key => { this.formGroup.controls[key].markAsDirty(); this.formGroup.controls[key].updateValueAndValidity(); });
+    } else {
+      this.saveLoading = true;
+      this.http.post('/customer/create', { paramJson: JSON.stringify(this.formGroup.value) }, true).then(res => {
+        this.saveLoading = false;
+        res.code == 1000 && this.close(true);
+        /**
+         * @throws 需要做消费成功剩余卡次提醒
+         */
+      })
+    }
+  }
 
 }
