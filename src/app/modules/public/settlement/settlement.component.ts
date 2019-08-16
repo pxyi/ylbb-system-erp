@@ -15,11 +15,12 @@ export class SettlementComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.selectIndex = this.consumptionInfo.haveCard ? 0 : 1;
   }
 
   @ViewChild('money') moneyComponent: MoneyComponent;
   selectChange() {
-    this.moneyComponent.addKeypressEventListener(this.selectIndex == 0 ? 'add' : 'remove');
+    this.moneyComponent.addKeypressEventListener(this.selectIndex == 1 ? 'add' : 'remove');
   }
 
   

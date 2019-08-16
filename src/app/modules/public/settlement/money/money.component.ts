@@ -52,7 +52,7 @@ export class MoneyComponent implements OnInit, OnDestroy {
 
     this.formGroup = this.fb.group({
       memberId: [this.consumptionInfo.memberId || this.consumptionInfo.id],
-      cardId: [this.consumptionInfo.cardCode || this.consumptionInfo.memberCard],
+      cardId: [this.consumptionInfo.cardId],
       satisfaction: ['一般'],
       swimTeacherId: [],
       comment: [],

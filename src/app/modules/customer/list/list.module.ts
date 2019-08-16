@@ -15,11 +15,10 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { ImportComponent } from './import/import.component';
 import { AlbumComponent } from './album/album.component';
 import { QRCodeModule } from 'angular2-qrcode';
-import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.component';
 
 
 @NgModule({
-  declarations: [ListComponent, UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent, ConsumptionTabComponent ],
+  declarations: [ListComponent, UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent ],
   imports: [
     CommonModule,
     NgRelaxModule,
@@ -34,6 +33,6 @@ import { ConsumptionTabComponent } from './consumption-tab/consumption-tab.compo
     }]),
     ViserModule
   ],
-  entryComponents: [UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent, ConsumptionTabComponent ]
+  entryComponents: [UpdateComponent, ConstructionComponent, AddIntegralComponent, ExchangeComponent, ImportComponent, AlbumComponent ]
 })
 export class ListModule { }
