@@ -146,7 +146,8 @@ export class SettingComponent implements OnInit {
       params.personList = [...params.personList[0], ...params.personList[1], ...params.personList[2], ...params.personList[3]];
       params.personList = JSON.stringify(params.personList.map(res => res = JSON.parse(res)));
       let requestPath = this.isInit ? '/income/saveIncomeGogal' : '/income/updateIncomeGogal';
-      this.http.post(requestPath, { paramJson: JSON.stringify(params) }, true).then(res => {
+      
+      this.http.post('/income/updateIncomeGogal', { paramJson: JSON.stringify(params) }, true).then(res => {
         this._init('/income/queryStoreIncomeConfig');
         this.isInit = false;
       })

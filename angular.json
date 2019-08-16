@@ -52,7 +52,7 @@
             ],
             "styles": [
               "src/styles.less",
-              "./node_modules/_quill@1.3.6@quill/dist/quill.snow.css"
+              "./node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "src/assets/js/aes.js"
