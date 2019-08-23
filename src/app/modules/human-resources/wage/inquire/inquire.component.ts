@@ -1,4 +1,4 @@
-import { NzDrawerService } from 'ng-zorro-antd';
+import { NzDrawerService , NzMessageService } from 'ng-zorro-antd';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
@@ -19,7 +19,8 @@ export class InquireComponent implements OnInit {
   constructor(
     private http: HttpService,
     private format: DatePipe,
-    private drawer: NzDrawerService
+    private drawer: NzDrawerService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit() {
@@ -29,7 +30,15 @@ export class InquireComponent implements OnInit {
     this.generateLoading = true;
     this.http.post('/payroll/generatePayroll', {
       month: this.format.transform(this.generateMonth, 'yyyy-MM')
-    }).then(res => this.generateLoading = false).catch(err => this.generateLoading = false);
+    }).then(res => {
+      this.generateLoading = false;
+      if(res.code == 1000){
+        this.message.success(res.info);
+      }else{
+        this.message.error(res.info);
+      }
+      
+    }).catch(err => this.generateLoading = false);
   }
 
   _disabledDate(current: Date): boolean {

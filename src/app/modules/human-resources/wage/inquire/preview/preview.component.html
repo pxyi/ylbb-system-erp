@@ -27,7 +27,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let data of table2.data">
-      <td>{{ data.commission }}</td>
+      <td *ngIf="data.createCartCommisson">{{ data.createCartCommisson }}+{{ data.satisfactionCommission }}={{ data.commission }}</td>
+      <td *ngIf="!data.createCartCommisson">{{ data.commission }}</td>
     </tr>
   </tbody>
 </nz-table>

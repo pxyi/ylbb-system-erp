@@ -225,6 +225,16 @@ export const MenuConfig = [
         isLeaf: true
       },
       {
+        title : '职级管理',
+        key   : '/home/humanresources/rank',
+        isLeaf: true
+      },
+      {
+        title : '提成配置',
+        key   : '/home/humanresources/bonussales',
+        isLeaf: true
+      },
+      {
         title : '部门管理',
         key   : '/home/humanresources/department',
         isLeaf: true

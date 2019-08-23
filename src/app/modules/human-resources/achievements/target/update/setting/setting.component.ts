@@ -1,6 +1,7 @@
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
+import { DrawerClose } from 'src/app/ng-relax/decorators/drawer/close.decorator';
 
 @Component({
   selector: 'app-setting',
@@ -41,12 +42,6 @@ export class SettingComponent implements OnInit {
       expectExperienceNum: [],
       expectClueNum: [],
 
-      personList: this.fb.array([
-        this.fb.control([]),
-        this.fb.control([]),
-        this.fb.control([]),
-        this.fb.control([])
-      ], [this._personListValidator()])
     });
     /* ----------------- 监听：期望本月流水收入 ----------------- */
     this.formGroup.controls['expectTotalIncome'].valueChanges.subscribe(res => {
@@ -136,6 +131,7 @@ export class SettingComponent implements OnInit {
 
   saveLoading: boolean;
   save() {
+    console.log(this.formGroup);
     if (this.formGroup.invalid) {
       Object.keys(this.formGroup.controls).map(key => {
         this.formGroup.controls[key].markAsDirty();
@@ -143,9 +139,9 @@ export class SettingComponent implements OnInit {
       })
     } else {
       let params = this.formGroup.value;
-      params.personList = [...params.personList[0], ...params.personList[1], ...params.personList[2], ...params.personList[3]];
-      params.personList = JSON.stringify(params.personList.map(res => res = JSON.parse(res)));
+
       let requestPath = this.isInit ? '/income/saveIncomeGogal' : '/income/updateIncomeGogal';
+      
       this.http.post(requestPath, { paramJson: JSON.stringify(params) }, true).then(res => {
         this._init('/income/queryStoreIncomeConfig');
         this.isInit = false;

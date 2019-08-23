@@ -1,0 +1,96 @@
+<div class="container">
+    <ea-query-simp [node]="[{label: '员工角色', key: 'role', type: 'select', options: [{ name: '店长', id: '0' }, { name: '销售', id: '1' }]}]" (onSubmit)="table.request($event)"></ea-query-simp>
+
+    <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="update()"><i class="anticon anticon-plus"></i>新增提成设置</button>
+  
+    <ea-table 
+      #table 
+      url="/bonusSalesSetting/list" 
+      [allowSpace]="false" 
+      [thead]="['员工角色','阶梯起始','阶梯终止','提成百分比','结算方式','操 作']"
+      [EaTableTbodyTr]="EaTableTbodyTr">
+      <ng-template let-data #EaTableTbodyTr>
+        <td>{{ data.role == 0 ? '店长' : data.role == 1 ? '全员' : '--' }}</td>      
+        <td>{{ data.minAmount }}</td>
+        <td>{{ data.maxAmount }}</td>
+        <td>{{ data.ratio * 100 + '%'}}</td>
+        <td>{{ data.settleType == 0 ? '通提' : data.role == 1 ? '阶梯' : '--' }}</td>
+        <td>
+          <a (click)="update(data)">编辑</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm nzTitle="确认删除此设置吗?" (nzOnConfirm)="delete(data.id)">删除</a>
+        </td>
+      </ng-template>
+    </ea-table>
+
+</div>
+
+<nz-drawer 
+[nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+[nzWidth]="720" 
+[nzVisible]="showDrawer" 
+nzTitle="销售提成设置" 
+(nzOnClose)="showDrawer = false">
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="role">员工角色</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="role" nzPlaceHolder="请选择角色">
+            <nz-option nzLabel="店长" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="全员" [nzValue]="1"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="settleType">提成方式</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="settleType" nzPlaceHolder="请选择提成方式">
+              <nz-option nzLabel="通提" [nzValue]="0"></nz-option>
+              <nz-option nzLabel="阶梯" [nzValue]="1"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="salary">阶梯起始</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入阶梯起始金额" formControlName="minAmount" id="minAmount">
+          <nz-form-explain *ngIf="formGroup.get('minAmount').dirty && formGroup.get('minAmount').hasError('required')">请输入阶梯起始金额！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="salary">阶梯终止</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入阶梯终止金额" formControlName="maxAmount" id="maxAmount">
+            <nz-form-explain *ngIf="formGroup.get('maxAmount').dirty && formGroup.get('maxAmount').hasError('required')">请输入阶梯终止金额！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="salary">提成比例</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入提成比例" formControlName="ratio" id="ratio">
+          <nz-form-explain *ngIf="formGroup.get('ratio').dirty && formGroup.get('ratio').hasError('required')">请输入提成比例！</nz-form-explain>
+          <p style="font-size:12px; color:red; line-height: 20px;">例：10%请输入0.1，20%输入0.2，以此类推</p>
+        </nz-form-control>
+      </nz-form-item>
+    </div> 
+  </div>
+</form>
+<div class="footer">
+  <button nz-button (click)="showDrawer = false">取消</button>
+  <button nz-button nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
+</div>
+</nz-drawer>

@@ -1,0 +1,19 @@
+<div class="container">
+  <ea-table 
+    #table 
+    url="/teacherRank/getTeacherRanks" 
+    [thead]="['名称','实习老师','一星老师','二星老师','三星老师','特级老师','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.name }}</td>
+      <td>{{ data['实习老师'] }}</td>
+      <td>{{ data['一星老师'] }}</td>
+      <td>{{ data['二星老师'] }}</td>
+      <td>{{ data['三星老师'] }}</td>
+      <td>{{ data['特级老师'] }}</td>
+      <td>
+        <button (click)="update({ rankInfo: data })" nz-button nzType="primary" [nzSize]="small"><i nz-icon nzType="setting"></i>配置职级</button>
+      </td>
+    </ng-template>
+  </ea-table>
+</div>
