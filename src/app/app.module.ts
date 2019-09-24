@@ -17,7 +17,7 @@ import { AppReuseStrategy } from './core/app-reuse-strategy';
 registerLocaleData(zh);
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

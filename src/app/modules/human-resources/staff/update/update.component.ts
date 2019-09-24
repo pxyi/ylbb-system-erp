@@ -32,7 +32,7 @@ export class UpdateComponent implements OnInit {
     this.staffInfo.insured = typeof this.staffInfo.insured === 'number' ? this.staffInfo.insured : 1;
     this.staffInfo.sex = typeof this.staffInfo.sex === 'number' ? this.staffInfo.sex : 1;
     this.staffInfo.state = this.staffInfo.state || '全职';
-    this.staffInfo.defaultEmp = typeof this.staffInfo.defaultEmp === 'boolean' ? this.staffInfo.defaultEmp : true;
+    this.staffInfo.notStatistics = typeof this.staffInfo.notStatistics === 'boolean' ? this.staffInfo.notStatistics : false;
     this.staffInfo.teacher = typeof this.staffInfo.teacher === 'boolean' ? this.staffInfo.teacher : true;
     this.staffInfo.online = typeof this.staffInfo.online === 'number' ? this.staffInfo.online : 1;
     this.staffInfo.serviceArea = this.staffInfo.serviceArea || 3;
@@ -56,7 +56,7 @@ export class UpdateComponent implements OnInit {
       leaveDate: [],              //	否	string	离职时间
       sex: [],                 //	是	int	性别 ‘1’: ’女’, ’0’: ’男’
       state: [],                 //	是	string	员工状态 ‘全职’: ’全职’, ’临时’: ’临时’, ’兼职’: ’兼职’, ’离职’: ’离职’
-      defaultEmp: [],                 //	是	boolean	是否提成 false: ’是’, true: ’否’
+      notStatistics: [],                 //	是	boolean	是否提成 false: ’是’, true: ’否’
       teacher: [],                 //	是	boolean	是否泳师 true: ’是’, false: ’否’
       online: [, [Validators.required]],                 //	是	int	是否网上预约 0: ’不可以’, 1: ’可以’
       serviceArea: [],                 //	是	int	服务区域 1: ’婴儿区’, 2: ’幼儿区’, 3: ’兼顾’

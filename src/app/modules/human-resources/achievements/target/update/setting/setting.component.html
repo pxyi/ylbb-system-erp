@@ -105,7 +105,7 @@
 </form>
 
 <form nz-form [formGroup]="formGroup" nzLayout="horizontal">
-  <h2>参与任务员工设置</h2>
+  <!-- <h2>参与任务员工设置</h2>
   <div nz-row nzGutter="8" formArrayName="personList">
     <div nz-col nzSpan="12">
       <nz-form-item>
@@ -151,10 +151,10 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
+  </div> -->
 
 
-  <h2>参与任务员工设置</h2>
+  <!-- <h2>参与任务员工设置</h2>
 
   <ea-table [thead]="['职位', '姓名', '线索数', '体验数', '会员消卡', '办卡', '新线索回访']" [showPage]="false" [EaTableTbodyTr]="EaTableTbodyTr" [dataSet]="dataSet">
     <ng-template #EaTableTbodyTr let-item>
@@ -166,10 +166,10 @@
       <td>{{ item.createCard }}</td>
       <td>{{ item.callbackClue }}</td>
     </ng-template>
-  </ea-table>
+  </ea-table> -->
 
   <div class="buttons">
     <button nz-button nzType="primary" (click)="save()">保存</button>
-    <button nz-button (click)="next.emit(1)">下一步</button>
+    <!-- <button nz-button (click)="next.emit(1)">下一步</button> -->
   </div>
 </form>

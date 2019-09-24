@@ -1,0 +1,131 @@
+<div class="container">
+
+    <button nz-button nzType="dashed" style="width: 100%; margin-bottom: 24px;" (click)="update()"><i class="anticon anticon-plus"></i>新增满意度职级</button>
+    <ea-table 
+    #table
+    url="/bonusSatisfaction/getBonusSatisfactionList" 
+    [allowSpace]="false" 
+    [thead]="['门店满意度','满意度提成系数','满意度职级','修改时间','修改人','操 作']"
+    [EaTableTbodyTr]="EaTableTbodyTr">
+    <ng-template let-data #EaTableTbodyTr>
+      <td>{{ data.satisfaction }}</td>      
+      <td>{{ data.ratio }}</td>
+      <td>{{ data.rankShortName }}</td>
+      <td>{{ data.modifyTime}}</td>
+      <td>{{ data.modifyUser }}</td>
+      <td>
+        <a (click)="editor(data)">编辑</a>
+      </td>
+    </ng-template>
+  </ea-table> 
+
+</div>
+
+<nz-drawer 
+[nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+[nzWidth]="720" 
+[nzVisible]="showDrawer" 
+nzTitle="满意度职级设置" 
+(nzOnClose)="showDrawer = false">
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="rankId">职级</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="rankId" nzPlaceHolder="请选择职级">
+            <nz-option *ngFor="let item of ranksList" [nzLabel]="item.rankName" [nzValue]="item.id"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="formGroup.get('rankId').dirty && formGroup.get('rankId').hasError('required')">请选择职级！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+  <nz-tabset>
+      <nz-tab nzTitle="满意度系数">
+      </nz-tab>
+    </nz-tabset>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="rank1">表扬</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="请输入满意度系数" formControlName="rank1" >
+          <nz-form-explain *ngIf="formGroup.get('rank1').dirty && formGroup.get('rank1').hasError('required')">请输入满意度系数！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="rank2">满意</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入满意度系数" formControlName="rank2" >
+            <nz-form-explain *ngIf="formGroup.get('rank2').dirty && formGroup.get('rank2').hasError('required')">请输入满意度系数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+  <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="rank3">一般</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="请输入满意度系数" formControlName="rank3" >
+              <nz-form-explain *ngIf="formGroup.get('rank3').dirty && formGroup.get('rank3').hasError('required')">请输入满意度系数！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="rank4">不好</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="请输入满意度系数" formControlName="rank4" >
+                <nz-form-explain *ngIf="formGroup.get('rank4').dirty && formGroup.get('rank4').hasError('required')">请输入满意度系数！</nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+  </div>
+</form>
+<div class="footer">
+  <button nz-button (click)="showDrawer = false">取消</button>
+  <button nz-button nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
+</div>
+</nz-drawer>
+
+
+<nz-drawer 
+[nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"
+[nzWidth]="720" 
+[nzVisible]="showEditor" 
+nzTitle="满意度职级设置" 
+(nzOnClose)="showEditor = false">
+<form nz-form [formGroup]="formEditorGroup">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label  nzFor="rankShortName"  >职级</nz-form-label>
+        <nz-form-control>
+         <input nz-input placeholder="请输入满意度系数" formControlName="rankShortName" disabled  >
+          <nz-form-explain *ngIf="formEditorGroup.get('rankShortName').dirty && formEditorGroup.get('rankShortName').hasError('required')">请输入职级！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label  nzFor="ratio"  >满意度系数</nz-form-label>
+          <nz-form-control>
+           <input nz-input placeholder="请输入满意度系数" formControlName="ratio"   >
+            <nz-form-explain *ngIf="formEditorGroup.get('ratio').dirty && formEditorGroup.get('ratio').hasError('required')">请输入满意度系数！</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+
+
+</form>
+<div class="footer">
+  <button nz-button (click)="showEditor = false">取消</button>
+  <button nz-button nzType="primary" (click)="save1()" [nzLoading]="saveLoading">保存</button>
+</div>
+</nz-drawer>

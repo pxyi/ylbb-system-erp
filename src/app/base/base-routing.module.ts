@@ -257,6 +257,18 @@ const routes: Routes = [
             loadChildren: 'src/app/modules/human-resources/position/position.module#PositionModule'
           },
           {
+            path: 'rank',
+            data: { title: '职级管理' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/human-resources/rank/rank.module#RankModule'
+          },
+          {
+            path: 'bonussales',
+            data: { title: '提成配置' },
+            canLoad: [ AuthGuardService ],
+            loadChildren: 'src/app/modules/human-resources/bonussales/bonussales.module#BonussalesModule'
+          },
+          {
             path: 'department',
             data: { title: '部门管理' },
             canLoad: [ AuthGuardService ],

@@ -40,7 +40,7 @@
     <td>{{ data.position }}</td>
     <td>{{ data.state }}</td>
     <td>{{ data.teacher == 1 ? '是' : '否' }}</td>
-    <td>{{ data.defaultEmp ? '是' : '否' }}</td>
+    <td>{{ !data.notStatistics ? '是' : '否' }}</td>
     <td>{{ data.serviceArea == 1 ? '婴儿区' : data.serviceArea == 2 ? '幼儿区' : '兼顾' }}</td>
     <td>{{ data.online == 1 ? '可以' : '不可以' }}</td>
     <td>
