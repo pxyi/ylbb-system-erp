@@ -52,7 +52,7 @@
             ],
             "styles": [
               "src/styles.less",
-              "./node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "src/assets/js/aes.js"
@@ -134,7 +134,8 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [],
             "assets": [
