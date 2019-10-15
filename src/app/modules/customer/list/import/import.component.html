@@ -3,7 +3,6 @@
 <nz-upload
   nzType="drag"
   [nzName]="'excelFile'"
-  [nzFileType]="'application/vnd.ms-excel'"
   nzAction="/member/uploadExcel"
   [nzWithCredentials]="true"
   (nzChange)="uploadComplate($event)">

@@ -74,6 +74,13 @@
           <nz-form-explain *ngIf="formControlError('promotionPrice', 'error')">活动价必须小于商品原价！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
+      <nz-form-item *ngIf="activityInfo.customPage && activityInfo.customPage == 1">
+        <nz-form-label nzRequired nzSpan="4">活动封面</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <ea-upload-picture formControlName="activityImgs" [maxLength]="1"></ea-upload-picture>
+          <nz-form-explain *ngIf="formControlError('activityImgs')">请上传活动封面！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">商品原价</nz-form-label>
         <nz-form-control nzSpan="20">

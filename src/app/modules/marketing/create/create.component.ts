@@ -156,6 +156,9 @@ export class CreateComponent implements OnInit {
    */
   private _templateTypeAddFormGroup = new Map([
     [this.templateType.get('体验卡'), () => {
+      if (this.activityInfo.customPage && this.activityInfo.customPage == 1) {
+        this.formGroup.addControl('activityImgs', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required]));
+      }
       this.formGroup.addControl('promotionPrice', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), this._promotionPriceValidator({ isFormGroup: true, control: 'orgPrice' })]));
       this.formGroup.addControl('orgPrice', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.addControl('needPay', this.fb.control({ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
