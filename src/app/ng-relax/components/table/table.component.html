@@ -8,6 +8,7 @@
   [nzTitle]="title ? title : null"
   [nzShowTotal]="tableTotalInfo"
   [nzShowPagination]="showPage"
+  [nzShowQuickJumper] = "isShowQuickJumper"
   [nzLoading]="_pageInfo.loading"
   [nzTotal]="_pageInfo.totalPage"
   [(nzPageIndex)]="_pageInfo.pageNum"

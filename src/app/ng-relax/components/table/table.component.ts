@@ -24,6 +24,8 @@ export class TableComponent implements OnInit {
 
   @Input() isParamJson  : boolean = true;
 
+  @Input() isShowQuickJumper  : boolean = true;
+  
   @Input() checkedItems : any[];
 
   @Input() checkedKey   : string = 'id';
