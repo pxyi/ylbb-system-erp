@@ -1,4 +1,5 @@
 import { CreateModule } from './../create/create.module';
+import { UpdatahtmlModule } from './../updatahtml/updatahtml.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivityComponent } from './activity.component';
@@ -20,7 +21,8 @@ import { QRCodeModule } from 'angular2-qrcode';
       }
     ]),
     QRCodeModule,
-    CreateModule
+    CreateModule,
+    UpdatahtmlModule
   ]
 })
 export class ActivityModule { }

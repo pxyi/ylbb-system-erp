@@ -5,6 +5,7 @@ import { HttpService } from './../../../ng-relax/services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateComponent } from '../create/create.component';
+import { UpdatahtmlComponent } from '../updatahtml/updatahtml.component';
 
 @Component({
   selector: "app-activity",
@@ -67,6 +68,14 @@ export class ActivityComponent implements OnInit {
       } else {
         this.router.navigate(['/home/configuration/store', { is: true }]);
       }
+    })
+  }
+  updataHTML(activityInfo){
+    this.drawer.create({
+      nzWidth: 720 + 400,
+      nzClosable: false,
+      nzContent: UpdatahtmlComponent,
+      nzContentParams: { activityInfo }
     })
   }
 

@@ -1,0 +1,104 @@
+<div class="title">
+  <span>{{ activityInfo?.templateHeadline }}页面配置</span>
+  <div>
+    <button nz-button nzSize="small" nzType="primary" (click)="save()" [nzLoading]="saveLoading">保存</button>
+    <button nz-button nzSize="small" (click)="cancel()">取消</button>
+  </div>
+</div>
+
+<div class="preview">
+  <div class="erp-html-scroll">
+  <div class="erp-content">
+    <div class="mode-content">
+      <!-- 第一个 -->
+      <div class="mode">
+          <div class="mode-title">
+              <span>{{ pageDetail.topDetail.title }}</span>
+          </div>
+          <div class="mode-main">
+              <img src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/mode-con-head-top.png" alt="" srcset="">
+              <div class="mode-detail"  [innerHTML]="pageDetail.topDetail.text"></div>
+              <img src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/mode-con-head-bottom.png" alt="" srcset="">
+          </div>
+      </div>
+      <!-- 第二个 -->
+      <div class="mode">
+          <div class="mode-title">
+              <span>{{ pageDetail.welfareDetail.title }}</span>
+          </div>
+          <div class="mode-main">
+              <img src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/mode-con-head-top.png" alt="" srcset="">
+              <div class="mode-detail">
+                  <div class="mode-fl-list" *ngFor="let item of pageDetail.welfareDetail.list">
+                        <div class="fl-title"><span>{{ item.title }}</span></div>
+                        <div class="fl-list-detail">
+                          <div class="fl-detail-text" [innerHTML]="item.text"></div>
+                          <img [src]="item.img" alt="">
+                        </div>
+                  </div>
+
+                  <div class="mode-consultation">
+                        <div class="consultation-title">详情进店咨询</div>
+                        <div class="consultation-img-list">
+                            <div [ngStyle]="{'background-image': 'url(https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/erp-header-bg.png)'}"></div>
+                            <div [ngStyle]="{'background-image': 'url(https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/erp-header-bg.png)'}"></div>
+                            <div [ngStyle]="{'background-image': 'url(https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/erp-header-bg.png)'}"></div>
+                        </div>
+                  </div>
+              </div>
+              <img src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/mode-con-head-bottom.png" alt="" srcset="">
+          </div>
+
+      </div>
+      <img style="width:100%; margin-bottom: 10px;" src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/con-sbg.png" alt="" srcset="">
+            <!-- 第三个 -->
+            <div class="mode">
+              <div class="mode-title">
+                  <span>品牌介绍</span>
+              </div>
+              <div class="mode-main">
+                <img src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/mode-con-head-top.png" alt="" srcset="">
+                <div class="mode-detail">
+                    <div class="mode-fl-list">
+                          <div class="fl-title"><span>我们是谁</span></div>
+                          <div class="fl-list-detail">
+                                <div class="store-details-text">
+                                    鱼乐贝贝朝阳大悦城店主要针对0-6岁的婴幼儿，老师一对一，有带圈独立游泳，也有教练全程水下陪同宝贝进行一对一制授课，训练婴儿潜泳，幼儿水中游泳技能包括蛙泳、自由泳、仰泳和蝶泳。教学内容涵盖水中和应急处理，充分发掘婴幼儿爱水的天性。倾听水之语，感受鱼之乐！0-6岁婴幼儿体验游泳乐趣，尽在鱼乐贝贝朝阳大悦城店！
+                                </div>
+                                <div class="store-details-img">
+                                    <div [ngStyle]="{'background-image': 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573538002889&di=e9fd041375af71b0a504fb444d752046&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fc25e8786bac1f4b0cc2efd8d1bc232bf36fc889a40a35-dwZKAY_fw658)'}"></div>
+                                    <div [ngStyle]="{'background-image': 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573538092039&di=d8d55bcfb597a8abb17bd4ebcebeb1c1&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Fback_pic%2F03%2F66%2F38%2F8257b02e63c27b6.jpg)'}"></div>
+                                    <div [ngStyle]="{'background-image': 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573538002889&di=e9fd041375af71b0a504fb444d752046&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fc25e8786bac1f4b0cc2efd8d1bc232bf36fc889a40a35-dwZKAY_fw658)'}"></div>
+                                    <div [ngStyle]="{'background-image': 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573538002889&di=e9fd041375af71b0a504fb444d752046&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fc25e8786bac1f4b0cc2efd8d1bc232bf36fc889a40a35-dwZKAY_fw658)'}"></div>
+                
+
+                                </div>
+                          </div>
+                    </div>
+
+                    <div class="mode-fl-list">
+                      <div class="fl-title"><span>联系方式</span></div>
+                      <div class="fl-list-detail">
+                          <div class="store-addreephone">
+                            <div class="store-qrcodes"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573538332738&di=5c21f25f461ab5156bd8bbfd6d2d64f3&imgtype=0&src=http%3A%2F%2Fimg3.cache.netease.com%2Fgame%2F2013%2F11%2F26%2F20131126143638f53f4.png" alt="" srcset=""></div>
+                            <div class="store-address-text">
+                                  <div>
+                                    联系地址：朝阳区青年路朝阳大悦城3楼3004鱼乐贝贝
+                                </div>
+                                <div>
+                                  预约电话：13595135989
+                              </div>
+                            </div>
+                          </div>
+                          </div>
+                </div>
+
+  
+                </div>
+                <img src="https://ylbb-admin-erp.oss-cn-beijing.aliyuncs.com/mode-con-head-bottom.png" alt="" srcset="">
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
+</div>
