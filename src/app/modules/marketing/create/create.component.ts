@@ -34,6 +34,7 @@ export class CreateComponent implements OnInit {
 
   customControls: any[] = [];
 
+  storeName: string;
   constructor(
     private http: HttpService,
     private fb: FormBuilder = new FormBuilder(),
@@ -48,7 +49,6 @@ export class CreateComponent implements OnInit {
       endTime: [],
       time: [, [Validators.required]],
       activityRole: [, [Validators.required]],
-
       shareHeadline: [, [Validators.required, Validators.maxLength(26)]],
       shareDescribe: [, [Validators.required, Validators.maxLength(30)]],
       shareImg: [, [Validators.required]],
@@ -66,6 +66,8 @@ export class CreateComponent implements OnInit {
       this.activityInfo = res.result.activity;
       this._templateInit();
     }) : this._templateInit();
+    this.activityInfo.redPackageName = this.storeName;
+    console.log( this.activityInfo);
   }
 
   formControlError(key, type = 'required') {
@@ -101,7 +103,10 @@ export class CreateComponent implements OnInit {
   private _templateInit() {
     /* ------------------- 预览H5活动 ------------------- */
     let storeId: number;
-    this.store.select('userInfoState').subscribe(res => storeId = res.store.id);
+    this.store.select('userInfoState').subscribe(res =>{
+      storeId = res.store.id;
+      this.storeName = res.store.shopName.length>10 ? res.store.shopName.slice(0,10) : res.store.shopName;
+    } );
     let iframe = document.createElement('iframe');
     iframe.width = '375';
     iframe.height = '602';
@@ -137,9 +142,12 @@ export class CreateComponent implements OnInit {
     /* ------------------ 如果为编辑则回显内容 ------------------ */
     if (this.activityId) {
       this.activityInfo.time = [new Date(this.activityInfo.startTime), new Date(this.activityInfo.endTime)];
+      this.activityInfo.redPackageName = this.storeName;
       this.formGroup.patchValue(this.activityInfo);
     } else if (this.activityInfo.templateIntroduce) {
-      this.formGroup.patchValue(JSON.parse(this.activityInfo.templateIntroduce));
+      let details = JSON.parse(this.activityInfo.templateIntroduce);
+      details.redPackageName = this.storeName;
+      this.formGroup.patchValue( details );
     }
   }
 
@@ -212,6 +220,7 @@ export class CreateComponent implements OnInit {
       this.formGroup.addControl('banquetProcess', this.fb.control(null, [Validators.required]));
       this.formGroup.addControl('activityImgs', this.fb.control(null, [Validators.required]));
     }],
+
     [this.templateType.get('返利'), () => {
       this.formGroup.removeControl('activityRole');
       this.formGroup.addControl('consumerType', this.fb.control(2, [Validators.required]));
@@ -221,6 +230,7 @@ export class CreateComponent implements OnInit {
       this.formGroup.addControl('productName', this.fb.control(null, [Validators.required]));
       this.formGroup.addControl('promotionPrice', this.fb.control(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]));
       this.formGroup.addControl('rebateRatio', this.fb.control(null, [Validators.required, Validators.pattern(/^(?:0|[1-9]\d?)$/)]));
+      this.formGroup.addControl('redPackageName', this.fb.control(null, [Validators.required, Validators.pattern(/^.{1,10}$/)]));      
     }],
     [this.templateType.get('团购返利'), () => {
       this.formGroup.removeControl('activityRole');
@@ -235,10 +245,12 @@ export class CreateComponent implements OnInit {
         productDesc: [, [Validators.required]],
         rebateRatioOne: [{ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
         rebateRatioTwo: [{ value: null, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^[1-9]\d{0,1}$/)]],
+        redPackageName: [{ value: this.storeName, disabled: !!this.activityId }, [Validators.required, Validators.pattern(/^.{1,10}$/)]],
         groupRule: [, [Validators.required]],
         luckyNumber: [, [Validators.required]],
         lotteryExplain: [, [Validators.required]]
       }))
+
       this.formGroup.controls['activityGroupRule']['controls']['drawSwitch'].valueChanges.subscribe(res => {
         if (res) {
           this.formGroup.controls['activityGroupRule']['addControl']('luckyNumber', this.fb.control(null, [Validators.required]));

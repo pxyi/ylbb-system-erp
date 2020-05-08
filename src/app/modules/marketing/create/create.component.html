@@ -37,16 +37,20 @@
                 <input nz-input [formControlName]="item.key" [placeholder]="'请输入' + item.label">
               </ng-container>
               <ng-container *ngSwitchCase="'datetime'">
-              
+
               </ng-container>
               <ng-container *ngSwitchDefault>
-              
+
               </ng-container>
             </ng-container>
-            <nz-form-explain *ngIf="item.required && otherContentError(item.key)">{{ '请输入' + item.label }}！</nz-form-explain>
-            <nz-form-explain *ngIf="item.minlength && otherContentError(item.key, 'minlength')">{{ '至少输入' + item.minlength + '位字符' }}！</nz-form-explain>
-            <nz-form-explain *ngIf="item.maxlength && otherContentError(item.key, 'maxlength')">{{ '最多输入' + item.maxlength + '位字符' }}！</nz-form-explain>
-            <nz-form-explain *ngIf="item.pattern && otherContentError(item.key, 'pattern')">{{ '请输入正确的' + item.label }}！</nz-form-explain>
+            <nz-form-explain *ngIf="item.required && otherContentError(item.key)">{{ '请输入' + item.label }}！
+            </nz-form-explain>
+            <nz-form-explain *ngIf="item.minlength && otherContentError(item.key, 'minlength')">
+              {{ '至少输入' + item.minlength + '位字符' }}！</nz-form-explain>
+            <nz-form-explain *ngIf="item.maxlength && otherContentError(item.key, 'maxlength')">
+              {{ '最多输入' + item.maxlength + '位字符' }}！</nz-form-explain>
+            <nz-form-explain *ngIf="item.pattern && otherContentError(item.key, 'pattern')">{{ '请输入正确的' + item.label }}！
+            </nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </ng-container>
@@ -58,7 +62,8 @@
       activityInfo.templateType != templateType.get('团购返利')">
       <nz-form-label nzRequired nzSpan="4">活动规则</nz-form-label>
       <nz-form-control nzSpan="20">
-        <textarea nz-input formControlName="activityRole" [nzAutosize]="{ minRows: 4, maxRows: 6 }" placeholder="请输入活动规则"></textarea>
+        <textarea nz-input formControlName="activityRole" [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+          placeholder="请输入活动规则"></textarea>
         <nz-form-explain *ngIf="formControlError('activityRole')">请输入活动规则！</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
@@ -104,26 +109,31 @@
       <ea-title>奖项设置</ea-title>
       <div class="bringnew">
         <h2>老用户推荐成功奖品</h2>
-        
+
         <nz-form-item>
           <nz-form-label nzSpan="4">兑换截止日期</nz-form-label>
           <nz-form-control nzSpan="16">
-            <nz-date-picker formControlName="expirationDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="请选择兑换截止日期"></nz-date-picker>
+            <nz-date-picker formControlName="expirationDate" nzFormat="yyyy-MM-dd" nzPlaceHolder="请选择兑换截止日期">
+            </nz-date-picker>
             <nz-form-explain *ngIf="formControlError('expirationDate', 'error')">截止日期必须大于活动结束日期！</nz-form-explain>
             <nz-form-extra>截止日期必须大于活动结束日期哦；不选择默认没有截止日期</nz-form-extra>
           </nz-form-control>
         </nz-form-item>
         <nz-tabset nzType="card" nzSize="small" [nzTabBarExtraContent]="extraTemplate">
-          <nz-tab [nzTitle]="titleTemplate" *ngFor="let group of activityPrizes.controls; let idx = index;" [formGroup]="group">
-            <ng-template #titleTemplate>奖项 {{ idx + 1 }} <i nz-icon type="close" *ngIf="idx != 0" (click)="activityPrizes.removeAt(idx)"></i></ng-template>
+          <nz-tab [nzTitle]="titleTemplate" *ngFor="let group of activityPrizes.controls; let idx = index;"
+            [formGroup]="group">
+            <ng-template #titleTemplate>奖项 {{ idx + 1 }} <i nz-icon type="close" *ngIf="idx != 0"
+                (click)="activityPrizes.removeAt(idx)"></i></ng-template>
 
             <nz-form-item>
               <nz-form-label nzRequired nzSpan="6">推荐到店好友数量</nz-form-label>
               <nz-form-control nzSpan="14">
                 <input nz-input formControlName="recommendedAmount" placeholder="请输入推荐到店好友数量">
                 <nz-form-explain *ngIf="activityPrizesError('recommendedAmount', idx)">请输入推荐到店好友数量！</nz-form-explain>
-                <nz-form-explain *ngIf="activityPrizesError('recommendedAmount', idx, 'pattern')">请输入正确的数量！</nz-form-explain>
-                <nz-form-explain *ngIf="activityPrizesError('recommendedAmount', idx, 'error')">到店好友数量必须大于上一组的推荐数量！</nz-form-explain>
+                <nz-form-explain *ngIf="activityPrizesError('recommendedAmount', idx, 'pattern')">请输入正确的数量！
+                </nz-form-explain>
+                <nz-form-explain *ngIf="activityPrizesError('recommendedAmount', idx, 'error')">到店好友数量必须大于上一组的推荐数量！
+                </nz-form-explain>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
@@ -131,15 +141,18 @@
               <nz-form-control nzSpan="14">
                 <input nz-input formControlName="prizeName" placeholder="请输入礼品名称">
                 <nz-form-explain *ngIf="activityPrizesError('prizeName', idx)">请输入礼品名称！</nz-form-explain>
-                <nz-form-explain *ngIf="activityPrizesError('prizeName', idx, 'maxlength')">礼品名称最多十个字符！</nz-form-explain>
+                <nz-form-explain *ngIf="activityPrizesError('prizeName', idx, 'maxlength')">礼品名称最多十个字符！
+                </nz-form-explain>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
               <nz-form-label nzRequired nzSpan="6">礼品简介</nz-form-label>
               <nz-form-control nzSpan="14">
-                <textarea nz-input formControlName="prizeIntroduction" [nzAutosize]="{ minRows: 2, maxRows: 4 }" placeholder="请输入礼品简介"></textarea>
+                <textarea nz-input formControlName="prizeIntroduction" [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                  placeholder="请输入礼品简介"></textarea>
                 <nz-form-explain *ngIf="activityPrizesError('prizeIntroduction', idx)">请输入礼品简介！</nz-form-explain>
-                <nz-form-explain *ngIf="activityPrizesError('prizeIntroduction', idx, 'maxlength')">礼品名称最多三十六个字符！</nz-form-explain>
+                <nz-form-explain *ngIf="activityPrizesError('prizeIntroduction', idx, 'maxlength')">礼品名称最多三十六个字符！
+                </nz-form-explain>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
@@ -186,7 +199,8 @@
               <nz-date-picker formControlName="expirationDate" nzPlaceHolder="请选择使用截止日期"></nz-date-picker>
               <nz-form-extra>截止日期必须大于活动结束日期哦；不选择默认没有截止日期</nz-form-extra>
               <nz-form-explain *ngIf="activityVouchersError('expirationDate')">请选择使用截止日期！</nz-form-explain>
-              <nz-form-explain *ngIf="activityVouchersError('expirationDate', 'error')">截止日期必须大于活动结束日期！</nz-form-explain>
+              <nz-form-explain *ngIf="activityVouchersError('expirationDate', 'error')">截止日期必须大于活动结束日期！
+              </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -207,7 +221,7 @@
         <nz-form-item>
           <nz-form-label nzRequired nzSpan="4">拼团有效期</nz-form-label>
           <nz-form-control nzSpan="20">
-            <nz-select formControlName="duration"  nzPlaceHolder="请选择拼团有效期">
+            <nz-select formControlName="duration" nzPlaceHolder="请选择拼团有效期">
               <nz-option *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]" [nzValue]="item" [nzLabel]="item"></nz-option>
             </nz-select>
             <nz-form-explain *ngIf="activityGroupRuleError('duration')">请选择拼团有效期！</nz-form-explain>
@@ -278,8 +292,10 @@
         <div nz-col nzSpan="20">
           <nz-tabset nzType="card" nzSize="small" [nzTabBarExtraContent]="addPosition">
             <ng-template #addPosition><button nz-button (click)="addPositionInfos()">新增岗位</button></ng-template>
-            <nz-tab [nzTitle]="titleTemplate" *ngFor="let group of positionInfos.controls; let idx = index;" [formGroup]="group">
-              <ng-template #titleTemplate>岗位 {{ idx + 1 }} <i nz-icon type="close" *ngIf="idx != 0" (click)="positionInfos.removeAt(idx)"></i></ng-template>
+            <nz-tab [nzTitle]="titleTemplate" *ngFor="let group of positionInfos.controls; let idx = index;"
+              [formGroup]="group">
+              <ng-template #titleTemplate>岗位 {{ idx + 1 }} <i nz-icon type="close" *ngIf="idx != 0"
+                  (click)="positionInfos.removeAt(idx)"></i></ng-template>
 
               <nz-form-item>
                 <nz-form-label nzRequired nzSpan="4">招聘职位</nz-form-label>
@@ -291,14 +307,16 @@
               <nz-form-item>
                 <nz-form-label nzRequired nzSpan="4">岗位职责</nz-form-label>
                 <nz-form-control nzSpan="20">
-                  <textarea nz-input class="textarea" formControlName="jobResponsibilities" placeholder="请输入岗位职责"></textarea>
+                  <textarea nz-input class="textarea" formControlName="jobResponsibilities"
+                    placeholder="请输入岗位职责"></textarea>
                   <nz-form-explain *ngIf="positionInfosError('jobResponsibilities', idx)">请输入岗位职责！</nz-form-explain>
                 </nz-form-control>
               </nz-form-item>
               <nz-form-item>
                 <nz-form-label nzRequired nzSpan="4">任职要求</nz-form-label>
                 <nz-form-control nzSpan="20">
-                  <textarea nz-input class="textarea" formControlName="jobRequirements" placeholder="请输入任职要求"></textarea>
+                  <textarea nz-input class="textarea" formControlName="jobRequirements"
+                    placeholder="请输入任职要求"></textarea>
                   <nz-form-explain *ngIf="positionInfosError('jobRequirements', idx)">请输入任职要求！</nz-form-explain>
                 </nz-form-control>
               </nz-form-item>
@@ -342,14 +360,16 @@
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">邀请语</nz-form-label>
         <nz-form-control nzSpan="20">
-          <textarea nz-input formControlName="invitationLanguage" [nzAutosize]="{ minRows: 4, maxRows: 6 }" placeholder="请输入邀请语"></textarea>
+          <textarea nz-input formControlName="invitationLanguage" [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+            placeholder="请输入邀请语"></textarea>
           <nz-form-explain *ngIf="formControlError('invitationLanguage')">请输入邀请语！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">生日寄语</nz-form-label>
         <nz-form-control nzSpan="20">
-          <textarea nz-input formControlName="birthdayLanguage" [nzAutosize]="{ minRows: 4, maxRows: 6 }" placeholder="请输入生日寄语"></textarea>
+          <textarea nz-input formControlName="birthdayLanguage" [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+            placeholder="请输入生日寄语"></textarea>
           <nz-form-explain *ngIf="formControlError('birthdayLanguage')">请输入生日寄语！</nz-form-explain>
           <nz-form-explain *ngIf="formControlError('birthdayLanguage', 'maxlength')">生日寄语最多45个字符！</nz-form-explain>
         </nz-form-control>
@@ -357,7 +377,8 @@
       <nz-form-item>
         <nz-form-label nzRequired nzSpan="4">宴会流程</nz-form-label>
         <nz-form-control nzSpan="20">
-          <textarea nz-input formControlName="banquetProcess" [nzAutosize]="{ minRows: 4, maxRows: 6 }" placeholder="请输入宴会流程"></textarea>
+          <textarea nz-input formControlName="banquetProcess" [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+            placeholder="请输入宴会流程"></textarea>
           <nz-form-explain *ngIf="formControlError('banquetProcess')">请输入宴会流程！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
@@ -420,6 +441,16 @@
           <input nz-input formControlName="promotionPrice" placeholder="请输入活动价格">
           <nz-form-explain *ngIf="formControlError('promotionPrice')">请输入活动价格！</nz-form-explain>
           <nz-form-explain *ngIf="formControlError('promotionPrice', 'pattern')">请输入正确的活动价格！</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzSpan="4">红包名称</nz-form-label>
+        <nz-form-control nzSpan="20">
+          <nz-input-group nzAddOnAfter="红包">
+            <input nz-input formControlName="redPackageName" placeholder="请输入红包名称">
+          </nz-input-group>
+          <nz-form-explain *ngIf="formControlError('redPackageName')">请输入红包名称！</nz-form-explain>
+          <nz-form-explain *ngIf="formControlError('redPackageName', 'pattern')">请输入十字以内红包名称！</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -509,9 +540,20 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
+            <nz-form-label nzRequired nzSpan="4">红包名称</nz-form-label>
+            <nz-form-control nzSpan="20">
+              <nz-input-group nzAddOnAfter="红包">
+                <input nz-input formControlName="redPackageName" placeholder="请输入红包名称">
+              </nz-input-group>
+              <nz-form-explain *ngIf="activityGroupRuleError('redPackageName')">请输入红包名称！</nz-form-explain>
+              <nz-form-explain *ngIf="activityGroupRuleError('redPackageName', 'pattern')">请输入十字以内红包名称！</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        <nz-form-item>
           <nz-form-label nzRequired nzSpan="4">商品描述</nz-form-label>
           <nz-form-control nzSpan="20">
-            <textarea nz-input formControlName="productDesc" [nzAutosize]="{ minRows: 2, maxRows: 4 }" placeholder="请输入商品描述"></textarea>
+            <textarea nz-input formControlName="productDesc" [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+              placeholder="请输入商品描述"></textarea>
             <nz-form-explain *ngIf="activityGroupRuleError('productDesc')">请输入商品描述！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
@@ -556,7 +598,7 @@
       </div>
 
 
-      
+
     </ng-container>
 
     <ea-title>分享设置</ea-title>

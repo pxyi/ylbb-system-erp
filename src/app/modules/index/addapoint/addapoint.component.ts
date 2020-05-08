@@ -35,7 +35,6 @@ export class AddapointComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.reserveInit)
     this.queryForm = this.fb.group({
       mobilePhone: [, [Validators.required, Validators.pattern(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/)]]
     });

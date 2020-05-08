@@ -119,7 +119,6 @@ export class ConsumptionComponent implements OnInit {
       baseValue[key] = this.baseFormGroup.controls[key].value;
     })
     if (this.consumptionType === 0) {
-      console.log(this.baseFormGroup, this.baseFormGroup.value)
       if (this.timesCountGroup.invalid) {
         for (let i in this.timesCountGroup.controls) {
           this.timesCountGroup.controls[i].markAsDirty();

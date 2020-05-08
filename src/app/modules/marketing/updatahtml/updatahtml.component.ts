@@ -14,6 +14,7 @@ import { Store } from '@ngrx/store';
 })
 export class UpdatahtmlComponent implements OnInit {
   @Input() activityInfo: any = {};
+  saveLoading: boolean = false;
   pageDetail :any = {
       topDetail:{
         title: '送福利啦1',
@@ -44,5 +45,5 @@ export class UpdatahtmlComponent implements OnInit {
   ngOnInit() {
   }
   cancel() { this.drawerRef.close() }
-
+  save(){}
 }
