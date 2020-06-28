@@ -48,8 +48,8 @@ export class UpdateComponent implements OnInit {
   }
   attribuiteIdChange(val) {
     if (val == 1) {
-      this.formGroup.addControl('times', this.fb.control(this.cardTypeInfo.id ? this.cardTypeInfo.times : null, [Validators.required]));
-      this.formGroup.addControl('freeTimes', this.fb.control(this.cardTypeInfo.id ? this.cardTypeInfo.freeTimes : null, [Validators.required]));
+      this.formGroup.addControl('times', this.fb.control(this.cardTypeInfo.id ? this.cardTypeInfo.times : null, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]));
+      this.formGroup.addControl('freeTimes', this.fb.control(this.cardTypeInfo.id ? this.cardTypeInfo.freeTimes : null, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]));
 
       this.formGroup.removeControl('amount');
       this.formGroup.removeControl('freeAmount');

@@ -62,6 +62,7 @@
           <nz-form-control>
             <input nz-input formControlName="times" id="times" placeholder="请输入正价次数">
             <nz-form-explain *ngIf="formGroup.get('times').dirty && formGroup.get('times').hasError('required')">请输入正价次数！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('times').dirty && formGroup.get('times').hasError('pattern')">请输入正确的正价次数！</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -71,6 +72,8 @@
           <nz-form-control>
             <input nz-input formControlName="freeTimes" id="freeTimes" placeholder="请输入赠送次数">
             <nz-form-explain *ngIf="formGroup.get('freeTimes').dirty && formGroup.get('freeTimes').hasError('required')">请输入赠送次数！</nz-form-explain>
+            <nz-form-explain *ngIf="formGroup.get('freeTimes').dirty && formGroup.get('freeTimes').hasError('pattern')">请输入正确的正价次数！</nz-form-explain>
+
           </nz-form-control>
         </nz-form-item>
       </div>
